@@ -17,3 +17,9 @@ export {
   sseEvents,
 } from "./client.js";
 export type { ChatRequest, LLMClient } from "./client.js";
+export {
+  ToolRegistry,
+  type ToolResultEnvelope,
+  type ToolResultFail,
+  type ToolResultOk,
+} from "./tools.js";
