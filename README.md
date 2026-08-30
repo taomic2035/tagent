@@ -12,12 +12,13 @@
 
 | 层 | 选型 | 说明 |
 |---|---|---|
+| Agent 语言 | **TypeScript**（Node/React Native/RNOH） | 零换语覆盖 Mac/Win/Linux/Android/鸿蒙，详见 [TECH_STACK.md](TECH_STACK.md) |
 | 模型 | Qwen3.5-4B（4bit 量化） | 原生 function calling，内建思考模式 |
 | 推理引擎 | MLX（mlx-lm） | Apple Silicon 优化；llama.cpp 因 Qwen3.5 新架构未优化（15 tok/s）被实测淘汰，保留作底层学习材料 |
 | 接口 | OpenAI 兼容 HTTP | `http://127.0.0.1:8081/v1` |
 | 硬件 | MacBook Air M5 / 32GB | 实测生成 38 tok/s（server 路径） |
 
-选型过程、实测数据、踩坑记录详见 [SETUP.md](SETUP.md)。
+选型过程、实测数据、踩坑记录详见 [SETUP.md](SETUP.md)；跨平台架构决策详见 [TECH_STACK.md](TECH_STACK.md)。
 
 ## 快速开始
 
@@ -36,7 +37,7 @@ curl http://127.0.0.1:8081/v1/chat/completions \
 
 ## 学习路线
 
-- [ ] **Step 1** 最小 agent loop：while 循环 + 工具定义 + 解析 `tool_calls` + 执行 + 结果回填上下文
+- [ ] **Step 1** 最小 agent loop：while 循环 + 工具定义 + 解析 `tool_calls` + 执行 + 结果回填上下文（TypeScript，`packages/core` 零依赖手搓）
 - [ ] **Step 2** 多工具与错误处理：工具执行失败的重试与降级策略
 - [ ] **Step 3** 上下文管理：对话历史裁剪、KV cache 复用对 agent 的意义
 - [ ] **Step 4** 思考模式实验：同一模型 thinking 开/关下任务成功率对比
@@ -50,6 +51,7 @@ curl http://127.0.0.1:8081/v1/chat/completions \
 ```
 tagent/
 ├── SETUP.md          # 环境搭建全记录：选型、实测数据、踩坑
+├── TECH_STACK.md     # 技术选型报告：语言、架构、跨平台路线
 ├── start_llm.sh      # 一键启动本地推理服务
 ├── LICENSE           # MIT
 └── models/           # 模型权重（不入库，见 SETUP.md）
