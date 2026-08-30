@@ -5,8 +5,9 @@
 models/
 *.gguf
 
-# 运行日志
+# 运行日志与会话记录
 *.log
+logs/
 
 # Python
 __pycache__/

@@ -52,6 +52,10 @@ curl http://127.0.0.1:8081/v1/chat/completions \
 tagent/
 ├── SETUP.md          # 环境搭建全记录：选型、实测数据、踩坑
 ├── TECH_STACK.md     # 技术选型报告：语言、架构、跨平台路线
+├── docs/
+│   ├── REQUIREMENTS.md   # 需求清单（Step 1 范围，含验收标准）
+│   ├── ARCHITECTURE.md   # 架构设计：模块划分、数据流、扩展点
+│   └── DESIGN.md         # 方案设计：类型、接口、算法、测试（可直接照写代码）
 ├── start_llm.sh      # 一键启动本地推理服务
 ├── LICENSE           # MIT
 └── models/           # 模型权重（不入库，见 SETUP.md）
