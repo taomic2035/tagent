@@ -37,7 +37,13 @@ PYEOF
   curl $flag --max-time 180 -D "$dir/response-headers.txt" -o "$dir/response.$ext" \
     http://127.0.0.1:8081/v1/chat/completions \
     -H "Content-Type: application/json" -d @"$dir/request.json"
-  echo "captured: $dir"
+  # 自动脱敏（隐私制度，见 docs/PROTOCOL.md §0）：
+  #   本机用户路径 → /Users/<user>/，硬件/系统指纹 → <SYSTEM_FINGERPRINT>
+  #   原始未脱敏版本只留在本机，不入库
+  sed -i '' -e "s|$MODEL_PATH|/Users/<user>/model|g" \
+            -e "s|0\.31\.3-[0-9.\-]*macOS-[0-9.\-]*-arm64[^\"\"]*|<SYSTEM_FINGERPRINT>|g" \
+    "$dir/request.json" "$dir/response.$ext" "$dir/response-headers.txt" 2>/dev/null || true
+  echo "captured: $dir (已脱敏)"
 }
 
 CAP 01-nonstream-chat  false no

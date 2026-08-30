@@ -10,6 +10,7 @@
 2. 每组抓取固定三件套：`request.json`（请求体原件）+ `response-headers.txt`（响应头原件）+ `response.sse / response.json`（响应体原件）
 3. 抓取命令可复现：`captures/capture.sh`（模型路径在 `captures/.env.local`，不入库）
 4. 新增任何协议观察（新引擎、新字段、异常报文）→ 先抓原件入 captures/，再更新本文
+5. **入库前脱敏（隐私制度）**：本机用户路径一律替换为 `/Users/<user>/`（本机原件由 capture.sh 保留在本地）；`system_fingerprint` 一律替换为 `<SYSTEM_FINGERPRINT>`；模型快照的哈希目录名同样属于本机信息，一并归一到 `<user>/model`。脱敏由 capture.sh 自动完成，手工抓取也必须执行同样替换
 
 ## 1. 一次 agent 请求的完整生命周期
 
