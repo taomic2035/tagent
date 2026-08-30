@@ -15,16 +15,16 @@ mkdir -p logs
 # 跑一个场景：提交问题 → 轮询 transcript 直到 final/error → 可选后置命令 → /exit
 run_ac() {
   local ac=$1 q=$2 post=${3:-}
-  local pre=$(ls logs/transcript-*.jsonl 2>/dev/null | wc -l | tr -d ' ')
+  local pre=$(ls logs/ 2>/dev/null | grep -c '^transcript-' | tr -d ' ')
   {
     printf '%s\n' "$q"
     T=""; i=0
     while [ $i -lt 30 ]; do
-      cur=$(ls logs/transcript-*.jsonl 2>/dev/null | wc -l | tr -d ' ')
-      if [ "$cur" -gt "$pre" ]; then T=$(ls -t logs/transcript-*.jsonl | head -1); break; fi
+      cur=$(ls logs/ 2>/dev/null | grep -c '^transcript-' | tr -d ' ')
+      if [ "$cur" -gt "$pre" ]; then T=$(ls -t logs/transcript-*.jsonl(N) | head -1); break; fi
       sleep 1; i=$((i+1))
     done
-    [ -z "$T" ] && T=$(ls -t logs/transcript-*.jsonl 2>/dev/null | head -1)
+    [ -z "$T" ] && T=$(ls -t logs/transcript-*.jsonl(N) | head -1)
     i=0
     while [ $i -lt 180 ]; do
       grep -q '"type":"final"' "$T" 2>/dev/null && break
