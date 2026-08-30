@@ -174,6 +174,23 @@ Cache-Control: no-cache
 | `captures/02-nonstream-tools/` | 非流式工具调用（finish=tool_calls，usage 缓存命中 99.6%） | request 469B + 953B |
 | `captures/03-stream-chat/` | 流式纯对话（147 数据帧 + keepalive） | 66179B |
 | `captures/04-stream-tools/` | 流式工具调用（22 数据帧，tool_call 单帧完整） | 9809B |
+| `captures/06-determinism/` | 确定性实验：同请求 × 温度 0.7/0 × 各两次 | 4 份响应 |
 | `packages/core/fixtures/*.sse` | 测试夹具（与 03/04 同源，供解析器测试） | — |
 
 复现方式：`./captures/capture.sh`（需先 `./start_llm.sh -d`）。
+
+## 10. 复现性与确定性（captures/06 实证）
+
+"可复现"要分层回答（实验：同一请求各发两次，temp 0.7 与 0 各一组）：
+
+| 层 | 结论 | 证据 |
+|---|---|---|
+| **请求层（prompt 级逐条复现）** | ✅ 完全可复现：captures/*/request.json 即完整输入，一条 curl 重放即得同请求 | captures/ 全部 |
+| **响应层（默认温度 temp=0.7）** | ❌ 不可逐字复现：两次同请求 reasoning 内容不同——LLM 采样有随机性，这是原理性的，不是存证缺陷 | 06/temp0.7-run1 vs run2 |
+| **响应层（temp=0）** | ✅ 两次响应逐字节相同（reasoning 字段全同）——贪婪解码无随机性 | 06/temp0-run1 vs run2 |
+
+使用规则：
+- **追溯**（"这个 token 从哪来"）→ 用 trace 溯源表，永远可行，不依赖温度
+- **复现**（"再跑一遍得到同样输出"）→ 请求层永远可行；响应层需 `temperature: 0`（agent 场景代价：回答多样性下降，调试协议时用，日常对话不必）
+
+**待考据发现（06 组实录）**：用户消息尾部加 `/no_think` 在 Qwen3.5 + MLX server 上**未关闭思考**——80 个生成 token 全部进入 reasoning，正文为空，finish_reason=length（与 §5.3 length 教训互证）。Qwen3.5 的思考开关机制与 Qwen3 的 `/no_think` 约定不同，正确开关方式待实验（候选：chat_template_kwargs / 模板级 enable_thinking），考据后更新本节。
