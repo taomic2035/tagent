@@ -1,0 +1,54 @@
+{"seq":1,"kind":"reasoning","frame":1,"line":3,"byte":17,"text":"用户"}
+{"seq":2,"kind":"reasoning","frame":2,"line":5,"byte":478,"text":"想要"}
+{"seq":3,"kind":"reasoning","frame":3,"line":7,"byte":939,"text":"计算"}
+{"seq":4,"kind":"reasoning","frame":4,"line":9,"byte":1400,"text":" 3"}
+{"seq":5,"kind":"reasoning","frame":5,"line":11,"byte":1851,"text":"."}
+{"seq":6,"kind":"reasoning","frame":6,"line":13,"byte":2301,"text":"7"}
+{"seq":7,"kind":"reasoning","frame":7,"line":15,"byte":2751,"text":" 乘以"}
+{"seq":8,"kind":"reasoning","frame":8,"line":17,"byte":3213,"text":" 1"}
+{"seq":9,"kind":"reasoning","frame":9,"line":19,"byte":3664,"text":"2"}
+{"seq":10,"kind":"reasoning","frame":10,"line":21,"byte":4114,"text":" 再"}
+{"seq":11,"kind":"reasoning","frame":11,"line":23,"byte":4570,"text":"减"}
+{"seq":12,"kind":"reasoning","frame":12,"line":25,"byte":5025,"text":" 8"}
+{"seq":13,"kind":"reasoning","frame":13,"line":27,"byte":5476,"text":"."}
+{"seq":14,"kind":"reasoning","frame":14,"line":29,"byte":5926,"text":"2"}
+{"seq":15,"kind":"reasoning","frame":15,"line":31,"byte":6376,"text":" 的结果"}
+{"seq":16,"kind":"reasoning","frame":16,"line":33,"byte":6844,"text":"。"}
+{"seq":17,"kind":"reasoning","frame":17,"line":35,"byte":7299,"text":"这是一个"}
+{"seq":18,"kind":"reasoning","frame":18,"line":37,"byte":7772,"text":"四"}
+{"seq":19,"kind":"reasoning","frame":19,"line":39,"byte":8227,"text":"则"}
+{"seq":20,"kind":"reasoning","frame":20,"line":41,"byte":8682,"text":"运算"}
+{"seq":21,"kind":"reasoning","frame":21,"line":43,"byte":9143,"text":"表达式"}
+{"seq":22,"kind":"reasoning","frame":22,"line":45,"byte":9610,"text":"，"}
+{"seq":23,"kind":"reasoning","frame":23,"line":47,"byte":10065,"text":"我"}
+{"seq":24,"kind":"reasoning","frame":24,"line":49,"byte":10520,"text":"需要使用"}
+{"seq":25,"kind":"reasoning","frame":25,"line":51,"byte":10993,"text":" calculate"}
+{"seq":26,"kind":"reasoning","frame":26,"line":53,"byte":11452,"text":" 工具"}
+{"seq":27,"kind":"reasoning","frame":27,"line":55,"byte":11914,"text":"来计算"}
+{"seq":28,"kind":"reasoning","frame":28,"line":57,"byte":12381,"text":"。"}
+{"seq":29,"kind":"reasoning","frame":29,"line":59,"byte":12836,"text":"\n\n"}
+{"seq":30,"kind":"reasoning","frame":30,"line":61,"byte":13289,"text":"表达式"}
+{"seq":31,"kind":"reasoning","frame":31,"line":63,"byte":13756,"text":"是"}
+{"seq":32,"kind":"reasoning","frame":32,"line":65,"byte":14211,"text":"："}
+{"seq":33,"kind":"reasoning","frame":33,"line":67,"byte":14666,"text":"3"}
+{"seq":34,"kind":"reasoning","frame":34,"line":69,"byte":15116,"text":"."}
+{"seq":35,"kind":"reasoning","frame":35,"line":71,"byte":15566,"text":"7"}
+{"seq":36,"kind":"reasoning","frame":36,"line":73,"byte":16016,"text":" *"}
+{"seq":37,"kind":"reasoning","frame":37,"line":75,"byte":16467,"text":" 1"}
+{"seq":38,"kind":"reasoning","frame":38,"line":77,"byte":16918,"text":"2"}
+{"seq":39,"kind":"reasoning","frame":39,"line":79,"byte":17368,"text":" -"}
+{"seq":40,"kind":"reasoning","frame":40,"line":81,"byte":17819,"text":" 8"}
+{"seq":41,"kind":"reasoning","frame":41,"line":83,"byte":18270,"text":"."}
+{"seq":42,"kind":"reasoning","frame":42,"line":85,"byte":18720,"text":"2"}
+{"seq":43,"kind":"reasoning","frame":43,"line":87,"byte":19170,"text":"\n\n"}
+{"seq":44,"kind":"reasoning","frame":44,"line":89,"byte":19623,"text":"让我"}
+{"seq":45,"kind":"reasoning","frame":45,"line":91,"byte":20084,"text":"调用"}
+{"seq":46,"kind":"reasoning","frame":46,"line":93,"byte":20545,"text":" calculate"}
+{"seq":47,"kind":"reasoning","frame":47,"line":95,"byte":21004,"text":" 工具"}
+{"seq":48,"kind":"reasoning","frame":48,"line":97,"byte":21466,"text":"来计算"}
+{"seq":49,"kind":"reasoning","frame":49,"line":99,"byte":21933,"text":"这个"}
+{"seq":50,"kind":"reasoning","frame":50,"line":101,"byte":22394,"text":"表达式"}
+{"seq":51,"kind":"reasoning","frame":51,"line":103,"byte":22861,"text":"。"}
+{"seq":52,"kind":"reasoning","frame":52,"line":105,"byte":23316,"text":"\n"}
+{"seq":53,"kind":"text","frame":53,"line":107,"byte":23767,"text":"\n\n"}
+{"seq":54,"kind":"tool-call","frame":54,"line":109,"byte":24218,"text":"{\"expression\": \"3.7*12-8.2\"}","index":0,"id":"afd3086b-3265-40ed-83e0-ba1ba55e2b9b","name":"calculate"}

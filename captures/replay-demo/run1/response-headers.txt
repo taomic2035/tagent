@@ -1,0 +1,7 @@
+access-control-allow-headers: *
+access-control-allow-methods: *
+access-control-allow-origin: *
+cache-control: no-cache
+content-type: text/event-stream
+date: Sun, 30 Aug 2026 15:54:56 GMT
+server: BaseHTTP/0.6 Python/3.14.6

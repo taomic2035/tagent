@@ -1,0 +1,90 @@
+data: {"choices":[{"index":0,"delta":{"reasoning":"根据"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"返回"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"的结果"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"7"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 乘以"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 1"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 再"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"减"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 的结果"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"是"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"6"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"7"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 乘以"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 1"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 再"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"减"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 等于"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" **"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"6"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"**。"}}]}
+
+data: {"choices":[{"index":0,"finish_reason":"stop","delta":{}}]}
+
+data: [DONE]
+

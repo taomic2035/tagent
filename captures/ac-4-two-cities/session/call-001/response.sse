@@ -1,0 +1,80 @@
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"想"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"对比"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"和"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"上海的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我需要"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"调用"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" get"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"_weather"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"来"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"查询"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"这两个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"城市的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"情况"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我需要"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"分别"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"查询"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"和"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"上海的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"然后"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"进行"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"对比"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"id":"1ce38df6-a6d4-4bcb-9ba5-4ad0d6a2a87b","function":{"name":"get_weather","arguments":"{\"city\": \"北京\"}"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":1,"id":"f79a21e0-e46d-4a72-9657-a8cf64e122a4","function":{"name":"get_weather","arguments":"{\"city\": \"上海\"}"}}]}}]}
+
+data: {"choices":[{"index":0,"finish_reason":"tool_calls","delta":{}}]}
+
+data: [DONE]
+

@@ -29,12 +29,20 @@ trace.jsonl 第 N 行
 
 即：**token 的内容、顺序、原始位置三方互相印证，无一来自记忆或转述。**
 
-## 3. 工具：scripts/trace-sse.mjs
+## 3. 工具：scripts/trace-sse.mjs 与 scripts/replay.mjs
 
+**trace-sse.mjs**（token 溯源）
 - 输入：任一 `response.sse` 原件
-- 输出：同目录 `response.trace.md`（人读表格）+ `response.trace.jsonl`（机器索引）
+- 输出：同目录 `*.trace.md`（人读表格）+ `*.trace.jsonl`（机器索引）
 - 输出确定性：不含时间戳，重跑结果逐字节相同（git 友好，可复核）
 - 用法：`node scripts/trace-sse.mjs <response.sse>`
+
+**replay.mjs**（prompt 重放——「prompt 可再复现」的落地）
+- 输入：任一存证单元的 `request.json`（captures/ 或 logs/sessions/）
+- 行为：原样（或 `--temp/--model/--base-url` 覆盖）重新发送，落盘为新的完整存证单元（含 trace）
+- 模型路径为脱敏占位符时自动从 `captures/.env.local` 恢复
+- 确定性重放：`--temp 0`（PROTOCOL.md §10：temp=0 下响应逐字节可复现）
+- 用法：`node scripts/replay.mjs <request.json> --temp 0 --out /tmp/rep1`
 
 ## 4. 覆盖范围（何时必须留痕）
 

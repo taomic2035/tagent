@@ -1,0 +1,694 @@
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"请求"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"对比"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"和"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"上海的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我已经"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"获得了"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"两个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"城市的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"数据"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"现在"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"可以"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"整理"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"并"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"对比"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"这些信息"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"状况"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"晴"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 温度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"°C"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 湿度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"4"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"%"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" AQ"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"I"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 更新时间"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"6"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 1"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":":"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":":"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"4"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"状况"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"多云"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 温度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"1"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"°C"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 湿度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"7"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"%"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" AQ"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"I"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"4"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 更新时间"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"6"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" 1"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":":"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":":"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"4"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"现在"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"可以"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"对比"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"这两个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"城市的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"了"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"以下是"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"和"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"上海的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"对比"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"|"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 项目"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"|"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"------"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"|"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"------"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"|"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"------"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"|"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"|"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"状况"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 🌤"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"️"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 晴"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" ☁"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"️"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 多云"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"|"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 温度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"°C"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"1"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"°C"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"|"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 湿度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 4"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"%"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 7"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"%"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"|"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" AQ"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"I"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 指数"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" ("}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"良"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":")"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 4"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" ("}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"优"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":")"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"|"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 更新时间"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"6"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 1"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":":"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"6"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" 1"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":":"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" |"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"**"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"主要"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"对比"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"：**"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" **"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"温度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"方面"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"**"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"比"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"高"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"更"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"热"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" **"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"湿度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"方面"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"**"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"湿度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"比"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"高"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"个百分点"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"更"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"干燥"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" **"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"空气质量"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"**"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"AQ"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"I"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"指数"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"略"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"低"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"空气质量"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"稍"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"好"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" **"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"状况"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"**"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"是"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"晴天"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"是"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"多云"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"总体来说"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"更"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"舒适"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"干燥"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"但"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"温度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"稍"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"低"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"；"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"较"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"热"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"且"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"潮湿"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"。"}}]}
+
+data: {"choices":[{"index":0,"finish_reason":"stop","delta":{}}]}
+
+data: [DONE]
+

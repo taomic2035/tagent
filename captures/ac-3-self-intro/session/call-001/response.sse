@@ -1,0 +1,186 @@
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"想要"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"介绍一下"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我自己"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我是"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" tag"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"ent"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"一个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"运行"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"在"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"本地"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"终端"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"上的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"助手"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"可以使用"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"提供的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"来获取"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"信息"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"或"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"进行"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"计算"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"但由于"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"这是个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"日常"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"对话"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"问题"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"不需要"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"调用"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"可以直接"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"回答"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"你好"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"！"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"我是"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" tag"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"ent"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"一个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"运行"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"在你"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"本地"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"终端"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"上的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"智能"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"助手"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"我的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"主要"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"功能是"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"帮助你"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"查询"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"指定"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"城市的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"信息"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"、"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"计算"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"四"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"则"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"运算"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"表达式"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"以及"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"协助"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"你"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"处理"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"其他"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"日常"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"任务"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"有什么"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"需要"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"帮忙"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"的吗"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"？"}}]}
+
+data: {"choices":[{"index":0,"finish_reason":"stop","delta":{}}]}
+
+data: [DONE]
+

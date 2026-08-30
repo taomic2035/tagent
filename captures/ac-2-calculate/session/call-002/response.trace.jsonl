@@ -1,0 +1,43 @@
+{"seq":1,"kind":"reasoning","frame":1,"line":1,"byte":0,"text":"根据"}
+{"seq":2,"kind":"reasoning","frame":2,"line":3,"byte":64,"text":"工具"}
+{"seq":3,"kind":"reasoning","frame":3,"line":5,"byte":128,"text":"返回"}
+{"seq":4,"kind":"reasoning","frame":4,"line":7,"byte":192,"text":"的结果"}
+{"seq":5,"kind":"reasoning","frame":5,"line":9,"byte":259,"text":"，"}
+{"seq":6,"kind":"reasoning","frame":6,"line":11,"byte":320,"text":"3"}
+{"seq":7,"kind":"reasoning","frame":7,"line":13,"byte":379,"text":"."}
+{"seq":8,"kind":"reasoning","frame":8,"line":15,"byte":438,"text":"7"}
+{"seq":9,"kind":"reasoning","frame":9,"line":17,"byte":497,"text":" 乘以"}
+{"seq":10,"kind":"reasoning","frame":10,"line":19,"byte":562,"text":" 1"}
+{"seq":11,"kind":"reasoning","frame":11,"line":21,"byte":622,"text":"2"}
+{"seq":12,"kind":"reasoning","frame":12,"line":23,"byte":681,"text":" 再"}
+{"seq":13,"kind":"reasoning","frame":13,"line":25,"byte":743,"text":"减"}
+{"seq":14,"kind":"reasoning","frame":14,"line":27,"byte":804,"text":" 8"}
+{"seq":15,"kind":"reasoning","frame":15,"line":29,"byte":864,"text":"."}
+{"seq":16,"kind":"reasoning","frame":16,"line":31,"byte":923,"text":"2"}
+{"seq":17,"kind":"reasoning","frame":17,"line":33,"byte":982,"text":" 的结果"}
+{"seq":18,"kind":"reasoning","frame":18,"line":35,"byte":1050,"text":"是"}
+{"seq":19,"kind":"reasoning","frame":19,"line":37,"byte":1111,"text":" 3"}
+{"seq":20,"kind":"reasoning","frame":20,"line":39,"byte":1171,"text":"6"}
+{"seq":21,"kind":"reasoning","frame":21,"line":41,"byte":1230,"text":"."}
+{"seq":22,"kind":"reasoning","frame":22,"line":43,"byte":1289,"text":"2"}
+{"seq":23,"kind":"reasoning","frame":23,"line":45,"byte":1348,"text":"。"}
+{"seq":24,"kind":"reasoning","frame":24,"line":47,"byte":1409,"text":"\n"}
+{"seq":25,"kind":"text","frame":25,"line":49,"byte":1469,"text":"\n\n"}
+{"seq":26,"kind":"text","frame":26,"line":51,"byte":1529,"text":"3"}
+{"seq":27,"kind":"text","frame":27,"line":53,"byte":1586,"text":"."}
+{"seq":28,"kind":"text","frame":28,"line":55,"byte":1643,"text":"7"}
+{"seq":29,"kind":"text","frame":29,"line":57,"byte":1700,"text":" 乘以"}
+{"seq":30,"kind":"text","frame":30,"line":59,"byte":1763,"text":" 1"}
+{"seq":31,"kind":"text","frame":31,"line":61,"byte":1821,"text":"2"}
+{"seq":32,"kind":"text","frame":32,"line":63,"byte":1878,"text":" 再"}
+{"seq":33,"kind":"text","frame":33,"line":65,"byte":1938,"text":"减"}
+{"seq":34,"kind":"text","frame":34,"line":67,"byte":1997,"text":" 8"}
+{"seq":35,"kind":"text","frame":35,"line":69,"byte":2055,"text":"."}
+{"seq":36,"kind":"text","frame":36,"line":71,"byte":2112,"text":"2"}
+{"seq":37,"kind":"text","frame":37,"line":73,"byte":2169,"text":" 等于"}
+{"seq":38,"kind":"text","frame":38,"line":75,"byte":2232,"text":" **"}
+{"seq":39,"kind":"text","frame":39,"line":77,"byte":2291,"text":"3"}
+{"seq":40,"kind":"text","frame":40,"line":79,"byte":2348,"text":"6"}
+{"seq":41,"kind":"text","frame":41,"line":81,"byte":2405,"text":"."}
+{"seq":42,"kind":"text","frame":42,"line":83,"byte":2462,"text":"2"}
+{"seq":43,"kind":"text","frame":43,"line":85,"byte":2519,"text":"**。"}

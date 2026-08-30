@@ -1,0 +1,20 @@
+{"seq":1,"kind":"reasoning","frame":1,"line":1,"byte":0,"text":"用户"}
+{"seq":2,"kind":"reasoning","frame":2,"line":3,"byte":64,"text":"询问"}
+{"seq":3,"kind":"reasoning","frame":3,"line":5,"byte":128,"text":"上海"}
+{"seq":4,"kind":"reasoning","frame":4,"line":7,"byte":192,"text":"天气"}
+{"seq":5,"kind":"reasoning","frame":5,"line":9,"byte":256,"text":"怎么样"}
+{"seq":6,"kind":"reasoning","frame":6,"line":11,"byte":323,"text":"，"}
+{"seq":7,"kind":"reasoning","frame":7,"line":13,"byte":384,"text":"我"}
+{"seq":8,"kind":"reasoning","frame":8,"line":15,"byte":445,"text":"需要使用"}
+{"seq":9,"kind":"reasoning","frame":9,"line":17,"byte":515,"text":" get"}
+{"seq":10,"kind":"reasoning","frame":10,"line":19,"byte":577,"text":"_weather"}
+{"seq":11,"kind":"reasoning","frame":11,"line":21,"byte":643,"text":" 工具"}
+{"seq":12,"kind":"reasoning","frame":12,"line":23,"byte":708,"text":"来"}
+{"seq":13,"kind":"reasoning","frame":13,"line":25,"byte":769,"text":"查询"}
+{"seq":14,"kind":"reasoning","frame":14,"line":27,"byte":833,"text":"上海的"}
+{"seq":15,"kind":"reasoning","frame":15,"line":29,"byte":900,"text":"天气"}
+{"seq":16,"kind":"reasoning","frame":16,"line":31,"byte":964,"text":"信息"}
+{"seq":17,"kind":"reasoning","frame":17,"line":33,"byte":1028,"text":"。"}
+{"seq":18,"kind":"reasoning","frame":18,"line":35,"byte":1089,"text":"\n"}
+{"seq":19,"kind":"text","frame":19,"line":37,"byte":1149,"text":"\n\n"}
+{"seq":20,"kind":"tool-call","frame":20,"line":39,"byte":1209,"text":"{\"city\": \"上海\"}","index":0,"id":"6c554d30-7d81-4417-a030-ca6730c1d7c6","name":"get_weather"}

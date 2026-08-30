@@ -27,17 +27,21 @@
 ./start_llm.sh -d
 curl http://127.0.0.1:8081/health
 
-# 2. 验证 tool calling
-curl http://127.0.0.1:8081/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -d '{"model": "", "messages": [{"role": "user", "content": "北京天气怎么样？"}], "max_tokens": 300}'
-```
+# 2. 构建并运行 agent（MODEL 路径见 captures/.env.local）
+pnpm build
+node apps/cli/dist/main.js --model "$(cat captures/.env.local | cut -d= -f2)"
+# 会话内：/tools 看工具 · /dump 导出上下文 · /reset 清空 · /exit 退出
 
-注意：请求体 `model` 字段填本地模型路径（见 `start_llm.sh` 中的 `MODEL_PATH`）或留空。
+# 3. 重放任一历史 prompt（token 级复现，见 docs/ACCEPTANCE.md）
+node scripts/replay.mjs captures/ac-2-calculate/session/call-001/request.json --temp 0
+
+# 4. 复跑真机验收（六场景，自动存证+脱敏）
+zsh scripts/acceptance.sh
+```
 
 ## 学习路线
 
-- [ ] **Step 1** 最小 agent loop：while 循环 + 工具定义 + 解析 `tool_calls` + 执行 + 结果回填上下文（TypeScript，`packages/core` 零依赖手搓）
+- [x] **Step 1** 最小 agent loop：while 循环 + 工具定义 + 解析 `tool_calls` + 执行 + 结果回填上下文（TypeScript，`packages/core` 零依赖手搓）——**已验收，见 [docs/ACCEPTANCE.md](docs/ACCEPTANCE.md)**
 - [ ] **Step 2** 多工具与错误处理：工具执行失败的重试与降级策略
 - [ ] **Step 3** 上下文管理：对话历史裁剪、KV cache 复用对 agent 的意义
 - [ ] **Step 4** 思考模式实验：同一模型 thinking 开/关下任务成功率对比
@@ -57,7 +61,8 @@ tagent/
 │   ├── ARCHITECTURE.md   # 架构设计：模块划分、数据流、扩展点
 │   ├── DESIGN.md         # 方案设计：类型、接口、算法、测试（可直接照写代码）
 │   ├── PROTOCOL.md       # 通信协议拆解：与 LLM 引擎双方通信逐字段分析
-│   └── TRACEABILITY.md   # 溯源制度：每次通信全量存证，每个 token 有据可循
+│   ├── TRACEABILITY.md   # 溯源制度：每次通信全量存证，每个 token 有据可循
+│   └── ACCEPTANCE.md     # Step1 真机验收报告：AC-1~6 + token 级复现实证
 ├── captures/         # 原始报文存证：请求体 + 响应头 + 响应体（抓取脚本可复现）
 ├── start_llm.sh      # 一键启动本地推理服务
 ├── LICENSE           # MIT
