@@ -1,0 +1,92 @@
+import type { z } from "zod";
+
+// ============================================================
+// 消息类型 —— OpenAI Chat 协议的 TS 化
+// messages 数组是 agent 上下文的唯一事实来源（ARCHITECTURE.md 不变量 1）
+// ============================================================
+
+/** 模型发起的一次工具调用。注意 arguments 是 JSON 字符串而非对象：
+ *  模型逐 token 生成 JSON 文本，流式分片必须拼完才能 parse（DESIGN.md §1）。 */
+export interface ToolCallData {
+  id: string;
+  type: "function";
+  function: { name: string; arguments: string };
+}
+
+export type ChatMessage =
+  | { role: "system"; content: string }
+  | { role: "user"; content: string }
+  | {
+      role: "assistant";
+      content: string | null;
+      /** 思考内容只在内存事件流中使用，永不写回 messages（DESIGN.md 不变量 4）。
+       *  此字段仅为对齐引擎返回而保留，解析后即被丢弃。 */
+      reasoning?: string;
+      tool_calls?: ToolCallData[];
+    }
+  | { role: "tool"; tool_call_id: string; content: string };
+
+// ============================================================
+// 工具类型
+// ============================================================
+
+/** 传给 LLM 的 JSON Schema 形态（协议层，无 zod 依赖） */
+export interface ToolDef {
+  type: "function";
+  function: {
+    name: string;
+    description: string;
+    parameters: Record<string, unknown>;
+  };
+}
+
+/** 工具执行上下文。Step 2 起预留，后续步骤按需扩展（如 AbortSignal）。 */
+export interface ToolContext {
+  signal?: AbortSignal;
+}
+
+/** registry 侧的完整工具定义：schema 用 zod 声明，类型自动推导（NFR-2） */
+export interface Tool<T extends z.ZodType = z.ZodType> {
+  name: string;
+  description: string;
+  schema: T;
+  execute: (args: z.infer<T>, ctx: ToolContext) => Promise<unknown>;
+}
+
+// ============================================================
+// 流事件 —— client 层对 SSE 的解析产物（client 是纯协议适配器，不做合并/积累）
+// ============================================================
+
+export type StreamEvent =
+  | { type: "reasoning-delta"; delta: string }
+  | { type: "text-delta"; delta: string }
+  | {
+      type: "tool-call-delta";
+      index: number;
+      id?: string;
+      name?: string;
+      argsDelta?: string;
+    }
+  | {
+      type: "done";
+      finishReason: "stop" | "tool_calls" | "length";
+      /** 注意：MLX server 流式响应不含 usage（实测确认），仅非流式有 */
+      usage?: Usage;
+    };
+
+export interface Usage {
+  promptTokens: number;
+  completionTokens: number;
+}
+
+// ============================================================
+// 配置
+// ============================================================
+
+export interface AgentConfig {
+  baseUrl: string;
+  model: string;
+  maxIterations: number;
+  temperature: number;
+  systemPrompt: string;
+}

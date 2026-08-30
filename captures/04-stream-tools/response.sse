@@ -1,0 +1,46 @@
+: keepalive 1/1
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\u7528\u6237"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\u8be2\u95ee"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\u5317\u4eac\u7684"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\u5929\u6c14"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\u60c5\u51b5"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\uff0c"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\u6211"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\u9700\u8981\u4f7f\u7528"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": " get"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "_weather"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": " \u5de5\u5177"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\u6765"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\u67e5\u8be2"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\u5317\u4eac"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\u4eca\u5929\u7684"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\u5929\u6c14"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\u3002"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "reasoning": "\n"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "content": "\n\n"}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": null, "delta": {"role": "assistant", "tool_calls": [{"function": {"name": "get_weather", "arguments": "{\"city\": \"\u5317\u4eac\"}"}, "type": "function", "id": "da87114c-9182-4b2e-959d-ae74081c2b45", "index": 0}]}}]}
+
+data: {"id": "chatcmpl-ff00acbf-4246-449a-b97a-9f96bdc8d129", "system_fingerprint": "<SYSTEM_FINGERPRINT>", "object": "chat.completion.chunk", "model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "created": 1788096372, "choices": [{"index": 0, "finish_reason": "tool_calls", "delta": {"role": "assistant"}}]}
+
+data: [DONE]
+

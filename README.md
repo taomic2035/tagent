@@ -55,7 +55,9 @@ tagent/
 ├── docs/
 │   ├── REQUIREMENTS.md   # 需求清单（Step 1 范围，含验收标准）
 │   ├── ARCHITECTURE.md   # 架构设计：模块划分、数据流、扩展点
-│   └── DESIGN.md         # 方案设计：类型、接口、算法、测试（可直接照写代码）
+│   ├── DESIGN.md         # 方案设计：类型、接口、算法、测试（可直接照写代码）
+│   └── PROTOCOL.md       # 通信协议拆解：与 LLM 引擎双方通信逐字段分析
+├── captures/         # 原始报文存证：请求体 + 响应头 + 响应体（抓取脚本可复现）
 ├── start_llm.sh      # 一键启动本地推理服务
 ├── LICENSE           # MIT
 └── models/           # 模型权重（不入库，见 SETUP.md）

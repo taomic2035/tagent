@@ -1,0 +1,9 @@
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.14.6
+Date: Sun, 30 Aug 2026 13:26:12 GMT
+Content-type: text/event-stream
+Cache-Control: no-cache
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: *
+Access-Control-Allow-Headers: *
+

@@ -1,0 +1,1 @@
+{"model": "/Users/<user>/.cache/huggingface/hub/models--mlx-community--Qwen3.5-4B-4bit/snapshots/0e7ffd5c629ef7719d4cbc04069232580bfa9d9c/", "messages": [{"role": "user", "content": "用两三句话介绍一下秋天"}], "max_tokens": 150, "stream": true}
