@@ -13,6 +13,9 @@ importers:
       '@tagent/core':
         specifier: workspace:*
         version: link:../../packages/core
+      zod:
+        specifier: ^4.5.4
+        version: 4.5.4
     devDependencies:
       '@types/node':
         specifier: ^24.0.0

@@ -10,10 +10,11 @@
     "test": "node --test --test-reporter=spec \"dist/**/*.test.js\""
   },
   "dependencies": {
-    "@tagent/core": "workspace:*"
+    "@tagent/core": "workspace:*",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
-    "typescript": "^5.9.0",
-    "@types/node": "^24.0.0"
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
   }
 }
