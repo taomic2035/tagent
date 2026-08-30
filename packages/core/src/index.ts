@@ -23,3 +23,4 @@ export {
   type ToolResultFail,
   type ToolResultOk,
 } from "./tools.js";
+export { runAgent, type AgentEvent, type AgentDeps } from "./loop.js";
