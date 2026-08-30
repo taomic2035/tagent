@@ -16,6 +16,10 @@ __pycache__/
 venv/
 *.egg-info/
 
+# Node / TypeScript
+node_modules/
+dist/
+
 # 环境变量与密钥
 .env
 .env.*

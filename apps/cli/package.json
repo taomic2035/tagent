@@ -1,0 +1,19 @@
+{
+  "name": "@tagent/cli",
+  "version": "0.1.0",
+  "description": "tagent 终端壳",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "dev": "tsc && node dist/main.js",
+    "test": "node --test --test-reporter=spec \"dist/**/*.test.js\""
+  },
+  "dependencies": {
+    "@tagent/core": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0",
+    "@types/node": "^24.0.0"
+  }
+}

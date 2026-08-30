@@ -1,0 +1,24 @@
+{
+  "name": "@tagent/core",
+  "version": "0.1.0",
+  "description": "agent 大脑：零运行时依赖（zod 除外）",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --test-reporter=spec \"dist/**/*.test.js\""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.9.0",
+    "@types/node": "^24.0.0"
+  }
+}
