@@ -1,4 +1,4 @@
-# Token 溯源表：response.sse
+# Token 溯源表：response
 
 > 由 scripts/trace-sse.mjs 自动生成（确定性输出，无时间戳）。
 > 溯源公式：seq → trace.jsonl 同行 → (line, byte) 定位 response.sse 原始字节。

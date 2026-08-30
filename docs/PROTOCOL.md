@@ -111,7 +111,7 @@ Cache-Control: no-cache
 
 | 字段 | MLX 流式 | MLX 非流式 | llama.cpp 非流式（此前实测） |
 |---|---|---|---|
-| 思考内容 | `delta.reasoning` | `message.reasoning` | `message.reasoning_content` |
+| 思考内容 | `delta.reasoning` | `message.reasoning` | `message.reasoning_content`（原件：captures/05） |
 | usage | 无 | 有（含 `prompt_tokens_details.cached_tokens`） | 有 |
 | tool_calls[].index | 有（流式必需，分片合并依据） | 无 | 有（流式） |
 
@@ -159,7 +159,8 @@ Cache-Control: no-cache
 
 | 差异点 | MLX server | llama.cpp server（已知） |
 |---|---|---|
-| 思考字段 | `reasoning` | `reasoning_content` → client.ts 双认 |
+| 思考字段 | `reasoning` | `reasoning_content` → client.ts 双认（原件：captures/05） |
+| tool_call id 格式 | UUID | 非固定长度随机串（captures/05 实录） |
 | tool call 解析 | 内置 | 需 `--jinja` 启动参数 |
 | 流式 usage | 无 | 有（`timings` 额外字段） |
 | 默认端口 | 8080（将改 9931，启动日志警告） | 8080 |

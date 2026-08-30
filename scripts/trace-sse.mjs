@@ -100,6 +100,8 @@ for (const rec of records) {
 }
 
 // ---- 3. 生成机读索引（每 token 一行） ----
+// 输出名随输入名派生（同目录多份原件不互相覆盖）
+const base = input.split("/").pop().replace(/\.sse$/, "");
 const jsonl = tokens
   .map((t) => JSON.stringify({ seq: t.seq, kind: t.kind, frame: t.frame, line: t.line, byte: t.byte, text: t.text, ...extraOf(t) }))
   .join("\n") + "\n";
@@ -111,7 +113,7 @@ function extraOf(t) {
 const esc = (s) => JSON.stringify(s).slice(1, -1).replace(/\|/g, "\\|"); // 表格内可见空格/转义，管道符转义
 const trunc = (s, n = 48) => (s.length > n ? esc(s.slice(0, n)) + `…(+${s.length - n}字)` : esc(s));
 
-const md = `# Token 溯源表：${input.split("/").pop()}
+const md = `# Token 溯源表：${base}
 
 > 由 scripts/trace-sse.mjs 自动生成（确定性输出，无时间戳）。
 > 溯源公式：seq → trace.jsonl 同行 → (line, byte) 定位 response.sse 原始字节。
@@ -147,8 +149,8 @@ ${tokens
   .join("\n")}
 `;
 
-const outMd = join(dirname(input), "response.trace.md");
-const outJsonl = join(dirname(input), "response.trace.jsonl");
+const outMd = join(dirname(input), `${base}.trace.md`);
+const outJsonl = join(dirname(input), `${base}.trace.jsonl`);
 writeFileSync(outMd, md);
 writeFileSync(outJsonl, jsonl);
 console.log(
