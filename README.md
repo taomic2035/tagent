@@ -63,6 +63,14 @@ tagent/
 └── models/           # 模型权重（不入库，见 SETUP.md）
 ```
 
+## 开发约定
+
+- **提交前隐私检查**：`sh scripts/check-privacy.sh`（本机路径/凭据/硬件指纹扫描，规则见脚本头注释）。克隆后启用自动检查：
+  ```bash
+  git config core.hooksPath scripts/hooks   # 让版本化的 pre-commit 钩子生效
+  ```
+- 协作规则（含 AI 助手）见 [AGENTS.md](AGENTS.md)：报文脱敏制度、测试先行、core 零依赖等
+
 ## License
 
 [MIT](LICENSE)

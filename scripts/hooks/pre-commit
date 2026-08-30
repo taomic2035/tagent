@@ -1,0 +1,4 @@
+#!/bin/sh
+# pre-commit 钩子（版本化存储，通过 core.hooksPath 启用，见 README「开发约定」）
+DIR=$(cd "$(dirname "$0")/../.." && pwd)
+exec sh "$DIR/scripts/check-privacy.sh"
