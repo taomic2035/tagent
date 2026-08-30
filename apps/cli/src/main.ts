@@ -11,11 +11,11 @@ import {
   type AgentConfig,
   type AgentEvent,
   type ChatMessage,
-  type Tool,
 } from "@tagent/core";
 import { z } from "zod";
 import { calculateTool } from "./builtin-tools/calculate.js";
 import { weatherTool } from "./builtin-tools/weather.js";
+import { RecordingClient } from "./recorder.js";
 import { paint, writeChunk, writeLine } from "./ui.js";
 
 // ---- 启动参数：CLI 参数 > 环境变量 > 默认值（泛化：不硬编码本机信息）----
@@ -48,7 +48,11 @@ const config: AgentConfig = {
 };
 
 // ---- 装配：壳依赖脑，脑不知道壳（依赖注入，ARCHITECTURE.md §4）----
-const client = new OpenAIClient(config.baseUrl, config.model);
+// RecordingClient 是装饰器：包住 OpenAIClient，每次调用落盘存证单元（TRACEABILITY.md §4）
+const client = new RecordingClient(
+  new OpenAIClient(config.baseUrl, config.model),
+  config.model,
+);
 const registry = new ToolRegistry();
 registry.register(weatherTool);
 registry.register(calculateTool);
