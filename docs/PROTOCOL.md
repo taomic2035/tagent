@@ -128,6 +128,8 @@ Cache-Control: no-cache
 | `tool_calls` | 模型要调工具 | 执行工具、回填、进入下一轮 |
 | `length` | max_tokens 触顶（01/03 组实测命中） | **危险状态**：回答被截断，Step 2 错误处理要显式提示用户 |
 
+**`length` 触顶的重要教训（03 组 fixture 实录）**：`max_tokens` 的计数范围**包含思考 token**。开启思考模式时若 max_tokens 给小了，模型会在思考阶段就被截断（03 组：150 token 全部耗在 reasoning，正文 0 token）。思考模型必须给足生成预算。
+
 ## 6. 非流式响应解剖（01/02 组原件）
 
 单个 JSON，结构与流式末态等价：
@@ -169,6 +171,6 @@ Cache-Control: no-cache
 | `captures/02-nonstream-tools/` | 非流式工具调用（finish=tool_calls，usage 缓存命中 99.6%） | request 469B + 953B |
 | `captures/03-stream-chat/` | 流式纯对话（147 数据帧 + keepalive） | 66179B |
 | `captures/04-stream-tools/` | 流式工具调用（22 数据帧，tool_call 单帧完整） | 9809B |
-| `packages/core/src/fixtures/*.sse` | 测试夹具（与 03/04 同源，供解析器测试） | — |
+| `packages/core/fixtures/*.sse` | 测试夹具（与 03/04 同源，供解析器测试） | — |
 
 复现方式：`./captures/capture.sh`（需先 `./start_llm.sh -d`）。
