@@ -44,6 +44,10 @@ PYEOF
             -e "s|0\.31\.3-[0-9.\-]*macOS-[0-9.\-]*-arm64[^\"\"]*|<SYSTEM_FINGERPRINT>|g" \
     "$dir/request.json" "$dir/response.$ext" "$dir/response-headers.txt" 2>/dev/null || true
   echo "captured: $dir (已脱敏)"
+  # token 级溯源（制度见 docs/TRACEABILITY.md）：流式响应自动生成溯源表
+  if [ "$ext" = "sse" ]; then
+    node "${0:A:h}/../scripts/trace-sse.mjs" "$dir/response.sse"
+  fi
 }
 
 CAP 01-nonstream-chat  false no

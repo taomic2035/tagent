@@ -1,0 +1,145 @@
+{"seq":1,"kind":"reasoning","frame":1,"line":3,"byte":17,"text":"Thinking"}
+{"seq":2,"kind":"reasoning","frame":2,"line":5,"byte":431,"text":" Process"}
+{"seq":3,"kind":"reasoning","frame":3,"line":7,"byte":845,"text":":"}
+{"seq":4,"kind":"reasoning","frame":4,"line":9,"byte":1252,"text":"\n"}
+{"seq":5,"kind":"reasoning","frame":5,"line":11,"byte":1660,"text":"1"}
+{"seq":6,"kind":"reasoning","frame":6,"line":13,"byte":2067,"text":"."}
+{"seq":7,"kind":"reasoning","frame":7,"line":15,"byte":2474,"text":"  **"}
+{"seq":8,"kind":"reasoning","frame":8,"line":17,"byte":2884,"text":"An"}
+{"seq":9,"kind":"reasoning","frame":9,"line":19,"byte":3292,"text":"alyze"}
+{"seq":10,"kind":"reasoning","frame":10,"line":21,"byte":3703,"text":" the"}
+{"seq":11,"kind":"reasoning","frame":11,"line":23,"byte":4113,"text":" Request"}
+{"seq":12,"kind":"reasoning","frame":12,"line":25,"byte":4527,"text":":**"}
+{"seq":13,"kind":"reasoning","frame":13,"line":27,"byte":4936,"text":"\n"}
+{"seq":14,"kind":"reasoning","frame":14,"line":29,"byte":5344,"text":"   "}
+{"seq":15,"kind":"reasoning","frame":15,"line":31,"byte":5753,"text":" *"}
+{"seq":16,"kind":"reasoning","frame":16,"line":33,"byte":6161,"text":"  "}
+{"seq":17,"kind":"reasoning","frame":17,"line":35,"byte":6569,"text":" Topic"}
+{"seq":18,"kind":"reasoning","frame":18,"line":37,"byte":6981,"text":":"}
+{"seq":19,"kind":"reasoning","frame":19,"line":39,"byte":7388,"text":" Autumn"}
+{"seq":20,"kind":"reasoning","frame":20,"line":41,"byte":7801,"text":" ("}
+{"seq":21,"kind":"reasoning","frame":21,"line":43,"byte":8209,"text":"秋天"}
+{"seq":22,"kind":"reasoning","frame":22,"line":45,"byte":8627,"text":" -"}
+{"seq":23,"kind":"reasoning","frame":23,"line":47,"byte":9035,"text":" qi"}
+{"seq":24,"kind":"reasoning","frame":24,"line":49,"byte":9444,"text":"ū"}
+{"seq":25,"kind":"reasoning","frame":25,"line":51,"byte":9856,"text":"ti"}
+{"seq":26,"kind":"reasoning","frame":26,"line":53,"byte":10264,"text":"ā"}
+{"seq":27,"kind":"reasoning","frame":27,"line":55,"byte":10676,"text":"n"}
+{"seq":28,"kind":"reasoning","frame":28,"line":57,"byte":11083,"text":")."}
+{"seq":29,"kind":"reasoning","frame":29,"line":59,"byte":11491,"text":"\n"}
+{"seq":30,"kind":"reasoning","frame":30,"line":61,"byte":11899,"text":"   "}
+{"seq":31,"kind":"reasoning","frame":31,"line":63,"byte":12308,"text":" *"}
+{"seq":32,"kind":"reasoning","frame":32,"line":65,"byte":12716,"text":"  "}
+{"seq":33,"kind":"reasoning","frame":33,"line":67,"byte":13124,"text":" Constraint"}
+{"seq":34,"kind":"reasoning","frame":34,"line":69,"byte":13541,"text":":"}
+{"seq":35,"kind":"reasoning","frame":35,"line":71,"byte":13948,"text":" Use"}
+{"seq":36,"kind":"reasoning","frame":36,"line":73,"byte":14358,"text":" two"}
+{"seq":37,"kind":"reasoning","frame":37,"line":75,"byte":14768,"text":" or"}
+{"seq":38,"kind":"reasoning","frame":38,"line":77,"byte":15177,"text":" three"}
+{"seq":39,"kind":"reasoning","frame":39,"line":79,"byte":15589,"text":" sentences"}
+{"seq":40,"kind":"reasoning","frame":40,"line":81,"byte":16005,"text":" ("}
+{"seq":41,"kind":"reasoning","frame":41,"line":83,"byte":16413,"text":"用"}
+{"seq":42,"kind":"reasoning","frame":42,"line":85,"byte":16825,"text":"两三"}
+{"seq":43,"kind":"reasoning","frame":43,"line":87,"byte":17243,"text":"句话"}
+{"seq":44,"kind":"reasoning","frame":44,"line":89,"byte":17661,"text":")."}
+{"seq":45,"kind":"reasoning","frame":45,"line":91,"byte":18069,"text":"\n"}
+{"seq":46,"kind":"reasoning","frame":46,"line":93,"byte":18477,"text":"   "}
+{"seq":47,"kind":"reasoning","frame":47,"line":95,"byte":18886,"text":" *"}
+{"seq":48,"kind":"reasoning","frame":48,"line":97,"byte":19294,"text":"  "}
+{"seq":49,"kind":"reasoning","frame":49,"line":99,"byte":19702,"text":" Language"}
+{"seq":50,"kind":"reasoning","frame":50,"line":101,"byte":20117,"text":":"}
+{"seq":51,"kind":"reasoning","frame":51,"line":103,"byte":20524,"text":" Chinese"}
+{"seq":52,"kind":"reasoning","frame":52,"line":105,"byte":20938,"text":"."}
+{"seq":53,"kind":"reasoning","frame":53,"line":107,"byte":21345,"text":"\n\n"}
+{"seq":54,"kind":"reasoning","frame":54,"line":109,"byte":21755,"text":"2"}
+{"seq":55,"kind":"reasoning","frame":55,"line":111,"byte":22162,"text":"."}
+{"seq":56,"kind":"reasoning","frame":56,"line":113,"byte":22569,"text":"  **"}
+{"seq":57,"kind":"reasoning","frame":57,"line":115,"byte":22979,"text":"Ident"}
+{"seq":58,"kind":"reasoning","frame":58,"line":117,"byte":23390,"text":"ify"}
+{"seq":59,"kind":"reasoning","frame":59,"line":119,"byte":23799,"text":" Key"}
+{"seq":60,"kind":"reasoning","frame":60,"line":121,"byte":24209,"text":" Characteristics"}
+{"seq":61,"kind":"reasoning","frame":61,"line":123,"byte":24631,"text":" of"}
+{"seq":62,"kind":"reasoning","frame":62,"line":125,"byte":25040,"text":" Autumn"}
+{"seq":63,"kind":"reasoning","frame":63,"line":127,"byte":25453,"text":":**"}
+{"seq":64,"kind":"reasoning","frame":64,"line":129,"byte":25862,"text":"\n"}
+{"seq":65,"kind":"reasoning","frame":65,"line":131,"byte":26270,"text":"   "}
+{"seq":66,"kind":"reasoning","frame":66,"line":133,"byte":26679,"text":" *"}
+{"seq":67,"kind":"reasoning","frame":67,"line":135,"byte":27087,"text":"  "}
+{"seq":68,"kind":"reasoning","frame":68,"line":137,"byte":27495,"text":" Season"}
+{"seq":69,"kind":"reasoning","frame":69,"line":139,"byte":27908,"text":"al"}
+{"seq":70,"kind":"reasoning","frame":70,"line":141,"byte":28316,"text":" transition"}
+{"seq":71,"kind":"reasoning","frame":71,"line":143,"byte":28733,"text":" ("}
+{"seq":72,"kind":"reasoning","frame":72,"line":145,"byte":29141,"text":"summer"}
+{"seq":73,"kind":"reasoning","frame":73,"line":147,"byte":29553,"text":" to"}
+{"seq":74,"kind":"reasoning","frame":74,"line":149,"byte":29962,"text":" winter"}
+{"seq":75,"kind":"reasoning","frame":75,"line":151,"byte":30375,"text":")."}
+{"seq":76,"kind":"reasoning","frame":76,"line":153,"byte":30783,"text":"\n"}
+{"seq":77,"kind":"reasoning","frame":77,"line":155,"byte":31191,"text":"   "}
+{"seq":78,"kind":"reasoning","frame":78,"line":157,"byte":31600,"text":" *"}
+{"seq":79,"kind":"reasoning","frame":79,"line":159,"byte":32008,"text":"  "}
+{"seq":80,"kind":"reasoning","frame":80,"line":161,"byte":32416,"text":" Visual"}
+{"seq":81,"kind":"reasoning","frame":81,"line":163,"byte":32829,"text":"s"}
+{"seq":82,"kind":"reasoning","frame":82,"line":165,"byte":33236,"text":":"}
+{"seq":83,"kind":"reasoning","frame":83,"line":167,"byte":33643,"text":" falling"}
+{"seq":84,"kind":"reasoning","frame":84,"line":169,"byte":34057,"text":" leaves"}
+{"seq":85,"kind":"reasoning","frame":85,"line":171,"byte":34470,"text":","}
+{"seq":86,"kind":"reasoning","frame":86,"line":173,"byte":34877,"text":" golden"}
+{"seq":87,"kind":"reasoning","frame":87,"line":175,"byte":35290,"text":" colors"}
+{"seq":88,"kind":"reasoning","frame":88,"line":177,"byte":35703,"text":","}
+{"seq":89,"kind":"reasoning","frame":89,"line":179,"byte":36110,"text":" harvest"}
+{"seq":90,"kind":"reasoning","frame":90,"line":181,"byte":36524,"text":"."}
+{"seq":91,"kind":"reasoning","frame":91,"line":183,"byte":36931,"text":"\n"}
+{"seq":92,"kind":"reasoning","frame":92,"line":185,"byte":37339,"text":"   "}
+{"seq":93,"kind":"reasoning","frame":93,"line":187,"byte":37748,"text":" *"}
+{"seq":94,"kind":"reasoning","frame":94,"line":189,"byte":38156,"text":"  "}
+{"seq":95,"kind":"reasoning","frame":95,"line":191,"byte":38564,"text":" Weather"}
+{"seq":96,"kind":"reasoning","frame":96,"line":193,"byte":38978,"text":":"}
+{"seq":97,"kind":"reasoning","frame":97,"line":195,"byte":39385,"text":" cooler"}
+{"seq":98,"kind":"reasoning","frame":98,"line":197,"byte":39798,"text":","}
+{"seq":99,"kind":"reasoning","frame":99,"line":199,"byte":40205,"text":" crisp"}
+{"seq":100,"kind":"reasoning","frame":100,"line":201,"byte":40617,"text":","}
+{"seq":101,"kind":"reasoning","frame":101,"line":203,"byte":41024,"text":" clear"}
+{"seq":102,"kind":"reasoning","frame":102,"line":205,"byte":41436,"text":" skies"}
+{"seq":103,"kind":"reasoning","frame":103,"line":207,"byte":41848,"text":"."}
+{"seq":104,"kind":"reasoning","frame":104,"line":209,"byte":42255,"text":"\n"}
+{"seq":105,"kind":"reasoning","frame":105,"line":211,"byte":42663,"text":"   "}
+{"seq":106,"kind":"reasoning","frame":106,"line":213,"byte":43072,"text":" *"}
+{"seq":107,"kind":"reasoning","frame":107,"line":215,"byte":43480,"text":"  "}
+{"seq":108,"kind":"reasoning","frame":108,"line":217,"byte":43888,"text":" Mood"}
+{"seq":109,"kind":"reasoning","frame":109,"line":219,"byte":44299,"text":":"}
+{"seq":110,"kind":"reasoning","frame":110,"line":221,"byte":44706,"text":" poetic"}
+{"seq":111,"kind":"reasoning","frame":111,"line":223,"byte":45119,"text":","}
+{"seq":112,"kind":"reasoning","frame":112,"line":225,"byte":45526,"text":" reflective"}
+{"seq":113,"kind":"reasoning","frame":113,"line":227,"byte":45943,"text":","}
+{"seq":114,"kind":"reasoning","frame":114,"line":229,"byte":46350,"text":" harvest"}
+{"seq":115,"kind":"reasoning","frame":115,"line":231,"byte":46764,"text":","}
+{"seq":116,"kind":"reasoning","frame":116,"line":233,"byte":47171,"text":" melanch"}
+{"seq":117,"kind":"reasoning","frame":117,"line":235,"byte":47585,"text":"oly"}
+{"seq":118,"kind":"reasoning","frame":118,"line":237,"byte":47994,"text":" or"}
+{"seq":119,"kind":"reasoning","frame":119,"line":239,"byte":48403,"text":" peaceful"}
+{"seq":120,"kind":"reasoning","frame":120,"line":241,"byte":48818,"text":"."}
+{"seq":121,"kind":"reasoning","frame":121,"line":243,"byte":49225,"text":"\n\n"}
+{"seq":122,"kind":"reasoning","frame":122,"line":245,"byte":49635,"text":"3"}
+{"seq":123,"kind":"reasoning","frame":123,"line":247,"byte":50042,"text":"."}
+{"seq":124,"kind":"reasoning","frame":124,"line":249,"byte":50449,"text":"  **"}
+{"seq":125,"kind":"reasoning","frame":125,"line":251,"byte":50859,"text":"Draft"}
+{"seq":126,"kind":"reasoning","frame":126,"line":253,"byte":51270,"text":"ing"}
+{"seq":127,"kind":"reasoning","frame":127,"line":255,"byte":51679,"text":" Options"}
+{"seq":128,"kind":"reasoning","frame":128,"line":257,"byte":52093,"text":":**"}
+{"seq":129,"kind":"reasoning","frame":129,"line":259,"byte":52502,"text":"\n"}
+{"seq":130,"kind":"reasoning","frame":130,"line":261,"byte":52910,"text":"   "}
+{"seq":131,"kind":"reasoning","frame":131,"line":263,"byte":53319,"text":" *"}
+{"seq":132,"kind":"reasoning","frame":132,"line":265,"byte":53727,"text":"  "}
+{"seq":133,"kind":"reasoning","frame":133,"line":267,"byte":54135,"text":" *"}
+{"seq":134,"kind":"reasoning","frame":134,"line":269,"byte":54543,"text":"Option"}
+{"seq":135,"kind":"reasoning","frame":135,"line":271,"byte":54955,"text":" 1"}
+{"seq":136,"kind":"reasoning","frame":136,"line":273,"byte":55363,"text":" ("}
+{"seq":137,"kind":"reasoning","frame":137,"line":275,"byte":55771,"text":"Des"}
+{"seq":138,"kind":"reasoning","frame":138,"line":277,"byte":56180,"text":"criptive"}
+{"seq":139,"kind":"reasoning","frame":139,"line":279,"byte":56594,"text":"):"}
+{"seq":140,"kind":"reasoning","frame":140,"line":281,"byte":57002,"text":"*"}
+{"seq":141,"kind":"reasoning","frame":141,"line":283,"byte":57409,"text":" 秋天"}
+{"seq":142,"kind":"reasoning","frame":142,"line":285,"byte":57828,"text":"是"}
+{"seq":143,"kind":"reasoning","frame":143,"line":287,"byte":58240,"text":"凉爽"}
+{"seq":144,"kind":"reasoning","frame":144,"line":289,"byte":58658,"text":"的季节"}
+{"seq":145,"kind":"reasoning","frame":145,"line":291,"byte":59082,"text":"，"}

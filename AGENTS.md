@@ -11,9 +11,10 @@
 3. **构建**：`pnpm build` 无错误
 4. 小步提交：一个提交只做一件事，提交信息用中文说明"是什么+为什么"
 
-## 报文捕获制度（docs/PROTOCOL.md §0）
+## 报文捕获制度（docs/PROTOCOL.md §0、docs/TRACEABILITY.md）
 
-- 所有抓到的引擎返回数据存原始报文（请求体+响应头+响应体），用 `captures/capture.sh`（已含自动脱敏）
+- 所有抓到的引擎返回数据存原始报文（请求体+响应头+响应体），用 `captures/capture.sh`（已含自动脱敏 + 自动 token 溯源）
+- **每一次与 LLM 的通信，每一个 token 都必须有据可循**：溯源 = trace.jsonl 的 (seq→frame→line→byte) 三方印证原始字节；新抓取必须有 response.trace.md/jsonl，真机验收结论必须引用 trace
 - 分析结论必须标注原始证据（captures/ 文件 + 行号），"反直觉"现象先存证再推理
 
 ## 学习项目原则

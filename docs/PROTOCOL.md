@@ -11,6 +11,7 @@
 3. 抓取命令可复现：`captures/capture.sh`（模型路径在 `captures/.env.local`，不入库）
 4. 新增任何协议观察（新引擎、新字段、异常报文）→ 先抓原件入 captures/，再更新本文
 5. **入库前脱敏（隐私制度）**：本机用户路径一律替换为 `/Users/<user>/`（本机原件由 capture.sh 保留在本地）；`system_fingerprint` 一律替换为 `<SYSTEM_FINGERPRINT>`；模型快照的哈希目录名同样属于本机信息，一并归一到 `<user>/model`。脱敏由 capture.sh 自动完成，手工抓取也必须执行同样替换
+6. **token 级溯源（制度详见 docs/TRACEABILITY.md）**：流式抓取必须附带 `response.trace.md/jsonl`（capture.sh 自动生成），每个 token 可经 (seq→frame→line→byte) 定位到原件原始字节
 
 ## 1. 一次 agent 请求的完整生命周期
 
@@ -87,7 +88,7 @@ Cache-Control: no-cache
   "id": "chatcmpl-f952ba71-…",              // 本次生成的会话 ID（流内各帧相同）
   "system_fingerprint": "0.31.3-0.32.2-macOS-…",  // mlx-lm/mlx-metal 版本 + 硬件指纹
   "object": "chat.completion.chunk",         // 流式固定为 .chunk；非流式为 chat.completion
-  "model": "/Users/…/Qwen3.5-4B-4bit",       // 又是路径
+  "model": "/Users/<user>/model",             // 又是路径（制度占位符，原始报文见 captures）
   "created": 1788087906,                     // Unix 秒
   "choices": [{
     "index": 0,                              // 单对话固定 0（多候选生成才有 1,2…）
