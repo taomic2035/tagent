@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# 模型权重（大文件不入库，见 SETUP.md 下载方式）
+models/
+*.gguf
+
+# 运行日志
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# 环境变量与密钥
+.env
+.env.*
