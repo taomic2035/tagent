@@ -326,3 +326,74 @@ for 循环走完（触顶且模型仍要工具）时，若 `degradeOnCap !== fal
 | signal | 超时后工具内 signal.aborted 为真（FR-17） |
 | loop 降级 | mock：round1 tool_calls + maxIterations=1 → 第二次请求无 tools 字段 + 含系统注入消息；messages 无注入痕迹；final 产出；degradeOnCap:false → error 事件 |
 | faults | 三种剧本的包装语义各一例 |
+
+## 12. Step 3 设计：上下文裁剪与 KV cache 复用（2026-08-31，对应 REQUIREMENTS §7）
+
+### 12.1 token 估算器（FR-18，无依赖手写）
+
+```
+estimateTokens(text):
+  cjk   = 正则 [\u4e00-\u9fff\u3000-\u303f\uff00-\uffef] 计数   → ×1.0
+  other = 其余字符计数                                          → ×0.25
+  return ceil(cjk + other×0.25)
+estimateMessagesTokens(msgs): Σ (content/arguments 估算 + 每条消息固定开销 4)
+```
+
+Qwen 系 BPE 中文约 1~1.5 字/token、英文约 4 字符/token——估算取保守中值。
+估算器的用途是**水位判断**：单调性比绝对精度重要（AC3-1 校准实验实测误差）。
+
+### 12.2 回合分组与裁剪算法（FR-19/20）
+
+```
+trimMessages(messages, {budget, lowRatio=0.5}):
+  system = messages[0] if role=system（永远保留，不计入裁剪候选）
+  turns  = 其余消息按 user 切组（每组 = 一个完整问答回合）
+  before = estimateMessagesTokens(messages)
+  if before ≤ budget: 返回恒等（不动前缀 —— 平凡轮次零成本）
+  从最旧回合开始整回合移除，直到 estimate ≤ budget×lowRatio
+  永远保留最后一回合；若仅剩 system+最后回合仍超低水位，如实返回（防死循环）
+  返回 { kept, removed, beforeTokens, afterTokens }
+```
+
+不变量：tool 消息与其 assistant(tool_calls) 同回合，整回合删除 ⇒ 配对永不拆散；
+回合以 user 起头 ⇒ 裁剪后的消息链对新请求而言仍是合法对话开头。
+
+### 12.3 loop 集成（NFR-10，ARCHITECTURE §6 扩展点落地）
+
+`AgentConfig.contextBudgetTokens?: number`（缺省不裁剪）。runAgent 每轮
+`client.stream` 之前（含降级轮）：
+
+```
+if (config.contextBudgetTokens) {
+  const r = trimMessages(messages, { budget: config.contextBudgetTokens })
+  if (r.removed.length > 0) {
+    messages.length = 0; messages.push(...r.kept)   // 原地替换：调用方持有的引用不变
+    yield { type: "context-trimmed", removedMessages, fromTokens, toTokens }
+  }
+}
+```
+
+裁剪即遗忘：messages 仍是唯一事实来源（不变量 1 的语义不变——
+"现场 = messages 当前内容"，被裁内容相当于人类的工作记忆丢弃）。
+
+### 12.4 KV cache 实验设计（AC3-4，scripts/kvcache-experiment.mjs）
+
+用非流式请求直读 timings 字段（llama.cpp：`cache_n` = 前缀命中 token 数），
+三段对照：
+
+| 段 | 操作 | 预期 cache_n |
+|---|---|---|
+| A 连续追加 | 同会话逐轮追加消息（前缀不变） | 随轮次增长（上一轮 prompt 全命中） |
+| B 前缀破坏 | 头部插入/删除消息后重发（模拟"每轮裁一点"） | 骤降（≈0，slot 找不到公共前缀） |
+| C 双水位恢复 | 裁剪后新前缀上继续追加 | 从新基线重新增长 |
+
+对照含义：滑动窗口式小步裁剪每轮都付全量 prompt 处理税（Windows CPU 上
+32~39 tok/s 的 prompt 处理是真实成本）；双水位把这笔税摊薄成偶发一次。
+
+### 12.5 测试增补（先行）
+
+| 对象 | 用例 |
+|---|---|
+| 估算器 | 纯中文/纯英文/混合的单调性与量级区间；消息估算含 tool_calls 与固定开销 |
+| 裁剪 | 未超预算恒等（同引用）；超预算裁最旧回合且保 system/末回合；tool 配对不拆散；极小预算不死循环 |
+| loop | 预算触发 context-trimmed 事件 + messages 被原地替换 + 请求消息数下降；无预算零事件（回归） |
