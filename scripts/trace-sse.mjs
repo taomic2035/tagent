@@ -100,8 +100,9 @@ for (const rec of records) {
 }
 
 // ---- 3. 生成机读索引（每 token 一行） ----
-// 输出名随输入名派生（同目录多份原件不互相覆盖）
-const base = input.split("/").pop().replace(/\.sse$/, "");
+// 输出名随输入名派生（同目录多份原件不互相覆盖）。
+// 分隔符双认：相对路径用 /，Windows 绝对路径用 \（2026-08-31 复盘发现并修复）
+const base = (input.split(/[\\/]/).pop() ?? "response").replace(/\.sse$/, "");
 const jsonl = tokens
   .map((t) => JSON.stringify({ seq: t.seq, kind: t.kind, frame: t.frame, line: t.line, byte: t.byte, text: t.text, ...extraOf(t) }))
   .join("\n") + "\n";

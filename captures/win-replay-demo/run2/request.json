@@ -1,0 +1,1 @@
+{"model":"<MODEL_PATH>","messages":[{"role":"user","content":"北京今天天气怎么样？ /no_think"}],"max_tokens":300,"stream":true,"temperature":0,"tools":[{"type":"function","function":{"name":"get_weather","description":"查询城市天气","parameters":{"type":"object","properties":{"city":{"type":"string"}},"required":["city"]}}}]}

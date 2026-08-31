@@ -208,7 +208,7 @@ MLX 默认 temp=0.0、llama.cpp 默认 temp=0.8。实测（2026-08-31，同请�
 |---|---|---|
 | **请求层（prompt 级逐条复现）** | ✅ 完全可复现：captures/*/request.json 即完整输入，一条 curl 重放即得同请求 | captures/ 全部 |
 | **响应层（默认温度 temp=0.7）** | ❌ 不可逐字复现：两次同请求 reasoning 内容不同——LLM 采样有随机性，这是原理性的，不是存证缺陷 | 06/temp0.7-run1 vs run2 |
-| **响应层（temp=0）** | ✅ 两次响应的 **token 流逐字节相同**（replay-demo 实证：56 帧归一化后 0 差异）。必然不同的是三个服务端元数据：chatcmpl `id`、`created` 时间戳、tool_call `id`——由 server 每次生成，不属于模型输出 | replay-demo/run1 vs run2；06/temp0-run1 vs run2 |
+| **响应层（temp=0）** | ✅ 两次响应的 **token 流逐字节相同**。必然不同的是服务端元数据：chatcmpl `id`、`created` 时间戳、tool_call `id`——由 server 每次生成，不属于模型输出；**llama.cpp 侧另有第 4 个：`timings`（墙钟计时）**（Windows 复测 2026-08-31，win-replay-demo） | replay-demo/run1 vs run2（MLX）；win-replay-demo/run1 vs run2（llama.cpp） |
 
 使用规则：
 - **追溯**（"这个 token 从哪来"）→ 用 trace 溯源表，永远可行，不依赖温度
