@@ -50,7 +50,7 @@ bash scripts/acceptance-win.sh      # Windows（llama.cpp 引擎，Git Bash）
 - [x] **Step 4** 思考模式实验——**已验收（AC4-1~4）**：请求级开关落地（修复 /no_think 失效）；A/B 实证 4B+简单任务上思考净负收益（82% vs 94%，7.3× 慢）——「不收敛烧预算」与「截断没答完」两种失败模式入档
 - [x] **Step 5** ReAct 与规划——**已验收（AC5-1~5）**：双协议 ReAct 引擎（经典文本 + 受限解码 JSON）；三方实证 native 100% / react-json 100% / react-text 75%——弱模型上格式纪律必须由工程兜底（沉淀 docs/FALLBACK.md）
 - [x] **Step 6** 记忆机制——**已验收（AC6-1~5）**：跨会话长期记忆（追加式事实库 + remember/recall 工具 + 手写 bigram 召回）、/save /load 会话持久化、--memory 静态注入；注入策略取舍表入档（逐问动态注入=反模式）
-- [ ] **Step 7** 子 agent 与编排：任务分解、结果聚合
+- [x] **Step 7** 子 agent 与编排——**已验收（AC7-1~4）**：delegate 工具（子 agent 即工具：独立上下文/递归锁/摘要信封）；同轮多委托=协议原生并行分解；直做 vs 委托成本对比（2.7× 调用买上下文隔离）
 - [ ] **Step 8** 模型能力对比：4B → 9B/27B，观察能力上限对 agent 行为的影响
 
 ## 目录结构

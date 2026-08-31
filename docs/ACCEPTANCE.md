@@ -227,3 +227,20 @@ node scripts/replay.mjs captures/ac-2-calculate/session/call-001/request.json --
 
 **记忆×预算交互**：注入块在 system prompt 内，天然被估算器计入（FR-37）；
 事实库无上限增长时，靠 `--max-context-tokens` 的双水位裁剪兜住（Step 3 机制复用，无新代码）。
+
+## Step 7 真机验收报告（AC7-1~4，2026-08-31）
+
+> 证据：`captures/step7-delegate/`（直做 vs 委托对照 + README 行为学观察）
+
+| # | 判定 | 证据 |
+|---|---|---|
+| AC7-1 单测 | ✅ | delegate.test.ts：子终答回传、递归锁（子 registry 无 delegate → 未知工具信封兜底）、父上下文无子细节泄漏、子 messages 无父对话 |
+| AC7-2 真机委托 | ✅ | delegated/：父同轮并行 2×delegate → 子各 3 轮（weather×2+calculate）→ 聚合「广深组更热 3°C」正确 |
+| AC7-3 隔离与成本 | ✅ | 直做 3 次调用 vs 委托 8 次（~2.7×）；父上下文 2 条摘要信封 vs 4 条过程消息——隔离是为复杂任务买的空间，简单任务不值得 |
+| AC7-4 回归 | ✅ | core 66 + cli 37 全绿；无 --delegate 时行为与 Step 6 一致（delegate 不注册） |
+
+**过程失误与修正（如实记录）**：本步曾因构建校验的 grep 模式写错（`error: ` 匹配不上
+tsc 的 `error TS`）连续漏检构建失败——`memoryInject`/`delegate` 两个字段静默缺失，
+Step 6 的 `--memory` 注入当时实为死代码（验收恰靠 recall 工具通过而未被察觉）。已修复
+（字段补齐 + 构建校验改为检查退出码），并回验：注入横幅/system prompt 注入/delegate
+注册全部实际生效。教训入 FALLBACK 检查清单：「验证要用退出码，不要用文本匹配」。

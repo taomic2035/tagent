@@ -120,4 +120,8 @@ export interface AgentConfig {
   /** ReAct 协议形态（Step 5，FR-31）：json = 单 JSON 步骤 + 受限解码（弱模型鲁棒，默认）；
    *  text = 经典 Thought/Action 文本标记（学习基线，弱模型上失败模式已存档）。 */
   reactFormat?: "json" | "text";
+  /** 长期记忆静态注入条数（Step 6，FR-36，CLI 装配字段）：>0 时启动注入最近 N 条 */
+  memoryInject?: number;
+  /** 是否注册 delegate 委托工具（Step 7，FR-42，CLI 装配字段） */
+  delegate?: boolean;
 }

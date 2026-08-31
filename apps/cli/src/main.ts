@@ -18,6 +18,7 @@ import { MemoryStore } from "@tagent/core";
 import { calculateTool } from "./builtin-tools/calculate.js";
 import { weatherTool } from "./builtin-tools/weather.js";
 import { makeMemoryTools } from "./builtin-tools/memory.js";
+import { makeDelegateTool } from "./builtin-tools/delegate.js";
 import { createWireRecorder } from "./wire.js";
 import { parseFaults, withFaults, describeFaults } from "./faults.js";
 import { paint, writeChunk, writeLine } from "./ui.js";
@@ -45,6 +46,10 @@ const config: AgentConfig = {
   reactMode: args.react !== undefined,
   // CLI 层默认 json（弱模型鲁棒）；--react-format text 选经典文本协议
   ...(args.react !== undefined ? { reactFormat: (args["react-format"] === "text" ? "text" : "json") as "text" | "json" } : {}),
+  // Step 6（FR-36）：--memory N = 启动时把最近 N 条长期记忆静态注入 system prompt
+  memoryInject: Number(args.memory ?? 0),
+  // Step 7（FR-42）：--delegate 启用子 agent 委托工具
+  delegate: args.delegate !== undefined,
   temperature: 0.7,
   systemPrompt: [
     "你是 tagent，一个运行在用户本地终端上的助手。",
@@ -70,9 +75,26 @@ registry.register(withFaults(calculateTool, faults));
 // Step 6：长期记忆（跨会话事实库 + remember/recall 工具）
 const memoryStore = new MemoryStore(join(process.cwd(), "logs", "memory.jsonl"));
 for (const t of makeMemoryTools(memoryStore)) registry.register(t);
+// Step 7：委托工具（--delegate）。子 registry 不含 delegate 本身——递归锁（FR-39）
+if (config.delegate) {
+  const clientForSub = client;
+  registry.register(
+    makeDelegateTool({
+      client: clientForSub,
+      makeSubRegistry: () => {
+        const sub = new ToolRegistry();
+        for (const t of makeMemoryTools(memoryStore)) sub.register(t);
+        sub.register(withFaults(weatherTool, faults));
+        sub.register(withFaults(calculateTool, faults));
+        return sub;
+      },
+      config,
+    }),
+  );
+}
 // 静态注入（FR-36）：最近 N 条事实进 system prompt 尾部——会话内前缀稳定（cache 友好）
-if (config.memoryInject > 0) {
-  const recent = memoryStore.all().slice(-config.memoryInject);
+if ((config.memoryInject ?? 0) > 0) {
+  const recent = memoryStore.all().slice(-(config.memoryInject ?? 0));
   if (recent.length > 0) {
     const block = ["", "", "## 长期记忆（最近 " + recent.length + " 条）", ...recent.map((f) => `- ${f.content}`)].join("\n");
     config.systemPrompt += block;
@@ -217,8 +239,11 @@ function main(): void {
   if (config.thinking !== undefined) {
     writeLine(paint.dim(`思考模式: ${config.thinking ? "开" : "关"}（/think /nothink 切换）`));
   }
-  if (config.memoryInject > 0) {
-    writeLine(paint.dim(`长期记忆：${memoryStore.all().length} 条事实，注入最近 ${config.memoryInject} 条（/memories 查看）`));
+  if ((config.memoryInject ?? 0) > 0) {
+    writeLine(paint.dim(`长期记忆：${memoryStore.all().length} 条事实，注入最近 ${config.memoryInject ?? 0} 条（/memories 查看）`));
+  }
+  if (config.delegate) {
+    writeLine(paint.dim("委托：delegate 工具已启用（子 agent 深度锁定 1 层）"));
   }
   if (config.reactMode) {
     const fmt = config.reactFormat ?? "json";
