@@ -132,3 +132,33 @@
 | AC3-3 | 触发裁剪 | 小预算长对话（CLI 多轮提问）→ transcript 出现 context-trimmed，之后请求体消息数显著下降，对话仍正常完成 |
 | AC3-4 | KV cache 复用实测 | 连续轮次 cache_n 前缀命中增长；人为"每轮裁一点"的对照请求 cache_n 骤降（前缀破坏实证）；双水位裁剪后新前缀恢复命中——timings 字段三段证据 |
 | AC3-5 | 回归 | 单测全绿；无预算时行为与 Step 2 完全一致 |
+
+## 8. Step 4 需求增补：思考模式实验与请求级开关（2026-08-31）
+
+> 前置考据已完成（PROTOCOL §10 待考据闭环）：Qwen3.5 的 `/no_think` 消息标记在两引擎均失效；
+> 正确开关 = **请求级 `chat_template_kwargs.enable_thinking`**（llama.cpp 实测双向有效：
+> 默认服务器上 false 关思考、off 服务器上 true 开思考），或服务器级 `--reasoning on|off`。
+
+### 8.1 功能需求
+
+| ID | 需求 | 说明 | 优先级 |
+|---|---|---|---|
+| FR-23 | 请求级思考开关 | core 支持请求体携带 `chat_template_kwargs`（`ChatRequest.chatTemplateKwargs`）；`AgentConfig.thinking?: boolean` 经 loop 下发为 `{enable_thinking}`——**修复 FR-8 的 /no_think 失效实现** | P0 |
+| FR-24 | CLI 思考命令 | `/think` / `/nothink` 切换 `config.thinking`（不再注入 `/no_think` 后缀——已证无效且污染用户消息）；横幅显示当前模式 | P0 |
+| FR-25 | A/B 实验羻具 | `scripts/thinking-ab.mjs`：同一服务器按请求切换思考开/关，任务集 × 多采样，自动判定成功，产出成功率/耗时/token 成本三维护度 | P0 |
+
+### 8.2 实验设计（AC4 判据的基础）
+
+- **任务集 11 题**：5 道多步算术（有唯一数值解）、3 道常识/传递推理（关键词判定）、2 道工具任务（判 tool_calls 选择与参数）、1 道工具滥用对照（应零调用）
+- **采样**：temp=0.7（agent 生产温度，保留采样随机性）每题每组建 3 份——成功率粒度 0/33/67/100%，粒度限制如实记录
+- **判据**：数值题=答案含期望值；常识题=含关键词；工具题=首轮 tool_calls 名称正确且参数可解析出期望值；滥用对照=零 tool_calls
+- **维度**：成功率、completion_tokens（成本）、端到端耗时
+
+### 8.3 验收标准（AC4-x）
+
+| ID | 场景 | 通过标准 |
+|---|---|---|
+| AC4-1 | 请求级开关 | 单测：kwargs 进请求体；默认(不设 thinking)不携带该字段；CLI /think /nothink 生效 |
+| AC4-2 | A/B 实验 | 双组各 33 样本全部跑完并存证；开组有 reasoning、关组无（抽样核验） |
+| AC4-3 | 结论 | 成功率/成本/耗时三维对比表 + 至少一条非平凡观察（如思考对多步算术的提升 vs token 成本倍数） |
+| AC4-4 | 回归 | 全套测试绿；默认路径（不设 thinking）与 Step 3 行为一致 |

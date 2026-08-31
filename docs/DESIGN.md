@@ -397,3 +397,24 @@ if (config.contextBudgetTokens) {
 | 估算器 | 纯中文/纯英文/混合的单调性与量级区间；消息估算含 tool_calls 与固定开销 |
 | 裁剪 | 未超预算恒等（同引用）；超预算裁最旧回合且保 system/末回合；tool 配对不拆散；极小预算不死循环 |
 | loop | 预算触发 context-trimmed 事件 + messages 被原地替换 + 请求消息数下降；无预算零事件（回归） |
+
+## 13. Step 4 设计：思考模式请求级开关与 A/B 实验（2026-08-31）
+
+### 13.1 开关链路（FR-23/24）
+
+```
+CLI /think|/nothink → config.thinking = true|false（undefined = 引擎默认）
+  → loop 每轮 stream({..., chatTemplateKwargs: thinking===undefined ? undefined : {enable_thinking: thinking}})
+  → client 请求体仅在该字段存在时携带 chat_template_kwargs（默认请求与 Step 3 逐字节同形）
+```
+
+考据证据：默认服务器 + enable_thinking:false → reasoning 0；off 服务器 + true → reasoning 396 字
+（captures/step4-thinking-ab/ 考据探针存证）。`/no_think` 后缀注入彻底移除。
+
+### 13.2 A/B 实验（FR-25，scripts/thinking-ab.mjs）
+
+- 单服务器（默认 auto）：ON 组不携带 kwargs（模板默认开）；OFF 组携带 enable_thinking:false
+  ——同服务器同 slot 语义，组间唯一变量是思考开关
+- max_tokens：ON 组 640（思考需预算，SETUP §5.3 length 教训）/ OFF 组 160
+- 每样本存 request+response 原件；汇总 results.jsonl + summary.md（成功率/耗时/completion_tokens）
+- 判据全部程序化（regex/JSON 解析），无人工评分
