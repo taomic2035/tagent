@@ -95,9 +95,10 @@ tagent/
 │   ├── cli/                 # 终端 agent（第一个可用产品）
 │   ├── mobile/              # （远期）React Native 壳，直接 import core
 │   └── harmony/             # （远期）RNOH/ArkTS 壳，直接 import core
-├── SETUP.md                 # 环境与实测数据
+├── SETUP.md                 # 环境与实测数据（§八 = Windows）
 ├── TECH_STACK.md            # 本文档
-└── start_llm.sh             # 引擎启动（Mac）
+├── start_llm.sh             # 引擎启动（Mac/MLX）
+└── start_llm.ps1            # 引擎启动（Windows/llama.cpp，含 -Mtp 投机解码）
 ```
 
 结构约束：`packages/core` **禁止引入任何运行时依赖**（zod 除外），保证一份代码从终端跑到手机。UI 壳按平台渐进添加，core 不感知壳的存在。
@@ -120,5 +121,6 @@ tagent/
 | Agent 大脑 | `packages/core` 零依赖手搓，HTTP + JSON + async 循环 |
 | 第一个产品 | 终端 CLI agent |
 | 移动端路线 | Android = React Native；鸿蒙 = RNOH/ArkTS |
-| 推理引擎 | Mac=MLX（现在），Win/Linux/移动=llama.cpp+GGUF（远期） |
-| 协议 | 两层之间只依赖 OpenAI 兼容 HTTP |
+| 推理引擎 | **Mac = MLX、Windows = llama.cpp（均已就绪并实测）**，Linux 待测；移动端 llama.cpp |
+| 投机解码 | llama.cpp 原生 draft-mtp 在 CPU 上正收益 +20~40%（SETUP §8.7）；Mac 待 mlx-lm 原生支持 |
+| 协议 | 两层之间只依赖 OpenAI 兼容 HTTP（已双引擎实证：agent 代码零改动） |

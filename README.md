@@ -13,27 +13,28 @@
 | 层 | 选型 | 说明 |
 |---|---|---|
 | Agent 语言 | **TypeScript**（Node/React Native/RNOH） | 零换语覆盖 Mac/Win/Linux/Android/鸿蒙，详见 [TECH_STACK.md](TECH_STACK.md) |
-| 模型 | Qwen3.5-4B（4bit 量化） | 原生 function calling，内建思考模式 |
-| 推理引擎 | MLX（mlx-lm） | Apple Silicon 优化；llama.cpp 因 Qwen3.5 新架构未优化（15 tok/s）被实测淘汰，保留作底层学习材料 |
-| 接口 | OpenAI 兼容 HTTP | `http://127.0.0.1:8081/v1` |
-| 硬件 | MacBook Air M5 / 32GB | 实测生成 38 tok/s（server 路径） |
+| 模型 | Qwen3.5-4B（4bit 量化） | 原生 function calling，内建思考模式；双平台同款量化 |
+| 推理引擎 | **双平台各选最优**：Mac = MLX；Windows = llama.cpp | OpenAI 兼容接口完全一致，**agent 代码零改动**（NFR-7 已六场景实证）；llama.cpp CPU 11.9 tok/s，开 MTP 投机解码 +20~40% |
+| 接口 | OpenAI 兼容 HTTP | `http://127.0.0.1:8081/v1`（两平台同端口） |
+| 硬件 | MacBook Air M5 / 32GB ｜ HP 台式机 i7-14700 / 32GB | MLX 38 tok/s ｜ llama.cpp CPU 11.9（MTP 后 17.6~21.3）tok/s |
 
-选型过程、实测数据、踩坑记录详见 [SETUP.md](SETUP.md)；跨平台架构决策详见 [TECH_STACK.md](TECH_STACK.md)。
+选型过程、实测数据、踩坑记录详见 [SETUP.md](SETUP.md)（§八 = Windows 迁移全记录）；双平台环境差异速查见 [docs/WINDOWS-ENV.md](docs/WINDOWS-ENV.md)。
 
 ## 快速开始
 
 ```bash
-# 1. 启动本地推理服务（首次需先下载模型，见 SETUP.md 第三节/第八节）
-./start_llm.sh -d              # macOS（MLX）
-.\start_llm.ps1 -Detach        # Windows（llama.cpp + GGUF，见 SETUP.md §八）
+# 1. 启动本地推理服务（首次需先下载模型，Mac 见 SETUP.md 第三节 / Windows 见第八节）
+./start_llm.sh -d               # macOS（MLX）
+.\start_llm.ps1 -Detach -Mtp    # Windows（llama.cpp；-Mtp 开投机解码，快 20~40%）
 curl http://127.0.0.1:8081/health
 
-# 2. 构建并运行 agent（MODEL 路径见 captures/.env.local）
+# 2. 构建并运行 agent（MODEL 路径见 captures/.env.local，不入库）
 pnpm build
 node apps/cli/dist/main.js --model "$(cat captures/.env.local | cut -d= -f2)"
 # 会话内：/tools 看工具 · /dump 导出上下文 · /reset 清空 · /exit 退出
 
-# 3. 重放任一历史 prompt（token 级复现，见 docs/ACCEPTANCE.md）
+# 3. 重放任一历史 prompt（token 级复现，见 docs/ACCEPTANCE.md；
+#    注意：重放须用无投机解码的服务，见 PROTOCOL.md §10）
 node scripts/replay.mjs captures/ac-2-calculate/session/call-001/request.json --temp 0
 
 # 4. 复跑真机验收（六场景，自动存证+脱敏）
@@ -56,20 +57,24 @@ bash scripts/acceptance-win.sh      # Windows（llama.cpp 引擎，Git Bash）
 
 ```
 tagent/
-├── SETUP.md          # 环境搭建全记录：选型、实测数据、踩坑（§八 = Windows 迁移）
-├── TECH_STACK.md     # 技术选型报告：语言、架构、跨平台路线
+├── SETUP.md          # 环境搭建全记录：选型、实测数据、踩坑（§八 = Windows 迁移+MTP 实测）
+├── TECH_STACK.md     # 技术选型报告：语言、架构、双平台引擎路线
+├── start_llm.sh      # 引擎启动（Mac/MLX）
+├── start_llm.ps1     # 引擎启动（Windows/llama.cpp，-Mtp 投机解码）
 ├── docs/
-│   ├── REQUIREMENTS.md   # 需求清单（Step 1 范围，含验收标准）
+│   ├── REQUIREMENTS.md   # 需求清单（Step 1 ✅ + Step 2 增补，含验收标准）
 │   ├── ARCHITECTURE.md   # 架构设计：模块划分、数据流、扩展点
 │   ├── DESIGN.md         # 方案设计：类型、接口、算法、测试（可直接照写代码）
-│   ├── PROTOCOL.md       # 通信协议拆解：与 LLM 引擎双方通信逐字段分析
+│   ├── PROTOCOL.md       # 通信协议拆解：双引擎差异实测（§8）与复现规则（§10）
 │   ├── TRACEABILITY.md   # 溯源制度：每次通信全量存证，每个 token 有据可循
-│   ├── ACCEPTANCE.md     # Step1 真机验收报告：AC-1~6 + token 级复现实证
+│   ├── ACCEPTANCE.md     # 真机验收报告：AC-1~6 + Windows 引擎复验附录
 │   └── WINDOWS-ENV.md    # Windows 环境对齐总结：清单、速查、与 Mac 差异
-├── captures/         # 原始报文存证：请求体 + 响应头 + 响应体（抓取脚本可复现）
-├── start_llm.sh      # 一键启动本地推理服务
-├── LICENSE           # MIT
-└── models/           # 模型权重（不入库，见 SETUP.md）
+├── captures/         # 原始报文存证：01~06（MLX）、07~10（llama.cpp）、ac-*/win-ac-*（验收）
+├── scripts/          # 验收（acceptance*.sh）、抓包（capture*.sh）、溯源/重放、隐私检查
+├── packages/core/    # agent 大脑（零依赖，仅 zod）
+├── apps/cli/         # 终端壳
+└── LICENSE           # MIT
+# 模型权重不入库：Mac 在 ~/.cache/huggingface，Windows 统一放 D:\LLM\models
 ```
 
 ## 开发约定

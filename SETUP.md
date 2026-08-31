@@ -1,6 +1,7 @@
 # 本地 Agent 开发环境：选型、搭建与实测数据
 
 > 记录日期：2026-08-30 ｜ 目标：在 Mac 上从零搭建可用的本地 LLM 服务，作为手写 agent 学习的推理后端
+> **2026-08-31 追记：开发机迁至 Windows，环境对齐记录见 §八（llama.cpp 部署/双引擎差异/MTP 实测）；速查版见 [docs/WINDOWS-ENV.md](docs/WINDOWS-ENV.md)**
 
 ## 一、硬件与软件环境
 
