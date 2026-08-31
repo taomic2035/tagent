@@ -418,3 +418,52 @@ CLI /think|/nothink → config.thinking = true|false（undefined = 引擎默认�
 - max_tokens：ON 组 640（思考需预算，SETUP §5.3 length 教训）/ OFF 组 160
 - 每样本存 request+response 原件；汇总 results.jsonl + summary.md（成功率/耗时/completion_tokens）
 - 判据全部程序化（regex/JSON 解析），无人工评分
+
+## 14. Step 5 设计：ReAct 文本协议引擎（2026-08-31）
+
+### 14.1 协议形态（FR-26）
+
+```
+system: 你通过"思考-行动-观察"循环解决问题…（含可用工具名清单与格式约定）
+user:   <任务>
+assistant: Thought: 需要……
+           Action: get_weather
+           Action Input: {"city":"北京"}
+user:   Observation: {"ok":true,"data":{"tempC":28,…}}
+assistant: Thought: 已拿到 28 度，接下来……
+           Action: calculate
+           Action Input: {"expression":"28*2"}
+user:   Observation: {"ok":true,"data":{"value":56}}
+assistant: Thought: 信息足够
+           Final Answer: 北京温度乘以 2 是 56 度
+```
+
+与原生模式同构：Thought≈reasoning、Action≈tool_calls、Observation≈role:tool——
+**区别只在"行动"的承载层**（文本 vs 协议字段）。核心洞见：ReAct 是把推理显式化
+塞进上下文的协议；原生 tool calling 是把推理隐式化留在采样侧。
+
+### 14.2 解析器（FR-27，react.ts 内纯函数）
+
+```
+parseAction(text):
+  有 "Final Answer:" → {kind:"final", answer}
+  取最后一个 "Action:" 行之后到 "Action Input:" 前的名字
+  "Action Input:" 之后到块尾（空行/下一标记/文末）为 JSON 文本 → parse
+  任何一步失败 → {kind:"invalid", reason}（引擎转成纠错 Observation 回填）
+```
+
+### 14.3 引擎（FR-28）
+
+- 每轮：stream(无 tools) → 全文累积（textBuf）→ parseAction
+  - final → push assistant + yield final
+  - action → registry.execute(name, json)（继承校验/策略/信封）→ push assistant 原文 +
+    push user "Observation: <信封JSON>" → yield tool-call/tool-result 事件
+  - invalid → push assistant 原文 + push 纠错 Observation → 继续（maxIterations 兜底）
+- 复用 AgentEvent 全集（round-start/llm-request/text-delta/tool-call/tool-result/final/error）
+  ——CLI 与 transcript 零改动；context-trim 不在 ReAct 路径（Step 3 预算仅原生模式，如实记载）
+
+### 14.4 实验脚本（FR-30，scripts/react-vs-native.mjs）
+
+双模式各跑 S1~S4 × 3 采样（temp 0.7、思考关——Step 4 结论），判据程序化；
+原生模式直接发协议请求（tools 定义 + 多轮 tool 消息演化，模拟 agent 循环），
+ReAct 模式用文本协议同法演化；每样本存 request/response + summary.md。

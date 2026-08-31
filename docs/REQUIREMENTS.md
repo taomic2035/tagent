@@ -162,3 +162,38 @@
 | AC4-2 | A/B 实验 | 双组各 33 样本全部跑完并存证；开组有 reasoning、关组无（抽样核验） |
 | AC4-3 | 结论 | 成功率/成本/耗时三维对比表 + 至少一条非平凡观察（如思考对多步算术的提升 vs token 成本倍数） |
 | AC4-4 | 回归 | 全套测试绿；默认路径（不设 thinking）与 Step 3 行为一致 |
+
+## 9. Step 5 需求增补：ReAct 文本协议与双模式对比（2026-08-31）
+
+> 学习目标：把「行动」从协议原生 tool_calls 换成**手写文本协议**（Thought/Action/Observation），
+> 亲手实现经典 ReAct 循环；同一 ToolRegistry 复用（校验/策略/信封全继承），
+> 实测对比两种驱动方式在**链式任务**（前一步结果是后一步参数）上的表现。
+
+### 9.1 功能需求
+
+| ID | 需求 | 说明 | 优先级 |
+|---|---|---|---|
+| FR-26 | ReAct 文本协议 | 系统提示规定输出格式（Thought/Action/Action Input 与 Final Answer）；Observation 以 user 角色追加（经典 ReAct 无 tool 消息）；**不传 tools 参数**（行动靠文本而非协议） | P0 |
+| FR-27 | 手写 Action 解析器 | 从 assistant 文本提取 Action/Action Input（JSON）/Final Answer；格式错误时生成纠错 Observation 回填（自愈，继承 Step 2 哲学），不崩溃 | P0 |
+| FR-28 | ReAct 引擎 | runReAct 与 runAgent 同契约：同 events（CLI 渲染/transcript 零改动）、同 messages 原地演化、同 maxIterations/思考开关/降级配置；工具执行仍走 ToolRegistry（复用全部安全层） | P0 |
+| FR-29 | CLI 模式开关 | `--react` 启动文本协议模式（缺省 = 原生 tool_calls 模式）；横幅显示当前模式 | P1 |
+| FR-30 | 双模式对比实验 | 链式任务集（天气→计算依赖链）× 双模式 × 3 采样，成功率/轮次/token 三维对比 + 存证 | P0 |
+
+### 9.2 链式任务集（判据程序化）
+
+| ID | 任务 | 依赖链 | 期望终答含 |
+|---|---|---|---|
+| S1 | 对比北京和上海的天气 | get_weather ×2（并列） | 两城各有数值 |
+| S2 | 先查北京天气，把温度乘以 2 告诉我 | get_weather → calculate(28*2) | **56** |
+| S3 | 北京和上海哪个更热？温差多少？ | get_weather ×2 → 算术 | **上海** 与 **3** |
+| S4 | 杭州温度减去广州温度再除以 2 | get_weather ×2 → calculate((30-33)/2) | **-1.5** |
+
+### 9.3 验收标准（AC5-x）
+
+| ID | 场景 | 通过标准 |
+|---|---|---|
+| AC5-1 | 解析器 | 单测：规范 Action/多行 JSON/Final Answer/畸形输出（缺 Action、坏 JSON）四类全过 |
+| AC5-2 | 引擎 | 单测：mock 回放 ReAct 剧本（act→observation→final），messages 演化与事件契约正确；格式错误自愈路径 |
+| AC5-3 | 真机 | CLI `--react` 模式跑通 S2 链式任务（weather→calculate），存证完整 |
+| AC5-4 | 对比实验 | 双模式 24 样本全跑完；至少一条非平凡结论（链式任务成功率/轮次/成本） |
+| AC5-5 | 回归 | 全套测试绿；原生模式行为不变 |
