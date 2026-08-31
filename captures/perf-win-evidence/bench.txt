@@ -1,0 +1,21 @@
+== CPU (avx2 dispatch):
+load_backend: loaded RPC backend from D:\LLM\llama-cpp\cpu\ggml-rpc.dll
+load_backend: loaded CPU backend from D:\LLM\llama-cpp\cpu\ggml-cpu-alderlake.dll
+| model                          |       size |     params | backend    | threads |            test |                  t/s |
+| ------------------------------ | ---------: | ---------: | ---------- | ------: | --------------: | -------------------: |
+| qwen35 4B Q4_K - Medium        |   2.70 GiB |     4.21 B | CPU        |      20 |           pp512 |         62.75 ± 0.99 |
+| qwen35 4B Q4_K - Medium        |   2.70 GiB |     4.21 B | CPU        |      20 |           tg128 |         11.89 ± 0.23 |
+
+build: c1d0e7a00 (10621)
+== Vulkan (UHD 770, -ngl 99):
+load_backend: loaded RPC backend from D:\LLM\llama-cpp\vulkan\ggml-rpc.dll
+ggml_vulkan: Found 1 Vulkan devices:
+ggml_vulkan: 0 = Intel(R) UHD Graphics 770 (Intel Corporation) | uma: 1 | fp16: 1 | bf16: 0 | fp4: 0 | warp size: 32 | shared memory: 32768 | int dot: 1 | matrix cores: none
+load_backend: loaded Vulkan backend from D:\LLM\llama-cpp\vulkan\ggml-vulkan.dll
+load_backend: loaded CPU backend from D:\LLM\llama-cpp\vulkan\ggml-cpu-alderlake.dll
+| model                          |       size |     params | backend    | ngl |  fa |            test |                  t/s |
+| ------------------------------ | ---------: | ---------: | ---------- | --: | --: | --------------: | -------------------: |
+| qwen35 4B Q4_K - Medium        |   2.70 GiB |     4.21 B | Vulkan     |  99 |   1 |           pp512 |         39.18 ± 2.38 |
+| qwen35 4B Q4_K - Medium        |   2.70 GiB |     4.21 B | Vulkan     |  99 |   1 |           tg128 |          5.16 ± 0.10 |
+
+build: c1d0e7a00 (10621)

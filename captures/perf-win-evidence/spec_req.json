@@ -1,0 +1,1 @@
+{"model": "spec-bench", "messages": [{"role": "user", "content": "请写一段约150字的秋天景色描写"}], "max_tokens": 256, "stream": false, "temperature": 0}
