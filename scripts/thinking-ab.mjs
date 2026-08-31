@@ -15,11 +15,11 @@ import { join, resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const outDir = join(repoRoot, "captures", "step4-thinking-ab");
+const outDir = join(repoRoot, "captures", process.env.AB_OUT ?? "step4-thinking-ab");
 mkdirSync(outDir, { recursive: true });
 
 const baseUrl = process.env.TAGENT_BASE_URL ?? "http://127.0.0.1:8081/v1";
-const mp = readFileSync(join(repoRoot, "captures", ".env.local"), "utf8").split("=", 2)[1]?.trim();
+const mp = process.env.AB_MODEL ?? readFileSync(join(repoRoot, "captures", ".env.local"), "utf8").split("=", 2)[1]?.trim();
 
 // ---- 任务集（REQUIREMENTS §8.2）：judge 全程序化 ----
 // 数值题：answer 含期望字符串即成功；常识题：关键词；工具题：tool_calls 判定

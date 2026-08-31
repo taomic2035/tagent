@@ -26,10 +26,10 @@ import { weatherTool } from "../apps/cli/dist/builtin-tools/weather.js";
 import { calculateTool } from "../apps/cli/dist/builtin-tools/calculate.js";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const outDir = join(repoRoot, "captures", "step5-react");
+const outDir = join(repoRoot, "captures", process.env.RN_OUT ?? "step5-react");
 mkdirSync(outDir, { recursive: true });
 const baseUrl = process.env.TAGENT_BASE_URL ?? "http://127.0.0.1:8081/v1";
-const mp = readFileSync(join(repoRoot, "captures", ".env.local"), "utf8").split("=", 2)[1]?.trim();
+const mp = process.env.RN_MODEL ?? readFileSync(join(repoRoot, "captures", ".env.local"), "utf8").split("=", 2)[1]?.trim();
 
 const registry = new ToolRegistry();
 registry.register(weatherTool);

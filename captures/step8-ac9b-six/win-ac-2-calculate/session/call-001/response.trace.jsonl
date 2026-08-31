@@ -1,0 +1,58 @@
+{"seq":1,"kind":"reasoning","frame":2,"line":3,"byte":266,"text":"用户"}
+{"seq":2,"kind":"reasoning","frame":3,"line":5,"byte":527,"text":"要求"}
+{"seq":3,"kind":"reasoning","frame":4,"line":7,"byte":788,"text":"计算"}
+{"seq":4,"kind":"reasoning","frame":5,"line":9,"byte":1049,"text":" "}
+{"seq":5,"kind":"reasoning","frame":6,"line":11,"byte":1305,"text":"3"}
+{"seq":6,"kind":"reasoning","frame":7,"line":13,"byte":1561,"text":"."}
+{"seq":7,"kind":"reasoning","frame":8,"line":15,"byte":1817,"text":"7"}
+{"seq":8,"kind":"reasoning","frame":9,"line":17,"byte":2073,"text":" "}
+{"seq":9,"kind":"reasoning","frame":10,"line":19,"byte":2329,"text":"乘以"}
+{"seq":10,"kind":"reasoning","frame":11,"line":21,"byte":2590,"text":" "}
+{"seq":11,"kind":"reasoning","frame":12,"line":23,"byte":2846,"text":"1"}
+{"seq":12,"kind":"reasoning","frame":13,"line":25,"byte":3102,"text":"2"}
+{"seq":13,"kind":"reasoning","frame":14,"line":27,"byte":3358,"text":" "}
+{"seq":14,"kind":"reasoning","frame":15,"line":29,"byte":3614,"text":"再"}
+{"seq":15,"kind":"reasoning","frame":16,"line":31,"byte":3872,"text":"减"}
+{"seq":16,"kind":"reasoning","frame":17,"line":33,"byte":4130,"text":" "}
+{"seq":17,"kind":"reasoning","frame":18,"line":35,"byte":4386,"text":"8"}
+{"seq":18,"kind":"reasoning","frame":19,"line":37,"byte":4642,"text":"."}
+{"seq":19,"kind":"reasoning","frame":20,"line":39,"byte":4898,"text":"2"}
+{"seq":20,"kind":"reasoning","frame":21,"line":41,"byte":5154,"text":"。"}
+{"seq":21,"kind":"reasoning","frame":22,"line":43,"byte":5412,"text":"我"}
+{"seq":22,"kind":"reasoning","frame":23,"line":45,"byte":5670,"text":"需要使用"}
+{"seq":23,"kind":"reasoning","frame":24,"line":47,"byte":5937,"text":" calculate"}
+{"seq":24,"kind":"reasoning","frame":25,"line":49,"byte":6202,"text":" "}
+{"seq":25,"kind":"reasoning","frame":26,"line":51,"byte":6458,"text":"工具"}
+{"seq":26,"kind":"reasoning","frame":27,"line":53,"byte":6719,"text":"来计算"}
+{"seq":27,"kind":"reasoning","frame":28,"line":55,"byte":6983,"text":"这个"}
+{"seq":28,"kind":"reasoning","frame":29,"line":57,"byte":7244,"text":"表达式"}
+{"seq":29,"kind":"reasoning","frame":30,"line":59,"byte":7508,"text":"。"}
+{"seq":30,"kind":"reasoning","frame":31,"line":61,"byte":7766,"text":"\n\n"}
+{"seq":31,"kind":"reasoning","frame":32,"line":63,"byte":8025,"text":"表达式"}
+{"seq":32,"kind":"reasoning","frame":33,"line":65,"byte":8289,"text":"应该是"}
+{"seq":33,"kind":"reasoning","frame":34,"line":67,"byte":8553,"text":"："}
+{"seq":34,"kind":"reasoning","frame":35,"line":69,"byte":8811,"text":"3"}
+{"seq":35,"kind":"reasoning","frame":36,"line":71,"byte":9067,"text":"."}
+{"seq":36,"kind":"reasoning","frame":37,"line":73,"byte":9323,"text":"7"}
+{"seq":37,"kind":"reasoning","frame":38,"line":75,"byte":9579,"text":"*"}
+{"seq":38,"kind":"reasoning","frame":39,"line":77,"byte":9835,"text":"1"}
+{"seq":39,"kind":"reasoning","frame":40,"line":79,"byte":10091,"text":"2"}
+{"seq":40,"kind":"reasoning","frame":41,"line":81,"byte":10347,"text":"-"}
+{"seq":41,"kind":"reasoning","frame":42,"line":83,"byte":10603,"text":"8"}
+{"seq":42,"kind":"reasoning","frame":43,"line":85,"byte":10859,"text":"."}
+{"seq":43,"kind":"reasoning","frame":44,"line":87,"byte":11115,"text":"2"}
+{"seq":44,"kind":"reasoning","frame":45,"line":89,"byte":11371,"text":"\n"}
+{"seq":45,"kind":"tool-call","frame":46,"line":91,"byte":11628,"text":"{","index":0,"id":"BAYSN4wxG2EC0KKgDSRmfxaSZIj27cFt","name":"calculate"}
+{"seq":46,"kind":"tool-call","frame":47,"line":93,"byte":11993,"text":"\"expression\":\"","index":0,"id":null,"name":null}
+{"seq":47,"kind":"tool-call","frame":48,"line":95,"byte":12297,"text":"3","index":0,"id":null,"name":null}
+{"seq":48,"kind":"tool-call","frame":49,"line":97,"byte":12585,"text":".","index":0,"id":null,"name":null}
+{"seq":49,"kind":"tool-call","frame":50,"line":99,"byte":12873,"text":"7","index":0,"id":null,"name":null}
+{"seq":50,"kind":"tool-call","frame":51,"line":101,"byte":13161,"text":"*","index":0,"id":null,"name":null}
+{"seq":51,"kind":"tool-call","frame":52,"line":103,"byte":13449,"text":"1","index":0,"id":null,"name":null}
+{"seq":52,"kind":"tool-call","frame":53,"line":105,"byte":13737,"text":"2","index":0,"id":null,"name":null}
+{"seq":53,"kind":"tool-call","frame":54,"line":107,"byte":14025,"text":"-","index":0,"id":null,"name":null}
+{"seq":54,"kind":"tool-call","frame":55,"line":109,"byte":14313,"text":"8","index":0,"id":null,"name":null}
+{"seq":55,"kind":"tool-call","frame":56,"line":111,"byte":14601,"text":".","index":0,"id":null,"name":null}
+{"seq":56,"kind":"tool-call","frame":57,"line":113,"byte":14889,"text":"2","index":0,"id":null,"name":null}
+{"seq":57,"kind":"tool-call","frame":58,"line":115,"byte":15177,"text":"\"","index":0,"id":null,"name":null}
+{"seq":58,"kind":"tool-call","frame":59,"line":117,"byte":15466,"text":"}","index":0,"id":null,"name":null}

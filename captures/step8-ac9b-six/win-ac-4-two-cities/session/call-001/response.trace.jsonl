@@ -1,0 +1,48 @@
+{"seq":1,"kind":"reasoning","frame":2,"line":3,"byte":266,"text":"用户"}
+{"seq":2,"kind":"reasoning","frame":3,"line":5,"byte":527,"text":"想要"}
+{"seq":3,"kind":"reasoning","frame":4,"line":7,"byte":788,"text":"对比"}
+{"seq":4,"kind":"reasoning","frame":5,"line":9,"byte":1049,"text":"北京"}
+{"seq":5,"kind":"reasoning","frame":6,"line":11,"byte":1310,"text":"和"}
+{"seq":6,"kind":"reasoning","frame":7,"line":13,"byte":1568,"text":"上海的"}
+{"seq":7,"kind":"reasoning","frame":8,"line":15,"byte":1832,"text":"天气"}
+{"seq":8,"kind":"reasoning","frame":9,"line":17,"byte":2093,"text":"。"}
+{"seq":9,"kind":"reasoning","frame":10,"line":19,"byte":2351,"text":"我"}
+{"seq":10,"kind":"reasoning","frame":11,"line":21,"byte":2609,"text":"需要使用"}
+{"seq":11,"kind":"reasoning","frame":12,"line":23,"byte":2876,"text":" get"}
+{"seq":12,"kind":"reasoning","frame":13,"line":25,"byte":3135,"text":"_weather"}
+{"seq":13,"kind":"reasoning","frame":14,"line":27,"byte":3398,"text":" "}
+{"seq":14,"kind":"reasoning","frame":15,"line":29,"byte":3654,"text":"工具"}
+{"seq":15,"kind":"reasoning","frame":16,"line":31,"byte":3915,"text":"来获取"}
+{"seq":16,"kind":"reasoning","frame":17,"line":33,"byte":4179,"text":"这两个"}
+{"seq":17,"kind":"reasoning","frame":18,"line":35,"byte":4443,"text":"城市的"}
+{"seq":18,"kind":"reasoning","frame":19,"line":37,"byte":4707,"text":"天气"}
+{"seq":19,"kind":"reasoning","frame":20,"line":39,"byte":4968,"text":"信息"}
+{"seq":20,"kind":"reasoning","frame":21,"line":41,"byte":5229,"text":"。"}
+{"seq":21,"kind":"reasoning","frame":22,"line":43,"byte":5487,"text":"我需要"}
+{"seq":22,"kind":"reasoning","frame":23,"line":45,"byte":5751,"text":"分别"}
+{"seq":23,"kind":"reasoning","frame":24,"line":47,"byte":6012,"text":"调用"}
+{"seq":24,"kind":"reasoning","frame":25,"line":49,"byte":6273,"text":"两次"}
+{"seq":25,"kind":"reasoning","frame":26,"line":51,"byte":6534,"text":" get"}
+{"seq":26,"kind":"reasoning","frame":27,"line":53,"byte":6793,"text":"_weather"}
+{"seq":27,"kind":"reasoning","frame":28,"line":55,"byte":7056,"text":" "}
+{"seq":28,"kind":"reasoning","frame":29,"line":57,"byte":7312,"text":"工具"}
+{"seq":29,"kind":"reasoning","frame":30,"line":59,"byte":7573,"text":"，"}
+{"seq":30,"kind":"reasoning","frame":31,"line":61,"byte":7831,"text":"一次"}
+{"seq":31,"kind":"reasoning","frame":32,"line":63,"byte":8092,"text":"查询"}
+{"seq":32,"kind":"reasoning","frame":33,"line":65,"byte":8353,"text":"北京"}
+{"seq":33,"kind":"reasoning","frame":34,"line":67,"byte":8614,"text":"，"}
+{"seq":34,"kind":"reasoning","frame":35,"line":69,"byte":8872,"text":"一次"}
+{"seq":35,"kind":"reasoning","frame":36,"line":71,"byte":9133,"text":"查询"}
+{"seq":36,"kind":"reasoning","frame":37,"line":73,"byte":9394,"text":"上海"}
+{"seq":37,"kind":"reasoning","frame":38,"line":75,"byte":9655,"text":"。"}
+{"seq":38,"kind":"reasoning","frame":39,"line":77,"byte":9913,"text":"\n"}
+{"seq":39,"kind":"tool-call","frame":40,"line":79,"byte":10170,"text":"{","index":0,"id":"web2COfbQdPzYfFD601xtk1Lqlseon8Y","name":"get_weather"}
+{"seq":40,"kind":"tool-call","frame":41,"line":81,"byte":10537,"text":"\"city\":\"","index":0,"id":null,"name":null}
+{"seq":41,"kind":"tool-call","frame":42,"line":83,"byte":10835,"text":"北京","index":0,"id":null,"name":null}
+{"seq":42,"kind":"tool-call","frame":43,"line":85,"byte":11128,"text":"\"","index":0,"id":null,"name":null}
+{"seq":43,"kind":"tool-call","frame":44,"line":87,"byte":11417,"text":"}","index":0,"id":null,"name":null}
+{"seq":44,"kind":"tool-call","frame":45,"line":89,"byte":11705,"text":"{","index":1,"id":"Rrmh9SnOUWrK8sIRrsb85G3t9F3m356n","name":"get_weather"}
+{"seq":45,"kind":"tool-call","frame":46,"line":91,"byte":12072,"text":"\"city\":\"","index":1,"id":null,"name":null}
+{"seq":46,"kind":"tool-call","frame":47,"line":93,"byte":12370,"text":"上海","index":1,"id":null,"name":null}
+{"seq":47,"kind":"tool-call","frame":48,"line":95,"byte":12663,"text":"\"","index":1,"id":null,"name":null}
+{"seq":48,"kind":"tool-call","frame":49,"line":97,"byte":12952,"text":"}","index":1,"id":null,"name":null}
