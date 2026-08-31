@@ -27,6 +27,15 @@ export {
 } from "./tools.js";
 export { runAgent, type AgentEvent, type AgentDeps } from "./loop.js";
 export {
+  runReAct,
+  parseAction,
+  parseActionJson,
+  reactJsonResponseFormat,
+  REACT_SYSTEM_PROMPT,
+  REACT_JSON_SYSTEM_PROMPT,
+  type ActionParse,
+} from "./react.js";
+export {
   estimateTokens,
   estimateMessagesTokens,
   trimMessages,

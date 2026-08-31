@@ -114,4 +114,10 @@ export interface AgentConfig {
   /** 思考模式（Step 4，FR-23）：经请求级 chat_template_kwargs.enable_thinking 下发。
    *  undefined = 不干预（引擎默认）；true/false = 显式开/关。 */
   thinking?: boolean;
+  /** 驱动模式（Step 5，FR-29）：true = ReAct 文本协议；false/缺省 = 原生 tool_calls。
+   *  仅 CLI 装配读取，runAgent 忽略此字段。 */
+  reactMode?: boolean;
+  /** ReAct 协议形态（Step 5，FR-31）：json = 单 JSON 步骤 + 受限解码（弱模型鲁棒，默认）；
+   *  text = 经典 Thought/Action 文本标记（学习基线，弱模型上失败模式已存档）。 */
+  reactFormat?: "json" | "text";
 }

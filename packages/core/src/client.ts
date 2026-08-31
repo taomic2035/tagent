@@ -34,6 +34,9 @@ export interface ChatRequest {
   /** 请求级模板参数（Step 4，FR-23）：如 {enable_thinking:false}。
    *  llama.cpp 实测有效；MLX 侧忽略未知字段。缺省不携带（请求体与旧版逐字节同形）。 */
   chatTemplateKwargs?: Record<string, unknown>;
+  /** 受限解码（Step 5，FR-31）：llama.cpp 支持 response_format json_schema（GBNF 约束），
+   *  弱模型的格式纪律由解码器保证。缺省不携带。 */
+  responseFormat?: Record<string, unknown>;
 }
 
 export interface LLMClient {
@@ -72,6 +75,7 @@ export class OpenAIClient implements LLMClient {
         ...(req.chatTemplateKwargs !== undefined
           ? { chat_template_kwargs: req.chatTemplateKwargs }
           : {}),
+        ...(req.responseFormat !== undefined ? { response_format: req.responseFormat } : {}),
       }),
     };
     for (let attempt = 0; ; attempt++) {

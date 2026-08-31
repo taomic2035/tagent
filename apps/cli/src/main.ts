@@ -8,6 +8,7 @@ import {
   OpenAIClient,
   ToolRegistry,
   runAgent,
+  runReAct,
   type AgentConfig,
   type AgentEvent,
   type ChatMessage,
@@ -38,6 +39,10 @@ const config: AgentConfig = {
   maxIterations: Number(args["max-iterations"] ?? 8),
   // Step 3（FR-22）：上下文预算（估算 token），超出触发双水位裁剪；缺省不裁剪
   ...(args["max-context-tokens"] ? { contextBudgetTokens: Number(args["max-context-tokens"]) } : {}),
+  // Step 5（FR-29）：--react = 文本协议模式（Thought/Action/Observation）；缺省原生 tool_calls
+  reactMode: args.react !== undefined,
+  // CLI 层默认 json（弱模型鲁棒）；--react-format text 选经典文本协议
+  ...(args.react !== undefined ? { reactFormat: (args["react-format"] === "text" ? "text" : "json") as "text" | "json" } : {}),
   temperature: 0.7,
   systemPrompt: [
     "你是 tagent，一个运行在用户本地终端上的助手。",
@@ -95,6 +100,7 @@ function render(ev: AgentEvent, state: { toolStart: number }): void {
       const ms = Date.now() - state.toolStart;
       const retry = ev.retriesUsed !== undefined ? `（重试 ${ev.retriesUsed} 次后仍失败）` : "";
       writeLine(paint.dim(`✔ ${ms}ms${retry}`));
+      writeLine(paint.dim(`  ↳ ${ev.result.slice(0, 140)}`)); // Observation 预览（ReAct/原生共用）
       break;
     }
     case "final":
@@ -150,7 +156,8 @@ function handleCommand(line: string): boolean {
 async function chat(input: string): Promise<void> {
   messages.push({ role: "user", content: input });
   const state = { toolStart: 0 };
-  for await (const ev of runAgent({ client, registry, config }, messages)) {
+  const engine = config.reactMode ? runReAct : runAgent; // 两引擎同事件契约（FR-28）
+  for await (const ev of engine({ client, registry, config }, messages)) {
     record(ev); // 每个事件落盘（制度：NFR-4）
     render(ev, state);
   }
@@ -169,6 +176,10 @@ function main(): void {
   }
   if (config.thinking !== undefined) {
     writeLine(paint.dim(`思考模式: ${config.thinking ? "开" : "关"}（/think /nothink 切换）`));
+  }
+  if (config.reactMode) {
+    const fmt = config.reactFormat ?? "json";
+    writeLine(paint.dim(`驱动模式: ReAct ${fmt === "json" ? "JSON 协议（受限解码，弱模型鲁棒）" : "文本协议（经典基线）"}`));
   }
   writeLine(paint.dim(`引擎: ${config.baseUrl} · transcript: ${transcriptPath}`));
 
