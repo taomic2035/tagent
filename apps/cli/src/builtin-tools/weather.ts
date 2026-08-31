@@ -29,6 +29,9 @@ export const weatherTool: Tool<z.ZodObject<{ city: z.ZodString }>> = {
   schema: z.object({
     city: z.string().min(1).describe("城市名，如：北京"),
   }),
+  // Step 2 执行策略（FR-12）：瞬时故障重试 1 次（mock 本不失败，
+  // 策略在 TAGENT_FAULTS 故障注入实验下生效）；5s 超时兜底挂死
+  policy: { timeoutMs: 5000, retries: 1, retryDelayMs: 300 },
   execute: async (args) => {
     const hit = WEATHER_DB[args.city];
     if (!hit) {

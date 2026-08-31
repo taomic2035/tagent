@@ -40,7 +40,21 @@ export interface ToolDef {
   };
 }
 
-/** 工具执行上下文。Step 2 起预留，后续步骤按需扩展（如 AbortSignal）。 */
+/**
+ * 工具执行策略（Step 2，FR-12）。由 ToolRegistry 统一施加，业务工具无感。
+ * 缺省（或不设）= Step 1 行为：不超时、不重试。
+ */
+export interface ToolExecPolicy {
+  /** 单次执行超时（毫秒）。超时视为可重试失败（FR-13） */
+  timeoutMs?: number;
+  /** 可重试失败的重试次数，默认 0（不重试） */
+  retries?: number;
+  /** 线性退避基数：第 n 次重试前等待 n × retryDelayMs */
+  retryDelayMs?: number;
+}
+
+/** 工具执行上下文。signal 由 registry 的超时控制（FR-17），
+ *  后续步骤按需扩展。 */
 export interface ToolContext {
   signal?: AbortSignal;
 }
@@ -51,6 +65,8 @@ export interface Tool<T extends z.ZodType = z.ZodType> {
   description: string;
   schema: T;
   execute: (args: z.infer<T>, ctx: ToolContext) => Promise<unknown>;
+  /** 执行策略（Step 2，可缺省） */
+  policy?: ToolExecPolicy;
 }
 
 // ============================================================
@@ -89,4 +105,7 @@ export interface AgentConfig {
   maxIterations: number;
   temperature: number;
   systemPrompt: string;
+  /** 迭代触顶后的降级策略（Step 2，FR-15）：true = 追加一次无 tools 请求
+   *  迫使模型基于已有结果作答；false = 维持 Step 1 行为（error 事件）。默认 true。 */
+  degradeOnCap?: boolean;
 }

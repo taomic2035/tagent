@@ -186,7 +186,7 @@ test("场景·reasoning 透传但不入档", async () => {
   assert.ok(asst && !("reasoning" in asst && asst.reasoning));
 });
 
-test("场景·maxIterations 触顶：error 事件兜底，无 final", async () => {
+test("场景·maxIterations 触顶（degradeOnCap:false）：error 事件兜底，无 final（Step 1 行为）", async () => {
   const messages: ChatMessage[] = [{ role: "user", content: "循环吧" }];
   const events = await collect(
     runAgent(
@@ -196,7 +196,7 @@ test("场景·maxIterations 触顶：error 事件兜底，无 final", async () =
           [toolDelta(0, "id-2", '{"text":"b"}'), done("tool_calls")],
         ]),
         makeRegistry(),
-        { ...config, systemPrompt: "", maxIterations: 2 }, // 剧本正好 2 轮，触顶退出
+        { ...config, systemPrompt: "", maxIterations: 2, degradeOnCap: false }, // 剧本正好 2 轮，触顶退出
       ),
       messages,
     ),
@@ -257,4 +257,64 @@ test("场景·system prompt 只插一次（多轮会话复用 messages 不重复
   const sysCount = messages.filter((m) => m.role === "system").length;
   assert.equal(sysCount, 1);
   assert.equal(messages[0]?.role, "system");
+});
+
+// ============================================================
+// Step 2：迭代触顶降级（FR-15，DESIGN §11.3）
+// ============================================================
+
+test("降级·触顶后追加无 tools 请求，模型给出文本终答（默认开启）", async () => {
+  const messages: ChatMessage[] = [{ role: "user", content: "echo 一下" }];
+  const seen: Array<{ tools?: unknown; msgs: ChatMessage[] }> = [];
+  const recording = {
+    async *stream(req: { messages: ChatMessage[]; tools?: unknown }): AsyncGenerator<StreamEvent> {
+      seen.push({ tools: req.tools, msgs: [...req.messages] });
+      const call = seen.length;
+      if (call === 1) {
+        yield toolDelta(0, "id-1", '{"text":"hi"}');
+        yield done("tool_calls");
+      } else {
+        yield { type: "text-delta", delta: "根据已有结果回答" };
+        yield done("stop");
+      }
+    },
+  };
+  const events = await collect(
+    runAgent(
+      { client: recording, registry: makeRegistry(), config: { ...config, systemPrompt: "", maxIterations: 1 } },
+      messages,
+    ),
+  );
+  // 降级请求：不传 tools（协议级禁止），并注入降级提示（副本拼接）
+  assert.equal(seen.length, 2);
+  assert.equal(seen[1]?.tools, undefined);
+  const lastMsg = seen[1]?.msgs.at(-1);
+  assert.equal(lastMsg?.role === "user" && lastMsg.content.includes("上限"), true);
+  // 调用方 messages 未被注入污染（不变量1），末条是降级终答 assistant
+  assert.ok(!messages.some((m) => m.role === "user" && m.content.includes("上限")));
+  assert.equal(messages.at(-1)?.role === "assistant" && messages.at(-1)?.content, "根据已有结果回答");
+  const final = events.at(-1) as Extract<AgentEvent, { type: "final" }>;
+  assert.equal(final.type, "final");
+  assert.equal(final.rounds, 2); // 1 轮工具 + 1 轮降级
+});
+
+test("降级·降级请求中模型仍吐 tool_calls 分片（协议矛盾）：按终答处理不回填", async () => {
+  // 防御性用例：无 tools 时模板不该产生 tool_calls；若引擎异常吐出，
+  // 降级轮按 finishReason!==tool_calls 或空 toolCalls 的既有出口规则收尾
+  const messages: ChatMessage[] = [{ role: "user", content: "x" }];
+  const weird = {
+    async *stream(): AsyncGenerator<StreamEvent> {
+      yield { type: "text-delta", delta: "尽力回答" };
+      yield toolDelta(0, "id-x", '{"text":"a"}'); // 声称要工具
+      yield done("stop"); // 但 finish_reason 是 stop
+    },
+  };
+  const events = await collect(
+    runAgent(
+      { client: weird, registry: makeRegistry(), config: { ...config, systemPrompt: "", maxIterations: 1 } },
+      messages,
+    ),
+  );
+  assert.equal(events.at(-1)?.type, "final");
+  assert.ok(!messages.some((m) => m.role === "tool")); // 没执行也没回填
 });

@@ -7,6 +7,7 @@ export type {
   ToolCallData,
   ToolContext,
   ToolDef,
+  ToolExecPolicy,
   StreamEvent,
   Usage,
 } from "./types.js";
@@ -19,6 +20,7 @@ export {
 export type { ChatRequest, LLMClient } from "./client.js";
 export {
   ToolRegistry,
+  TransientToolError,
   type ToolResultEnvelope,
   type ToolResultFail,
   type ToolResultOk,

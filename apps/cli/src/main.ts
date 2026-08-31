@@ -16,6 +16,7 @@ import { z } from "zod";
 import { calculateTool } from "./builtin-tools/calculate.js";
 import { weatherTool } from "./builtin-tools/weather.js";
 import { RecordingClient } from "./recorder.js";
+import { parseFaults, withFaults, describeFaults } from "./faults.js";
 import { paint, writeChunk, writeLine } from "./ui.js";
 
 // ---- 启动参数：CLI 参数 > 环境变量 > 默认值（泛化：不硬编码本机信息）----
@@ -54,8 +55,10 @@ const client = new RecordingClient(
   config.model,
 );
 const registry = new ToolRegistry();
-registry.register(weatherTool);
-registry.register(calculateTool);
+// 故障注入（FR-16）：TAGENT_FAULTS 按剧本把内建工具搞坏，实验工具只进壳
+const faults = parseFaults(process.env.TAGENT_FAULTS);
+registry.register(withFaults(weatherTool, faults));
+registry.register(withFaults(calculateTool, faults));
 const messages: ChatMessage[] = [];
 
 // ---- transcript：每个事件一行 JSON（NFR-4 可观测性）----
@@ -86,7 +89,8 @@ function render(ev: AgentEvent, state: { toolStart: number }): void {
       break;
     case "tool-result": {
       const ms = Date.now() - state.toolStart;
-      writeLine(paint.dim(`✔ ${ms}ms`));
+      const retry = ev.retriesUsed !== undefined ? `（重试 ${ev.retriesUsed} 次后仍失败）` : "";
+      writeLine(paint.dim(`✔ ${ms}ms${retry}`));
       break;
     }
     case "final":
@@ -154,6 +158,9 @@ function main(): void {
   writeLine(paint.bold("tagent") + paint.dim(" · 本地手搓 agent · /tools 查看工具，/exit 退出"));
   if (!config.model) {
     writeLine(paint.yellow("⚠ 未设置模型路径：--model <path> 或环境变量 TAGENT_MODEL（MLX server 要求 model 为本地路径）"));
+  }
+  if (faults.size > 0) {
+    writeLine(paint.red(`⚡ 故障注入已启用: ${describeFaults(faults)}（TAGENT_FAULTS）`));
   }
   writeLine(paint.dim(`引擎: ${config.baseUrl} · transcript: ${transcriptPath}`));
 

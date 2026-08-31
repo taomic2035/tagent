@@ -140,6 +140,8 @@ export const calculateTool: Tool<z.ZodObject<{ expression: z.ZodString }>> = {
       .min(1)
       .describe("四则运算表达式，例如 3.7*12-8.2 或 (2+3)*4"),
   }),
+  // Step 2 执行策略：纯 CPU 求值器确定性成功/失败，只配超时不配重试（FR-13）
+  policy: { timeoutMs: 2000 },
   execute: async (args) => {
     const value = evaluateExpression(args.expression);
     return { expression: args.expression, value };
