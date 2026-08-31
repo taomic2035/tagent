@@ -1,0 +1,10 @@
+{
+  "task": "S3",
+  "mode": "react-text",
+  "sample": 2,
+  "ok": true,
+  "rounds": 1,
+  "tokens": 213,
+  "ms": 15310,
+  "answer": "目前北京的气温是30摄氏度，上海的气温是28摄氏度，北京比上海热，温差是2摄氏度。"
+}

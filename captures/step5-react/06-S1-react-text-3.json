@@ -1,0 +1,10 @@
+{
+  "task": "S1",
+  "mode": "react-text",
+  "sample": 3,
+  "ok": false,
+  "rounds": 1,
+  "tokens": 134,
+  "ms": 9853,
+  "answer": "当前北京天气为多云，气温22℃；上海天气为晴，气温23℃。"
+}

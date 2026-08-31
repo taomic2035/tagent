@@ -1,0 +1,10 @@
+{
+  "task": "S2",
+  "mode": "react-text",
+  "sample": 3,
+  "ok": true,
+  "rounds": 3,
+  "tokens": 106,
+  "ms": 10676,
+  "answer": "北京今天的温度是28度，乘以2之后是56。"
+}

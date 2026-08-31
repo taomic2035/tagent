@@ -1,0 +1,10 @@
+{
+  "task": "S2",
+  "mode": "native",
+  "sample": 2,
+  "ok": true,
+  "rounds": 2,
+  "tokens": 60,
+  "ms": 5959,
+  "answer": "北京今天的温度是 28 摄氏度。\n\n28 * 2 = 56\n\n所以，温度乘以 2 是 56。"
+}

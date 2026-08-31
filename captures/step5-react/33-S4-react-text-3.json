@@ -1,0 +1,10 @@
+{
+  "task": "S4",
+  "mode": "react-text",
+  "sample": 3,
+  "ok": false,
+  "rounds": 1,
+  "tokens": 226,
+  "ms": 16211,
+  "answer": "杭州的温度（28度）减去广州的温度（30度）再除以 2，结果是 -1.0。"
+}

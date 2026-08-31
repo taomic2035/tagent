@@ -1,0 +1,10 @@
+{
+  "task": "S3",
+  "mode": "react-json",
+  "sample": 2,
+  "ok": true,
+  "rounds": 5,
+  "tokens": 287,
+  "ms": 28144,
+  "answer": "上海今天更热，气温为31°C；北京今天气温为28°C。两地的温差为3°C。"
+}

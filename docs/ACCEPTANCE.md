@@ -164,3 +164,39 @@ node scripts/replay.mjs captures/ac-2-calculate/session/call-001/request.json --
 - 单测：kwargs 缺省不携带（请求体与旧版逐字节同形）/ 携带时正确序列化 / loop 按配置下发——全绿
 - CLI：`/think` `/nothink` 切换 `AgentConfig.thinking`，移除无效的 `/no_think` 后缀注入（PROTOCOL §2/§10 同步更新）
 - 回归（AC4-4）：core 50 + cli 34 全绿，默认路径与 Step 3 行为一致
+
+## Step 5 真机验收报告（AC5-1~5，2026-08-31）
+
+> 引擎：llama.cpp b10621 CPU ｜ 复现：`node scripts/react-vs-native.mjs`；CLI 冒烟 `--react`
+> 主角是「驱动层」：同一模型同一工具，三种行动承载方式的对决。
+
+### 三方对比（S1~S4 链式任务 × 3 采样，temp 0.7 思考关）
+
+| 维度 | native tool_calls | react-text（经典文本） | react-json（受限解码） |
+|---|---|---|---|
+| 成功率 | **100%**（S1~S4 全 3/3） | 75%（S1/S3/S4 各 1 失败） | **100%**（全 3/3） |
+| 平均轮次 | **2.6** | 2.3 | 3.8 |
+| 平均 tokens | **129** | 171 | 224 |
+| 平均耗时 | **12.3s** | 14.7s | 21.4s |
+
+### 结论与观察（AC5-4）
+
+1. **native tool_calls 是本栈最优**：最省（129 tok）、最快、成功率满格——协议原生行动
+   承载 + 同轮并行调用（S1 双城一轮回）是文本协议做不到的。
+2. **react-text 的 3 个失败全是同一死法**：首轮跳过 Action 直接作答（无 Final Answer 标记
+   或直接给错答案），零样本文本协议对 4B 约束力不足——与冒烟阶段的幻觉/复读现象同源。
+3. **受限解码完全救活了 ReAct**（75%→100%）：代价是 +73% token 与更多轮次（JSON 协议
+   每轮只出一个动作，无并行）。**弱模型上文本协议不可用，但 JSON 协议可用**——
+   格式纪律从模型挪到解码器后，同一个模型脱胎换骨。
+4. 工程启示（已沉淀 [FALLBACK.md](FALLBACK.md)）：引擎有原生 tool calling 就用 native；
+   没有或需要严格格式控制时，用受限 JSON 协议，**不要用自由文本协议**。
+
+### 分项判定
+
+| # | 判定 | 证据 |
+|---|---|---|
+| AC5-1 解析器 | ✅ | react.test.ts：规范/多行 JSON/尾随杂文/Final/三类畸形全过 |
+| AC5-2 引擎 | ✅ | mock 剧本：act→observation→final 链、格式错误自愈、失败信封回填、触顶降级 |
+| AC5-3 CLI 真机 | ✅ | `step5-react/cli-smoke/`：--react（JSON 协议）S2 链式任务 6 轮完成，28×2=56 无幻觉 |
+| AC5-4 对比实验 | ✅ | `step5-react/summary.md` + 36 样本存证（上表） |
+| AC5-5 回归 | ✅ | core 62 + cli 34 全绿；native 路径行为与 Step 4 一致 |

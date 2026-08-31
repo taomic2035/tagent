@@ -1,0 +1,107 @@
+{"seq":1,"kind":"text","frame":2,"line":3,"byte":295,"text":"{"}
+{"seq":2,"kind":"text","frame":3,"line":5,"byte":570,"text":"\n"}
+{"seq":3,"kind":"text","frame":4,"line":7,"byte":846,"text":" "}
+{"seq":4,"kind":"text","frame":5,"line":9,"byte":1121,"text":" \""}
+{"seq":5,"kind":"text","frame":6,"line":11,"byte":1398,"text":"thought"}
+{"seq":6,"kind":"text","frame":7,"line":13,"byte":1679,"text":"\":"}
+{"seq":7,"kind":"text","frame":8,"line":15,"byte":1956,"text":" \""}
+{"seq":8,"kind":"text","frame":9,"line":17,"byte":2233,"text":"我已经"}
+{"seq":9,"kind":"text","frame":10,"line":19,"byte":2516,"text":"获取"}
+{"seq":10,"kind":"text","frame":11,"line":21,"byte":2796,"text":"了"}
+{"seq":11,"kind":"text","frame":12,"line":23,"byte":3073,"text":"北京的"}
+{"seq":12,"kind":"text","frame":13,"line":25,"byte":3356,"text":"天气"}
+{"seq":13,"kind":"text","frame":14,"line":27,"byte":3636,"text":"数据"}
+{"seq":14,"kind":"text","frame":15,"line":29,"byte":3916,"text":"，"}
+{"seq":15,"kind":"text","frame":16,"line":31,"byte":4193,"text":"温度为"}
+{"seq":16,"kind":"text","frame":17,"line":33,"byte":4476,"text":" "}
+{"seq":17,"kind":"text","frame":18,"line":35,"byte":4751,"text":"2"}
+{"seq":18,"kind":"text","frame":19,"line":37,"byte":5026,"text":"8"}
+{"seq":19,"kind":"text","frame":20,"line":39,"byte":5301,"text":" "}
+{"seq":20,"kind":"text","frame":21,"line":41,"byte":5576,"text":"摄氏度"}
+{"seq":21,"kind":"text","frame":22,"line":43,"byte":5859,"text":"。"}
+{"seq":22,"kind":"text","frame":23,"line":45,"byte":6136,"text":"用户"}
+{"seq":23,"kind":"text","frame":24,"line":47,"byte":6416,"text":"要求"}
+{"seq":24,"kind":"text","frame":25,"line":49,"byte":6696,"text":"将"}
+{"seq":25,"kind":"text","frame":26,"line":51,"byte":6973,"text":"温度"}
+{"seq":26,"kind":"text","frame":27,"line":53,"byte":7253,"text":"乘以"}
+{"seq":27,"kind":"text","frame":28,"line":55,"byte":7533,"text":" "}
+{"seq":28,"kind":"text","frame":29,"line":57,"byte":7808,"text":"2"}
+{"seq":29,"kind":"text","frame":30,"line":59,"byte":8083,"text":"。"}
+{"seq":30,"kind":"text","frame":31,"line":61,"byte":8360,"text":"计算"}
+{"seq":31,"kind":"text","frame":32,"line":63,"byte":8640,"text":"结果是"}
+{"seq":32,"kind":"text","frame":33,"line":65,"byte":8923,"text":" "}
+{"seq":33,"kind":"text","frame":34,"line":67,"byte":9198,"text":"2"}
+{"seq":34,"kind":"text","frame":35,"line":69,"byte":9473,"text":"8"}
+{"seq":35,"kind":"text","frame":36,"line":71,"byte":9748,"text":" *"}
+{"seq":36,"kind":"text","frame":37,"line":73,"byte":10024,"text":" "}
+{"seq":37,"kind":"text","frame":38,"line":75,"byte":10299,"text":"2"}
+{"seq":38,"kind":"text","frame":39,"line":77,"byte":10574,"text":" ="}
+{"seq":39,"kind":"text","frame":40,"line":79,"byte":10850,"text":" "}
+{"seq":40,"kind":"text","frame":41,"line":81,"byte":11125,"text":"5"}
+{"seq":41,"kind":"text","frame":42,"line":83,"byte":11400,"text":"6"}
+{"seq":42,"kind":"text","frame":43,"line":85,"byte":11675,"text":"。"}
+{"seq":43,"kind":"text","frame":44,"line":87,"byte":11952,"text":"现在"}
+{"seq":44,"kind":"text","frame":45,"line":89,"byte":12232,"text":"可以直接"}
+{"seq":45,"kind":"text","frame":46,"line":91,"byte":12518,"text":"回答"}
+{"seq":46,"kind":"text","frame":47,"line":93,"byte":12798,"text":"用户"}
+{"seq":47,"kind":"text","frame":48,"line":95,"byte":13078,"text":"，"}
+{"seq":48,"kind":"text","frame":49,"line":97,"byte":13355,"text":"无需"}
+{"seq":49,"kind":"text","frame":50,"line":99,"byte":13635,"text":"再次"}
+{"seq":50,"kind":"text","frame":51,"line":101,"byte":13915,"text":"调用"}
+{"seq":51,"kind":"text","frame":52,"line":103,"byte":14195,"text":"工具"}
+{"seq":52,"kind":"text","frame":53,"line":105,"byte":14475,"text":"。"}
+{"seq":53,"kind":"text","frame":54,"line":107,"byte":14752,"text":"\","}
+{"seq":54,"kind":"text","frame":55,"line":109,"byte":15029,"text":"\n"}
+{"seq":55,"kind":"text","frame":56,"line":111,"byte":15305,"text":" "}
+{"seq":56,"kind":"text","frame":57,"line":113,"byte":15580,"text":" \""}
+{"seq":57,"kind":"text","frame":58,"line":115,"byte":15857,"text":"action"}
+{"seq":58,"kind":"text","frame":59,"line":117,"byte":16137,"text":"\":"}
+{"seq":59,"kind":"text","frame":60,"line":119,"byte":16414,"text":" {"}
+{"seq":60,"kind":"text","frame":61,"line":121,"byte":16690,"text":"\n"}
+{"seq":61,"kind":"text","frame":62,"line":123,"byte":16966,"text":"   "}
+{"seq":62,"kind":"text","frame":63,"line":125,"byte":17243,"text":" \""}
+{"seq":63,"kind":"text","frame":64,"line":127,"byte":17520,"text":"tool"}
+{"seq":64,"kind":"text","frame":65,"line":129,"byte":17798,"text":"\":"}
+{"seq":65,"kind":"text","frame":66,"line":131,"byte":18075,"text":" \""}
+{"seq":66,"kind":"text","frame":67,"line":133,"byte":18352,"text":"get"}
+{"seq":67,"kind":"text","frame":68,"line":135,"byte":18629,"text":"_weather"}
+{"seq":68,"kind":"text","frame":69,"line":137,"byte":18911,"text":"\","}
+{"seq":69,"kind":"text","frame":70,"line":139,"byte":19188,"text":"\n"}
+{"seq":70,"kind":"text","frame":71,"line":141,"byte":19464,"text":"   "}
+{"seq":71,"kind":"text","frame":72,"line":143,"byte":19741,"text":" \""}
+{"seq":72,"kind":"text","frame":73,"line":145,"byte":20018,"text":"args"}
+{"seq":73,"kind":"text","frame":74,"line":147,"byte":20296,"text":"\":"}
+{"seq":74,"kind":"text","frame":75,"line":149,"byte":20573,"text":" {"}
+{"seq":75,"kind":"text","frame":76,"line":151,"byte":20849,"text":"\n"}
+{"seq":76,"kind":"text","frame":77,"line":153,"byte":21125,"text":"     "}
+{"seq":77,"kind":"text","frame":78,"line":155,"byte":21404,"text":" \""}
+{"seq":78,"kind":"text","frame":79,"line":157,"byte":21681,"text":"city"}
+{"seq":79,"kind":"text","frame":80,"line":159,"byte":21959,"text":"\":"}
+{"seq":80,"kind":"text","frame":81,"line":161,"byte":22236,"text":" \""}
+{"seq":81,"kind":"text","frame":82,"line":163,"byte":22513,"text":"北京"}
+{"seq":82,"kind":"text","frame":83,"line":165,"byte":22793,"text":"\","}
+{"seq":83,"kind":"text","frame":84,"line":167,"byte":23070,"text":"\n"}
+{"seq":84,"kind":"text","frame":85,"line":169,"byte":23346,"text":"     "}
+{"seq":85,"kind":"text","frame":86,"line":171,"byte":23625,"text":" \""}
+{"seq":86,"kind":"text","frame":87,"line":173,"byte":23902,"text":"date"}
+{"seq":87,"kind":"text","frame":88,"line":175,"byte":24180,"text":"\":"}
+{"seq":88,"kind":"text","frame":89,"line":177,"byte":24457,"text":" \""}
+{"seq":89,"kind":"text","frame":90,"line":179,"byte":24734,"text":"2"}
+{"seq":90,"kind":"text","frame":91,"line":181,"byte":25009,"text":"0"}
+{"seq":91,"kind":"text","frame":92,"line":183,"byte":25284,"text":"2"}
+{"seq":92,"kind":"text","frame":93,"line":185,"byte":25559,"text":"6"}
+{"seq":93,"kind":"text","frame":94,"line":187,"byte":25834,"text":"-"}
+{"seq":94,"kind":"text","frame":95,"line":189,"byte":26109,"text":"0"}
+{"seq":95,"kind":"text","frame":96,"line":191,"byte":26384,"text":"1"}
+{"seq":96,"kind":"text","frame":97,"line":193,"byte":26659,"text":"-"}
+{"seq":97,"kind":"text","frame":98,"line":195,"byte":26934,"text":"1"}
+{"seq":98,"kind":"text","frame":99,"line":197,"byte":27209,"text":"1"}
+{"seq":99,"kind":"text","frame":100,"line":199,"byte":27484,"text":"\""}
+{"seq":100,"kind":"text","frame":101,"line":201,"byte":27760,"text":"\n"}
+{"seq":101,"kind":"text","frame":102,"line":203,"byte":28036,"text":"   "}
+{"seq":102,"kind":"text","frame":103,"line":205,"byte":28313,"text":" }"}
+{"seq":103,"kind":"text","frame":104,"line":207,"byte":28589,"text":"\n"}
+{"seq":104,"kind":"text","frame":105,"line":209,"byte":28865,"text":" "}
+{"seq":105,"kind":"text","frame":106,"line":211,"byte":29140,"text":" }"}
+{"seq":106,"kind":"text","frame":107,"line":213,"byte":29416,"text":"\n"}
+{"seq":107,"kind":"text","frame":108,"line":215,"byte":29692,"text":"}"}

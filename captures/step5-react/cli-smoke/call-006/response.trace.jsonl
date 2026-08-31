@@ -1,0 +1,43 @@
+{"seq":1,"kind":"text","frame":2,"line":3,"byte":295,"text":"根据"}
+{"seq":2,"kind":"text","frame":3,"line":5,"byte":575,"text":"查询"}
+{"seq":3,"kind":"text","frame":4,"line":7,"byte":855,"text":"结果"}
+{"seq":4,"kind":"text","frame":5,"line":9,"byte":1135,"text":"，"}
+{"seq":5,"kind":"text","frame":6,"line":11,"byte":1412,"text":"北京"}
+{"seq":6,"kind":"text","frame":7,"line":13,"byte":1692,"text":"今天的"}
+{"seq":7,"kind":"text","frame":8,"line":15,"byte":1975,"text":"天气"}
+{"seq":8,"kind":"text","frame":9,"line":17,"byte":2255,"text":"是"}
+{"seq":9,"kind":"text","frame":10,"line":19,"byte":2532,"text":"晴天"}
+{"seq":10,"kind":"text","frame":11,"line":21,"byte":2812,"text":"，"}
+{"seq":11,"kind":"text","frame":12,"line":23,"byte":3089,"text":"温度为"}
+{"seq":12,"kind":"text","frame":13,"line":25,"byte":3372,"text":" "}
+{"seq":13,"kind":"text","frame":14,"line":27,"byte":3647,"text":"2"}
+{"seq":14,"kind":"text","frame":15,"line":29,"byte":3922,"text":"8"}
+{"seq":15,"kind":"text","frame":16,"line":31,"byte":4197,"text":" "}
+{"seq":16,"kind":"text","frame":17,"line":33,"byte":4472,"text":"摄氏度"}
+{"seq":17,"kind":"text","frame":18,"line":35,"byte":4755,"text":"。"}
+{"seq":18,"kind":"text","frame":19,"line":37,"byte":5032,"text":"\n\n"}
+{"seq":19,"kind":"text","frame":20,"line":39,"byte":5310,"text":"将"}
+{"seq":20,"kind":"text","frame":21,"line":41,"byte":5587,"text":"温度"}
+{"seq":21,"kind":"text","frame":22,"line":43,"byte":5867,"text":"乘以"}
+{"seq":22,"kind":"text","frame":23,"line":45,"byte":6147,"text":" "}
+{"seq":23,"kind":"text","frame":24,"line":47,"byte":6422,"text":"2"}
+{"seq":24,"kind":"text","frame":25,"line":49,"byte":6697,"text":"："}
+{"seq":25,"kind":"text","frame":26,"line":51,"byte":6974,"text":"\n"}
+{"seq":26,"kind":"text","frame":27,"line":53,"byte":7250,"text":"2"}
+{"seq":27,"kind":"text","frame":28,"line":55,"byte":7525,"text":"8"}
+{"seq":28,"kind":"text","frame":29,"line":57,"byte":7800,"text":" ×"}
+{"seq":29,"kind":"text","frame":30,"line":59,"byte":8077,"text":" "}
+{"seq":30,"kind":"text","frame":31,"line":61,"byte":8352,"text":"2"}
+{"seq":31,"kind":"text","frame":32,"line":63,"byte":8627,"text":" ="}
+{"seq":32,"kind":"text","frame":33,"line":65,"byte":8903,"text":" "}
+{"seq":33,"kind":"text","frame":34,"line":67,"byte":9178,"text":"5"}
+{"seq":34,"kind":"text","frame":35,"line":69,"byte":9453,"text":"6"}
+{"seq":35,"kind":"text","frame":36,"line":71,"byte":9728,"text":"\n\n"}
+{"seq":36,"kind":"text","frame":37,"line":73,"byte":10006,"text":"所以"}
+{"seq":37,"kind":"text","frame":38,"line":75,"byte":10286,"text":"，"}
+{"seq":38,"kind":"text","frame":39,"line":77,"byte":10563,"text":"计算"}
+{"seq":39,"kind":"text","frame":40,"line":79,"byte":10843,"text":"结果是"}
+{"seq":40,"kind":"text","frame":41,"line":81,"byte":11126,"text":" **"}
+{"seq":41,"kind":"text","frame":42,"line":83,"byte":11403,"text":"5"}
+{"seq":42,"kind":"text","frame":43,"line":85,"byte":11678,"text":"6"}
+{"seq":43,"kind":"text","frame":44,"line":87,"byte":11953,"text":"**。"}

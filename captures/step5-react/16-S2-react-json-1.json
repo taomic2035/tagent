@@ -1,0 +1,10 @@
+{
+  "task": "S2",
+  "mode": "react-json",
+  "sample": 1,
+  "ok": true,
+  "rounds": 3,
+  "tokens": 136,
+  "ms": 13235,
+  "answer": "北京今天的天气是晴天，温度 28 摄氏度。将温度乘以 2 后为 56 摄氏度。"
+}
