@@ -15,16 +15,18 @@ CAP() {  # CAP <目录> <stream: true|false> <含tools: yes|no>
   mkdir -p "$dir"
   python3 - "$dir" "$stream" "$tools" <<'PYEOF'
 import json, sys, os
+# 注：tools/stream 已是 bool（下方 argv 解析），判断须用真值而非 == "yes"
+#     （旧版 == "yes" 恒假，2026-08-31 Windows 迁移实测发现并修复）
 d, stream, tools = sys.argv[1], sys.argv[2] == "true", sys.argv[3] == "yes"
 mp = open(".env.local").read().split("=", 1)[1].strip()
 req = {
     "model": mp,
     "messages": [{"role": "user", "content":
-        "北京今天天气怎么样？ /no_think" if tools == "yes" else "用两三句话介绍一下秋天"}],
+        "北京今天天气怎么样？ /no_think" if tools else "用两三句话介绍一下秋天"}],
     "max_tokens": 150,
     "stream": stream,
 }
-if tools == "yes":
+if tools:
     req["tools"] = [{"type": "function", "function": {
         "name": "get_weather", "description": "查询城市天气",
         "parameters": {"type": "object",
