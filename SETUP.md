@@ -94,6 +94,8 @@ llama-server -m Qwen3.5-4B-UD-Q4_K_XL.gguf \
 
 结论：MTP 机制正常工作但接受率不足，当前不要开。mlx-lm 主线目前会在加载时丢弃 Qwen3.5 的 `mtp.*` 权重（源码 `models/qwen3_5.py` sanitize 阶段），MTP 路径依赖 mlx-vlm。等 mlx-lm 原生支持后值得重测。
 
+> **跨平台复审（2026-08-31）**：llama.cpp 侧已有原生路径且实测为**正收益**（Windows CPU +20~40%，接受率 0.626）——"引擎原生支持后值得重测"在 llama.cpp 上应验，Mac 侧待 mlx-lm 跟进。详见 §8.7。
+
 ### 4.3 低电量模式影响（最关键的一项系统设置）
 
 | 指标 | lowpowermode=1 | lowpowermode=0 | 提升 |
@@ -226,6 +228,41 @@ UHD 770 无矩阵核心（bench 设备探测 `matrix cores: none`）且与 CPU �
 D:\LLM\
 ├── llama-cpp\cpu\        # llama.cpp b10621 CPU 版（llama-server.exe 等）
 ├── llama-cpp\vulkan\     # Vulkan 版（核显对照实验备用）
-├── models\Qwen3.5-4B-UD-Q4_K_XL.gguf   # 2912 MB，与 Mac 备份同款
+├── models\Qwen3.5-4B-UD-Q4_K_XL.gguf   # 2912 MB，与 Mac 备份同款（日常默认）
+├── models\Qwen3.5-4B-MTP-Q4_K_M.gguf   # 2834 MB，MTP 一体模型（投机解码用，见 8.7）
+├── models\Qwen3.5-0.8B-UD-Q4_K_XL.gguf # 559 MB，经典草稿模型（实验对照）
 └── llama_server.log      # 后台运行日志
 ```
+
+### 8.7 MTP 投机解码实测（2026-08-31，对 Mac §4.2 结论的跨平台复审）
+
+> Mac 侧结论：mlx-vlm 旁路 MTP 为**负优化**（接受率不足，草稿开销抵不过省的步数），
+> "等引擎原生支持后值得重测"。Windows/llama.cpp 恰好提供了原生路径——本次复审完成。
+
+**测试对象与加载方式**
+
+- 一体模型 `Qwen3.5-4B-MTP-Q4_K_M.gguf`（ModelScope `unsloth/Qwen3.5-4B-MTP-GGUF`）：
+  张量结构 = 基础 32 层（blk.0~31）+ **blk.32 即 MTP 头**（`eh_proj/hnorm/enorm/shared_head_norm`，DeepSeek 系 MTP 命名）。所谓"一体"就是基础权重和 MTP 头打包在同一文件。
+- llama.cpp b10621 原生支持：`-md 同一文件 --spec-type draft-mtp`（从草稿文件取 MTP 头）
+- 注意：MTP 仓库中 `MTP-UD-Q4_K_XL.gguf` 在 ModelScope 服务端是空文件（API 报"文件内容为空"），实际可用的是不带 MTP- 前缀的量化档（它们同样含头，比基础版同档大 ~90MB）
+
+**数据（server 路径真实请求，同题「秋天描写 256 token」×3，timings 字段直读）**
+
+| 配置 | 生成 tok/s | 接受率 | 判定 |
+|---|---|---|---|
+| UD-Q4_K_XL 无投机（部署基线） | 10.9 ~ 12.6 | — | 基准 |
+| **Q4_K_M 无投机**（同 MTP 文件、关 spec） | **14.9** | — | 量化档本身更快（K-quant 内核对 CPU 友好） |
+| **Q4_K_M + MTP（n-max=3，默认）** | **17.6 ~ 21.3** | **0.626**（166/265，mean len 2.87） | ✅ **比同档基线 +20~40%；比部署基线 +50~80%** |
+| Q4_K_M + MTP（n-max=5） | 16.2 ~ 17.3 | — | 深链多被拒，不如默认 3 |
+| UD-Q4_K_XL + 0.8B 草稿（draft-simple，n-max=8） | 8.2 ~ 8.5 | 0.338 | ❌ 负优化 -30% |
+| UD-Q4_K_XL + 0.8B 草稿（n-max=4） | 10.5 ~ 11.4 | — | ❌ 仍低于基线 |
+
+**结论与解释**
+
+1. **MTP 在 Windows CPU 上有实打实的收益**：同量化档 +20~40%。与 Mac 旁路实验结论相反，原因是 llama.cpp 走官方 draft-mtp 路径：草稿只需跑单层 MTP 头（mlx-vlm 旁路是整模型流程），且 CPU 批式验证把「一次权重扫描验证多个 token」的带宽收益吃满（CPU 解码本就是带宽受限）。
+2. **0.8B 当草稿不行**：接受率 0.338——0.8B 太弱（与 §二选型时"tool calling 不可靠"的判断一致），弱草稿 + CPU 上下文切换开销 = 负优化。**投机解码的瓶颈是草稿质量，不是草稿速度。**
+3. **内存代价**：进程私有内存 6.3 GB（草稿是整份加载而非只取头，约 +3.2 GB）；32 GB 无压力，小内存机器需留意。
+4. **复现性注意（衔接 PROTOCOL §10）**：贪心（temp=0）下「开/关投机解码」的输出**不保证逐字节一致**——批式验证与逐 token 生成的 GEMM 归约顺序不同，浮点噪声会在近平局 token 上翻转 argmax（实测同题在 409 字符处 "Melancholic"↔"Calm" 分叉，其后各自保持连贯）。分布正确性不受影响（拒绝采样数学等价），但**严格重放/复现场景必须关投机解码**。
+5. n-max 调参：默认 3 已最优（接受率 0.63 下 5 深链大部分被拒）。
+
+**启用方式**：`.\start_llm.ps1 -Mtp`（agent 侧零改动，已实测工具调用链路正常）。

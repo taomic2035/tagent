@@ -75,7 +75,7 @@ Agent 系统拆成两个重量级完全不同的层：
 | 平台 | 引擎 | 状态 | 说明 |
 |---|---|---|---|
 | Mac | **MLX**（当前方案） | ✅ 已就绪，实测 38 tok/s | Apple Silicon 专属；llama.cpp 因 Qwen3.5 GDN 架构未优化仅 15 tok/s，实测淘汰（详见 SETUP.md） |
-| Windows / Linux | llama.cpp + GGUF | ✅ Windows 已就绪（2026-08-31 迁移实测 CPU 11.6~13 tok/s） | 启动脚本 `start_llm.ps1`；GGUF 与 Mac 同款量化；**agent 代码零改动**（NFR-7 实证，六场景复验收见 docs/ACCEPTANCE.md 附录）；Linux 待测 |
+| Windows / Linux | llama.cpp + GGUF | ✅ Windows 已就绪（2026-08-31 迁移实测 CPU 11.6~13 tok/s；开 MTP 投机解码 +20~40%，见 SETUP §8.7） | 启动脚本 `start_llm.ps1`（`-Mtp` 开投机解码）；GGUF 与 Mac 同款量化；**agent 代码零改动**（NFR-7 实证，六场景复验收见 docs/ACCEPTANCE.md 附录）；Linux 待测 |
 | Android | llama.cpp（NDK 交叉编译） | 远期 | 生态成熟 |
 | HarmonyOS | llama.cpp（OHOS NDK 交叉编译） | 远期 | [社区已有 llama.cpp-server-ohos 移植](https://github.com/Aloereed/llama.cpp-server-ohos)；华为官方有[鸿蒙开发板跑 DeepSeek R1 教程](https://developer.huawei.com/consumer/cn/blog/topic/03175975712912026) |
 

@@ -213,6 +213,7 @@ MLX 默认 temp=0.0、llama.cpp 默认 temp=0.8。实测（2026-08-31，同请�
 使用规则：
 - **追溯**（"这个 token 从哪来"）→ 用 trace 溯源表，永远可行，不依赖温度
 - **复现**（"再跑一遍得到同样输出"）→ 请求层永远可行；响应层需 `temperature: 0`（agent 场景代价：回答多样性下降，调试协议时用，日常对话不必）
+- **投机解码例外（2026-08-31 Windows/llama.cpp 实测，SETUP §8.7）**：即使 temp=0，「开/关投机解码」也不保证逐字节一致——批式验证与逐 token 生成的 GEMM 归约顺序不同，近平局 token 的贪心 argmax 可能翻转（同题 409 字符处实测分叉，各自保持连贯）。分布正确性不受影响（拒绝采样数学等价），但**严格重放场景必须关闭投机解码**（`start_llm.ps1` 不带 `-Mtp` 即可）
 
 **待考据发现（06 组实录）**：用户消息尾部加 `/no_think` 在 Qwen3.5 + MLX server 上**未关闭思考**——80 个生成 token 全部进入 reasoning，正文为空，finish_reason=length（与 §5.3 length 教训互证）。Qwen3.5 的思考开关机制与 Qwen3 的 `/no_think` 约定不同，正确开关方式待实验（候选：chat_template_kwargs / 模板级 enable_thinking），考据后更新本节。
 
