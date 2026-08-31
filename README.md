@@ -46,7 +46,7 @@ bash scripts/acceptance-win.sh      # Windows（llama.cpp 引擎，Git Bash）
 
 - [x] **Step 1** 最小 agent loop：while 循环 + 工具定义 + 解析 `tool_calls` + 执行 + 结果回填上下文（TypeScript，`packages/core` 零依赖手搓）——**已验收，见 [docs/ACCEPTANCE.md](docs/ACCEPTANCE.md)**
 - [x] **Step 2** 多工具与错误处理：工具执行失败的重试与降级策略——**已验收（故障注入法，AC2-1~4），见 ACCEPTANCE.md Step 2 章节**：超时/瞬时重试/重试耗尽信封/迭代触顶的无 tools 协议级降级
-- [ ] **Step 3** 上下文管理：对话历史裁剪、KV cache 复用对 agent 的意义
+- [x] **Step 3** 上下文管理：对话历史裁剪、KV cache 复用——**已验收（AC3-1~5）**：回合完整+双水位裁剪、KV cache 三段实证（追加命中 78%/破坏骤降/裁剪后恢复）、估算器校准与口径发现
 - [ ] **Step 4** 思考模式实验：同一模型 thinking 开/关下任务成功率对比
 - [ ] **Step 5** ReAct 与规划：思考-行动-观察显式分离
 - [ ] **Step 6** 记忆机制：短期记忆与长期记忆的实现与取舍

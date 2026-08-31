@@ -108,3 +108,22 @@ node scripts/replay.mjs captures/ac-2-calculate/session/call-001/request.json --
 - FR-13 分类设计的实证价值：`:down` 场景若对确定性失败也重试，只会白等两轮；若对瞬时失败不重试（Step 1 行为），AC2-2 就要模型自己再调一轮（多花一次 LLM 请求 + 一轮延迟）。分类正确时两类场景都是最优路径。
 - 降级的协议级保证优于 prompt 恳求：call-002 的请求体里根本没有 `tools` 字段，模板层就没了工具段——模型"想调也没得调"，`finish_reason` 不可能是 `tool_calls`。
 - AC2-1 的 10.3s 工具耗时全部花在两次 5s 超时等待上——生产上 `timeoutMs` 应按工具的真实延迟分布设定（本实验故意放宽以便观察）。
+
+## Step 3 真机验收报告（AC3-1~5，2026-08-31）
+
+> 引擎：llama.cpp b10621 CPU ｜ 复现入口：`node scripts/kvcache-experiment.mjs`（AC3-4）、
+> `bash scripts/acceptance-step3.sh`（AC3-2/3）、`node scripts/estimator-calibration.mjs`（AC3-1）
+
+| # | 场景 | 判定 | 关键证据 |
+|---|---|---|---|
+| AC3-1 | 估算器校准 | ✅（含口径发现） | `step3-kvcache/estimator-calibration.md`：无工具误差 **+1%/+9%**（远优于 ±50% 标准）；带工具 -73% 是口径差非误差——`prompt_tokens` 含模板+工具 Schema 渲染（固定开销 ≈409 token ≈ 3.7 倍），预算语义 = messages 自身（已写明） |
+| AC3-2 | 回合完整性 | ✅ | 单测（裁剪后无孤立 tool 消息）+ AC3-3 的 /dump 实证：脚本断言通过 |
+| AC3-3 | 触发裁剪 | ✅ | `step3-ac3-3-trim/`：三问触发 1 次裁剪（**457→222** est，移除 8 条）；请求消息数序列 [2,4,6,8,10,**4**,8] 可视化双水位；对话全部完成 |
+| AC3-4 | KV cache 复用 | ✅ | `step3-kvcache/experiment.md` 三段对照：**连续追加命中 0%→78%**（cache_n 0→87，每轮仅处理 ~25 新 token）；**前缀破坏骤降 26%**；**双水位裁剪后一次性付 35% 代价、下轮恢复 78%** |
+| AC3-5 | 回归 | ✅ | core 48 + cli 34 全绿；无预算时行为与 Step 2 一致（零事件回归测试） |
+
+**有含金量的观察**：
+
+1. **双水位 vs 滑动窗口的经济学被量化**：B 段证明"每轮裁一点"每轮都付全量 prompt 处理税（CPU 上 32~39 tok/s 的处理速度是真实成本）；双水位把这笔税摊薄成偶发一次（C1 一次 35% 代价，之后回到 78% 命中）。
+2. **预算口径**：`--max-context-tokens` 算的是 messages 自身；真实引擎 prompt 还要加模板+工具固定开销（2 工具 ≈ +409 token）。设预算时从引擎上下文上限（16K）倒推要扣掉这层。
+3. **实验方法论**：cache 实验重跑会被 slot 暖缓存污染（实测踩坑：重跑时 A1 就有 16 命中、B 段命中 2575%）——实验脚本加 run nonce 冷启动后数据才干净。
