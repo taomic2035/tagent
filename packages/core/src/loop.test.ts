@@ -318,3 +318,56 @@ test("降级·降级请求中模型仍吐 tool_calls 分片（协议矛盾）：
   assert.equal(events.at(-1)?.type, "final");
   assert.ok(!messages.some((m) => m.role === "tool")); // 没执行也没回填
 });
+
+// ============================================================
+// Step 3：上下文预算裁剪（FR-20/21，DESIGN §12.3）
+// ============================================================
+
+test("裁剪·预算触发：context-trimmed 事件 + messages 原地替换 + 请求消息数下降", async () => {
+  // 构造带超长历史的会话：system + 5 个历史回合 + 本轮 user
+  const messages: ChatMessage[] = [{ role: "user", content: "第一轮".repeat(30) }];
+  // 直接预置历史（模拟多轮会话后的 messages）
+  messages.push({ role: "assistant", content: "第一轮回答".repeat(30) });
+  for (let i = 2; i <= 5; i++) {
+    messages.push({ role: "user", content: `第${i}轮的很长的问题`.repeat(20) });
+    messages.push({ role: "assistant", content: `第${i}轮的很长的回答`.repeat(20) });
+  }
+  messages.push({ role: "user", content: "现在 echo 一下 hello" });
+  const messagesRef = messages; // 引用不变断言用
+
+  const requests: number[] = [];
+  const client = {
+    async *stream(req: { messages: ChatMessage[] }): AsyncGenerator<StreamEvent> {
+      requests.push(req.messages.length);
+      yield toolDelta(0, "id-1", '{"text":"hello"}');
+      yield done("tool_calls");
+    },
+  };
+  // 只跑 1 轮（触发一次请求），预算设小到必然裁剪历史回合
+  const events = await collect(
+    runAgent(
+      { client, registry: makeRegistry(), config: { ...config, systemPrompt: "", maxIterations: 1, contextBudgetTokens: 120 } },
+      messages,
+    ),
+  );
+  const trimmed = events.find((e) => e.type === "context-trimmed");
+  assert.ok(trimmed, "应产生 context-trimmed 事件");
+  if (trimmed?.type === "context-trimmed") {
+    assert.ok(trimmed.removedMessages >= 2, "至少裁掉一个完整回合");
+    assert.ok(trimmed.toTokens < trimmed.fromTokens);
+  }
+  assert.equal(messages, messagesRef, "messages 引用不变（原地替换）");
+  assert.ok(messages[0]?.role === "user", "裁剪后首条应是 user（无 system 配置时）");
+  assert.equal(messages.at(-1)?.role, "assistant", "runAgent 结束后末条是终答 assistant");
+  assert.ok(requests[0] !== undefined && requests[0]! < 11, "请求消息数应显著小于裁剪前");
+  // 当前轮 user 保留（否则模型不知道要干什么）
+  assert.ok(messages.some((m) => m.role === "user" && m.content.includes("echo")));
+});
+
+test("裁剪·无预算零事件（回归：Step 1/2 行为不变）", async () => {
+  const messages: ChatMessage[] = [{ role: "user", content: "你好" }];
+  const events = await collect(
+    runAgent(makeDeps(scriptedClient([[{ type: "text-delta", delta: "好" }, done("stop")]]), makeRegistry()), messages),
+  );
+  assert.ok(!events.some((e) => e.type === "context-trimmed"));
+});

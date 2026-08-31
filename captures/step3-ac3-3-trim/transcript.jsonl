@@ -1,0 +1,853 @@
+{"ts":"2026-08-31T08:29:51.618Z","ev":{"type":"round-start","round":1}}
+{"ts":"2026-08-31T08:29:51.618Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"北京今天天气怎么样？"}]}}
+{"ts":"2026-08-31T08:29:57.187Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:29:57.255Z","ev":{"type":"reasoning-delta","delta":"想知道"}}
+{"ts":"2026-08-31T08:29:57.323Z","ev":{"type":"reasoning-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:29:57.391Z","ev":{"type":"reasoning-delta","delta":"今天的"}}
+{"ts":"2026-08-31T08:29:57.456Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:29:57.530Z","ev":{"type":"reasoning-delta","delta":"情况"}}
+{"ts":"2026-08-31T08:29:57.600Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:29:57.671Z","ev":{"type":"reasoning-delta","delta":"我"}}
+{"ts":"2026-08-31T08:29:57.738Z","ev":{"type":"reasoning-delta","delta":"需要使用"}}
+{"ts":"2026-08-31T08:29:57.804Z","ev":{"type":"reasoning-delta","delta":" get"}}
+{"ts":"2026-08-31T08:29:57.870Z","ev":{"type":"reasoning-delta","delta":"_weather"}}
+{"ts":"2026-08-31T08:29:57.947Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:29:58.016Z","ev":{"type":"reasoning-delta","delta":"工具"}}
+{"ts":"2026-08-31T08:29:58.082Z","ev":{"type":"reasoning-delta","delta":"来"}}
+{"ts":"2026-08-31T08:29:58.156Z","ev":{"type":"reasoning-delta","delta":"查询"}}
+{"ts":"2026-08-31T08:29:58.222Z","ev":{"type":"reasoning-delta","delta":"北京的"}}
+{"ts":"2026-08-31T08:29:58.296Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:29:58.367Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:29:58.436Z","ev":{"type":"reasoning-delta","delta":"根据"}}
+{"ts":"2026-08-31T08:29:58.512Z","ev":{"type":"reasoning-delta","delta":"工具"}}
+{"ts":"2026-08-31T08:29:58.578Z","ev":{"type":"reasoning-delta","delta":"定义"}}
+{"ts":"2026-08-31T08:29:58.649Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:29:58.720Z","ev":{"type":"reasoning-delta","delta":"这个"}}
+{"ts":"2026-08-31T08:29:58.790Z","ev":{"type":"reasoning-delta","delta":"工具"}}
+{"ts":"2026-08-31T08:29:58.856Z","ev":{"type":"reasoning-delta","delta":"支持"}}
+{"ts":"2026-08-31T08:29:58.923Z","ev":{"type":"reasoning-delta","delta":"查询"}}
+{"ts":"2026-08-31T08:29:58.991Z","ev":{"type":"reasoning-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:29:59.059Z","ev":{"type":"reasoning-delta","delta":"/"}}
+{"ts":"2026-08-31T08:29:59.124Z","ev":{"type":"reasoning-delta","delta":"上海"}}
+{"ts":"2026-08-31T08:29:59.195Z","ev":{"type":"reasoning-delta","delta":"/"}}
+{"ts":"2026-08-31T08:29:59.272Z","ev":{"type":"reasoning-delta","delta":"广州"}}
+{"ts":"2026-08-31T08:29:59.340Z","ev":{"type":"reasoning-delta","delta":"/"}}
+{"ts":"2026-08-31T08:29:59.414Z","ev":{"type":"reasoning-delta","delta":"深圳"}}
+{"ts":"2026-08-31T08:29:59.485Z","ev":{"type":"reasoning-delta","delta":"/"}}
+{"ts":"2026-08-31T08:29:59.562Z","ev":{"type":"reasoning-delta","delta":"杭州"}}
+{"ts":"2026-08-31T08:29:59.641Z","ev":{"type":"reasoning-delta","delta":"的天气"}}
+{"ts":"2026-08-31T08:29:59.707Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:29:59.770Z","ev":{"type":"reasoning-delta","delta":"参数"}}
+{"ts":"2026-08-31T08:29:59.835Z","ev":{"type":"reasoning-delta","delta":"需要"}}
+{"ts":"2026-08-31T08:29:59.901Z","ev":{"type":"reasoning-delta","delta":"城市"}}
+{"ts":"2026-08-31T08:29:59.967Z","ev":{"type":"reasoning-delta","delta":"名"}}
+{"ts":"2026-08-31T08:30:00.035Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:00.099Z","ev":{"type":"reasoning-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T08:30:00.167Z","ev":{"type":"reasoning-delta","delta":"我需要"}}
+{"ts":"2026-08-31T08:30:00.235Z","ev":{"type":"reasoning-delta","delta":"调用"}}
+{"ts":"2026-08-31T08:30:00.299Z","ev":{"type":"reasoning-delta","delta":" get"}}
+{"ts":"2026-08-31T08:30:00.368Z","ev":{"type":"reasoning-delta","delta":"_weather"}}
+{"ts":"2026-08-31T08:30:00.437Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:30:00.510Z","ev":{"type":"reasoning-delta","delta":"工具"}}
+{"ts":"2026-08-31T08:30:00.580Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:00.648Z","ev":{"type":"reasoning-delta","delta":"参数"}}
+{"ts":"2026-08-31T08:30:00.716Z","ev":{"type":"reasoning-delta","delta":" city"}}
+{"ts":"2026-08-31T08:30:00.783Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:30:00.848Z","ev":{"type":"reasoning-delta","delta":"设置为"}}
+{"ts":"2026-08-31T08:30:00.912Z","ev":{"type":"reasoning-delta","delta":"\""}}
+{"ts":"2026-08-31T08:30:00.975Z","ev":{"type":"reasoning-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:30:01.041Z","ev":{"type":"reasoning-delta","delta":"\""}}
+{"ts":"2026-08-31T08:30:01.105Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:01.172Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:30:03.055Z","ev":{"type":"tool-call","id":"oQwCgeZdT2ilu4AJ56JynqAFnfY2UAXK","name":"get_weather","args":{"city":"北京"}}}
+{"ts":"2026-08-31T08:30:03.058Z","ev":{"type":"tool-result","id":"oQwCgeZdT2ilu4AJ56JynqAFnfY2UAXK","name":"get_weather","result":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"北京\",\"condition\":\"晴\",\"tempC\":28,\"humidity\":40,\"aqi\":55,\"fetchedAt\":\"2026-08-31T08:30:03.057Z\",\"source\":\"mock\"}}"}}
+{"ts":"2026-08-31T08:30:03.058Z","ev":{"type":"round-start","round":2}}
+{"ts":"2026-08-31T08:30:03.058Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"北京今天天气怎么样？"},{"role":"assistant","content":null,"tool_calls":[{"id":"oQwCgeZdT2ilu4AJ56JynqAFnfY2UAXK","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"北京\"}"}}]},{"role":"tool","tool_call_id":"oQwCgeZdT2ilu4AJ56JynqAFnfY2UAXK","content":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"北京\",\"condition\":\"晴\",\"tempC\":28,\"humidity\":40,\"aqi\":55,\"fetchedAt\":\"2026-08-31T08:30:03.057Z\",\"source\":\"mock\"}}"}]}}
+{"ts":"2026-08-31T08:30:04.299Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:30:04.376Z","ev":{"type":"reasoning-delta","delta":"询问"}}
+{"ts":"2026-08-31T08:30:04.441Z","ev":{"type":"reasoning-delta","delta":"北京的"}}
+{"ts":"2026-08-31T08:30:04.512Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:30:04.585Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:04.653Z","ev":{"type":"reasoning-delta","delta":"我已经"}}
+{"ts":"2026-08-31T08:30:04.719Z","ev":{"type":"reasoning-delta","delta":"通过"}}
+{"ts":"2026-08-31T08:30:04.785Z","ev":{"type":"reasoning-delta","delta":"工具"}}
+{"ts":"2026-08-31T08:30:04.862Z","ev":{"type":"reasoning-delta","delta":"获取"}}
+{"ts":"2026-08-31T08:30:04.920Z","ev":{"type":"reasoning-delta","delta":"了"}}
+{"ts":"2026-08-31T08:30:04.988Z","ev":{"type":"reasoning-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:30:05.053Z","ev":{"type":"reasoning-delta","delta":"当天的"}}
+{"ts":"2026-08-31T08:30:05.119Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:30:05.183Z","ev":{"type":"reasoning-delta","delta":"信息"}}
+{"ts":"2026-08-31T08:30:05.250Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:30:05.314Z","ev":{"type":"reasoning-delta","delta":"晴天"}}
+{"ts":"2026-08-31T08:30:05.383Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:05.449Z","ev":{"type":"reasoning-delta","delta":"温度"}}
+{"ts":"2026-08-31T08:30:05.518Z","ev":{"type":"reasoning-delta","delta":"2"}}
+{"ts":"2026-08-31T08:30:05.595Z","ev":{"type":"reasoning-delta","delta":"8"}}
+{"ts":"2026-08-31T08:30:05.664Z","ev":{"type":"reasoning-delta","delta":"摄氏度"}}
+{"ts":"2026-08-31T08:30:05.730Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:05.795Z","ev":{"type":"reasoning-delta","delta":"湿度"}}
+{"ts":"2026-08-31T08:30:05.861Z","ev":{"type":"reasoning-delta","delta":"4"}}
+{"ts":"2026-08-31T08:30:05.928Z","ev":{"type":"reasoning-delta","delta":"0"}}
+{"ts":"2026-08-31T08:30:05.991Z","ev":{"type":"reasoning-delta","delta":"%，"}}
+{"ts":"2026-08-31T08:30:06.059Z","ev":{"type":"reasoning-delta","delta":"空气质量"}}
+{"ts":"2026-08-31T08:30:06.131Z","ev":{"type":"reasoning-delta","delta":"指数"}}
+{"ts":"2026-08-31T08:30:06.197Z","ev":{"type":"reasoning-delta","delta":"5"}}
+{"ts":"2026-08-31T08:30:06.266Z","ev":{"type":"reasoning-delta","delta":"5"}}
+{"ts":"2026-08-31T08:30:06.332Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:06.402Z","ev":{"type":"reasoning-delta","delta":"现在"}}
+{"ts":"2026-08-31T08:30:06.469Z","ev":{"type":"reasoning-delta","delta":"需要将"}}
+{"ts":"2026-08-31T08:30:06.675Z","ev":{"type":"reasoning-delta","delta":"这些信息"}}
+{"ts":"2026-08-31T08:30:06.676Z","ev":{"type":"reasoning-delta","delta":"整理"}}
+{"ts":"2026-08-31T08:30:06.677Z","ev":{"type":"reasoning-delta","delta":"成"}}
+{"ts":"2026-08-31T08:30:06.739Z","ev":{"type":"reasoning-delta","delta":"友好的"}}
+{"ts":"2026-08-31T08:30:06.808Z","ev":{"type":"reasoning-delta","delta":"回答"}}
+{"ts":"2026-08-31T08:30:06.877Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:06.940Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:30:07.143Z","ev":{"type":"text-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:30:07.211Z","ev":{"type":"text-delta","delta":"今天"}}
+{"ts":"2026-08-31T08:30:07.278Z","ev":{"type":"text-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:30:07.351Z","ev":{"type":"text-delta","delta":"晴"}}
+{"ts":"2026-08-31T08:30:07.427Z","ev":{"type":"text-delta","delta":"好"}}
+{"ts":"2026-08-31T08:30:07.496Z","ev":{"type":"text-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:07.570Z","ev":{"type":"text-delta","delta":"气温"}}
+{"ts":"2026-08-31T08:30:07.650Z","ev":{"type":"text-delta","delta":"2"}}
+{"ts":"2026-08-31T08:30:07.718Z","ev":{"type":"text-delta","delta":"8"}}
+{"ts":"2026-08-31T08:30:07.789Z","ev":{"type":"text-delta","delta":"°C"}}
+{"ts":"2026-08-31T08:30:07.859Z","ev":{"type":"text-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:07.925Z","ev":{"type":"text-delta","delta":"湿度"}}
+{"ts":"2026-08-31T08:30:07.996Z","ev":{"type":"text-delta","delta":"4"}}
+{"ts":"2026-08-31T08:30:08.061Z","ev":{"type":"text-delta","delta":"0"}}
+{"ts":"2026-08-31T08:30:08.129Z","ev":{"type":"text-delta","delta":"%，"}}
+{"ts":"2026-08-31T08:30:08.199Z","ev":{"type":"text-delta","delta":"空气质量"}}
+{"ts":"2026-08-31T08:30:08.268Z","ev":{"type":"text-delta","delta":"指数"}}
+{"ts":"2026-08-31T08:30:08.338Z","ev":{"type":"text-delta","delta":"5"}}
+{"ts":"2026-08-31T08:30:08.404Z","ev":{"type":"text-delta","delta":"5"}}
+{"ts":"2026-08-31T08:30:08.475Z","ev":{"type":"text-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:08.540Z","ev":{"type":"text-delta","delta":"今天"}}
+{"ts":"2026-08-31T08:30:08.618Z","ev":{"type":"text-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:30:08.689Z","ev":{"type":"text-delta","delta":"不错"}}
+{"ts":"2026-08-31T08:30:08.759Z","ev":{"type":"text-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:08.829Z","ev":{"type":"text-delta","delta":"适合"}}
+{"ts":"2026-08-31T08:30:08.898Z","ev":{"type":"text-delta","delta":"外出"}}
+{"ts":"2026-08-31T08:30:08.969Z","ev":{"type":"text-delta","delta":"活动"}}
+{"ts":"2026-08-31T08:30:09.036Z","ev":{"type":"text-delta","delta":"！"}}
+{"ts":"2026-08-31T08:30:09.112Z","ev":{"type":"final","message":{"role":"assistant","content":"北京今天天气晴好，气温28°C，湿度40%，空气质量指数55。今天天气不错，适合外出活动！"},"rounds":2,"usage":{"promptTokens":0,"completionTokens":0}}}
+{"ts":"2026-08-31T08:30:09.402Z","ev":{"type":"round-start","round":1}}
+{"ts":"2026-08-31T08:30:09.403Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"北京今天天气怎么样？"},{"role":"assistant","content":null,"tool_calls":[{"id":"oQwCgeZdT2ilu4AJ56JynqAFnfY2UAXK","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"北京\"}"}}]},{"role":"tool","tool_call_id":"oQwCgeZdT2ilu4AJ56JynqAFnfY2UAXK","content":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"北京\",\"condition\":\"晴\",\"tempC\":28,\"humidity\":40,\"aqi\":55,\"fetchedAt\":\"2026-08-31T08:30:03.057Z\",\"source\":\"mock\"}}"},{"role":"assistant","content":"北京今天天气晴好，气温28°C，湿度40%，空气质量指数55。今天天气不错，适合外出活动！"},{"role":"user","content":"那上海呢？"}]}}
+{"ts":"2026-08-31T08:30:11.653Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:30:11.723Z","ev":{"type":"reasoning-delta","delta":"现在"}}
+{"ts":"2026-08-31T08:30:11.790Z","ev":{"type":"reasoning-delta","delta":"想"}}
+{"ts":"2026-08-31T08:30:11.863Z","ev":{"type":"reasoning-delta","delta":"查询"}}
+{"ts":"2026-08-31T08:30:11.933Z","ev":{"type":"reasoning-delta","delta":"上海的"}}
+{"ts":"2026-08-31T08:30:12.001Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:30:12.070Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:12.136Z","ev":{"type":"reasoning-delta","delta":"我"}}
+{"ts":"2026-08-31T08:30:12.208Z","ev":{"type":"reasoning-delta","delta":"需要使用"}}
+{"ts":"2026-08-31T08:30:12.280Z","ev":{"type":"reasoning-delta","delta":"get"}}
+{"ts":"2026-08-31T08:30:12.349Z","ev":{"type":"reasoning-delta","delta":"_weather"}}
+{"ts":"2026-08-31T08:30:12.421Z","ev":{"type":"reasoning-delta","delta":"工具"}}
+{"ts":"2026-08-31T08:30:12.492Z","ev":{"type":"reasoning-delta","delta":"来获取"}}
+{"ts":"2026-08-31T08:30:12.564Z","ev":{"type":"reasoning-delta","delta":"上海"}}
+{"ts":"2026-08-31T08:30:12.636Z","ev":{"type":"reasoning-delta","delta":"的信息"}}
+{"ts":"2026-08-31T08:30:12.705Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:12.776Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:30:14.760Z","ev":{"type":"tool-call","id":"14NmYb4vL1GRnDa1iNXjTZLApDPquWgC","name":"get_weather","args":{"city":"上海"}}}
+{"ts":"2026-08-31T08:30:14.761Z","ev":{"type":"tool-result","id":"14NmYb4vL1GRnDa1iNXjTZLApDPquWgC","name":"get_weather","result":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"上海\",\"condition\":\"多云\",\"tempC\":31,\"humidity\":70,\"aqi\":48,\"fetchedAt\":\"2026-08-31T08:30:14.761Z\",\"source\":\"mock\"}}"}}
+{"ts":"2026-08-31T08:30:14.761Z","ev":{"type":"round-start","round":2}}
+{"ts":"2026-08-31T08:30:14.762Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"北京今天天气怎么样？"},{"role":"assistant","content":null,"tool_calls":[{"id":"oQwCgeZdT2ilu4AJ56JynqAFnfY2UAXK","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"北京\"}"}}]},{"role":"tool","tool_call_id":"oQwCgeZdT2ilu4AJ56JynqAFnfY2UAXK","content":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"北京\",\"condition\":\"晴\",\"tempC\":28,\"humidity\":40,\"aqi\":55,\"fetchedAt\":\"2026-08-31T08:30:03.057Z\",\"source\":\"mock\"}}"},{"role":"assistant","content":"北京今天天气晴好，气温28°C，湿度40%，空气质量指数55。今天天气不错，适合外出活动！"},{"role":"user","content":"那上海呢？"},{"role":"assistant","content":null,"tool_calls":[{"id":"14NmYb4vL1GRnDa1iNXjTZLApDPquWgC","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"上海\"}"}}]},{"role":"tool","tool_call_id":"14NmYb4vL1GRnDa1iNXjTZLApDPquWgC","content":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"上海\",\"condition\":\"多云\",\"tempC\":31,\"humidity\":70,\"aqi\":48,\"fetchedAt\":\"2026-08-31T08:30:14.761Z\",\"source\":\"mock\"}}"}]}}
+{"ts":"2026-08-31T08:30:16.547Z","ev":{"type":"reasoning-delta","delta":"工具"}}
+{"ts":"2026-08-31T08:30:16.620Z","ev":{"type":"reasoning-delta","delta":"调用"}}
+{"ts":"2026-08-31T08:30:16.700Z","ev":{"type":"reasoning-delta","delta":"成功"}}
+{"ts":"2026-08-31T08:30:16.780Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:16.857Z","ev":{"type":"reasoning-delta","delta":"返回"}}
+{"ts":"2026-08-31T08:30:16.933Z","ev":{"type":"reasoning-delta","delta":"了"}}
+{"ts":"2026-08-31T08:30:17.003Z","ev":{"type":"reasoning-delta","delta":"上海的"}}
+{"ts":"2026-08-31T08:30:17.073Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:30:17.145Z","ev":{"type":"reasoning-delta","delta":"数据"}}
+{"ts":"2026-08-31T08:30:17.217Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:30:17.285Z","ev":{"type":"reasoning-delta","delta":"多云"}}
+{"ts":"2026-08-31T08:30:17.360Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:17.432Z","ev":{"type":"reasoning-delta","delta":"3"}}
+{"ts":"2026-08-31T08:30:17.503Z","ev":{"type":"reasoning-delta","delta":"1"}}
+{"ts":"2026-08-31T08:30:17.580Z","ev":{"type":"reasoning-delta","delta":"°C"}}
+{"ts":"2026-08-31T08:30:17.654Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:17.731Z","ev":{"type":"reasoning-delta","delta":"湿度"}}
+{"ts":"2026-08-31T08:30:17.808Z","ev":{"type":"reasoning-delta","delta":"7"}}
+{"ts":"2026-08-31T08:30:17.885Z","ev":{"type":"reasoning-delta","delta":"0"}}
+{"ts":"2026-08-31T08:30:17.958Z","ev":{"type":"reasoning-delta","delta":"%，"}}
+{"ts":"2026-08-31T08:30:18.035Z","ev":{"type":"reasoning-delta","delta":"AQ"}}
+{"ts":"2026-08-31T08:30:18.113Z","ev":{"type":"reasoning-delta","delta":"I"}}
+{"ts":"2026-08-31T08:30:18.188Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:30:18.263Z","ev":{"type":"reasoning-delta","delta":"4"}}
+{"ts":"2026-08-31T08:30:18.338Z","ev":{"type":"reasoning-delta","delta":"8"}}
+{"ts":"2026-08-31T08:30:18.407Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:18.482Z","ev":{"type":"reasoning-delta","delta":"现在"}}
+{"ts":"2026-08-31T08:30:18.556Z","ev":{"type":"reasoning-delta","delta":"可以直接"}}
+{"ts":"2026-08-31T08:30:18.631Z","ev":{"type":"reasoning-delta","delta":"回答"}}
+{"ts":"2026-08-31T08:30:18.712Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:30:18.782Z","ev":{"type":"reasoning-delta","delta":"的问题"}}
+{"ts":"2026-08-31T08:30:18.855Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:18.925Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:30:19.138Z","ev":{"type":"text-delta","delta":"上海"}}
+{"ts":"2026-08-31T08:30:19.210Z","ev":{"type":"text-delta","delta":"今天"}}
+{"ts":"2026-08-31T08:30:19.283Z","ev":{"type":"text-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:30:19.350Z","ev":{"type":"text-delta","delta":"多云"}}
+{"ts":"2026-08-31T08:30:19.425Z","ev":{"type":"text-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:19.498Z","ev":{"type":"text-delta","delta":"气温"}}
+{"ts":"2026-08-31T08:30:19.569Z","ev":{"type":"text-delta","delta":"3"}}
+{"ts":"2026-08-31T08:30:19.639Z","ev":{"type":"text-delta","delta":"1"}}
+{"ts":"2026-08-31T08:30:19.716Z","ev":{"type":"text-delta","delta":"°C"}}
+{"ts":"2026-08-31T08:30:19.792Z","ev":{"type":"text-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:19.865Z","ev":{"type":"text-delta","delta":"湿度"}}
+{"ts":"2026-08-31T08:30:19.929Z","ev":{"type":"text-delta","delta":"7"}}
+{"ts":"2026-08-31T08:30:19.999Z","ev":{"type":"text-delta","delta":"0"}}
+{"ts":"2026-08-31T08:30:20.068Z","ev":{"type":"text-delta","delta":"%，"}}
+{"ts":"2026-08-31T08:30:20.136Z","ev":{"type":"text-delta","delta":"空气质量"}}
+{"ts":"2026-08-31T08:30:20.210Z","ev":{"type":"text-delta","delta":"指数"}}
+{"ts":"2026-08-31T08:30:20.284Z","ev":{"type":"text-delta","delta":"4"}}
+{"ts":"2026-08-31T08:30:20.351Z","ev":{"type":"text-delta","delta":"8"}}
+{"ts":"2026-08-31T08:30:20.421Z","ev":{"type":"text-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:20.492Z","ev":{"type":"text-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:30:20.562Z","ev":{"type":"text-delta","delta":"还算"}}
+{"ts":"2026-08-31T08:30:20.629Z","ev":{"type":"text-delta","delta":"舒适"}}
+{"ts":"2026-08-31T08:30:20.705Z","ev":{"type":"text-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:20.776Z","ev":{"type":"text-delta","delta":"但"}}
+{"ts":"2026-08-31T08:30:20.844Z","ev":{"type":"text-delta","delta":"湿度"}}
+{"ts":"2026-08-31T08:30:20.914Z","ev":{"type":"text-delta","delta":"稍"}}
+{"ts":"2026-08-31T08:30:20.985Z","ev":{"type":"text-delta","delta":"高"}}
+{"ts":"2026-08-31T08:30:21.054Z","ev":{"type":"text-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:21.121Z","ev":{"type":"text-delta","delta":"出门"}}
+{"ts":"2026-08-31T08:30:21.189Z","ev":{"type":"text-delta","delta":"记得"}}
+{"ts":"2026-08-31T08:30:21.262Z","ev":{"type":"text-delta","delta":"带"}}
+{"ts":"2026-08-31T08:30:21.334Z","ev":{"type":"text-delta","delta":"伞"}}
+{"ts":"2026-08-31T08:30:21.405Z","ev":{"type":"text-delta","delta":"哦"}}
+{"ts":"2026-08-31T08:30:21.481Z","ev":{"type":"text-delta","delta":"！"}}
+{"ts":"2026-08-31T08:30:21.551Z","ev":{"type":"final","message":{"role":"assistant","content":"上海今天天气多云，气温31°C，湿度70%，空气质量指数48。天气还算舒适，但湿度稍高，出门记得带伞哦！"},"rounds":2,"usage":{"promptTokens":0,"completionTokens":0}}}
+{"ts":"2026-08-31T08:30:21.552Z","ev":{"type":"round-start","round":1}}
+{"ts":"2026-08-31T08:30:21.552Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"北京今天天气怎么样？"},{"role":"assistant","content":null,"tool_calls":[{"id":"oQwCgeZdT2ilu4AJ56JynqAFnfY2UAXK","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"北京\"}"}}]},{"role":"tool","tool_call_id":"oQwCgeZdT2ilu4AJ56JynqAFnfY2UAXK","content":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"北京\",\"condition\":\"晴\",\"tempC\":28,\"humidity\":40,\"aqi\":55,\"fetchedAt\":\"2026-08-31T08:30:03.057Z\",\"source\":\"mock\"}}"},{"role":"assistant","content":"北京今天天气晴好，气温28°C，湿度40%，空气质量指数55。今天天气不错，适合外出活动！"},{"role":"user","content":"那上海呢？"},{"role":"assistant","content":null,"tool_calls":[{"id":"14NmYb4vL1GRnDa1iNXjTZLApDPquWgC","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"上海\"}"}}]},{"role":"tool","tool_call_id":"14NmYb4vL1GRnDa1iNXjTZLApDPquWgC","content":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"上海\",\"condition\":\"多云\",\"tempC\":31,\"humidity\":70,\"aqi\":48,\"fetchedAt\":\"2026-08-31T08:30:14.761Z\",\"source\":\"mock\"}}"},{"role":"assistant","content":"上海今天天气多云，气温31°C，湿度70%，空气质量指数48。天气还算舒适，但湿度稍高，出门记得带伞哦！"},{"role":"user","content":"杭州的天气如何？对比一下这三个城市"}]}}
+{"ts":"2026-08-31T08:30:23.911Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:30:23.979Z","ev":{"type":"reasoning-delta","delta":"想了解"}}
+{"ts":"2026-08-31T08:30:24.049Z","ev":{"type":"reasoning-delta","delta":"杭州"}}
+{"ts":"2026-08-31T08:30:24.120Z","ev":{"type":"reasoning-delta","delta":"的天气"}}
+{"ts":"2026-08-31T08:30:24.188Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:24.258Z","ev":{"type":"reasoning-delta","delta":"并要求"}}
+{"ts":"2026-08-31T08:30:24.323Z","ev":{"type":"reasoning-delta","delta":"对比"}}
+{"ts":"2026-08-31T08:30:24.391Z","ev":{"type":"reasoning-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:30:24.462Z","ev":{"type":"reasoning-delta","delta":"、"}}
+{"ts":"2026-08-31T08:30:24.535Z","ev":{"type":"reasoning-delta","delta":"上海"}}
+{"ts":"2026-08-31T08:30:24.608Z","ev":{"type":"reasoning-delta","delta":"和"}}
+{"ts":"2026-08-31T08:30:24.681Z","ev":{"type":"reasoning-delta","delta":"杭州"}}
+{"ts":"2026-08-31T08:30:24.752Z","ev":{"type":"reasoning-delta","delta":"三个"}}
+{"ts":"2026-08-31T08:30:24.818Z","ev":{"type":"reasoning-delta","delta":"城市的"}}
+{"ts":"2026-08-31T08:30:24.884Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:30:24.952Z","ev":{"type":"reasoning-delta","delta":"情况"}}
+{"ts":"2026-08-31T08:30:25.023Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:25.095Z","ev":{"type":"reasoning-delta","delta":"我需要"}}
+{"ts":"2026-08-31T08:30:25.167Z","ev":{"type":"reasoning-delta","delta":"先"}}
+{"ts":"2026-08-31T08:30:25.237Z","ev":{"type":"reasoning-delta","delta":"查询"}}
+{"ts":"2026-08-31T08:30:25.310Z","ev":{"type":"reasoning-delta","delta":"杭州"}}
+{"ts":"2026-08-31T08:30:25.378Z","ev":{"type":"reasoning-delta","delta":"的天气"}}
+{"ts":"2026-08-31T08:30:25.450Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:25.524Z","ev":{"type":"reasoning-delta","delta":"然后"}}
+{"ts":"2026-08-31T08:30:25.607Z","ev":{"type":"reasoning-delta","delta":"进行"}}
+{"ts":"2026-08-31T08:30:25.688Z","ev":{"type":"reasoning-delta","delta":"对比"}}
+{"ts":"2026-08-31T08:30:25.762Z","ev":{"type":"reasoning-delta","delta":"分析"}}
+{"ts":"2026-08-31T08:30:25.834Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:25.909Z","ev":{"type":"reasoning-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T08:30:25.981Z","ev":{"type":"reasoning-delta","delta":"让我"}}
+{"ts":"2026-08-31T08:30:26.054Z","ev":{"type":"reasoning-delta","delta":"先"}}
+{"ts":"2026-08-31T08:30:26.127Z","ev":{"type":"reasoning-delta","delta":"查询"}}
+{"ts":"2026-08-31T08:30:26.197Z","ev":{"type":"reasoning-delta","delta":"杭州"}}
+{"ts":"2026-08-31T08:30:26.280Z","ev":{"type":"reasoning-delta","delta":"的天气"}}
+{"ts":"2026-08-31T08:30:26.359Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:26.436Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:30:28.551Z","ev":{"type":"tool-call","id":"n2MjX9lzRIsn9YSRMDfgKc31ohAztREs","name":"get_weather","args":{"city":"杭州"}}}
+{"ts":"2026-08-31T08:30:28.552Z","ev":{"type":"tool-result","id":"n2MjX9lzRIsn9YSRMDfgKc31ohAztREs","name":"get_weather","result":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"杭州\",\"condition\":\"晴转多云\",\"tempC\":30,\"humidity\":65,\"aqi\":58,\"fetchedAt\":\"2026-08-31T08:30:28.551Z\",\"source\":\"mock\"}}"}}
+{"ts":"2026-08-31T08:30:28.552Z","ev":{"type":"context-trimmed","removedMessages":8,"fromTokens":457,"toTokens":222}}
+{"ts":"2026-08-31T08:30:28.552Z","ev":{"type":"round-start","round":2}}
+{"ts":"2026-08-31T08:30:28.552Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"杭州的天气如何？对比一下这三个城市"},{"role":"assistant","content":null,"tool_calls":[{"id":"n2MjX9lzRIsn9YSRMDfgKc31ohAztREs","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"杭州\"}"}}]},{"role":"tool","tool_call_id":"n2MjX9lzRIsn9YSRMDfgKc31ohAztREs","content":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"杭州\",\"condition\":\"晴转多云\",\"tempC\":30,\"humidity\":65,\"aqi\":58,\"fetchedAt\":\"2026-08-31T08:30:28.551Z\",\"source\":\"mock\"}}"}]}}
+{"ts":"2026-08-31T08:30:37.469Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:30:37.539Z","ev":{"type":"reasoning-delta","delta":"想"}}
+{"ts":"2026-08-31T08:30:37.609Z","ev":{"type":"reasoning-delta","delta":"对比"}}
+{"ts":"2026-08-31T08:30:37.690Z","ev":{"type":"reasoning-delta","delta":"杭州"}}
+{"ts":"2026-08-31T08:30:37.764Z","ev":{"type":"reasoning-delta","delta":"和"}}
+{"ts":"2026-08-31T08:30:37.842Z","ev":{"type":"reasoning-delta","delta":"另外"}}
+{"ts":"2026-08-31T08:30:37.920Z","ev":{"type":"reasoning-delta","delta":"两个"}}
+{"ts":"2026-08-31T08:30:37.992Z","ev":{"type":"reasoning-delta","delta":"城市的"}}
+{"ts":"2026-08-31T08:30:38.062Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:30:38.128Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:38.202Z","ev":{"type":"reasoning-delta","delta":"但"}}
+{"ts":"2026-08-31T08:30:38.278Z","ev":{"type":"reasoning-delta","delta":"只"}}
+{"ts":"2026-08-31T08:30:38.351Z","ev":{"type":"reasoning-delta","delta":"说了"}}
+{"ts":"2026-08-31T08:30:38.422Z","ev":{"type":"reasoning-delta","delta":"“"}}
+{"ts":"2026-08-31T08:30:38.493Z","ev":{"type":"reasoning-delta","delta":"对比"}}
+{"ts":"2026-08-31T08:30:38.560Z","ev":{"type":"reasoning-delta","delta":"一下"}}
+{"ts":"2026-08-31T08:30:38.632Z","ev":{"type":"reasoning-delta","delta":"这三个"}}
+{"ts":"2026-08-31T08:30:38.707Z","ev":{"type":"reasoning-delta","delta":"城市"}}
+{"ts":"2026-08-31T08:30:38.778Z","ev":{"type":"reasoning-delta","delta":"”，"}}
+{"ts":"2026-08-31T08:30:38.853Z","ev":{"type":"reasoning-delta","delta":"没有"}}
+{"ts":"2026-08-31T08:30:38.929Z","ev":{"type":"reasoning-delta","delta":"指明"}}
+{"ts":"2026-08-31T08:30:38.997Z","ev":{"type":"reasoning-delta","delta":"是哪"}}
+{"ts":"2026-08-31T08:30:39.064Z","ev":{"type":"reasoning-delta","delta":"三个"}}
+{"ts":"2026-08-31T08:30:39.128Z","ev":{"type":"reasoning-delta","delta":"城市"}}
+{"ts":"2026-08-31T08:30:39.196Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:39.269Z","ev":{"type":"reasoning-delta","delta":"结合"}}
+{"ts":"2026-08-31T08:30:39.340Z","ev":{"type":"reasoning-delta","delta":"上下文"}}
+{"ts":"2026-08-31T08:30:39.411Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:39.484Z","ev":{"type":"reasoning-delta","delta":"我"}}
+{"ts":"2026-08-31T08:30:39.550Z","ev":{"type":"reasoning-delta","delta":"刚才"}}
+{"ts":"2026-08-31T08:30:39.622Z","ev":{"type":"reasoning-delta","delta":"查询"}}
+{"ts":"2026-08-31T08:30:39.694Z","ev":{"type":"reasoning-delta","delta":"了"}}
+{"ts":"2026-08-31T08:30:39.764Z","ev":{"type":"reasoning-delta","delta":"杭州"}}
+{"ts":"2026-08-31T08:30:39.834Z","ev":{"type":"reasoning-delta","delta":"的天气"}}
+{"ts":"2026-08-31T08:30:39.908Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:39.976Z","ev":{"type":"reasoning-delta","delta":"现在"}}
+{"ts":"2026-08-31T08:30:40.047Z","ev":{"type":"reasoning-delta","delta":"需要"}}
+{"ts":"2026-08-31T08:30:40.114Z","ev":{"type":"reasoning-delta","delta":"获取"}}
+{"ts":"2026-08-31T08:30:40.184Z","ev":{"type":"reasoning-delta","delta":"另外"}}
+{"ts":"2026-08-31T08:30:40.256Z","ev":{"type":"reasoning-delta","delta":"两个"}}
+{"ts":"2026-08-31T08:30:40.325Z","ev":{"type":"reasoning-delta","delta":"城市的"}}
+{"ts":"2026-08-31T08:30:40.393Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:30:40.467Z","ev":{"type":"reasoning-delta","delta":"来进行"}}
+{"ts":"2026-08-31T08:30:40.539Z","ev":{"type":"reasoning-delta","delta":"对比"}}
+{"ts":"2026-08-31T08:30:40.607Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:40.676Z","ev":{"type":"reasoning-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T08:30:40.746Z","ev":{"type":"reasoning-delta","delta":"由于"}}
+{"ts":"2026-08-31T08:30:40.819Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:30:40.892Z","ev":{"type":"reasoning-delta","delta":"没有"}}
+{"ts":"2026-08-31T08:30:40.959Z","ev":{"type":"reasoning-delta","delta":"明确"}}
+{"ts":"2026-08-31T08:30:41.031Z","ev":{"type":"reasoning-delta","delta":"说明"}}
+{"ts":"2026-08-31T08:30:41.100Z","ev":{"type":"reasoning-delta","delta":"是哪"}}
+{"ts":"2026-08-31T08:30:41.171Z","ev":{"type":"reasoning-delta","delta":"三个"}}
+{"ts":"2026-08-31T08:30:41.243Z","ev":{"type":"reasoning-delta","delta":"城市"}}
+{"ts":"2026-08-31T08:30:41.313Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:41.387Z","ev":{"type":"reasoning-delta","delta":"我"}}
+{"ts":"2026-08-31T08:30:41.456Z","ev":{"type":"reasoning-delta","delta":"需要考虑"}}
+{"ts":"2026-08-31T08:30:41.527Z","ev":{"type":"reasoning-delta","delta":"可能的"}}
+{"ts":"2026-08-31T08:30:41.603Z","ev":{"type":"reasoning-delta","delta":"情况"}}
+{"ts":"2026-08-31T08:30:41.677Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:30:41.750Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:30:41.817Z","ev":{"type":"reasoning-delta","delta":"1"}}
+{"ts":"2026-08-31T08:30:41.889Z","ev":{"type":"reasoning-delta","delta":"."}}
+{"ts":"2026-08-31T08:30:41.957Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:30:42.022Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:30:42.095Z","ev":{"type":"reasoning-delta","delta":"可能"}}
+{"ts":"2026-08-31T08:30:42.163Z","ev":{"type":"reasoning-delta","delta":"指的是"}}
+{"ts":"2026-08-31T08:30:42.227Z","ev":{"type":"reasoning-delta","delta":"中国"}}
+{"ts":"2026-08-31T08:30:42.294Z","ev":{"type":"reasoning-delta","delta":"的一些"}}
+{"ts":"2026-08-31T08:30:42.362Z","ev":{"type":"reasoning-delta","delta":"主要"}}
+{"ts":"2026-08-31T08:30:42.430Z","ev":{"type":"reasoning-delta","delta":"城市"}}
+{"ts":"2026-08-31T08:30:42.500Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:30:42.568Z","ev":{"type":"reasoning-delta","delta":"2"}}
+{"ts":"2026-08-31T08:30:42.638Z","ev":{"type":"reasoning-delta","delta":"."}}
+{"ts":"2026-08-31T08:30:42.710Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:30:42.779Z","ev":{"type":"reasoning-delta","delta":"或者"}}
+{"ts":"2026-08-31T08:30:42.852Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:30:42.924Z","ev":{"type":"reasoning-delta","delta":"忘记"}}
+{"ts":"2026-08-31T08:30:42.991Z","ev":{"type":"reasoning-delta","delta":"说了"}}
+{"ts":"2026-08-31T08:30:43.060Z","ev":{"type":"reasoning-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T08:30:43.132Z","ev":{"type":"reasoning-delta","delta":"我应该"}}
+{"ts":"2026-08-31T08:30:43.200Z","ev":{"type":"reasoning-delta","delta":"先"}}
+{"ts":"2026-08-31T08:30:43.270Z","ev":{"type":"reasoning-delta","delta":"询问"}}
+{"ts":"2026-08-31T08:30:43.342Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:30:43.414Z","ev":{"type":"reasoning-delta","delta":"具体"}}
+{"ts":"2026-08-31T08:30:43.485Z","ev":{"type":"reasoning-delta","delta":"是哪"}}
+{"ts":"2026-08-31T08:30:43.557Z","ev":{"type":"reasoning-delta","delta":"三个"}}
+{"ts":"2026-08-31T08:30:43.629Z","ev":{"type":"reasoning-delta","delta":"城市"}}
+{"ts":"2026-08-31T08:30:43.698Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:43.770Z","ev":{"type":"reasoning-delta","delta":"或者"}}
+{"ts":"2026-08-31T08:30:43.842Z","ev":{"type":"reasoning-delta","delta":"我"}}
+{"ts":"2026-08-31T08:30:43.914Z","ev":{"type":"reasoning-delta","delta":"可以直接"}}
+{"ts":"2026-08-31T08:30:43.985Z","ev":{"type":"reasoning-delta","delta":"查询"}}
+{"ts":"2026-08-31T08:30:44.056Z","ev":{"type":"reasoning-delta","delta":"几个"}}
+{"ts":"2026-08-31T08:30:44.130Z","ev":{"type":"reasoning-delta","delta":"常见"}}
+{"ts":"2026-08-31T08:30:44.201Z","ev":{"type":"reasoning-delta","delta":"城市"}}
+{"ts":"2026-08-31T08:30:44.273Z","ev":{"type":"reasoning-delta","delta":"（"}}
+{"ts":"2026-08-31T08:30:44.343Z","ev":{"type":"reasoning-delta","delta":"如"}}
+{"ts":"2026-08-31T08:30:44.415Z","ev":{"type":"reasoning-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:30:44.486Z","ev":{"type":"reasoning-delta","delta":"、"}}
+{"ts":"2026-08-31T08:30:44.552Z","ev":{"type":"reasoning-delta","delta":"上海"}}
+{"ts":"2026-08-31T08:30:44.620Z","ev":{"type":"reasoning-delta","delta":"、"}}
+{"ts":"2026-08-31T08:30:44.697Z","ev":{"type":"reasoning-delta","delta":"广州"}}
+{"ts":"2026-08-31T08:30:44.765Z","ev":{"type":"reasoning-delta","delta":"）"}}
+{"ts":"2026-08-31T08:30:44.836Z","ev":{"type":"reasoning-delta","delta":"作为"}}
+{"ts":"2026-08-31T08:30:44.906Z","ev":{"type":"reasoning-delta","delta":"对比"}}
+{"ts":"2026-08-31T08:30:44.979Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:45.045Z","ev":{"type":"reasoning-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T08:30:45.115Z","ev":{"type":"reasoning-delta","delta":"但"}}
+{"ts":"2026-08-31T08:30:45.184Z","ev":{"type":"reasoning-delta","delta":"更"}}
+{"ts":"2026-08-31T08:30:45.249Z","ev":{"type":"reasoning-delta","delta":"合理的"}}
+{"ts":"2026-08-31T08:30:45.321Z","ev":{"type":"reasoning-delta","delta":"做法"}}
+{"ts":"2026-08-31T08:30:45.392Z","ev":{"type":"reasoning-delta","delta":"是"}}
+{"ts":"2026-08-31T08:30:45.462Z","ev":{"type":"reasoning-delta","delta":"询问"}}
+{"ts":"2026-08-31T08:30:45.532Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:30:45.603Z","ev":{"type":"reasoning-delta","delta":"具体"}}
+{"ts":"2026-08-31T08:30:45.670Z","ev":{"type":"reasoning-delta","delta":"是哪"}}
+{"ts":"2026-08-31T08:30:45.742Z","ev":{"type":"reasoning-delta","delta":"三个"}}
+{"ts":"2026-08-31T08:30:45.816Z","ev":{"type":"reasoning-delta","delta":"城市"}}
+{"ts":"2026-08-31T08:30:45.889Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:45.962Z","ev":{"type":"reasoning-delta","delta":"因为"}}
+{"ts":"2026-08-31T08:30:46.033Z","ev":{"type":"reasoning-delta","delta":"这样"}}
+{"ts":"2026-08-31T08:30:46.108Z","ev":{"type":"reasoning-delta","delta":"更"}}
+{"ts":"2026-08-31T08:30:46.182Z","ev":{"type":"reasoning-delta","delta":"准确"}}
+{"ts":"2026-08-31T08:30:46.249Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:46.322Z","ev":{"type":"reasoning-delta","delta":"不过"}}
+{"ts":"2026-08-31T08:30:46.396Z","ev":{"type":"reasoning-delta","delta":"考虑到"}}
+{"ts":"2026-08-31T08:30:46.477Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:30:46.551Z","ev":{"type":"reasoning-delta","delta":"可能"}}
+{"ts":"2026-08-31T08:30:46.625Z","ev":{"type":"reasoning-delta","delta":"希望"}}
+{"ts":"2026-08-31T08:30:46.704Z","ev":{"type":"reasoning-delta","delta":"我"}}
+{"ts":"2026-08-31T08:30:46.782Z","ev":{"type":"reasoning-delta","delta":"直接"}}
+{"ts":"2026-08-31T08:30:46.858Z","ev":{"type":"reasoning-delta","delta":"给出"}}
+{"ts":"2026-08-31T08:30:46.933Z","ev":{"type":"reasoning-delta","delta":"一些"}}
+{"ts":"2026-08-31T08:30:47.006Z","ev":{"type":"reasoning-delta","delta":"常见"}}
+{"ts":"2026-08-31T08:30:47.084Z","ev":{"type":"reasoning-delta","delta":"城市的"}}
+{"ts":"2026-08-31T08:30:47.163Z","ev":{"type":"reasoning-delta","delta":"对比"}}
+{"ts":"2026-08-31T08:30:47.237Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:47.313Z","ev":{"type":"reasoning-delta","delta":"我可以"}}
+{"ts":"2026-08-31T08:30:47.390Z","ev":{"type":"reasoning-delta","delta":"查询"}}
+{"ts":"2026-08-31T08:30:47.460Z","ev":{"type":"reasoning-delta","delta":"几个"}}
+{"ts":"2026-08-31T08:30:47.537Z","ev":{"type":"reasoning-delta","delta":"主要"}}
+{"ts":"2026-08-31T08:30:47.611Z","ev":{"type":"reasoning-delta","delta":"城市"}}
+{"ts":"2026-08-31T08:30:47.687Z","ev":{"type":"reasoning-delta","delta":"（"}}
+{"ts":"2026-08-31T08:30:47.771Z","ev":{"type":"reasoning-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:30:47.853Z","ev":{"type":"reasoning-delta","delta":"、"}}
+{"ts":"2026-08-31T08:30:47.930Z","ev":{"type":"reasoning-delta","delta":"上海"}}
+{"ts":"2026-08-31T08:30:48.004Z","ev":{"type":"reasoning-delta","delta":"、"}}
+{"ts":"2026-08-31T08:30:48.079Z","ev":{"type":"reasoning-delta","delta":"广州"}}
+{"ts":"2026-08-31T08:30:48.151Z","ev":{"type":"reasoning-delta","delta":"）"}}
+{"ts":"2026-08-31T08:30:48.221Z","ev":{"type":"reasoning-delta","delta":"并"}}
+{"ts":"2026-08-31T08:30:48.297Z","ev":{"type":"reasoning-delta","delta":"给出"}}
+{"ts":"2026-08-31T08:30:48.372Z","ev":{"type":"reasoning-delta","delta":"对比"}}
+{"ts":"2026-08-31T08:30:48.445Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:48.519Z","ev":{"type":"reasoning-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T08:30:48.590Z","ev":{"type":"reasoning-delta","delta":"让我"}}
+{"ts":"2026-08-31T08:30:48.666Z","ev":{"type":"reasoning-delta","delta":"先"}}
+{"ts":"2026-08-31T08:30:48.740Z","ev":{"type":"reasoning-delta","delta":"查询"}}
+{"ts":"2026-08-31T08:30:48.811Z","ev":{"type":"reasoning-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:30:48.886Z","ev":{"type":"reasoning-delta","delta":"、"}}
+{"ts":"2026-08-31T08:30:48.958Z","ev":{"type":"reasoning-delta","delta":"上海"}}
+{"ts":"2026-08-31T08:30:49.031Z","ev":{"type":"reasoning-delta","delta":"、"}}
+{"ts":"2026-08-31T08:30:49.099Z","ev":{"type":"reasoning-delta","delta":"广州"}}
+{"ts":"2026-08-31T08:30:49.168Z","ev":{"type":"reasoning-delta","delta":"的天气"}}
+{"ts":"2026-08-31T08:30:49.239Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:30:49.308Z","ev":{"type":"reasoning-delta","delta":"然后"}}
+{"ts":"2026-08-31T08:30:49.382Z","ev":{"type":"reasoning-delta","delta":"提供"}}
+{"ts":"2026-08-31T08:30:49.449Z","ev":{"type":"reasoning-delta","delta":"对比"}}
+{"ts":"2026-08-31T08:30:49.523Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:30:49.591Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:30:55.224Z","ev":{"type":"tool-call","id":"4pCmydIhsUwUNQeVbgrtX9Hb0i2MGIgA","name":"get_weather","args":{"city":"北京"}}}
+{"ts":"2026-08-31T08:30:55.224Z","ev":{"type":"tool-result","id":"4pCmydIhsUwUNQeVbgrtX9Hb0i2MGIgA","name":"get_weather","result":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"北京\",\"condition\":\"晴\",\"tempC\":28,\"humidity\":40,\"aqi\":55,\"fetchedAt\":\"2026-08-31T08:30:55.224Z\",\"source\":\"mock\"}}"}}
+{"ts":"2026-08-31T08:30:55.225Z","ev":{"type":"tool-call","id":"ujNeEIBprMM9l4UG0empykhHv3FiXCJY","name":"get_weather","args":{"city":"上海"}}}
+{"ts":"2026-08-31T08:30:55.225Z","ev":{"type":"tool-result","id":"ujNeEIBprMM9l4UG0empykhHv3FiXCJY","name":"get_weather","result":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"上海\",\"condition\":\"多云\",\"tempC\":31,\"humidity\":70,\"aqi\":48,\"fetchedAt\":\"2026-08-31T08:30:55.225Z\",\"source\":\"mock\"}}"}}
+{"ts":"2026-08-31T08:30:55.226Z","ev":{"type":"tool-call","id":"k9AnKUtp4gzemaxozFK0Ka9OZjf2MvEN","name":"get_weather","args":{"city":"广州"}}}
+{"ts":"2026-08-31T08:30:55.226Z","ev":{"type":"tool-result","id":"k9AnKUtp4gzemaxozFK0Ka9OZjf2MvEN","name":"get_weather","result":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"广州\",\"condition\":\"雷阵雨\",\"tempC\":33,\"humidity\":85,\"aqi\":62,\"fetchedAt\":\"2026-08-31T08:30:55.226Z\",\"source\":\"mock\"}}"}}
+{"ts":"2026-08-31T08:30:55.226Z","ev":{"type":"round-start","round":3}}
+{"ts":"2026-08-31T08:30:55.227Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"杭州的天气如何？对比一下这三个城市"},{"role":"assistant","content":null,"tool_calls":[{"id":"n2MjX9lzRIsn9YSRMDfgKc31ohAztREs","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"杭州\"}"}}]},{"role":"tool","tool_call_id":"n2MjX9lzRIsn9YSRMDfgKc31ohAztREs","content":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"杭州\",\"condition\":\"晴转多云\",\"tempC\":30,\"humidity\":65,\"aqi\":58,\"fetchedAt\":\"2026-08-31T08:30:28.551Z\",\"source\":\"mock\"}}"},{"role":"assistant","content":null,"tool_calls":[{"id":"4pCmydIhsUwUNQeVbgrtX9Hb0i2MGIgA","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"北京\"}"}},{"id":"ujNeEIBprMM9l4UG0empykhHv3FiXCJY","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"上海\"}"}},{"id":"k9AnKUtp4gzemaxozFK0Ka9OZjf2MvEN","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"广州\"}"}}]},{"role":"tool","tool_call_id":"4pCmydIhsUwUNQeVbgrtX9Hb0i2MGIgA","content":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"北京\",\"condition\":\"晴\",\"tempC\":28,\"humidity\":40,\"aqi\":55,\"fetchedAt\":\"2026-08-31T08:30:55.224Z\",\"source\":\"mock\"}}"},{"role":"tool","tool_call_id":"ujNeEIBprMM9l4UG0empykhHv3FiXCJY","content":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"上海\",\"condition\":\"多云\",\"tempC\":31,\"humidity\":70,\"aqi\":48,\"fetchedAt\":\"2026-08-31T08:30:55.225Z\",\"source\":\"mock\"}}"},{"role":"tool","tool_call_id":"k9AnKUtp4gzemaxozFK0Ka9OZjf2MvEN","content":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"广州\",\"condition\":\"雷阵雨\",\"tempC\":33,\"humidity\":85,\"aqi\":62,\"fetchedAt\":\"2026-08-31T08:30:55.226Z\",\"source\":\"mock\"}}"}]}}
+{"ts":"2026-08-31T08:30:59.755Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:30:59.831Z","ev":{"type":"reasoning-delta","delta":"想知道"}}
+{"ts":"2026-08-31T08:30:59.901Z","ev":{"type":"reasoning-delta","delta":"杭州"}}
+{"ts":"2026-08-31T08:30:59.973Z","ev":{"type":"reasoning-delta","delta":"的天气"}}
+{"ts":"2026-08-31T08:31:00.045Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:31:00.111Z","ev":{"type":"reasoning-delta","delta":"并"}}
+{"ts":"2026-08-31T08:31:00.184Z","ev":{"type":"reasoning-delta","delta":"对比"}}
+{"ts":"2026-08-31T08:31:00.256Z","ev":{"type":"reasoning-delta","delta":"了"}}
+{"ts":"2026-08-31T08:31:00.325Z","ev":{"type":"reasoning-delta","delta":"三个"}}
+{"ts":"2026-08-31T08:31:00.397Z","ev":{"type":"reasoning-delta","delta":"城市"}}
+{"ts":"2026-08-31T08:31:00.466Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:31:00.536Z","ev":{"type":"reasoning-delta","delta":"我已经"}}
+{"ts":"2026-08-31T08:31:00.609Z","ev":{"type":"reasoning-delta","delta":"获取"}}
+{"ts":"2026-08-31T08:31:00.683Z","ev":{"type":"reasoning-delta","delta":"了"}}
+{"ts":"2026-08-31T08:31:00.761Z","ev":{"type":"reasoning-delta","delta":"这四个"}}
+{"ts":"2026-08-31T08:31:00.839Z","ev":{"type":"reasoning-delta","delta":"城市"}}
+{"ts":"2026-08-31T08:31:00.918Z","ev":{"type":"reasoning-delta","delta":"（"}}
+{"ts":"2026-08-31T08:31:01.007Z","ev":{"type":"reasoning-delta","delta":"杭州"}}
+{"ts":"2026-08-31T08:31:01.083Z","ev":{"type":"reasoning-delta","delta":"、"}}
+{"ts":"2026-08-31T08:31:01.165Z","ev":{"type":"reasoning-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:31:01.249Z","ev":{"type":"reasoning-delta","delta":"、"}}
+{"ts":"2026-08-31T08:31:01.327Z","ev":{"type":"reasoning-delta","delta":"上海"}}
+{"ts":"2026-08-31T08:31:01.402Z","ev":{"type":"reasoning-delta","delta":"、"}}
+{"ts":"2026-08-31T08:31:01.481Z","ev":{"type":"reasoning-delta","delta":"广州"}}
+{"ts":"2026-08-31T08:31:01.558Z","ev":{"type":"reasoning-delta","delta":"）"}}
+{"ts":"2026-08-31T08:31:01.641Z","ev":{"type":"reasoning-delta","delta":"的天气"}}
+{"ts":"2026-08-31T08:31:01.729Z","ev":{"type":"reasoning-delta","delta":"信息"}}
+{"ts":"2026-08-31T08:31:01.813Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:31:01.893Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:01.979Z","ev":{"type":"reasoning-delta","delta":"现在我"}}
+{"ts":"2026-08-31T08:31:02.061Z","ev":{"type":"reasoning-delta","delta":"需要"}}
+{"ts":"2026-08-31T08:31:02.133Z","ev":{"type":"reasoning-delta","delta":"整理"}}
+{"ts":"2026-08-31T08:31:02.213Z","ev":{"type":"reasoning-delta","delta":"这些数据"}}
+{"ts":"2026-08-31T08:31:02.294Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T08:31:02.375Z","ev":{"type":"reasoning-delta","delta":"并"}}
+{"ts":"2026-08-31T08:31:02.458Z","ev":{"type":"reasoning-delta","delta":"为用户提供"}}
+{"ts":"2026-08-31T08:31:02.542Z","ev":{"type":"reasoning-delta","delta":"对比"}}
+{"ts":"2026-08-31T08:31:02.615Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:31:02.686Z","ev":{"type":"reasoning-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T08:31:02.770Z","ev":{"type":"reasoning-delta","delta":"杭州"}}
+{"ts":"2026-08-31T08:31:02.848Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:02.921Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:03.003Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:03.073Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:03.146Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:31:03.231Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:03.312Z","ev":{"type":"reasoning-delta","delta":"晴"}}
+{"ts":"2026-08-31T08:31:03.389Z","ev":{"type":"reasoning-delta","delta":"转"}}
+{"ts":"2026-08-31T08:31:03.463Z","ev":{"type":"reasoning-delta","delta":"多云"}}
+{"ts":"2026-08-31T08:31:03.535Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:03.606Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:03.680Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:03.754Z","ev":{"type":"reasoning-delta","delta":"温度"}}
+{"ts":"2026-08-31T08:31:03.831Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:03.901Z","ev":{"type":"reasoning-delta","delta":"3"}}
+{"ts":"2026-08-31T08:31:03.976Z","ev":{"type":"reasoning-delta","delta":"0"}}
+{"ts":"2026-08-31T08:31:04.051Z","ev":{"type":"reasoning-delta","delta":"°C"}}
+{"ts":"2026-08-31T08:31:04.124Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:04.207Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:04.289Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:04.365Z","ev":{"type":"reasoning-delta","delta":"湿度"}}
+{"ts":"2026-08-31T08:31:04.434Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:04.514Z","ev":{"type":"reasoning-delta","delta":"6"}}
+{"ts":"2026-08-31T08:31:04.585Z","ev":{"type":"reasoning-delta","delta":"5"}}
+{"ts":"2026-08-31T08:31:04.655Z","ev":{"type":"reasoning-delta","delta":"%"}}
+{"ts":"2026-08-31T08:31:04.729Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:04.805Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:04.880Z","ev":{"type":"reasoning-delta","delta":" AQ"}}
+{"ts":"2026-08-31T08:31:04.962Z","ev":{"type":"reasoning-delta","delta":"I"}}
+{"ts":"2026-08-31T08:31:05.046Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:05.125Z","ev":{"type":"reasoning-delta","delta":"5"}}
+{"ts":"2026-08-31T08:31:05.210Z","ev":{"type":"reasoning-delta","delta":"8"}}
+{"ts":"2026-08-31T08:31:05.296Z","ev":{"type":"reasoning-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T08:31:05.374Z","ev":{"type":"reasoning-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:31:05.452Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:05.534Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:05.612Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:05.686Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:05.763Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:31:05.840Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:05.922Z","ev":{"type":"reasoning-delta","delta":"晴"}}
+{"ts":"2026-08-31T08:31:06.010Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:06.090Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:06.174Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:06.258Z","ev":{"type":"reasoning-delta","delta":"温度"}}
+{"ts":"2026-08-31T08:31:06.340Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:06.432Z","ev":{"type":"reasoning-delta","delta":"2"}}
+{"ts":"2026-08-31T08:31:06.511Z","ev":{"type":"reasoning-delta","delta":"8"}}
+{"ts":"2026-08-31T08:31:06.586Z","ev":{"type":"reasoning-delta","delta":"°C"}}
+{"ts":"2026-08-31T08:31:06.665Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:06.742Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:06.818Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:06.892Z","ev":{"type":"reasoning-delta","delta":"湿度"}}
+{"ts":"2026-08-31T08:31:06.963Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:07.038Z","ev":{"type":"reasoning-delta","delta":"4"}}
+{"ts":"2026-08-31T08:31:07.108Z","ev":{"type":"reasoning-delta","delta":"0"}}
+{"ts":"2026-08-31T08:31:07.186Z","ev":{"type":"reasoning-delta","delta":"%"}}
+{"ts":"2026-08-31T08:31:07.255Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:07.329Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:07.397Z","ev":{"type":"reasoning-delta","delta":" AQ"}}
+{"ts":"2026-08-31T08:31:07.469Z","ev":{"type":"reasoning-delta","delta":"I"}}
+{"ts":"2026-08-31T08:31:07.548Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:07.625Z","ev":{"type":"reasoning-delta","delta":"5"}}
+{"ts":"2026-08-31T08:31:07.698Z","ev":{"type":"reasoning-delta","delta":"5"}}
+{"ts":"2026-08-31T08:31:07.771Z","ev":{"type":"reasoning-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T08:31:07.847Z","ev":{"type":"reasoning-delta","delta":"上海"}}
+{"ts":"2026-08-31T08:31:07.923Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:07.999Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:08.081Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:08.159Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:08.238Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:31:08.314Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:08.385Z","ev":{"type":"reasoning-delta","delta":"多云"}}
+{"ts":"2026-08-31T08:31:08.458Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:08.530Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:08.601Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:08.673Z","ev":{"type":"reasoning-delta","delta":"温度"}}
+{"ts":"2026-08-31T08:31:08.744Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:08.816Z","ev":{"type":"reasoning-delta","delta":"3"}}
+{"ts":"2026-08-31T08:31:08.892Z","ev":{"type":"reasoning-delta","delta":"1"}}
+{"ts":"2026-08-31T08:31:08.962Z","ev":{"type":"reasoning-delta","delta":"°C"}}
+{"ts":"2026-08-31T08:31:09.038Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:09.109Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:09.184Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:09.255Z","ev":{"type":"reasoning-delta","delta":"湿度"}}
+{"ts":"2026-08-31T08:31:09.328Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:09.400Z","ev":{"type":"reasoning-delta","delta":"7"}}
+{"ts":"2026-08-31T08:31:09.475Z","ev":{"type":"reasoning-delta","delta":"0"}}
+{"ts":"2026-08-31T08:31:09.551Z","ev":{"type":"reasoning-delta","delta":"%"}}
+{"ts":"2026-08-31T08:31:09.620Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:09.690Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:09.765Z","ev":{"type":"reasoning-delta","delta":" AQ"}}
+{"ts":"2026-08-31T08:31:09.835Z","ev":{"type":"reasoning-delta","delta":"I"}}
+{"ts":"2026-08-31T08:31:09.904Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:09.980Z","ev":{"type":"reasoning-delta","delta":"4"}}
+{"ts":"2026-08-31T08:31:10.058Z","ev":{"type":"reasoning-delta","delta":"8"}}
+{"ts":"2026-08-31T08:31:10.129Z","ev":{"type":"reasoning-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T08:31:10.201Z","ev":{"type":"reasoning-delta","delta":"广州"}}
+{"ts":"2026-08-31T08:31:10.283Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:10.352Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:10.426Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:10.499Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:10.573Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:31:10.645Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:10.720Z","ev":{"type":"reasoning-delta","delta":"雷"}}
+{"ts":"2026-08-31T08:31:10.796Z","ev":{"type":"reasoning-delta","delta":"阵雨"}}
+{"ts":"2026-08-31T08:31:10.870Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:10.942Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:11.012Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:11.088Z","ev":{"type":"reasoning-delta","delta":"温度"}}
+{"ts":"2026-08-31T08:31:11.164Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:11.246Z","ev":{"type":"reasoning-delta","delta":"3"}}
+{"ts":"2026-08-31T08:31:11.328Z","ev":{"type":"reasoning-delta","delta":"3"}}
+{"ts":"2026-08-31T08:31:11.403Z","ev":{"type":"reasoning-delta","delta":"°C"}}
+{"ts":"2026-08-31T08:31:11.474Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:11.550Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:11.625Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:11.706Z","ev":{"type":"reasoning-delta","delta":"湿度"}}
+{"ts":"2026-08-31T08:31:11.779Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:11.854Z","ev":{"type":"reasoning-delta","delta":"8"}}
+{"ts":"2026-08-31T08:31:11.928Z","ev":{"type":"reasoning-delta","delta":"5"}}
+{"ts":"2026-08-31T08:31:12.007Z","ev":{"type":"reasoning-delta","delta":"%"}}
+{"ts":"2026-08-31T08:31:12.082Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:12.155Z","ev":{"type":"reasoning-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:12.231Z","ev":{"type":"reasoning-delta","delta":" AQ"}}
+{"ts":"2026-08-31T08:31:12.312Z","ev":{"type":"reasoning-delta","delta":"I"}}
+{"ts":"2026-08-31T08:31:12.389Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:12.458Z","ev":{"type":"reasoning-delta","delta":"6"}}
+{"ts":"2026-08-31T08:31:12.529Z","ev":{"type":"reasoning-delta","delta":"2"}}
+{"ts":"2026-08-31T08:31:12.606Z","ev":{"type":"reasoning-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T08:31:12.685Z","ev":{"type":"reasoning-delta","delta":"我"}}
+{"ts":"2026-08-31T08:31:12.769Z","ev":{"type":"reasoning-delta","delta":"可以用"}}
+{"ts":"2026-08-31T08:31:12.850Z","ev":{"type":"reasoning-delta","delta":"这些信息"}}
+{"ts":"2026-08-31T08:31:12.941Z","ev":{"type":"reasoning-delta","delta":"来"}}
+{"ts":"2026-08-31T08:31:13.022Z","ev":{"type":"reasoning-delta","delta":"回答"}}
+{"ts":"2026-08-31T08:31:13.102Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T08:31:13.178Z","ev":{"type":"reasoning-delta","delta":"的问题"}}
+{"ts":"2026-08-31T08:31:13.262Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T08:31:13.357Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:13.595Z","ev":{"type":"text-delta","delta":"以下是"}}
+{"ts":"2026-08-31T08:31:13.672Z","ev":{"type":"text-delta","delta":"杭州"}}
+{"ts":"2026-08-31T08:31:13.748Z","ev":{"type":"text-delta","delta":"及"}}
+{"ts":"2026-08-31T08:31:13.823Z","ev":{"type":"text-delta","delta":"三个"}}
+{"ts":"2026-08-31T08:31:13.900Z","ev":{"type":"text-delta","delta":"城市的"}}
+{"ts":"2026-08-31T08:31:13.974Z","ev":{"type":"text-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:31:14.053Z","ev":{"type":"text-delta","delta":"情况"}}
+{"ts":"2026-08-31T08:31:14.132Z","ev":{"type":"text-delta","delta":"对比"}}
+{"ts":"2026-08-31T08:31:14.207Z","ev":{"type":"text-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:14.289Z","ev":{"type":"text-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T08:31:14.360Z","ev":{"type":"text-delta","delta":"|"}}
+{"ts":"2026-08-31T08:31:14.431Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:14.503Z","ev":{"type":"text-delta","delta":"城市"}}
+{"ts":"2026-08-31T08:31:14.579Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:14.656Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:14.725Z","ev":{"type":"text-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:31:14.795Z","ev":{"type":"text-delta","delta":"状况"}}
+{"ts":"2026-08-31T08:31:14.872Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:14.949Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:15.025Z","ev":{"type":"text-delta","delta":"温度"}}
+{"ts":"2026-08-31T08:31:15.101Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:15.174Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:15.246Z","ev":{"type":"text-delta","delta":"湿度"}}
+{"ts":"2026-08-31T08:31:15.318Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:15.387Z","ev":{"type":"text-delta","delta":" AQ"}}
+{"ts":"2026-08-31T08:31:15.465Z","ev":{"type":"text-delta","delta":"I"}}
+{"ts":"2026-08-31T08:31:15.535Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:15.612Z","ev":{"type":"text-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:15.746Z","ev":{"type":"text-delta","delta":"|"}}
+{"ts":"2026-08-31T08:31:15.760Z","ev":{"type":"text-delta","delta":" :"}}
+{"ts":"2026-08-31T08:31:15.830Z","ev":{"type":"text-delta","delta":"---"}}
+{"ts":"2026-08-31T08:31:15.907Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:15.980Z","ev":{"type":"text-delta","delta":" :"}}
+{"ts":"2026-08-31T08:31:16.053Z","ev":{"type":"text-delta","delta":"---"}}
+{"ts":"2026-08-31T08:31:16.129Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:16.204Z","ev":{"type":"text-delta","delta":" :"}}
+{"ts":"2026-08-31T08:31:16.279Z","ev":{"type":"text-delta","delta":"---"}}
+{"ts":"2026-08-31T08:31:16.352Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:16.428Z","ev":{"type":"text-delta","delta":" :"}}
+{"ts":"2026-08-31T08:31:16.508Z","ev":{"type":"text-delta","delta":"---"}}
+{"ts":"2026-08-31T08:31:16.585Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:16.653Z","ev":{"type":"text-delta","delta":" :"}}
+{"ts":"2026-08-31T08:31:16.729Z","ev":{"type":"text-delta","delta":"---"}}
+{"ts":"2026-08-31T08:31:16.806Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:16.876Z","ev":{"type":"text-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:16.951Z","ev":{"type":"text-delta","delta":"|"}}
+{"ts":"2026-08-31T08:31:17.028Z","ev":{"type":"text-delta","delta":" **"}}
+{"ts":"2026-08-31T08:31:17.107Z","ev":{"type":"text-delta","delta":"杭州"}}
+{"ts":"2026-08-31T08:31:17.185Z","ev":{"type":"text-delta","delta":"**"}}
+{"ts":"2026-08-31T08:31:17.259Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:17.331Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:17.406Z","ev":{"type":"text-delta","delta":"晴"}}
+{"ts":"2026-08-31T08:31:17.479Z","ev":{"type":"text-delta","delta":"转"}}
+{"ts":"2026-08-31T08:31:17.555Z","ev":{"type":"text-delta","delta":"多云"}}
+{"ts":"2026-08-31T08:31:17.632Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:17.700Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:17.780Z","ev":{"type":"text-delta","delta":"3"}}
+{"ts":"2026-08-31T08:31:17.862Z","ev":{"type":"text-delta","delta":"0"}}
+{"ts":"2026-08-31T08:31:17.948Z","ev":{"type":"text-delta","delta":"°C"}}
+{"ts":"2026-08-31T08:31:18.032Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:18.112Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:18.194Z","ev":{"type":"text-delta","delta":"6"}}
+{"ts":"2026-08-31T08:31:18.274Z","ev":{"type":"text-delta","delta":"5"}}
+{"ts":"2026-08-31T08:31:18.350Z","ev":{"type":"text-delta","delta":"%"}}
+{"ts":"2026-08-31T08:31:18.426Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:18.503Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:18.579Z","ev":{"type":"text-delta","delta":"5"}}
+{"ts":"2026-08-31T08:31:18.656Z","ev":{"type":"text-delta","delta":"8"}}
+{"ts":"2026-08-31T08:31:18.730Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:18.807Z","ev":{"type":"text-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:18.877Z","ev":{"type":"text-delta","delta":"|"}}
+{"ts":"2026-08-31T08:31:18.954Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:19.027Z","ev":{"type":"text-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:31:19.104Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:19.178Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:19.251Z","ev":{"type":"text-delta","delta":"晴"}}
+{"ts":"2026-08-31T08:31:19.329Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:19.402Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:19.476Z","ev":{"type":"text-delta","delta":"2"}}
+{"ts":"2026-08-31T08:31:19.550Z","ev":{"type":"text-delta","delta":"8"}}
+{"ts":"2026-08-31T08:31:19.626Z","ev":{"type":"text-delta","delta":"°C"}}
+{"ts":"2026-08-31T08:31:19.696Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:19.774Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:19.846Z","ev":{"type":"text-delta","delta":"4"}}
+{"ts":"2026-08-31T08:31:19.921Z","ev":{"type":"text-delta","delta":"0"}}
+{"ts":"2026-08-31T08:31:19.994Z","ev":{"type":"text-delta","delta":"%"}}
+{"ts":"2026-08-31T08:31:20.074Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:20.152Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:20.224Z","ev":{"type":"text-delta","delta":"5"}}
+{"ts":"2026-08-31T08:31:20.301Z","ev":{"type":"text-delta","delta":"5"}}
+{"ts":"2026-08-31T08:31:20.379Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:20.458Z","ev":{"type":"text-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:20.539Z","ev":{"type":"text-delta","delta":"|"}}
+{"ts":"2026-08-31T08:31:20.618Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:20.690Z","ev":{"type":"text-delta","delta":"上海"}}
+{"ts":"2026-08-31T08:31:20.765Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:20.838Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:20.911Z","ev":{"type":"text-delta","delta":"多云"}}
+{"ts":"2026-08-31T08:31:20.986Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:21.065Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:21.141Z","ev":{"type":"text-delta","delta":"3"}}
+{"ts":"2026-08-31T08:31:21.218Z","ev":{"type":"text-delta","delta":"1"}}
+{"ts":"2026-08-31T08:31:21.303Z","ev":{"type":"text-delta","delta":"°C"}}
+{"ts":"2026-08-31T08:31:21.369Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:21.446Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:21.531Z","ev":{"type":"text-delta","delta":"7"}}
+{"ts":"2026-08-31T08:31:21.611Z","ev":{"type":"text-delta","delta":"0"}}
+{"ts":"2026-08-31T08:31:21.694Z","ev":{"type":"text-delta","delta":"%"}}
+{"ts":"2026-08-31T08:31:21.770Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:21.843Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:21.916Z","ev":{"type":"text-delta","delta":"4"}}
+{"ts":"2026-08-31T08:31:21.992Z","ev":{"type":"text-delta","delta":"8"}}
+{"ts":"2026-08-31T08:31:22.066Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:22.142Z","ev":{"type":"text-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:22.218Z","ev":{"type":"text-delta","delta":"|"}}
+{"ts":"2026-08-31T08:31:22.289Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:22.365Z","ev":{"type":"text-delta","delta":"广州"}}
+{"ts":"2026-08-31T08:31:22.439Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:22.513Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:22.590Z","ev":{"type":"text-delta","delta":"雷"}}
+{"ts":"2026-08-31T08:31:22.672Z","ev":{"type":"text-delta","delta":"阵雨"}}
+{"ts":"2026-08-31T08:31:22.752Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:22.831Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:22.909Z","ev":{"type":"text-delta","delta":"3"}}
+{"ts":"2026-08-31T08:31:22.989Z","ev":{"type":"text-delta","delta":"3"}}
+{"ts":"2026-08-31T08:31:23.074Z","ev":{"type":"text-delta","delta":"°C"}}
+{"ts":"2026-08-31T08:31:23.152Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:23.229Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:23.307Z","ev":{"type":"text-delta","delta":"8"}}
+{"ts":"2026-08-31T08:31:23.390Z","ev":{"type":"text-delta","delta":"5"}}
+{"ts":"2026-08-31T08:31:23.470Z","ev":{"type":"text-delta","delta":"%"}}
+{"ts":"2026-08-31T08:31:23.565Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:23.664Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T08:31:23.750Z","ev":{"type":"text-delta","delta":"6"}}
+{"ts":"2026-08-31T08:31:23.829Z","ev":{"type":"text-delta","delta":"2"}}
+{"ts":"2026-08-31T08:31:23.925Z","ev":{"type":"text-delta","delta":" |"}}
+{"ts":"2026-08-31T08:31:24.009Z","ev":{"type":"text-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T08:31:24.091Z","ev":{"type":"text-delta","delta":"**"}}
+{"ts":"2026-08-31T08:31:24.172Z","ev":{"type":"text-delta","delta":"简要"}}
+{"ts":"2026-08-31T08:31:24.244Z","ev":{"type":"text-delta","delta":"对比"}}
+{"ts":"2026-08-31T08:31:24.318Z","ev":{"type":"text-delta","delta":"：**"}}
+{"ts":"2026-08-31T08:31:24.390Z","ev":{"type":"text-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:24.468Z","ev":{"type":"text-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:24.548Z","ev":{"type":"text-delta","delta":" **"}}
+{"ts":"2026-08-31T08:31:24.629Z","ev":{"type":"text-delta","delta":"温度"}}
+{"ts":"2026-08-31T08:31:24.707Z","ev":{"type":"text-delta","delta":"**"}}
+{"ts":"2026-08-31T08:31:24.787Z","ev":{"type":"text-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:24.861Z","ev":{"type":"text-delta","delta":"广州"}}
+{"ts":"2026-08-31T08:31:24.936Z","ev":{"type":"text-delta","delta":"最"}}
+{"ts":"2026-08-31T08:31:25.009Z","ev":{"type":"text-delta","delta":"热"}}
+{"ts":"2026-08-31T08:31:25.087Z","ev":{"type":"text-delta","delta":"（"}}
+{"ts":"2026-08-31T08:31:25.167Z","ev":{"type":"text-delta","delta":"3"}}
+{"ts":"2026-08-31T08:31:25.244Z","ev":{"type":"text-delta","delta":"3"}}
+{"ts":"2026-08-31T08:31:25.319Z","ev":{"type":"text-delta","delta":"°C"}}
+{"ts":"2026-08-31T08:31:25.396Z","ev":{"type":"text-delta","delta":"），"}}
+{"ts":"2026-08-31T08:31:25.470Z","ev":{"type":"text-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:31:25.544Z","ev":{"type":"text-delta","delta":"最"}}
+{"ts":"2026-08-31T08:31:25.621Z","ev":{"type":"text-delta","delta":"凉"}}
+{"ts":"2026-08-31T08:31:25.697Z","ev":{"type":"text-delta","delta":"（"}}
+{"ts":"2026-08-31T08:31:25.775Z","ev":{"type":"text-delta","delta":"2"}}
+{"ts":"2026-08-31T08:31:25.846Z","ev":{"type":"text-delta","delta":"8"}}
+{"ts":"2026-08-31T08:31:25.923Z","ev":{"type":"text-delta","delta":"°C"}}
+{"ts":"2026-08-31T08:31:25.998Z","ev":{"type":"text-delta","delta":"）。"}}
+{"ts":"2026-08-31T08:31:26.078Z","ev":{"type":"text-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:26.155Z","ev":{"type":"text-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:26.228Z","ev":{"type":"text-delta","delta":" **"}}
+{"ts":"2026-08-31T08:31:26.304Z","ev":{"type":"text-delta","delta":"湿度"}}
+{"ts":"2026-08-31T08:31:26.375Z","ev":{"type":"text-delta","delta":"**"}}
+{"ts":"2026-08-31T08:31:26.449Z","ev":{"type":"text-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:26.526Z","ev":{"type":"text-delta","delta":"广州"}}
+{"ts":"2026-08-31T08:31:26.600Z","ev":{"type":"text-delta","delta":"最"}}
+{"ts":"2026-08-31T08:31:26.675Z","ev":{"type":"text-delta","delta":"潮湿"}}
+{"ts":"2026-08-31T08:31:26.755Z","ev":{"type":"text-delta","delta":"（"}}
+{"ts":"2026-08-31T08:31:26.833Z","ev":{"type":"text-delta","delta":"8"}}
+{"ts":"2026-08-31T08:31:26.909Z","ev":{"type":"text-delta","delta":"5"}}
+{"ts":"2026-08-31T08:31:26.985Z","ev":{"type":"text-delta","delta":"%"}}
+{"ts":"2026-08-31T08:31:27.062Z","ev":{"type":"text-delta","delta":"），"}}
+{"ts":"2026-08-31T08:31:27.142Z","ev":{"type":"text-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:31:27.220Z","ev":{"type":"text-delta","delta":"最"}}
+{"ts":"2026-08-31T08:31:27.295Z","ev":{"type":"text-delta","delta":"干燥"}}
+{"ts":"2026-08-31T08:31:27.371Z","ev":{"type":"text-delta","delta":"（"}}
+{"ts":"2026-08-31T08:31:27.443Z","ev":{"type":"text-delta","delta":"4"}}
+{"ts":"2026-08-31T08:31:27.521Z","ev":{"type":"text-delta","delta":"0"}}
+{"ts":"2026-08-31T08:31:27.596Z","ev":{"type":"text-delta","delta":"%"}}
+{"ts":"2026-08-31T08:31:27.673Z","ev":{"type":"text-delta","delta":"）。"}}
+{"ts":"2026-08-31T08:31:27.747Z","ev":{"type":"text-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:27.821Z","ev":{"type":"text-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:27.898Z","ev":{"type":"text-delta","delta":" **"}}
+{"ts":"2026-08-31T08:31:27.970Z","ev":{"type":"text-delta","delta":"天气"}}
+{"ts":"2026-08-31T08:31:28.049Z","ev":{"type":"text-delta","delta":"**"}}
+{"ts":"2026-08-31T08:31:28.132Z","ev":{"type":"text-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:28.213Z","ev":{"type":"text-delta","delta":"广州"}}
+{"ts":"2026-08-31T08:31:28.292Z","ev":{"type":"text-delta","delta":"有"}}
+{"ts":"2026-08-31T08:31:28.366Z","ev":{"type":"text-delta","delta":"雷"}}
+{"ts":"2026-08-31T08:31:28.446Z","ev":{"type":"text-delta","delta":"阵雨"}}
+{"ts":"2026-08-31T08:31:28.528Z","ev":{"type":"text-delta","delta":"，"}}
+{"ts":"2026-08-31T08:31:28.608Z","ev":{"type":"text-delta","delta":"杭州"}}
+{"ts":"2026-08-31T08:31:28.688Z","ev":{"type":"text-delta","delta":"和"}}
+{"ts":"2026-08-31T08:31:28.764Z","ev":{"type":"text-delta","delta":"北京"}}
+{"ts":"2026-08-31T08:31:28.837Z","ev":{"type":"text-delta","delta":"是"}}
+{"ts":"2026-08-31T08:31:28.914Z","ev":{"type":"text-delta","delta":"晴天"}}
+{"ts":"2026-08-31T08:31:28.993Z","ev":{"type":"text-delta","delta":"，"}}
+{"ts":"2026-08-31T08:31:29.073Z","ev":{"type":"text-delta","delta":"上海"}}
+{"ts":"2026-08-31T08:31:29.161Z","ev":{"type":"text-delta","delta":"多云"}}
+{"ts":"2026-08-31T08:31:29.235Z","ev":{"type":"text-delta","delta":"。"}}
+{"ts":"2026-08-31T08:31:29.305Z","ev":{"type":"text-delta","delta":"\n"}}
+{"ts":"2026-08-31T08:31:29.382Z","ev":{"type":"text-delta","delta":"-"}}
+{"ts":"2026-08-31T08:31:29.459Z","ev":{"type":"text-delta","delta":" **"}}
+{"ts":"2026-08-31T08:31:29.535Z","ev":{"type":"text-delta","delta":"空气质量"}}
+{"ts":"2026-08-31T08:31:29.616Z","ev":{"type":"text-delta","delta":"**"}}
+{"ts":"2026-08-31T08:31:29.693Z","ev":{"type":"text-delta","delta":"："}}
+{"ts":"2026-08-31T08:31:29.768Z","ev":{"type":"text-delta","delta":"上海"}}
+{"ts":"2026-08-31T08:31:29.843Z","ev":{"type":"text-delta","delta":"相对"}}
+{"ts":"2026-08-31T08:31:29.921Z","ev":{"type":"text-delta","delta":"较好"}}
+{"ts":"2026-08-31T08:31:29.996Z","ev":{"type":"text-delta","delta":"（"}}
+{"ts":"2026-08-31T08:31:30.070Z","ev":{"type":"text-delta","delta":"AQ"}}
+{"ts":"2026-08-31T08:31:30.150Z","ev":{"type":"text-delta","delta":"I"}}
+{"ts":"2026-08-31T08:31:30.229Z","ev":{"type":"text-delta","delta":"最低"}}
+{"ts":"2026-08-31T08:31:30.301Z","ev":{"type":"text-delta","delta":"），"}}
+{"ts":"2026-08-31T08:31:30.377Z","ev":{"type":"text-delta","delta":"广州"}}
+{"ts":"2026-08-31T08:31:30.453Z","ev":{"type":"text-delta","delta":"相对"}}
+{"ts":"2026-08-31T08:31:30.527Z","ev":{"type":"text-delta","delta":"较差"}}
+{"ts":"2026-08-31T08:31:30.601Z","ev":{"type":"text-delta","delta":"（"}}
+{"ts":"2026-08-31T08:31:30.676Z","ev":{"type":"text-delta","delta":"AQ"}}
+{"ts":"2026-08-31T08:31:30.754Z","ev":{"type":"text-delta","delta":"I"}}
+{"ts":"2026-08-31T08:31:30.832Z","ev":{"type":"text-delta","delta":"最高"}}
+{"ts":"2026-08-31T08:31:30.909Z","ev":{"type":"text-delta","delta":"）。"}}
+{"ts":"2026-08-31T08:31:30.986Z","ev":{"type":"final","message":{"role":"assistant","content":"以下是杭州及三个城市的天气情况对比：\n\n| 城市 | 天气状况 | 温度 | 湿度 | AQI |\n| :--- | :--- | :--- | :--- | :--- |\n| **杭州** | 晴转多云 | 30°C | 65% | 58 |\n| 北京 | 晴 | 28°C | 40% | 55 |\n| 上海 | 多云 | 31°C | 70% | 48 |\n| 广州 | 雷阵雨 | 33°C | 85% | 62 |\n\n**简要对比：**\n- **温度**：广州最热（33°C），北京最凉（28°C）。\n- **湿度**：广州最潮湿（85%），北京最干燥（40%）。\n- **天气**：广州有雷阵雨，杭州和北京是晴天，上海多云。\n- **空气质量**：上海相对较好（AQI最低），广州相对较差（AQI最高）。"},"rounds":3,"usage":{"promptTokens":0,"completionTokens":0}}}

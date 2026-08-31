@@ -1,0 +1,64 @@
+{"seq":1,"kind":"reasoning","frame":2,"line":3,"byte":295,"text":"用户"}
+{"seq":2,"kind":"reasoning","frame":3,"line":5,"byte":585,"text":"想知道"}
+{"seq":3,"kind":"reasoning","frame":4,"line":7,"byte":878,"text":"北京"}
+{"seq":4,"kind":"reasoning","frame":5,"line":9,"byte":1168,"text":"今天的"}
+{"seq":5,"kind":"reasoning","frame":6,"line":11,"byte":1461,"text":"天气"}
+{"seq":6,"kind":"reasoning","frame":7,"line":13,"byte":1751,"text":"情况"}
+{"seq":7,"kind":"reasoning","frame":8,"line":15,"byte":2041,"text":"。"}
+{"seq":8,"kind":"reasoning","frame":9,"line":17,"byte":2328,"text":"我"}
+{"seq":9,"kind":"reasoning","frame":10,"line":19,"byte":2615,"text":"需要使用"}
+{"seq":10,"kind":"reasoning","frame":11,"line":21,"byte":2911,"text":" get"}
+{"seq":11,"kind":"reasoning","frame":12,"line":23,"byte":3199,"text":"_weather"}
+{"seq":12,"kind":"reasoning","frame":13,"line":25,"byte":3491,"text":" "}
+{"seq":13,"kind":"reasoning","frame":14,"line":27,"byte":3776,"text":"工具"}
+{"seq":14,"kind":"reasoning","frame":15,"line":29,"byte":4066,"text":"来"}
+{"seq":15,"kind":"reasoning","frame":16,"line":31,"byte":4353,"text":"查询"}
+{"seq":16,"kind":"reasoning","frame":17,"line":33,"byte":4643,"text":"北京的"}
+{"seq":17,"kind":"reasoning","frame":18,"line":35,"byte":4936,"text":"天气"}
+{"seq":18,"kind":"reasoning","frame":19,"line":37,"byte":5226,"text":"。"}
+{"seq":19,"kind":"reasoning","frame":20,"line":39,"byte":5513,"text":"根据"}
+{"seq":20,"kind":"reasoning","frame":21,"line":41,"byte":5803,"text":"工具"}
+{"seq":21,"kind":"reasoning","frame":22,"line":43,"byte":6093,"text":"定义"}
+{"seq":22,"kind":"reasoning","frame":23,"line":45,"byte":6383,"text":"，"}
+{"seq":23,"kind":"reasoning","frame":24,"line":47,"byte":6670,"text":"这个"}
+{"seq":24,"kind":"reasoning","frame":25,"line":49,"byte":6960,"text":"工具"}
+{"seq":25,"kind":"reasoning","frame":26,"line":51,"byte":7250,"text":"支持"}
+{"seq":26,"kind":"reasoning","frame":27,"line":53,"byte":7540,"text":"查询"}
+{"seq":27,"kind":"reasoning","frame":28,"line":55,"byte":7830,"text":"北京"}
+{"seq":28,"kind":"reasoning","frame":29,"line":57,"byte":8120,"text":"/"}
+{"seq":29,"kind":"reasoning","frame":30,"line":59,"byte":8405,"text":"上海"}
+{"seq":30,"kind":"reasoning","frame":31,"line":61,"byte":8695,"text":"/"}
+{"seq":31,"kind":"reasoning","frame":32,"line":63,"byte":8980,"text":"广州"}
+{"seq":32,"kind":"reasoning","frame":33,"line":65,"byte":9270,"text":"/"}
+{"seq":33,"kind":"reasoning","frame":34,"line":67,"byte":9555,"text":"深圳"}
+{"seq":34,"kind":"reasoning","frame":35,"line":69,"byte":9845,"text":"/"}
+{"seq":35,"kind":"reasoning","frame":36,"line":71,"byte":10130,"text":"杭州"}
+{"seq":36,"kind":"reasoning","frame":37,"line":73,"byte":10420,"text":"的天气"}
+{"seq":37,"kind":"reasoning","frame":38,"line":75,"byte":10713,"text":"，"}
+{"seq":38,"kind":"reasoning","frame":39,"line":77,"byte":11000,"text":"参数"}
+{"seq":39,"kind":"reasoning","frame":40,"line":79,"byte":11290,"text":"需要"}
+{"seq":40,"kind":"reasoning","frame":41,"line":81,"byte":11580,"text":"城市"}
+{"seq":41,"kind":"reasoning","frame":42,"line":83,"byte":11870,"text":"名"}
+{"seq":42,"kind":"reasoning","frame":43,"line":85,"byte":12157,"text":"。"}
+{"seq":43,"kind":"reasoning","frame":44,"line":87,"byte":12444,"text":"\n\n"}
+{"seq":44,"kind":"reasoning","frame":45,"line":89,"byte":12732,"text":"我需要"}
+{"seq":45,"kind":"reasoning","frame":46,"line":91,"byte":13025,"text":"调用"}
+{"seq":46,"kind":"reasoning","frame":47,"line":93,"byte":13315,"text":" get"}
+{"seq":47,"kind":"reasoning","frame":48,"line":95,"byte":13603,"text":"_weather"}
+{"seq":48,"kind":"reasoning","frame":49,"line":97,"byte":13895,"text":" "}
+{"seq":49,"kind":"reasoning","frame":50,"line":99,"byte":14180,"text":"工具"}
+{"seq":50,"kind":"reasoning","frame":51,"line":101,"byte":14470,"text":"，"}
+{"seq":51,"kind":"reasoning","frame":52,"line":103,"byte":14757,"text":"参数"}
+{"seq":52,"kind":"reasoning","frame":53,"line":105,"byte":15047,"text":" city"}
+{"seq":53,"kind":"reasoning","frame":54,"line":107,"byte":15336,"text":" "}
+{"seq":54,"kind":"reasoning","frame":55,"line":109,"byte":15621,"text":"设置为"}
+{"seq":55,"kind":"reasoning","frame":56,"line":111,"byte":15914,"text":"\""}
+{"seq":56,"kind":"reasoning","frame":57,"line":113,"byte":16200,"text":"北京"}
+{"seq":57,"kind":"reasoning","frame":58,"line":115,"byte":16490,"text":"\""}
+{"seq":58,"kind":"reasoning","frame":59,"line":117,"byte":16776,"text":"。"}
+{"seq":59,"kind":"reasoning","frame":60,"line":119,"byte":17063,"text":"\n"}
+{"seq":60,"kind":"tool-call","frame":61,"line":121,"byte":17349,"text":"{","index":0,"id":"oQwCgeZdT2ilu4AJ56JynqAFnfY2UAXK","name":"get_weather"}
+{"seq":61,"kind":"tool-call","frame":62,"line":123,"byte":17745,"text":"\"city\":\"","index":0,"id":null,"name":null}
+{"seq":62,"kind":"tool-call","frame":63,"line":125,"byte":18072,"text":"北京","index":0,"id":null,"name":null}
+{"seq":63,"kind":"tool-call","frame":64,"line":127,"byte":18394,"text":"\"","index":0,"id":null,"name":null}
+{"seq":64,"kind":"tool-call","frame":65,"line":129,"byte":18712,"text":"}","index":0,"id":null,"name":null}

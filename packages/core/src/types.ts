@@ -108,4 +108,7 @@ export interface AgentConfig {
   /** 迭代触顶后的降级策略（Step 2，FR-15）：true = 追加一次无 tools 请求
    *  迫使模型基于已有结果作答；false = 维持 Step 1 行为（error 事件）。默认 true。 */
   degradeOnCap?: boolean;
+  /** 上下文预算（Step 3，FR-22）：估算 token 超过此值触发双水位裁剪。
+   *  缺省 = 不裁剪（Step 1/2 行为）。 */
+  contextBudgetTokens?: number;
 }

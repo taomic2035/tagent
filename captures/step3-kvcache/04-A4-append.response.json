@@ -1,0 +1,37 @@
+{
+  "choices": [
+    {
+      "finish_reason": "length",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *"
+      }
+    }
+  ],
+  "created": 1788164902,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 16,
+    "prompt_tokens": 112,
+    "total_tokens": 128,
+    "prompt_tokens_details": {
+      "cached_tokens": 87
+    }
+  },
+  "id": "chatcmpl-IO3BmWMizzC68tO069cK82nO2w2bwDYF",
+  "timings": {
+    "cache_n": 87,
+    "prompt_n": 25,
+    "prompt_ms": 385.606,
+    "prompt_per_token_ms": 15.42424,
+    "prompt_per_second": 64.83301608377462,
+    "predicted_n": 16,
+    "predicted_ms": 1081.398,
+    "predicted_per_token_ms": 72.0932,
+    "predicted_per_second": 13.870933735775358
+  }
+}

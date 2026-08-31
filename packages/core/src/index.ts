@@ -26,3 +26,10 @@ export {
   type ToolResultOk,
 } from "./tools.js";
 export { runAgent, type AgentEvent, type AgentDeps } from "./loop.js";
+export {
+  estimateTokens,
+  estimateMessagesTokens,
+  trimMessages,
+  type TrimPolicy,
+  type TrimResult,
+} from "./memory.js";

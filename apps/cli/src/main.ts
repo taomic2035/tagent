@@ -36,6 +36,8 @@ const config: AgentConfig = {
   // 必须通过 TAGENT_MODEL 或 --model 提供
   model: args.model ?? process.env.TAGENT_MODEL ?? "",
   maxIterations: Number(args["max-iterations"] ?? 8),
+  // Step 3（FR-22）：上下文预算（估算 token），超出触发双水位裁剪；缺省不裁剪
+  ...(args["max-context-tokens"] ? { contextBudgetTokens: Number(args["max-context-tokens"]) } : {}),
   temperature: 0.7,
   systemPrompt: [
     "你是 tagent，一个运行在用户本地终端上的助手。",
@@ -80,6 +82,9 @@ function render(ev: AgentEvent, state: { toolStart: number }): void {
       break;
     case "round-start":
       if (ev.round > 1) writeLine(); // 多轮间空行分隔
+      break;
+    case "context-trimmed":
+      writeLine(paint.yellow(`⚡ 上下文已裁剪：${ev.fromTokens} → ${ev.toTokens} 估算 token（移除 ${ev.removedMessages} 条消息；裁剪即遗忘，旧回合不再可见）`));
       break;
     case "tool-call":
       state.toolStart = Date.now();
@@ -160,6 +165,9 @@ function main(): void {
   }
   if (faults.size > 0) {
     writeLine(paint.red(`⚡ 故障注入已启用: ${describeFaults(faults)}（TAGENT_FAULTS）`));
+  }
+  if (config.contextBudgetTokens) {
+    writeLine(paint.dim(`上下文预算: ${config.contextBudgetTokens} 估算 token（双水位裁剪）`));
   }
   writeLine(paint.dim(`引擎: ${config.baseUrl} · transcript: ${transcriptPath}`));
 

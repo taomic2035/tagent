@@ -1,6 +1,7 @@
 import type { AgentConfig, ChatMessage, ToolContext, Usage } from "./types.js";
 import type { LLMClient } from "./client.js";
 import type { ToolRegistry } from "./tools.js";
+import { trimMessages } from "./memory.js";
 
 // ============================================================
 // AgentEvent：loop 对外暴露的事件流
@@ -14,6 +15,7 @@ export type AgentEvent =
   | { type: "text-delta"; delta: string }
   | { type: "tool-call"; id: string; name: string; args: unknown }
   | { type: "tool-result"; id: string; name: string; result: string; retriesUsed?: number }
+  | { type: "context-trimmed"; removedMessages: number; fromTokens: number; toTokens: number }
   | { type: "final"; message: ChatMessage; rounds: number; usage: Usage }
   | { type: "error"; message: string; recoverable: boolean };
 
@@ -48,6 +50,22 @@ export async function* runAgent(
   const totalUsage: Usage = { promptTokens: 0, completionTokens: 0 };
 
   for (let round = 1; round <= config.maxIterations; round++) {
+    // ---- 上下文预算检查（Step 3，FR-20/21）：每轮请求前，超预算才裁，一次裁到低水位 ----
+    if (config.contextBudgetTokens) {
+      const t = trimMessages(messages, { budget: config.contextBudgetTokens });
+      if (t.removed.length > 0) {
+        // 原地替换：调用方持有的 messages 引用不变（不变量1 的载体）
+        messages.length = 0;
+        messages.push(...t.kept);
+        yield {
+          type: "context-trimmed",
+          removedMessages: t.removed.length,
+          fromTokens: t.beforeTokens,
+          toTokens: t.afterTokens,
+        };
+      }
+    }
+
     yield { type: "round-start", round };
     yield { type: "llm-request", messages: [...messages] }; // 快照，供 debug/transcript
 
@@ -127,6 +145,19 @@ export async function* runAgent(
   // 降级终答：追加一次【无 tools】请求——协议层禁止再调工具（无 tools 定义
   // → 模板无工具段 → finish_reason 不可能是 tool_calls），降级靠协议保证而非 prompt 恳求。
   // 注入提示用副本拼接，不污染调用方持有的 messages（不变量1 不破）。
+  if (config.contextBudgetTokens) {
+    const t = trimMessages(messages, { budget: config.contextBudgetTokens });
+    if (t.removed.length > 0) {
+      messages.length = 0;
+      messages.push(...t.kept);
+      yield {
+        type: "context-trimmed",
+        removedMessages: t.removed.length,
+        fromTokens: t.beforeTokens,
+        toTokens: t.afterTokens,
+      };
+    }
+  }
   const degradeRound = config.maxIterations + 1;
   yield { type: "round-start", round: degradeRound };
   const degradeMessages = [

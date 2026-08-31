@@ -1,0 +1,32 @@
+{
+  "model": "<MODEL_PATH>",
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是缓存实验助手，请只回答一个词。（run 1788164896139）"
+    },
+    {
+      "role": "user",
+      "content": "第三个问题：煤是什么颜色？"
+    },
+    {
+      "role": "assistant",
+      "content": "（截断）"
+    },
+    {
+      "role": "user",
+      "content": "第四个问题：牛奶是什么颜色？"
+    },
+    {
+      "role": "assistant",
+      "content": "（截断）"
+    },
+    {
+      "role": "user",
+      "content": "第五个问题：海是什么颜色？"
+    }
+  ],
+  "max_tokens": 16,
+  "temperature": 0,
+  "stream": false
+}
