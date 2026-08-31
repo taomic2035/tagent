@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "我们可以通过简单的日期推算来解决这个问题：\n\n1.  **确定今天**：\n    如果昨天是星期三，那么今天就是星期三的第二天。\n    星期三 + 1 天 = **星期四**。\n\n2.  **确定明天**：\n    既然今天是星期四，那么明天就是星期四的第二天。\n    星期四 + 1 天 = **星期五**。\n\n**结论：**\n今天是**星期四**，明天是**星期五**。"
+      }
+    }
+  ],
+  "created": 1788168665,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 96,
+    "prompt_tokens": 25,
+    "total_tokens": 121,
+    "prompt_tokens_details": {
+      "cached_tokens": 21
+    }
+  },
+  "id": "chatcmpl-bxX85IpGxJDbgsX8d5UCWjt23Z4EKE2H",
+  "timings": {
+    "cache_n": 21,
+    "prompt_n": 4,
+    "prompt_ms": 123.004,
+    "prompt_per_token_ms": 30.751,
+    "prompt_per_second": 32.519267666092155,
+    "predicted_n": 96,
+    "predicted_ms": 7014.873,
+    "predicted_per_token_ms": 73.84076842105263,
+    "predicted_per_second": 13.542654300370087
+  }
+}

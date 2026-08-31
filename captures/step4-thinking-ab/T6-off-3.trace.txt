@@ -1,0 +1,4 @@
+ok=true ms=8366 reasoning=0 tokens=110 | content=根据题目给出的条件进行逻辑推导：
+
+1.  **A 比 B 高**：意味着 $A > B$
+2.  **B 比 C 高*

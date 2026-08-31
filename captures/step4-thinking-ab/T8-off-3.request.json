@@ -1,0 +1,15 @@
+{
+  "model": "<MODEL_PATH>",
+  "messages": [
+    {
+      "role": "user",
+      "content": "所有的猫都怕水，汤姆是一只猫。汤姆怕水吗？"
+    }
+  ],
+  "max_tokens": 160,
+  "temperature": 0.7,
+  "stream": false,
+  "chat_template_kwargs": {
+    "enable_thinking": false
+  }
+}

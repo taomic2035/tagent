@@ -1,0 +1,4 @@
+ok=true ms=27969 reasoning=1020 tokens=347 | content=如果昨天是星期三，那么：
+
+*   **今天是星期四**
+*   **明天是星期五**

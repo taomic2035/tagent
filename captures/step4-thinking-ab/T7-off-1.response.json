@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "这是一个有趣的逻辑推理问题。我们可以分步推导：\n\n1.  **确定今天**：\n    如果“昨天”是星期三，那么从今天往回推一天就是星期三。因此，**今天是星期四**。\n\n2.  **确定明天**：\n    今天是星期四，那么明天就是**星期五**。\n\n**结论：**\n今天是**星期四**，明天是**星期五**。"
+      }
+    }
+  ],
+  "created": 1788168651,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 82,
+    "prompt_tokens": 25,
+    "total_tokens": 107,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "id": "chatcmpl-ilYWPvCkkLg0FfZtb3TGUAILfDZKHjR2",
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 25,
+    "prompt_ms": 416.285,
+    "prompt_per_token_ms": 16.651400000000002,
+    "prompt_per_second": 60.055010389516795,
+    "predicted_n": 82,
+    "predicted_ms": 6011.693,
+    "predicted_per_token_ms": 74.21843209876543,
+    "predicted_per_second": 13.473741922616474
+  }
+}

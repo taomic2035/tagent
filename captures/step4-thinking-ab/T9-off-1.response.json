@@ -1,0 +1,46 @@
+{
+  "choices": [
+    {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [
+          {
+            "type": "function",
+            "function": {
+              "name": "get_weather",
+              "arguments": "{\"city\":\"北京\"}"
+            },
+            "id": "1gr5yMR35TJVdMrUTdW4TRTbLliibSxB"
+          }
+        ]
+      }
+    }
+  ],
+  "created": 1788168694,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 26,
+    "prompt_tokens": 298,
+    "total_tokens": 324,
+    "prompt_tokens_details": {
+      "cached_tokens": 292
+    }
+  },
+  "id": "chatcmpl-CfJPCXLHIAbrcSxXZdBa3aEs07dgcDAT",
+  "timings": {
+    "cache_n": 292,
+    "prompt_n": 6,
+    "prompt_ms": 228.728,
+    "prompt_per_token_ms": 38.12133333333333,
+    "prompt_per_second": 26.232031058724772,
+    "predicted_n": 26,
+    "predicted_ms": 1889.518,
+    "predicted_per_token_ms": 75.58072,
+    "predicted_per_second": 13.230887453837434
+  }
+}

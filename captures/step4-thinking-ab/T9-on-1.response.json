@@ -1,0 +1,47 @@
+{
+  "choices": [
+    {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "用户想知道北京的天气情况。我需要使用get_weather函数来查询北京的天气。根据工具定义，这个函数接受一个city参数，支持北京/上海/广州/深圳/杭州等城市。用户询问的是北京，所以city参数应该设置为\"北京\"。\n",
+        "tool_calls": [
+          {
+            "type": "function",
+            "function": {
+              "name": "get_weather",
+              "arguments": "{\"city\":\"北京\"}"
+            },
+            "id": "NLrkA1vSnBYv2B6acAeiSPDB9dkw0doe"
+          }
+        ]
+      }
+    }
+  ],
+  "created": 1788168169,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 82,
+    "prompt_tokens": 296,
+    "total_tokens": 378,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "id": "chatcmpl-KoWfLCd40exqYhbVmDzwVysfB0yuNPQu",
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 296,
+    "prompt_ms": 4387.042,
+    "prompt_per_token_ms": 14.821087837837839,
+    "prompt_per_second": 67.47143063595014,
+    "predicted_n": 82,
+    "predicted_ms": 5972.726,
+    "predicted_per_token_ms": 73.73735802469136,
+    "predicted_per_second": 13.561646725465057
+  }
+}

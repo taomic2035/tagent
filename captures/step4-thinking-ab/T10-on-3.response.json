@@ -1,0 +1,47 @@
+{
+  "choices": [
+    {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "用户想要计算 128 乘以 4 再减 100，这是一个简单的四则运算表达式。\n\n我需要使用 calculate 工具来计算这个表达式。表达式是：128 * 4 - 100\n\n让我调用 calculate 函数。\n",
+        "tool_calls": [
+          {
+            "type": "function",
+            "function": {
+              "name": "calculate",
+              "arguments": "{\"expression\":\"128 * 4 - 100\"}"
+            },
+            "id": "krHiXzQ3trqhOmT6a2KGLZiQLn1ekkzX"
+          }
+        ]
+      }
+    }
+  ],
+  "created": 1788168205,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 96,
+    "prompt_tokens": 306,
+    "total_tokens": 402,
+    "prompt_tokens_details": {
+      "cached_tokens": 302
+    }
+  },
+  "id": "chatcmpl-nfxmJm3srcHTTcgnrBeGDGnTDFHT65dq",
+  "timings": {
+    "cache_n": 302,
+    "prompt_n": 4,
+    "prompt_ms": 133.989,
+    "prompt_per_token_ms": 33.49725,
+    "prompt_per_second": 29.85319690422348,
+    "predicted_n": 96,
+    "predicted_ms": 7121.697,
+    "predicted_per_token_ms": 74.96523157894737,
+    "predicted_per_second": 13.339517252699743
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "length",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "计算从 1 加到 100 的和，可以使用**等差数列求和公式**：\n\n$$S_n = \\frac{n(n+1)}{2}$$\n\n其中：\n- $n$ 是最后一项，即 $100$。\n- 第一项是 $1$，公差是 $1$。\n\n代入数值计算：\n$$S_{100} = \\frac{100 \\times (100 + 1)}{2} = \\frac{100 \\times 101}{2} = \\frac{10100}{2} = 5050$$\n\n或者使用**高斯求和法**（首尾配对）：\n"
+      }
+    }
+  ],
+  "created": 1788168567,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 160,
+    "prompt_tokens": 27,
+    "total_tokens": 187,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "id": "chatcmpl-Xq3sLqMwoHCtFro8EbqwJ9i8vFGHSuaK",
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 27,
+    "prompt_ms": 471.268,
+    "prompt_per_token_ms": 17.45437037037037,
+    "prompt_per_second": 57.292241357359295,
+    "predicted_n": 160,
+    "predicted_ms": 12331.467,
+    "predicted_per_token_ms": 77.5563962264151,
+    "predicted_per_second": 12.893843043978466
+  }
+}

@@ -1,0 +1,4 @@
+ok=true ms=66889 reasoning=2017 tokens=800 | content=根据题目中的逻辑关系，我们可以将其串联起来：
+
+1.  **D 比 A 高** (D > A)
+2.  **A 比 B 

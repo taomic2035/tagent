@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "我们可以通过倒推时间来解决这个问题：\n\n1.  **推导今天**：\n    如果**昨天**是星期三，那么明天就是星期四，所以**今天**就是**星期三**。\n\n2.  **推导明天**：\n    既然今天是星期三，那么**明天**就是**星期四**。\n\n**结论：**\n*   今天是 **星期三**。\n*   明天是 **星期四**。"
+      }
+    }
+  ],
+  "created": 1788168658,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 85,
+    "prompt_tokens": 25,
+    "total_tokens": 110,
+    "prompt_tokens_details": {
+      "cached_tokens": 21
+    }
+  },
+  "id": "chatcmpl-qngh08WkSEj6XP9KMcQdpFko1O97eGMF",
+  "timings": {
+    "cache_n": 21,
+    "prompt_n": 4,
+    "prompt_ms": 125.143,
+    "prompt_per_token_ms": 31.28575,
+    "prompt_per_second": 31.963433831696538,
+    "predicted_n": 85,
+    "predicted_ms": 6157.768,
+    "predicted_per_token_ms": 73.3067619047619,
+    "predicted_per_second": 13.64130639543419
+  }
+}

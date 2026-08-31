@@ -1,0 +1,4 @@
+ok=true ms=6671 reasoning=0 tokens=71 | content=要将公里（km）换算成米（m），需要知道进率：**1 公里 = 1000 米**。
+
+计算过程如下：
+$$9.5 \ti

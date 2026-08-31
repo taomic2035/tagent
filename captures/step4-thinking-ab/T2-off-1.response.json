@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "我们可以按照发生的顺序逐步计算：\n\n1.  小明最初有 **17** 个苹果。\n2.  给了小红 5 个后，剩下的数量是：$17 - 5 = 12$ 个。\n3.  又买了 8 个后，现在的数量是：$12 + 8 = 20$ 个。\n\n所以，现在一共有 **20** 个苹果。"
+      }
+    }
+  ],
+  "created": 1788168506,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 99,
+    "prompt_tokens": 38,
+    "total_tokens": 137,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "id": "chatcmpl-d2tA78vPDqDwuEmGk2FiwkLItewuFti0",
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 38,
+    "prompt_ms": 595.571,
+    "prompt_per_token_ms": 15.67292105263158,
+    "prompt_per_second": 63.804315522414626,
+    "predicted_n": 99,
+    "predicted_ms": 7269.159,
+    "predicted_per_token_ms": 74.1750918367347,
+    "predicted_per_second": 13.481614585676281
+  }
+}

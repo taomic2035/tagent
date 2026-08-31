@@ -1,0 +1,5 @@
+ok=true ms=11613 reasoning=0 tokens=152 | content=我们可以分步计算这个问题：
+
+1.  **先计算乘法**：
+    $3.7 \times 12$
+    可以将 $1

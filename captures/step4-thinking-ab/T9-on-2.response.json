@@ -1,0 +1,47 @@
+{
+  "choices": [
+    {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "用户想查询北京的天气情况。我需要使用get_weather工具，参数city应该是\"北京\"。\n",
+        "tool_calls": [
+          {
+            "type": "function",
+            "function": {
+              "name": "get_weather",
+              "arguments": "{\"city\":\"北京\"}"
+            },
+            "id": "ZDO02n3awY2OlwBeKHpideEBrXaREYd5"
+          }
+        ]
+      }
+    }
+  ],
+  "created": 1788168173,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 49,
+    "prompt_tokens": 296,
+    "total_tokens": 345,
+    "prompt_tokens_details": {
+      "cached_tokens": 292
+    }
+  },
+  "id": "chatcmpl-jbg8w2NqMSgl8LYNRQri9G3GvL3babBT",
+  "timings": {
+    "cache_n": 292,
+    "prompt_n": 4,
+    "prompt_ms": 123.687,
+    "prompt_per_token_ms": 30.92175,
+    "prompt_per_second": 32.3396961685545,
+    "predicted_n": 49,
+    "predicted_ms": 3544.558,
+    "predicted_per_token_ms": 73.84495833333334,
+    "predicted_per_second": 13.541885899454883
+  }
+}

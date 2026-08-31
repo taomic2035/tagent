@@ -1,0 +1,12 @@
+{
+  "model": "<MODEL_PATH>",
+  "messages": [
+    {
+      "role": "user",
+      "content": "如果昨天是星期三，那么今天是星期几？明天呢？"
+    }
+  ],
+  "max_tokens": 1200,
+  "temperature": 0.7,
+  "stream": false
+}

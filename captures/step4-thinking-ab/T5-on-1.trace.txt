@@ -1,0 +1,5 @@
+ok=true ms=45500 reasoning=1413 tokens=614 | content=9.5 公里等于 **9500 米**。
+
+计算过程：
+1 公里 = 1000 米
+$9.5 \times 1000 =

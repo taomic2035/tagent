@@ -1,0 +1,46 @@
+{
+  "choices": [
+    {
+      "finish_reason": "tool_calls",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [
+          {
+            "type": "function",
+            "function": {
+              "name": "calculate",
+              "arguments": "{\"expression\":\"128 * 4 - 100\"}"
+            },
+            "id": "phodjTs5y8cegWU7lE420l7njupgMyq0"
+          }
+        ]
+      }
+    }
+  ],
+  "created": 1788168703,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 36,
+    "prompt_tokens": 308,
+    "total_tokens": 344,
+    "prompt_tokens_details": {
+      "cached_tokens": 304
+    }
+  },
+  "id": "chatcmpl-N1yTcG1DLD6fVRo8Ot9SrN7uqTDJVWJZ",
+  "timings": {
+    "cache_n": 304,
+    "prompt_n": 4,
+    "prompt_ms": 137.682,
+    "prompt_per_token_ms": 34.4205,
+    "prompt_per_second": 29.05245420606906,
+    "predicted_n": 36,
+    "predicted_ms": 2796.877,
+    "predicted_per_token_ms": 79.91077142857142,
+    "predicted_per_second": 12.513957531918637
+  }
+}

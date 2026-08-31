@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "length",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "从 1 一直加到 100 的求和可以通过**等差数列求和公式**来计算。\n\n这个数列是一个首项 $a_1 = 1$、末项 $a_n = 100$、项数 $n = 100$ 的等差数列。其求和公式为：\n$$S_n = \\frac{n(a_1 + a_n)}{2}$$\n\n将数值代入公式：\n$$S_{100} = \\frac{100 \\times (1 + 100)}{2}$$\n$$S_{100} = \\frac{100 \\times 101}{2}$$\n$$S_{10"
+      }
+    }
+  ],
+  "created": 1788168581,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 160,
+    "prompt_tokens": 27,
+    "total_tokens": 187,
+    "prompt_tokens_details": {
+      "cached_tokens": 23
+    }
+  },
+  "id": "chatcmpl-UVQL6Hzuv1Y2oIhs96Zkumcvhit9uN50",
+  "timings": {
+    "cache_n": 23,
+    "prompt_n": 4,
+    "prompt_ms": 136.125,
+    "prompt_per_token_ms": 34.03125,
+    "prompt_per_second": 29.38475665748393,
+    "predicted_n": 160,
+    "predicted_ms": 13914.522,
+    "predicted_per_token_ms": 87.51271698113209,
+    "predicted_per_second": 11.426910676486049
+  }
+}

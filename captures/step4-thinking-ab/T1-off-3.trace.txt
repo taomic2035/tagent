@@ -1,0 +1,5 @@
+ok=true ms=5620 reasoning=0 tokens=75 | content=我们可以按照运算顺序逐步计算：
+
+1.  **先算乘法**：
+    $$3.7 \times 12 = 44.4$$
+

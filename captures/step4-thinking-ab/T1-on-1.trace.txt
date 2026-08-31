@@ -1,0 +1,4 @@
+ok=true ms=50759 reasoning=1438 tokens=680 | content=计算过程如下：
+
+1.  先算乘法：$3.7 \times 12 = 44.4$
+2.  再算减法：$44.4 - 8.

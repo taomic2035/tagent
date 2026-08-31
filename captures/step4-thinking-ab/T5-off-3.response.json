@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "要将公里（km）转换为米（m），需要知道进率关系：**1 公里 = 1000 米**。\n\n因此，计算过程如下：\n$$9.5 \\times 1000 = 9500$$\n\n**9.5 公里等于 9500 米。**"
+      }
+    }
+  ],
+  "created": 1788168614,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 71,
+    "prompt_tokens": 21,
+    "total_tokens": 92,
+    "prompt_tokens_details": {
+      "cached_tokens": 17
+    }
+  },
+  "id": "chatcmpl-jHdt6Hz7It8Moz3CA1Sb3NhPXDGyEyem",
+  "timings": {
+    "cache_n": 17,
+    "prompt_n": 4,
+    "prompt_ms": 145.705,
+    "prompt_per_token_ms": 36.42625,
+    "prompt_per_second": 27.452729830822552,
+    "predicted_n": 71,
+    "predicted_ms": 5440.054,
+    "predicted_per_token_ms": 77.71505714285715,
+    "predicted_per_second": 12.867519329771358
+  }
+}

@@ -1,0 +1,6 @@
+ok=true ms=70966 reasoning=1939 tokens=885 | content=计算过程如下：
+
+1.  **先打八折**：
+    $240 \times 0.8 = 192$（元）
+
+2.  **

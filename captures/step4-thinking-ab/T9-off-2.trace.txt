@@ -1,0 +1,1 @@
+ok=true ms=1914 reasoning=0 tokens=26 | get_weather {"city":"北京"}

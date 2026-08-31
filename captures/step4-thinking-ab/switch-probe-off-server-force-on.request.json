@@ -1,0 +1,1 @@
+{"model": "t", "messages": [{"role": "user", "content": "用一句话介绍冬天"}], "max_tokens": 120, "stream": false, "temperature": 0, "chat_template_kwargs": {"enable_thinking": true}}

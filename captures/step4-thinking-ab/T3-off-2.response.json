@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "我们可以分两步来计算这件衣服的最终价格：\n\n1.  **先计算打八折后的价格**：\n    原价是 240 元，打八折意味着乘以 0.8。\n    $$240 \\times 0.8 = 192 \\text{（元）}$$\n\n2.  **再减去 30 元**：\n    在打折后的基础上减去 30 元。\n    $$192 - 30 = 162 \\text{（元）}$$\n\n最终价格是 **162 元**。"
+      }
+    }
+  ],
+  "created": 1788168545,
+  "model": "D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 132,
+    "prompt_tokens": 37,
+    "total_tokens": 169,
+    "prompt_tokens_details": {
+      "cached_tokens": 33
+    }
+  },
+  "id": "chatcmpl-WlGLIdggms9QgnAklDW8vFTW0EJnIqXn",
+  "timings": {
+    "cache_n": 33,
+    "prompt_n": 4,
+    "prompt_ms": 124.725,
+    "prompt_per_token_ms": 31.18125,
+    "prompt_per_second": 32.070555221487275,
+    "predicted_n": 132,
+    "predicted_ms": 9665.453,
+    "predicted_per_token_ms": 73.78208396946565,
+    "predicted_per_second": 13.553425793907435
+  }
+}

@@ -1,0 +1,6 @@
+ok=true ms=5575 reasoning=0 tokens=76 | content=我们可以分步计算这个问题：
+
+1.  **先进行乘法运算**：
+    $3.7 \times 12 = 44.4$
+
+
