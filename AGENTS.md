@@ -13,7 +13,7 @@
 
 ## 报文捕获制度（docs/PROTOCOL.md §0、docs/TRACEABILITY.md）
 
-- 所有抓到的引擎返回数据存原始报文（请求体+响应头+响应体），用 `captures/capture.sh`（已含自动脱敏 + 自动 token 溯源）
+- 所有抓到的引擎返回数据存原始报文（请求体+响应头+响应体），用 `captures/capture.sh`（Mac/MLX）或 `captures/capture-win.sh`（Windows/llama.cpp，均已含自动脱敏 + 自动 token 溯源）
 - **每一次与 LLM 的通信，每一个 token 都必须有据可循**：溯源 = trace.jsonl 的 (seq→frame→line→byte) 三方印证原始字节；新抓取必须有 response.trace.md/jsonl，真机验收结论必须引用 trace
 - 分析结论必须标注原始证据（captures/ 文件 + 行号），"反直觉"现象先存证再推理
 
@@ -25,5 +25,7 @@
 
 ## 已知环境差异（跨平台注意）
 
-- 本项目主要在 macOS/Apple Silicon 开发，但代码只准用跨平台 API（禁止 macOS 专属调用）
+- 项目在 macOS/Apple Silicon（MLX 引擎）与 Windows（llama.cpp 引擎）双平台开发：Mac 用 `./start_llm.sh`，Windows 用 `.\start_llm.ps1`（验收复跑 `bash scripts/acceptance-win.sh`），Windows 环境记录见 SETUP.md §八
+- 代码只准用跨平台 API（禁止平台专属调用）；`.ps1` 含中文必须存 UTF-8 with BOM（PowerShell 5.1 会把无 BOM 的 UTF-8 按 GBK 解析）
+- Windows 侧约定：推理引擎与模型统一放 `D:\LLM`；JSON/脚本里的 Windows 路径一律写正斜杠（反斜杠会在多层传递中被吞成非法转义，实测）
 - MLX 仅限 Mac；Windows/Linux/移动端走 llama.cpp+GGUF（见 TECH_STACK.md §四）

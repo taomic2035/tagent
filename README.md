@@ -23,8 +23,9 @@
 ## 快速开始
 
 ```bash
-# 1. 启动本地推理服务（首次需先下载模型，见 SETUP.md 第三节）
-./start_llm.sh -d
+# 1. 启动本地推理服务（首次需先下载模型，见 SETUP.md 第三节/第八节）
+./start_llm.sh -d              # macOS（MLX）
+.\start_llm.ps1 -Detach        # Windows（llama.cpp + GGUF，见 SETUP.md §八）
 curl http://127.0.0.1:8081/health
 
 # 2. 构建并运行 agent（MODEL 路径见 captures/.env.local）
@@ -36,7 +37,8 @@ node apps/cli/dist/main.js --model "$(cat captures/.env.local | cut -d= -f2)"
 node scripts/replay.mjs captures/ac-2-calculate/session/call-001/request.json --temp 0
 
 # 4. 复跑真机验收（六场景，自动存证+脱敏）
-zsh scripts/acceptance.sh
+zsh scripts/acceptance.sh           # macOS（MLX 引擎）
+bash scripts/acceptance-win.sh      # Windows（llama.cpp 引擎，Git Bash）
 ```
 
 ## 学习路线

@@ -157,14 +157,30 @@ Cache-Control: no-cache
 
 ## 8. 引擎差异备忘（跨引擎兼容性，llama.cpp 接入时对照）
 
-| 差异点 | MLX server | llama.cpp server（已知） |
+> 2026-08-31 Windows 迁移实测补全（llama.cpp b10621 + GGUF，原件：captures/07~10，agent 代码零改动跑通六场景）。
+
+| 差异点 | MLX server | llama.cpp server（b10621 实测） |
 |---|---|---|
-| 思考字段 | `reasoning` | `reasoning_content` → client.ts 双认（原件：captures/05） |
-| tool_call id 格式 | UUID | 非固定长度随机串（captures/05 实录） |
-| tool call 解析 | 内置 | 需 `--jinja` 启动参数 |
-| 流式 usage | 无 | 有（`timings` 额外字段） |
-| 默认端口 | 8080（将改 9931，启动日志警告） | 8080 |
-| HTTP 版本 | 1.0 | 1.1 |
+| 思考字段 | `reasoning` | `reasoning_content` → client.ts 双认（原件：captures/05、09） |
+| **默认温度** | **0.0** | **0.8** ← 最大暗坑：不显式带 temperature 时同请求行为完全不同（详见 §8.1） |
+| tool_call id 格式 | UUID | 非固定长度随机串（captures/05、10 实录） |
+| tool call 解析 | 内置 | 需 `--jinja`（b10621 已默认开启） |
+| 流式 usage | 无 | **也无**（不主动请求 `stream_options` 时；末帧带非标准 `timings` 字段，client 忽略即可）——修正旧表"有"的记载（07~10 实测 grep=0） |
+| 流式 tool_call 分片 | 单帧完整（04 组） | **逐 token 碎片**（10 组：name+首字符一帧，arguments 其余 4 帧）→ 合并逻辑不能假设单帧完整，与 OpenAI 云端行为一致 |
+| keepalive 注释帧 | 有（`: keepalive n/m`） | 无（07~10 实测 grep=0） |
+| 首帧 delta | `{"role":"assistant",...}` | `{"role":"assistant","content":null}`（null 安全：pickStr 类型守卫忽略） |
+| `system_fingerprint` | 版本+OS+硬件指纹（敏感，入库脱敏） | `b10621-c1d0e7a00`（仅 build+commit，非机器指纹，可留原件） |
+| model 回显 | 原样路径 | 会把正斜杠归一为反斜杠回显（`D:/` → `D:\`） |
+| HTTP 版本 | 1.0（连接关闭收尾） | 1.1 + Keep-Alive |
+| 默认端口 | 8080（将改 9931，启动日志警告） | 8080（两引擎都由启动脚本固定 8081） |
+
+### 8.1 默认温度暗坑（跨引擎对照实验最重要的参数）
+
+MLX 默认 temp=0.0、llama.cpp 默认 temp=0.8。实测（2026-08-31，同请求仅差默认温度）：
+- temp=0（或 MLX 默认）：简短中文思考（69 字）→ 干净 tool call，一次成功（对照探针）
+- temp=0.8（llama.cpp 默认）：思考切换为冗长英文 "Thinking Process: 1. Analyze the Request…"，300 token 预算耗尽仍无 tool call，finish=length（captures/07/08 初版实录，已重抓覆盖前可查 git 历史）
+
+**规则：任何跨引擎对照实验必须在请求里显式写 temperature**（抓取脚本已固定 temp=0）。
 
 ## 9. 原始报文索引
 
@@ -175,9 +191,14 @@ Cache-Control: no-cache
 | `captures/03-stream-chat/` | 流式纯对话（147 数据帧 + keepalive） | 66179B |
 | `captures/04-stream-tools/` | 流式工具调用（22 数据帧，tool_call 单帧完整） | 9809B |
 | `captures/06-determinism/` | 确定性实验：同请求 × 温度 0.7/0 × 各两次 | 4 份响应 |
+| `captures/07-win-llamacpp-nonstream-chat/` | Windows/llama.cpp 非流式对话（temp=0，reasoning_content） | 三件套 |
+| `captures/08-win-llamacpp-nonstream-tools/` | Windows/llama.cpp 非流式工具调用（temp=0 一次成功） | 三件套 |
+| `captures/09-win-llamacpp-stream-chat/` | Windows/llama.cpp 流式对话（无 keepalive，首帧 content:null） | 三件套 + trace |
+| `captures/10-win-llamacpp-stream-tools/` | Windows/llama.cpp 流式工具调用（tool_call 逐 token 分片，5 帧） | 三件套 + trace |
+| `captures/win-ac-1~6/`、`win-ac-5b/` | Windows 引擎六场景验收存证（见 docs/ACCEPTANCE.md 附录） | session + transcript + stdout + trace |
 | `packages/core/fixtures/*.sse` | 测试夹具（与 03/04 同源，供解析器测试） | — |
 
-复现方式：`./captures/capture.sh`（需先 `./start_llm.sh -d`）。
+复现方式：MLX 组 `./captures/capture.sh`（需先 `./start_llm.sh -d`）；llama.cpp 组 `bash captures/capture-win.sh`（需先 `.\start_llm.ps1 -Detach`）。
 
 ## 10. 复现性与确定性（captures/06 实证）
 
@@ -194,3 +215,5 @@ Cache-Control: no-cache
 - **复现**（"再跑一遍得到同样输出"）→ 请求层永远可行；响应层需 `temperature: 0`（agent 场景代价：回答多样性下降，调试协议时用，日常对话不必）
 
 **待考据发现（06 组实录）**：用户消息尾部加 `/no_think` 在 Qwen3.5 + MLX server 上**未关闭思考**——80 个生成 token 全部进入 reasoning，正文为空，finish_reason=length（与 §5.3 length 教训互证）。Qwen3.5 的思考开关机制与 Qwen3 的 `/no_think` 约定不同，正确开关方式待实验（候选：chat_template_kwargs / 模板级 enable_thinking），考据后更新本节。
+
+**跨引擎补充（2026-08-31，Windows/llama.cpp 07~10 组）**：`/no_think` 在 llama.cpp 上**同样不关闭思考**（09 组：temp=0 仍 512 token 全 reasoning）——两引擎行为一致说明这是**模型/模板层**问题而非引擎实现差异，§8.1 的温度差异才是引擎层变量。llama.cpp 侧候选开关：启动参数 `--reasoning on|off`（本次未实验，待考据）。

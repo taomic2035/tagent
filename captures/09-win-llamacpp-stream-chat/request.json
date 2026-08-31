@@ -1,0 +1,1 @@
+{"model": "<MODEL_PATH>", "messages": [{"role": "user", "content": "用两三句话介绍一下秋天"}], "max_tokens": 512, "stream": true, "temperature": 0}

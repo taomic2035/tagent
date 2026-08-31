@@ -150,3 +150,82 @@ server 稳定在 38 tok/s，裸引擎约 78 tok/s。差值来自 HTTP 处理、�
 - 想更快：换旧架构 Qwen3-4B（预计 60+ tok/s）或进程内调用
 - 想更强：升级 Qwen3.5-9B/27B（32 GB 跑 Q4 无压力），对比 agent 任务成功率变化
 - 下一步：手写 agent loop（while 循环 + 工具定义 + 解析 tool_calls + 执行 + 结果回填），先做"查天气 + 算数学"两工具最小版
+
+## 八、Windows 环境部署与实测（2026-08-31 迁移）
+
+> 开发机从 MacBook Air M5 迁至 Windows 台式机。引擎层按 TECH_STACK.md §四 既定路线切换：MLX（Mac 专属）→ llama.cpp + GGUF；**agent 代码零改动**（NFR-7 引擎无关的实证）。
+
+### 8.1 硬件与网络环境
+
+| 项目 | 配置 |
+|---|---|
+| 机型 | HP Elite Tower 880 G9 |
+| CPU | Intel i7-14700（20 核 28 线程，AVX2；无 AVX-512） |
+| 内存 | 32 GB DDR5 |
+| GPU | Intel UHD 770 核显（**无独显** → llama.cpp 走 CPU 后端；Vulkan 留作对照实验） |
+| 网络 | GitHub 可直连但 release CDN 限速 ~13 KB/s（经 ghfast.top 代理 ~292 KB/s）；huggingface.co 与 hf-mirror.com 均不可达 → **模型源改走 ModelScope**（Qwen 官方国内源，实测 ~12 MB/s）——与 Mac 时期恰好相反 |
+
+### 8.2 安装步骤（可复现，全部落地 `D:\LLM`）
+
+```powershell
+# 1. llama.cpp b10621（v0.3.0 nightly 指针指向的构建；zip 内含按 CPU 微架构自动分派的 DLL，无需手选 AVX2 变体）
+curl -L -o llama-cpu.zip "https://github.com/ggml-org/llama.cpp/releases/download/b10621/llama-b10621-bin-win-cpu-x64.zip"
+# 直连过慢时加代理前缀：https://ghfast.top/<完整 github 下载地址>
+# 解压到 D:\LLM\llama-cpp\cpu\（vulkan 版同理，备用对照）
+
+# 2. 模型：与 Mac 备份同款量化（unsloth UD-Q4_K_XL，2912 MB）
+curl -L -o D:\LLM\models\Qwen3.5-4B-UD-Q4_K_XL.gguf `
+  "https://modelscope.cn/models/unsloth/Qwen3.5-4B-GGUF/resolve/master/Qwen3.5-4B-UD-Q4_K_XL.gguf"
+
+# 3. 启动（仓库根目录；captures/.env.local 写 MODEL_PATH=D:/LLM/models/Qwen3.5-4B-UD-Q4_K_XL.gguf）
+.\start_llm.ps1 -Detach
+curl http://127.0.0.1:8081/health
+```
+
+### 8.3 start_llm.ps1 关键参数
+
+```
+llama-server -m <gguf> --host 127.0.0.1 --port 8081 -c 16384 --jinja --reasoning-format deepseek
+（vulkan 后端追加 -ngl 99 -fa on）
+```
+
+- `--jinja`：b10621 已默认开启，仍显式写出（tool calling 前提）
+- `--reasoning-format deepseek`：思考内容进 `delta.reasoning_content`；client.ts 本就双认 `reasoning`/`reasoning_content`，**协议层零改动**
+- 模型加载 3.4 s（llama.cpp 启动即加载；MLX 是首请求才加载）
+
+### 8.4 实测性能（数据来自 llama.cpp 响应内建 `timings` 字段与 llama-bench）
+
+| 指标 | Windows i7-14700 CPU | 对照 Mac M5 MLX |
+|---|---|---|
+| 生成速度（server timings 直读） | **11.6 ~ 13.0 tok/s** | 38.1 tok/s |
+| prompt 处理（server） | 32 ~ 39 tok/s | ~160 tok/s（缓存命中前 72） |
+| 备注 | agent 交互可用，长思考场景偏慢 | — |
+
+**CPU vs Vulkan 后端 A/B**（llama-bench，pp512/tg128 各 3 次，`D:\LLM\bench.txt`）：
+
+| 后端 | pp512（t/s） | tg128（t/s） | 结论 |
+|---|---|---|---|
+| CPU（alderlake 内核自动分派，20 线程） | **62.75 ± 0.99** | **11.89 ± 0.23** | ✅ 采用 |
+| Vulkan（UHD 770，`-ngl 99 -fa on`） | 39.18 ± 2.38 | 5.16 ± 0.10 | ❌ 负优化（tg 慢 2.3×） |
+
+UHD 770 无矩阵核心（bench 设备探测 `matrix cores: none`）且与 CPU 共享内存带宽，全卸载反而更慢——与 Mac 侧 MTP 负优化实验同一教训：**弱硬件加速不如强 CPU 内核，实测再下结论**。故 `start_llm.ps1` 默认 CPU 后端，vulkan 保留作参数可选。
+
+### 8.5 Windows 踩坑记录（按排查顺序）
+
+1. **JSON 里的反斜杠模型路径会被多层传递吞成非法转义**（`D:\LLM` → `\L`，服务端报 `forbidden character after backslash`）。统一用正斜杠 `D:/LLM/...`——Windows API 完全接受，JSON 免转义。
+2. **两引擎默认温度不同**（MLX 0.0 / llama.cpp 0.8）：不显式指定 temperature 时同一请求行为完全不同——默认温度下思考变冗长英文、300 token 预算耗尽仍无 tool call；temp=0 时与 Mac 行为一致（简短中文思考 + 干净 tool call）。协议对照实验必须显式带温度。
+3. `/no_think` 在 llama.cpp 上同样不关闭思考（与 PROTOCOL.md §10 的 MLX 待考据互证——是模型/模板层问题，非引擎层）。
+4. PowerShell 5.1 把无 BOM 的 UTF-8 脚本按 GBK 解析（中文注释变乱码直接解析错误）→ `.ps1` 带中文必须存 UTF-8 **with BOM**。
+5. readline 的 `pause()` 挡不住同 chunk 缓冲里的下一行：`printf '问题\n/exit\n'` 管道输入会用 `/exit` 杀掉生成中的 agent → 验收脚本先轮询 transcript 出现 `final` 再发 `/exit`（acceptance-win.sh）。
+6. **capture.sh 潜伏 bug 被迁移实测暴露**：python 侧 `tools` 已是 bool，判断却写 `tools == "yes"` 恒假（首版即存在，Mac 早期存证出自未回传的本地修复版）。已随 capture-win.sh 一并修复。
+7. 下载源结论：GitHub release CDN 慢走 ghfast.top；HF 系全不可达走 ModelScope。
+
+### 8.6 当前资产清单（Windows）
+
+```
+D:\LLM\
+├── llama-cpp\cpu\        # llama.cpp b10621 CPU 版（llama-server.exe 等）
+├── llama-cpp\vulkan\     # Vulkan 版（核显对照实验备用）
+├── models\Qwen3.5-4B-UD-Q4_K_XL.gguf   # 2912 MB，与 Mac 备份同款
+└── llama_server.log      # 后台运行日志
+```
