@@ -111,4 +111,7 @@ export interface AgentConfig {
   /** 上下文预算（Step 3，FR-22）：估算 token 超过此值触发双水位裁剪。
    *  缺省 = 不裁剪（Step 1/2 行为）。 */
   contextBudgetTokens?: number;
+  /** 思考模式（Step 4，FR-23）：经请求级 chat_template_kwargs.enable_thinking 下发。
+   *  undefined = 不干预（引擎默认）；true/false = 显式开/关。 */
+  thinking?: boolean;
 }

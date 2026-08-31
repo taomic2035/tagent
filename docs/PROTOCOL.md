@@ -39,7 +39,8 @@ tagent (client.ts)                          MLX server (:8081)
 | `tools` | 可选 | `[{type:"function", function:{name,description,parameters(JSON Schema)}}]` | server 端经 `--jinja` 渲染进 chat template（llama.cpp 同理） |
 | `stream` | 可选 | `true`=SSE 流；缺省=单个 JSON | |
 | `temperature` | 可选 | 0~2 | |
-| `max_tokens` | 可选 | 生成上限；触顶时 `finish_reason:"length"` | |
+| `max_tokens` | 可选 | 生成上限；触顶时 `finish_reason:"length"` | 思考模型的计数**含 reasoning**（§5.3） |
+| `chat_template_kwargs` | 可选 | 模板级参数（如 `{"enable_thinking":false}`）——llama.cpp 实测有效，MLX 侧忽略未知字段；缺省不携带 | 思考开关的正确姿势（Step 4 考据，见 §10）；tagent 经 `AgentConfig.thinking` 下发 |
 
 ## 3. 响应头拆解（原件：captures/*/response-headers.txt）
 
@@ -217,4 +218,9 @@ MLX 默认 temp=0.0、llama.cpp 默认 temp=0.8。实测（2026-08-31，同请�
 
 **待考据发现（06 组实录）**：用户消息尾部加 `/no_think` 在 Qwen3.5 + MLX server 上**未关闭思考**——80 个生成 token 全部进入 reasoning，正文为空，finish_reason=length（与 §5.3 length 教训互证）。Qwen3.5 的思考开关机制与 Qwen3 的 `/no_think` 约定不同，正确开关方式待实验（候选：chat_template_kwargs / 模板级 enable_thinking），考据后更新本节。
 
-**跨引擎补充（2026-08-31，Windows/llama.cpp 07~10 组）**：`/no_think` 在 llama.cpp 上**同样不关闭思考**（09 组：temp=0 仍 512 token 全 reasoning）——两引擎行为一致说明这是**模型/模板层**问题而非引擎实现差异，§8.1 的温度差异才是引擎层变量。llama.cpp 侧候选开关：启动参数 `--reasoning on|off`（本次未实验，待考据）。
+**跨引擎补充（2026-08-31，Windows/llama.cpp 07~10 组）**：`/no_think` 在 llama.cpp 上**同样不关闭思考**（09 组：temp=0 仍 512 token 全 reasoning）——两引擎行为一致说明这是**模型/模板层**问题而非引擎实现差异，§8.1 的温度差异才是引擎层变量。
+
+**✅ 已考据闭环（2026-08-31，Step 4）**：`/no_think` 失效的根因是 **Qwen3.5 模板不认该消息级约定**（Qwen3 时代机制）。正确开关（llama.cpp b10621 实测，双向验证）：
+1. **服务器级**：`--reasoning off` —— 思考关闭，24 token 直答同题（对照思考版 512+ token）
+2. **请求级**：`chat_template_kwargs: {"enable_thinking": false/true}` —— 默认(auto)服务器上 false 关思考（reasoning=0）；off 服务器上 true 重新打开（reasoning 396 字）——**同服务器按请求切换**，tagent 的 `/think` `/nothink` 即此实现（FR-23，修复了 FR-8 的无效 `/no_think` 注入）
+证据：captures/step4-thinking-ab/ 考据探针与 A/B 实验存证。

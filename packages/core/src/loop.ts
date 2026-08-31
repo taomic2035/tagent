@@ -78,6 +78,7 @@ export async function* runAgent(
       messages,
       tools: registry.schemas(),
       temperature: config.temperature,
+      ...(config.thinking !== undefined ? { chatTemplateKwargs: { enable_thinking: config.thinking } } : {}),
     })) {
       if (ev.type === "reasoning-delta") {
         yield ev; // 透传渲染，不积累
@@ -167,12 +168,14 @@ export async function* runAgent(
       content: `（系统注入：已达工具调用次数上限 ${config.maxIterations}，不要再请求工具，请基于已获得的工具结果直接给出最终回答）`,
     },
   ];
+  const degradeKwargs = config.thinking !== undefined ? { chatTemplateKwargs: { enable_thinking: config.thinking } } : {};
   yield { type: "llm-request", messages: degradeMessages };
 
   let degradeText = "";
   for await (const ev of client.stream({
     messages: degradeMessages,
     temperature: config.temperature, // 注意：不传 tools
+    ...degradeKwargs,
   })) {
     if (ev.type === "reasoning-delta" || ev.type === "text-delta") {
       if (ev.type === "text-delta") degradeText += ev.delta;

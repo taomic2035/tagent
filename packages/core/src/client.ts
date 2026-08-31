@@ -31,6 +31,9 @@ export interface ChatRequest {
   messages: ChatMessage[];
   tools?: ToolDef[];
   temperature?: number;
+  /** 请求级模板参数（Step 4，FR-23）：如 {enable_thinking:false}。
+   *  llama.cpp 实测有效；MLX 侧忽略未知字段。缺省不携带（请求体与旧版逐字节同形）。 */
+  chatTemplateKwargs?: Record<string, unknown>;
 }
 
 export interface LLMClient {
@@ -66,6 +69,9 @@ export class OpenAIClient implements LLMClient {
         tools: req.tools,
         temperature: req.temperature,
         stream: true,
+        ...(req.chatTemplateKwargs !== undefined
+          ? { chat_template_kwargs: req.chatTemplateKwargs }
+          : {}),
       }),
     };
     for (let attempt = 0; ; attempt++) {

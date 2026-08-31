@@ -133,24 +133,22 @@ function handleCommand(line: string): boolean {
     case "/dump":
       writeLine(JSON.stringify(messages, null, 2));
       break;
-    case "/nothink": {
-      noThink = !noThink;
-      writeLine(paint.dim(`思考提示已${noThink ? "开启" : "关闭"}（下一条用户消息生效）`));
+    case "/think":
+      config.thinking = true;
+      writeLine(paint.dim("思考模式已开启（请求级 enable_thinking=true）"));
       break;
-    }
+    case "/nothink":
+      config.thinking = false;
+      writeLine(paint.dim("思考模式已关闭（请求级 enable_thinking=false；旧 /no_think 标记已废弃——两引擎实测无效，PROTOCOL §10）"));
+      break;
     default:
-      writeLine(paint.yellow(`未知命令 ${line}（可用：/exit /reset /tools /dump /nothink）`));
+      writeLine(paint.yellow(`未知命令 ${line}（可用：/exit /reset /tools /dump /think /nothink）`));
   }
   return true;
 }
-let noThink = false;
-
 // ---- REPL 主循环 ----
 async function chat(input: string): Promise<void> {
-  messages.push({
-    role: "user",
-    content: noThink ? `${input} /no_think` : input,
-  });
+  messages.push({ role: "user", content: input });
   const state = { toolStart: 0 };
   for await (const ev of runAgent({ client, registry, config }, messages)) {
     record(ev); // 每个事件落盘（制度：NFR-4）
@@ -168,6 +166,9 @@ function main(): void {
   }
   if (config.contextBudgetTokens) {
     writeLine(paint.dim(`上下文预算: ${config.contextBudgetTokens} 估算 token（双水位裁剪）`));
+  }
+  if (config.thinking !== undefined) {
+    writeLine(paint.dim(`思考模式: ${config.thinking ? "开" : "关"}（/think /nothink 切换）`));
   }
   writeLine(paint.dim(`引擎: ${config.baseUrl} · transcript: ${transcriptPath}`));
 

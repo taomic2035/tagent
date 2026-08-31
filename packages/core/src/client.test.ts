@@ -172,3 +172,20 @@ test("HTTP·4xx 不重试直接报错", async () => {
   await assert.rejects(consume(), LLMHttpError);
   assert.equal(calls(), 1);
 });
+
+// ---- Step 4：请求级思考开关（FR-23）----
+
+test("chatTemplateKwargs 存在时进请求体，缺省时不携带（与旧版逐字节同形）", async () => {
+  const bodies: string[] = [];
+  const mockFetch = (async (_u: unknown, init?: RequestInit) => {
+    bodies.push(String(init?.body));
+    // 立即关闭的空流：fetch 发生即可，流内容本测试不关心
+    return new Response(new ReadableStream({ start(c) { c.close(); } }), { status: 200 });
+  }) as unknown as typeof fetch;
+  const on = new OpenAIClient("http://x", "m", mockFetch);
+  const off = new OpenAIClient("http://x", "m", mockFetch);
+  try { for await (const _ of on.stream({ messages: [], chatTemplateKwargs: { enable_thinking: true } })) void _; } catch { /* 流体为空，异常即可 */ }
+  try { for await (const _ of off.stream({ messages: [] })) void _; } catch { /* 同上 */ }
+  assert.match(bodies[0] ?? "", /"chat_template_kwargs":\{"enable_thinking":true\}/);
+  assert.doesNotMatch(bodies[1] ?? "", /chat_template_kwargs/);
+});

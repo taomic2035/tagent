@@ -371,3 +371,16 @@ test("裁剪·无预算零事件（回归：Step 1/2 行为不变）", async () 
   );
   assert.ok(!events.some((e) => e.type === "context-trimmed"));
 });
+
+test("思考开关（Step 4）：config.thinking 经 loop 下发为 chat_template_kwargs，缺省不携带", async () => {
+  const seen: unknown[] = [];
+  const client = {
+    async *stream(req: { chatTemplateKwargs?: unknown }): AsyncGenerator<StreamEvent> {
+      seen.push(req.chatTemplateKwargs);
+      yield done("stop");
+    },
+  };
+  await collect(runAgent({ client, registry: makeRegistry(), config: { ...config, systemPrompt: "", thinking: false } }, [{ role: "user", content: "q" }]));
+  await collect(runAgent({ client, registry: makeRegistry(), config: { ...config, systemPrompt: "" } }, [{ role: "user", content: "q" }]));
+  assert.deepEqual(seen, [{ enable_thinking: false }, undefined]);
+});
