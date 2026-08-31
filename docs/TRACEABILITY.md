@@ -11,8 +11,8 @@
 | 文件 | 内容 | 生成方式 |
 |---|---|---|
 | `request.json` | 请求体原件（原样，未经格式化） | 抓取时保存 |
-| `response-headers.txt` | 响应头原件 | `curl -D` |
-| `response.sse` / `response.json` | 响应体原件（流式/非流式） | `curl -o` |
+| `response-headers.txt` | 响应头原件 | `curl -D`（CLI session 单元此项为 fetch 解析重建——fetch 拿不到头字节原件，头字节级证据以 captures 三件套为准） |
+| `response.sse` / `response.json` | 响应体原件（流式/非流式，**原始字节**） | `curl -o`；CLI session 单元由 wire 记录器在 fetch 层 tee（apps/cli/src/wire.ts，2026-08-31 复盘升级——旧 recorder 重建帧导致字段归一化失真，已废弃） |
 | `response.trace.md` | **token 级溯源表（人读）** | `scripts/trace-sse.mjs` 自动生成 |
 | `response.trace.jsonl` | **token 级溯源索引（机读）** | 同上 |
 
@@ -50,9 +50,16 @@ trace.jsonl 第 N 行
 |---|---|
 | 协议调研 / 踩坑排查（如 captures/01~04） | 手动抓取时必须走 capture.sh（含自动溯源） |
 | Step 6 起的真机验收（AC-1~6） | 每个验收场景一个存证单元，验收结论引用 trace |
-| Step 5 起的 CLI 运行时 | **每次 CLI 会话的每次 LLM 调用**自动落盘为存证单元（`logs/sessions/<ts>/`，格式同 §1），transcript JSONL 与存证单元一一对应 |
+| Step 5 起的 CLI 运行时 | **每次 CLI 会话的每次 LLM 调用**自动落盘为存证单元（`logs/sessions/<ts>/`，格式同 §1：wire 记录器 fetch 层 tee 原始字节 + 内联生成 trace），transcript JSONL 与存证单元一一对应 |
 | 对照实验（思考开关/换模型） | 每组实验独立存证单元，PROTOCOL.md/SETUP.md 引用 |
 
 ## 5. 隐私约束（与 PROTOCOL.md §0.5 的关系）
 
 溯源文件由原始报文派生，继承同一条脱敏规则：入库前 `/Users/<user>/`、`<SYSTEM_FINGERPRINT>` 占位化。trace-sse.mjs 不引入新的敏感字段（它只搬运原始数据的位置与内容）。
+
+
+## 6. 复现口径（2026-08-31 复盘确立）
+
+- **token 级追溯**：seq→frame→line→byte 三方印证，对 captures 三件套与 CLI session 单元（wire 记录器）均成立
+- **prompt 级复现（任务级口径）**：同一任务，agent 跑一遍 + 人照存证手敲重走一遍（手写请求、手工执行确定性工具、手工回填），任务完整完成即达标——实证见 `captures/hand-replay-demo/`
+- **字节级复现（更强口径，仅实验用）**：temp=0 + 关投机解码下模型输出 token 流逐字一致（win-replay-demo）；必然不同的是服务端元数据（id/created/tool_call id/timings）
