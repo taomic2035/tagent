@@ -1,0 +1,4 @@
+ok=true ms=16960 reasoning=0 tokens=133 | content=我们可以根据题目给出的条件逐步推导四人的身高关系：
+
+1.  **A 比 B 高**：即 $A > B$
+2.  **B

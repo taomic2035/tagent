@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "我们可以根据题目给出的条件逐步推导四人的身高关系：\n\n1.  **A 比 B 高**：即 $A > B$\n2.  **B 比 C 高**：即 $B > C$\n    *   结合前两点，可知：$A > B > C$\n3.  **D 比 A 高**：即 $D > A$\n    *   将这一点加入上述链条，得到完整的身高排序：$D > A > B > C$\n\n在这个排序中，C 排在最后，因此 **C** 是最矮的。"
+      }
+    }
+  ],
+  "created": 1788179433,
+  "model": "<MODEL_PATH>",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 133,
+    "prompt_tokens": 40,
+    "total_tokens": 173,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "id": "chatcmpl-m4xSMDxVubnAb2oa1BEO1yW8BOSakDG1",
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 40,
+    "prompt_ms": 1040.426,
+    "prompt_per_token_ms": 26.01065,
+    "prompt_per_second": 38.4457904742865,
+    "predicted_n": 133,
+    "predicted_ms": 15867.102,
+    "predicted_per_token_ms": 120.20531818181819,
+    "predicted_per_second": 8.319099480169724
+  }
+}

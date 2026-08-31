@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "你好，我是 Qwen3.5，阿里巴巴最新推出的通义千问大语言模型，具备强大的逻辑推理、全栈代码及视觉深度解析能力，能高效协助你完成复杂任务。"
+      }
+    }
+  ],
+  "created": 1788179518,
+  "model": "<MODEL_PATH>",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 43,
+    "prompt_tokens": 18,
+    "total_tokens": 61,
+    "prompt_tokens_details": {
+      "cached_tokens": 14
+    }
+  },
+  "id": "chatcmpl-ihvRD8kV3mV5tIYdDvVQkoqkcvUJzKzv",
+  "timings": {
+    "cache_n": 14,
+    "prompt_n": 4,
+    "prompt_ms": 170.124,
+    "prompt_per_token_ms": 42.531,
+    "prompt_per_second": 23.51226164444758,
+    "predicted_n": 43,
+    "predicted_ms": 4919.463,
+    "predicted_per_token_ms": 117.13007142857143,
+    "predicted_per_second": 8.537517204621725
+  }
+}

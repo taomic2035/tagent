@@ -1,0 +1,1 @@
+ok=true ms=4344 reasoning=0 tokens=36 | calculate {"expression":"128 * 4 - 100"}

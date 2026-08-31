@@ -1,0 +1,12 @@
+{
+  "model": "<MODEL_PATH>",
+  "messages": [
+    {
+      "role": "user",
+      "content": "一件衣服原价 240 元，先打八折再减 30 元，最终多少钱？"
+    }
+  ],
+  "max_tokens": 1200,
+  "temperature": 0.7,
+  "stream": false
+}

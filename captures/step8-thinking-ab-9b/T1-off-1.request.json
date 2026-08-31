@@ -1,0 +1,15 @@
+{
+  "model": "<MODEL_PATH>",
+  "messages": [
+    {
+      "role": "user",
+      "content": "3.7 乘以 12 再减 8.2 等于多少？"
+    }
+  ],
+  "max_tokens": 160,
+  "temperature": 0.7,
+  "stream": false,
+  "chat_template_kwargs": {
+    "enable_thinking": false
+  }
+}

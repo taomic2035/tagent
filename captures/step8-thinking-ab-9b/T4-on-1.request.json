@@ -1,0 +1,12 @@
+{
+  "model": "<MODEL_PATH>",
+  "messages": [
+    {
+      "role": "user",
+      "content": "从 1 一直加到 100 等于多少？"
+    }
+  ],
+  "max_tokens": 1200,
+  "temperature": 0.7,
+  "stream": false
+}

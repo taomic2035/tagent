@@ -1,0 +1,5 @@
+ok=true ms=74923 reasoning=1442 tokens=613 | content=**C** 最矮。
+
+推理过程如下：
+1.  已知 **D 比 A 高** ($D > A$)
+2.  已知 **A 比

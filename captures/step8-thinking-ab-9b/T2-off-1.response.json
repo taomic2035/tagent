@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "我们可以分步来计算小明现在有多少个苹果：\n\n1.  **初始数量**：小明原本有 **17** 个苹果。\n2.  **给出苹果**：给了小红 5 个，数量减少：\n    $17 - 5 = 12$ （个）\n3.  **购买苹果**：又买了 8 个，数量增加：\n    $12 + 8 = 20$ （个）\n\n所以，现在小明有 **20** 个苹果。"
+      }
+    }
+  ],
+  "created": 1788179311,
+  "model": "<MODEL_PATH>",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 115,
+    "prompt_tokens": 38,
+    "total_tokens": 153,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "id": "chatcmpl-Gwdvr81lXghuAHpxcwTxP3AId43vVhz2",
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 38,
+    "prompt_ms": 1001.936,
+    "prompt_per_token_ms": 26.366736842105265,
+    "prompt_per_second": 37.92657415244087,
+    "predicted_n": 115,
+    "predicted_ms": 13451.182,
+    "predicted_per_token_ms": 117.99282456140351,
+    "predicted_per_second": 8.475091631352544
+  }
+}

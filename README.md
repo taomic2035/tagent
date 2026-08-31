@@ -51,7 +51,7 @@ bash scripts/acceptance-win.sh      # Windows（llama.cpp 引擎，Git Bash）
 - [x] **Step 5** ReAct 与规划——**已验收（AC5-1~5）**：双协议 ReAct 引擎（经典文本 + 受限解码 JSON）；三方实证 native 100% / react-json 100% / react-text 75%——弱模型上格式纪律必须由工程兜底（沉淀 docs/FALLBACK.md）
 - [x] **Step 6** 记忆机制——**已验收（AC6-1~5）**：跨会话长期记忆（追加式事实库 + remember/recall 工具 + 手写 bigram 召回）、/save /load 会话持久化、--memory 静态注入；注入策略取舍表入档（逐问动态注入=反模式）
 - [x] **Step 7** 子 agent 与编排——**已验收（AC7-1~4）**：delegate 工具（子 agent 即工具：独立上下文/递归锁/摘要信封）；同轮多委托=协议原生并行分解；直做 vs 委托成本对比（2.7× 调用买上下文隔离）
-- [ ] **Step 8** 模型能力对比：4B → 9B/27B，观察能力上限对 agent 行为的影响
+- [x] **Step 8** 模型能力对比——**已验收（AC8-1~4），学习路线收官**：9B 复测三组实验，反直觉双结论——思考不收敛随规模**加剧**（82%→68%），格式纪律随规模**解决**（75%→100%）；工程兜底价值不随模型变强而消失
 
 ## 目录结构
 

@@ -1,0 +1,4 @@
+ok=true ms=12973 reasoning=0 tokens=106 | content=计算这件衣服的最终价格需要分两步进行：
+
+首先，将原价 240 元打八折（即乘以 0.8）：
+$$240 \times 

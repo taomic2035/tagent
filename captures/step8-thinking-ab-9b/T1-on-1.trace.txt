@@ -1,0 +1,6 @@
+ok=true ms=111081 reasoning=2028 tokens=891 | content=计算过程如下：
+
+1.  **先算乘法：**
+    $$3.7 \times 12 = 44.4$$
+
+2.  **再

@@ -1,0 +1,10 @@
+{
+  "task": "S1",
+  "mode": "react-text",
+  "sample": 1,
+  "ok": true,
+  "rounds": 3,
+  "tokens": 128,
+  "ms": 24859,
+  "answer": "北京天气晴朗，气温28°C，湿度40%，AQI 55；上海天气多云，气温31°C，湿度70%，AQI 48。上海比北京更热且湿度更高。"
+}

@@ -1,0 +1,10 @@
+{
+  "task": "S3",
+  "mode": "native",
+  "sample": 1,
+  "ok": true,
+  "rounds": 2,
+  "tokens": 92,
+  "ms": 15446,
+  "answer": "根据最新天气数据：\n- 北京气温为 28°C\n- 上海气温为 31°C\n\n上海比北京更热，温差为 3 度。"
+}

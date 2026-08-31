@@ -1,0 +1,12 @@
+{
+  "model": "<MODEL_PATH>",
+  "messages": [
+    {
+      "role": "user",
+      "content": "9.5 公里等于多少米？"
+    }
+  ],
+  "max_tokens": 1200,
+  "temperature": 0.7,
+  "stream": false
+}

@@ -1,0 +1,24 @@
+{"task":"S1","mode":"native","sample":1,"ok":true,"rounds":2,"tokens":129,"ms":31424,"answer":"北京和上海的当前天气对比如下：\n\n- **北京**：天气晴，温度 28°C，湿度 40%，AQI 55。\n- **上海**：天气多云，温度 31°C，湿度 70%，AQI 48。\n\n上海比北京更热且更潮湿，但空气质量略好于北京。"}
+{"task":"S1","mode":"native","sample":2,"ok":true,"rounds":2,"tokens":175,"ms":25094,"answer":"以下是北京和上海的天气对比：\n\n*   **北京**\n    *   天气：晴\n    *   温度：28°C\n    *   湿度：40%\n    *   空气质量 (AQI)：55\n\n*   **上海**\n    *   天气：多云\n "}
+{"task":"S1","mode":"react-text","sample":1,"ok":true,"rounds":3,"tokens":128,"ms":24859,"answer":"北京天气晴朗，气温28°C，湿度40%，AQI 55；上海天气多云，气温31°C，湿度70%，AQI 48。上海比北京更热且湿度更高。"}
+{"task":"S1","mode":"react-text","sample":2,"ok":true,"rounds":3,"tokens":126,"ms":22157,"answer":"北京天气晴朗，气温28°C，湿度40%；上海天气多云，气温31°C，湿度70%。上海比北京更热且湿度更高。"}
+{"task":"S1","mode":"react-json","sample":1,"ok":true,"rounds":4,"tokens":204,"ms":36112,"answer":"北京天气：晴，28°C，湿度40%，AQI 55；上海天气：多云，31°C，湿度70%，AQI 48。"}
+{"task":"S1","mode":"react-json","sample":2,"ok":true,"rounds":4,"tokens":283,"ms":43805,"answer":"北京和上海天气对比如下：\n- **北京**：晴天，气温 28°C，湿度 40%，空气质量指数 (AQI) 55。\n- **上海**：多云，气温 31°C，湿度 70%，空气质量指数 (AQI) 48。\n总体而言，上海比北京热约 3 度且湿度"}
+{"task":"S2","mode":"native","sample":1,"ok":true,"rounds":3,"tokens":77,"ms":13155,"answer":"北京今天的天气是晴，温度为28摄氏度。将温度乘以2后，结果是56。"}
+{"task":"S2","mode":"native","sample":2,"ok":true,"rounds":2,"tokens":46,"ms":8124,"answer":"北京的当前温度是 28°C，乘以 2 后的结果是 56。"}
+{"task":"S2","mode":"react-text","sample":1,"ok":true,"rounds":3,"tokens":115,"ms":19425,"answer":"北京今天的温度是28摄氏度，乘以2后的结果是56摄氏度。"}
+{"task":"S2","mode":"react-text","sample":2,"ok":true,"rounds":3,"tokens":119,"ms":21732,"answer":"北京今天的温度是 28°C，乘以 2 后的结果是 56。"}
+{"task":"S2","mode":"react-json","sample":1,"ok":true,"rounds":3,"tokens":124,"ms":23037,"answer":"北京今天的温度是28摄氏度，乘以2后是56摄氏度。"}
+{"task":"S2","mode":"react-json","sample":2,"ok":true,"rounds":3,"tokens":119,"ms":19552,"answer":"北京今天的温度是28°C，乘以2后的结果是56°C。"}
+{"task":"S3","mode":"native","sample":1,"ok":true,"rounds":2,"tokens":92,"ms":15446,"answer":"根据最新天气数据：\n- 北京气温为 28°C\n- 上海气温为 31°C\n\n上海比北京更热，温差为 3 度。"}
+{"task":"S3","mode":"native","sample":2,"ok":true,"rounds":2,"tokens":104,"ms":16484,"answer":"根据查询到的当前天气数据：\n*   北京气温：28°C\n*   上海气温：31°C\n\n上海更热。两地的温差是 3 度（31 - 28 = 3）。"}
+{"task":"S3","mode":"react-text","sample":1,"ok":true,"rounds":4,"tokens":151,"ms":26551,"answer":"上海更热（31°C），北京（28°C），温差是3°C。"}
+{"task":"S3","mode":"react-text","sample":2,"ok":true,"rounds":4,"tokens":146,"ms":25735,"answer":"上海更热，两地温差是3°C。"}
+{"task":"S3","mode":"react-json","sample":1,"ok":true,"rounds":4,"tokens":208,"ms":34129,"answer":"上海更热。北京当前气温为28°C，上海为31°C，两地温差为3°C。"}
+{"task":"S3","mode":"react-json","sample":2,"ok":true,"rounds":4,"tokens":170,"ms":29088,"answer":"上海更热，北京气温为28°C，上海气温为31°C，温差为3°C。"}
+{"task":"S4","mode":"native","sample":1,"ok":true,"rounds":3,"tokens":165,"ms":25172,"answer":"杭州的温度是 30 度，广州的温度是 33 度。\n\n计算过程：\n1. 杭州温度减去广州温度：30 - 33 = -3\n2. 将结果除以 2：-3 / 2 = -1.5\n\n所以，杭州的温度减去广州的温度再除以 2，结果是 **-1.5**。"}
+{"task":"S4","mode":"native","sample":2,"ok":true,"rounds":3,"tokens":136,"ms":22196,"answer":"杭州的温度是 30 度，广州的温度是 33 度。\n计算过程如下：\n(30 - 33) ÷ 2 = -1.5\n\n所以，结果是 **-1.5**。"}
+{"task":"S4","mode":"react-text","sample":1,"ok":true,"rounds":4,"tokens":153,"ms":26845,"answer":"杭州的温度减去广州的温度再除以 2，等于 -1.5。"}
+{"task":"S4","mode":"react-text","sample":2,"ok":true,"rounds":4,"tokens":162,"ms":28466,"answer":"杭州的温度减去广州的温度再除以 2，等于 -1.5。"}
+{"task":"S4","mode":"react-json","sample":1,"ok":true,"rounds":4,"tokens":168,"ms":28485,"answer":"杭州温度减去广州温度再除以2等于 -1.5。"}
+{"task":"S4","mode":"react-json","sample":2,"ok":true,"rounds":4,"tokens":183,"ms":30437,"answer":"杭州的温度减去广州的温度再除以 2，等于 -1.5。"}

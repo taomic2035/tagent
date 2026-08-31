@@ -1,0 +1,10 @@
+{
+  "task": "S2",
+  "mode": "native",
+  "sample": 2,
+  "ok": true,
+  "rounds": 2,
+  "tokens": 46,
+  "ms": 8124,
+  "answer": "北京的当前温度是 28°C，乘以 2 后的结果是 56。"
+}

@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "计算这件衣服的最终价格可以分为两步：\n\n1.  **先打八折**：\n    原价 240 元打八折（即乘以 0.8）：\n    $$240 \\times 0.8 = 192 \\text{（元）}$$\n\n2.  **再减 30 元**：\n    在打折后的价格基础上减去 30 元：\n    $$192 - 30 = 162 \\text{（元）}$$\n\n最终价格是 **162** 元。"
+      }
+    }
+  ],
+  "created": 1788179344,
+  "model": "<MODEL_PATH>",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 130,
+    "prompt_tokens": 37,
+    "total_tokens": 167,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "id": "chatcmpl-ejYHDrkB2lQN0JNklaOroE8EuLU3sNra",
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 37,
+    "prompt_ms": 1034.723,
+    "prompt_per_token_ms": 27.965486486486487,
+    "prompt_per_second": 35.75836238297593,
+    "predicted_n": 130,
+    "predicted_ms": 15584.898,
+    "predicted_per_token_ms": 120.81316279069767,
+    "predicted_per_second": 8.277243777918855
+  }
+}

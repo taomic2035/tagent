@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "这是一个经典的逻辑推理问题，关键在于理解“如果昨天是星期三”这个假设前提。\n\n1.  **推导今天**：\n    如果昨天是星期三，那么今天就是星期三的下一天，即**星期四**。\n\n2.  **推导明天**：\n    如果今天是星期四，那么明天就是星期四的下一天，即**星期五**。\n\n**结论：**\n*   今天是**星期四**。\n*   明天是**星期五**。"
+      }
+    }
+  ],
+  "created": 1788179470,
+  "model": "<MODEL_PATH>",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 97,
+    "prompt_tokens": 25,
+    "total_tokens": 122,
+    "prompt_tokens_details": {
+      "cached_tokens": 21
+    }
+  },
+  "id": "chatcmpl-wYTlR0wrWp3Ywl389g1Ag4wrf7thiLQm",
+  "timings": {
+    "cache_n": 21,
+    "prompt_n": 4,
+    "prompt_ms": 176.423,
+    "prompt_per_token_ms": 44.10575,
+    "prompt_per_second": 22.672780759878247,
+    "predicted_n": 97,
+    "predicted_ms": 11266.601,
+    "predicted_per_token_ms": 117.36042708333333,
+    "predicted_per_second": 8.520759721587726
+  }
+}

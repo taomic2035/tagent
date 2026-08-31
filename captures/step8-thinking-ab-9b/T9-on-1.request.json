@@ -1,0 +1,34 @@
+{
+  "model": "<MODEL_PATH>",
+  "messages": [
+    {
+      "role": "user",
+      "content": "北京今天天气怎么样？"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "get_weather",
+        "description": "查询指定城市的当前天气（支持：北京/上海/广州/深圳/杭州）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "city": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "city"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ],
+  "max_tokens": 1200,
+  "temperature": 0.7,
+  "stream": false
+}

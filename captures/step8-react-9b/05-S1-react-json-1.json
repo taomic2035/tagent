@@ -1,0 +1,10 @@
+{
+  "task": "S1",
+  "mode": "react-json",
+  "sample": 1,
+  "ok": true,
+  "rounds": 4,
+  "tokens": 204,
+  "ms": 36112,
+  "answer": "北京天气：晴，28°C，湿度40%，AQI 55；上海天气：多云，31°C，湿度70%，AQI 48。"
+}

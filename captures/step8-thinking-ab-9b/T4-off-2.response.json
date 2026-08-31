@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "length",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "从 1 加到 100 的计算可以使用高斯求和公式：\n$$S_n = \\frac{n(a_1 + a_n)}{2}$$\n\n其中：\n- $n$ 是项数（这里是 100）\n- $a_1$ 是首项（这里是 1）\n- $a_n$ 是末项（这里是 100）\n\n代入数值计算：\n$$S_{100} = \\frac{100 \\times (1 + 100)}{2} = \\frac{100 \\times 101}{2} = 50 \\times 101 = 5050$$\n\n从 1"
+      }
+    }
+  ],
+  "created": 1788179397,
+  "model": "<MODEL_PATH>",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 160,
+    "prompt_tokens": 27,
+    "total_tokens": 187,
+    "prompt_tokens_details": {
+      "cached_tokens": 23
+    }
+  },
+  "id": "chatcmpl-UE7fCxrSKWqQw6bJNnWlz5whVkbxHaJn",
+  "timings": {
+    "cache_n": 23,
+    "prompt_n": 4,
+    "prompt_ms": 180.81,
+    "prompt_per_token_ms": 45.2025,
+    "prompt_per_second": 22.1226702062939,
+    "predicted_n": 160,
+    "predicted_ms": 18800.862,
+    "predicted_per_token_ms": 118.24441509433963,
+    "predicted_per_second": 8.45705904335663
+  }
+}

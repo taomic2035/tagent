@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "要将公里（千米）转换为米，需要知道 **1 公里 = 1000 米**。\n\n因此，计算 9.5 公里的过程如下：\n$$9.5 \\times 1000 = 9500$$\n\n所以，9.5 公里等于 **9500** 米。"
+      }
+    }
+  ],
+  "created": 1788179416,
+  "model": "<MODEL_PATH>",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 74,
+    "prompt_tokens": 21,
+    "total_tokens": 95,
+    "prompt_tokens_details": {
+      "cached_tokens": 17
+    }
+  },
+  "id": "chatcmpl-P0cRZ4tcRQMxPqomRA1RzVqgIfBZSF3S",
+  "timings": {
+    "cache_n": 17,
+    "prompt_n": 4,
+    "prompt_ms": 182.557,
+    "prompt_per_token_ms": 45.63925,
+    "prompt_per_second": 21.91096479455732,
+    "predicted_n": 74,
+    "predicted_ms": 9029.787,
+    "predicted_per_token_ms": 123.69571232876713,
+    "predicted_per_second": 8.084354592195806
+  }
+}

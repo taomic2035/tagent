@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "根据你提供的逻辑前提：\n\n1.  **大前提**：所有的猫都怕水。\n2.  **小前提**：汤姆是一只猫。\n\n根据演绎推理规则，既然“所有的猫”都具有“怕水”这一属性，而汤姆属于“猫”这个集合，那么结论是确定的：**汤姆怕水**。"
+      }
+    }
+  ],
+  "created": 1788179480,
+  "model": "<MODEL_PATH>",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 72,
+    "prompt_tokens": 27,
+    "total_tokens": 99,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "id": "chatcmpl-EQ8BVCpk922E76ZiU7V3m2QFjVxAPI4C",
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 27,
+    "prompt_ms": 750.554,
+    "prompt_per_token_ms": 27.798296296296297,
+    "prompt_per_second": 35.97342762812536,
+    "predicted_n": 72,
+    "predicted_ms": 8576.109,
+    "predicted_per_token_ms": 120.79026760563382,
+    "predicted_per_second": 8.278812687665233
+  }
+}

@@ -1,0 +1,4 @@
+ok=true ms=19018 reasoning=0 tokens=160 | content=从 1 加到 100 的计算可以使用高斯求和公式：
+$$S_n = \frac{n(a_1 + a_n)}{2}$$
+
+

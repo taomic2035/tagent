@@ -1,0 +1,4 @@
+ok=true ms=9688 reasoning=0 tokens=82 | content=根据运算顺序（先乘除后加减），计算步骤如下：
+
+1.  **先进行乘法运算**：
+    $$3.7 \times 12

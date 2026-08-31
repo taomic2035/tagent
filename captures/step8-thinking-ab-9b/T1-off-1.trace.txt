@@ -1,0 +1,3 @@
+ok=true ms=19829 reasoning=0 tokens=160 | content=我们可以按照运算顺序一步步来计算这个表达式：$3.7 \times 12 - 8.2$。
+
+**第一步：计算乘法部分**

@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "根据运算顺序（先乘除后加减），计算步骤如下：\n\n1.  **先进行乘法运算**：\n    $$3.7 \\times 12 = 44.4$$\n\n2.  **再进行减法运算**：\n    $$44.4 - 8.2 = 36.2$$\n\n最终结果是 **36.2**。"
+      }
+    }
+  ],
+  "created": 1788179296,
+  "model": "<MODEL_PATH>",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 82,
+    "prompt_tokens": 31,
+    "total_tokens": 113,
+    "prompt_tokens_details": {
+      "cached_tokens": 27
+    }
+  },
+  "id": "chatcmpl-b7AzdKRpZTHf7qgnt2zmBLqKeL4L9ILj",
+  "timings": {
+    "cache_n": 27,
+    "prompt_n": 4,
+    "prompt_ms": 167.145,
+    "prompt_per_token_ms": 41.78625,
+    "prompt_per_second": 23.931317119865984,
+    "predicted_n": 82,
+    "predicted_ms": 9491.716,
+    "predicted_per_token_ms": 117.18167901234568,
+    "predicted_per_second": 8.53375722577456
+  }
+}

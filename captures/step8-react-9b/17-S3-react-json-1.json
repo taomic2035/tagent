@@ -1,0 +1,10 @@
+{
+  "task": "S3",
+  "mode": "react-json",
+  "sample": 1,
+  "ok": true,
+  "rounds": 4,
+  "tokens": 208,
+  "ms": 34129,
+  "answer": "上海更热。北京当前气温为28°C，上海为31°C，两地温差为3°C。"
+}

@@ -1,0 +1,10 @@
+{
+  "task": "S3",
+  "mode": "react-text",
+  "sample": 1,
+  "ok": true,
+  "rounds": 4,
+  "tokens": 151,
+  "ms": 26551,
+  "answer": "上海更热（31°C），北京（28°C），温差是3°C。"
+}

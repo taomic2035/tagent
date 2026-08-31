@@ -1,0 +1,36 @@
+{
+  "choices": [
+    {
+      "finish_reason": "length",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "我们可以按照运算顺序一步步来计算这个表达式：$3.7 \\times 12 - 8.2$。\n\n**第一步：计算乘法部分**\n先算 $3.7$ 乘以 $12$：\n$$3.7 \\times 12 = 44.4$$\n（计算过程：$3.7 \\times 10 = 37$，$3.7 \\times 2 = 7.4$，两者相加 $37 + 7.4 = 44.4$）\n\n**第二步：计算减法部分**\n用第一步得到的结果减去 $8.2$：\n$$44.4 - 8.2 = 36.2$$\n\n**最终结果"
+      }
+    }
+  ],
+  "created": 1788179287,
+  "model": "<MODEL_PATH>",
+  "system_fingerprint": "b10621-c1d0e7a00",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 160,
+    "prompt_tokens": 31,
+    "total_tokens": 191,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "id": "chatcmpl-U9LNe00ryjJxVykLrOzm8XyqxaL5Ov03",
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 31,
+    "prompt_ms": 854.566,
+    "prompt_per_token_ms": 27.566645161290324,
+    "prompt_per_second": 36.27572358366703,
+    "predicted_n": 160,
+    "predicted_ms": 18910.406,
+    "predicted_per_token_ms": 118.93337106918239,
+    "predicted_per_second": 8.408069081118619
+  }
+}
