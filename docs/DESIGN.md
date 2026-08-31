@@ -496,3 +496,31 @@ recall(query, k=5)：评分>0 按分排序取前 k；全 0 分返回空（宁缺
 `/save 名` → logs/saved/<名>.json（messages 原样 + meta）；`/load 名` →
 messages.length=0 后回填（runAgent 的 system 只插一次逻辑天然兼容）；跨进程恢复后
 session 存证/wire 记录器照常工作（新会话目录）。
+
+## 16. Step 7 设计：子 agent 与编排（2026-08-31）
+
+### 16.1 delegate 工具（FR-38~40，apps/cli/builtin-tools/delegate.ts）
+
+```
+delegate(task) 执行体：
+  subMessages = [{user: task}]            // 独立上下文，无父对话
+  subConfig  = {systemPrompt: 子提示, maxIterations: min(父,4), thinking 继承}
+  subRegistry= makeSubRegistry()          // 不含 delegate（递归锁，FR-39）
+  for await ev of runAgent({client, subRegistry, subConfig}, subMessages):
+      只收集统计与终答，事件不外抛（父事件流不掺子过程）
+  return {answer, subRounds, subToolCalls}  // 摘要信封回填父上下文
+policy: {timeoutMs: 300_000}              // 子任务总预算（Step 2 策略层复用）
+```
+
+### 16.2 编排形态（FR-41）
+
+- **并行分解**：父同轮发多个 tool_calls（delegate×N）——协议原生支持（AC-4 已证），
+  loop 按协议顺序**串行执行**后逐一回填；「真并行执行」明确不做：配对顺序是协议硬约束，
+  且本地引擎单 slot 串行收益为零（YAGNI，如实记载）
+- **串行分解**：父逐轮委托（后任务依赖前结果时自然出现）
+
+### 16.3 可观测性边界（FR-40）
+
+子过程事件不进父 transcript（隔离），但 wire 记录器在 fetch 层 tee 一切 LLM 调用——
+子 agent 的每次通信照样落存证单元（token 级溯源不断链，TRACEABILITY 制度自动覆盖嵌套）。
+delegate 信封里的 subRounds/subToolCalls 是父可见的过程摘要。

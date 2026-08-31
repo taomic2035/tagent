@@ -230,3 +230,28 @@
 | AC6-3 | 跨会话真机 | 会话1「记住我喜欢喝美式咖啡」→ /exit；**新进程**会话2 问「我喜欢喝什么？」→ recall/注入命中 → 正确回答；全程存证 |
 | AC6-4 | 取舍分析 | 注入策略对比表入档（静态注入 vs 工具召回 vs 逐问注入）——引用 Step 3 cache 实测数据；记忆增长×预算交互说明 |
 | AC6-5 | 回归 | 全套测试绿；无 --memory 时行为与 Step 5 一致 |
+
+## 11. Step 7 需求增补：子 agent 与编排（2026-08-31）
+
+> 架构预留兑现（ARCHITECTURE §6）：子 agent = 一个工具。`delegate(task)` 的 execute
+> 内部再起 runAgent——**上下文隔离**（子 agent 独立 messages，只拿任务描述，返回摘要），
+> 这是 Step 3 裁剪之外的另一种上下文管理手段：隔离 vs 遗忘。
+
+### 11.1 功能需求
+
+| ID | 需求 | 说明 | 优先级 |
+|---|---|---|---|
+| FR-38 | delegate 工具 | `delegate(task)`：内部起子 agent（独立 messages + 独立 system prompt + 缩小的 maxIterations），返回终答摘要 + 子过程统计（轮次/工具调用数） | P0 |
+| FR-39 | 递归防护 | 子 agent 的 registry **不含 delegate**（深度锁定 1 层）——子 agent 不能再开子 agent | P0 |
+| FR-40 | 上下文隔离 | 子任务细节不进父上下文（父只收到摘要信封）；子 agent 看不到父对话（task 必须自包含）；子过程证据由 wire 记录器在 fetch 层自动保全（token 溯源不断链） | P0 |
+| FR-41 | 编排能力 | 同轮多个 delegate 调用 = 并行分解（协议原生）；结果按协议顺序回填聚合——**顺序执行**保证配对顺序（真并行执行明确不做，见 DESIGN） | P1 |
+| FR-42 | CLI 开关 | `--delegate` 启用委托工具（缺省不注册，保持前序验收可复现） | P1 |
+
+### 11.2 验收标准（AC7-x）
+
+| ID | 场景 | 通过标准 |
+|---|---|---|
+| AC7-1 | 单测 | mock：delegate 返回子终答；子 registry 无 delegate（递归锁）；父 messages 无子过程细节泄漏 |
+| AC7-2 | 真机委托 | `--delegate` + 多城市任务：父 agent 委托子任务（或同轮多委托），聚合出正确结论（如最热城市） |
+| AC7-3 | 隔离与成本 | 存证显示子调用独立 session 单元；对比同任务直做 vs 委托的轮次/token（隔离的代价或收益） |
+| AC7-4 | 回归 | 全套测试绿；无 --delegate 时行为与 Step 6 一致 |
