@@ -49,7 +49,7 @@ bash scripts/acceptance-win.sh      # Windows（llama.cpp 引擎，Git Bash）
 - [x] **Step 3** 上下文管理：对话历史裁剪、KV cache 复用——**已验收（AC3-1~5）**：回合完整+双水位裁剪、KV cache 三段实证（追加命中 78%/破坏骤降/裁剪后恢复）、估算器校准与口径发现
 - [x] **Step 4** 思考模式实验——**已验收（AC4-1~4）**：请求级开关落地（修复 /no_think 失效）；A/B 实证 4B+简单任务上思考净负收益（82% vs 94%，7.3× 慢）——「不收敛烧预算」与「截断没答完」两种失败模式入档
 - [x] **Step 5** ReAct 与规划——**已验收（AC5-1~5）**：双协议 ReAct 引擎（经典文本 + 受限解码 JSON）；三方实证 native 100% / react-json 100% / react-text 75%——弱模型上格式纪律必须由工程兜底（沉淀 docs/FALLBACK.md）
-- [ ] **Step 6** 记忆机制：短期记忆与长期记忆的实现与取舍
+- [x] **Step 6** 记忆机制——**已验收（AC6-1~5）**：跨会话长期记忆（追加式事实库 + remember/recall 工具 + 手写 bigram 召回）、/save /load 会话持久化、--memory 静态注入；注入策略取舍表入档（逐问动态注入=反模式）
 - [ ] **Step 7** 子 agent 与编排：任务分解、结果聚合
 - [ ] **Step 8** 模型能力对比：4B → 9B/27B，观察能力上限对 agent 行为的影响
 

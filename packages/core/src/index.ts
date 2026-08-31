@@ -36,6 +36,12 @@ export {
   type ActionParse,
 } from "./react.js";
 export {
+  MemoryStore,
+  scoreRecall,
+  type MemoryFact,
+  type RecalledFact,
+} from "./store.js";
+export {
   estimateTokens,
   estimateMessagesTokens,
   trimMessages,

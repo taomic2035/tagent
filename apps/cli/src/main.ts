@@ -2,7 +2,7 @@
 // tagent CLI：终端 REPL，装配 core 三件套（ARCHITECTURE.md：壳不含 agent 逻辑）
 // ============================================================
 import { createInterface } from "node:readline";
-import { appendFileSync, mkdirSync } from "node:fs";
+import { appendFileSync, mkdirSync, readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import {
   OpenAIClient,
@@ -14,8 +14,10 @@ import {
   type ChatMessage,
 } from "@tagent/core";
 import { z } from "zod";
+import { MemoryStore } from "@tagent/core";
 import { calculateTool } from "./builtin-tools/calculate.js";
 import { weatherTool } from "./builtin-tools/weather.js";
+import { makeMemoryTools } from "./builtin-tools/memory.js";
 import { createWireRecorder } from "./wire.js";
 import { parseFaults, withFaults, describeFaults } from "./faults.js";
 import { paint, writeChunk, writeLine } from "./ui.js";
@@ -65,6 +67,17 @@ const registry = new ToolRegistry();
 const faults = parseFaults(process.env.TAGENT_FAULTS);
 registry.register(withFaults(weatherTool, faults));
 registry.register(withFaults(calculateTool, faults));
+// Step 6：长期记忆（跨会话事实库 + remember/recall 工具）
+const memoryStore = new MemoryStore(join(process.cwd(), "logs", "memory.jsonl"));
+for (const t of makeMemoryTools(memoryStore)) registry.register(t);
+// 静态注入（FR-36）：最近 N 条事实进 system prompt 尾部——会话内前缀稳定（cache 友好）
+if (config.memoryInject > 0) {
+  const recent = memoryStore.all().slice(-config.memoryInject);
+  if (recent.length > 0) {
+    const block = ["", "", "## 长期记忆（最近 " + recent.length + " 条）", ...recent.map((f) => `- ${f.content}`)].join("\n");
+    config.systemPrompt += block;
+  }
+}
 const messages: ChatMessage[] = [];
 
 // ---- transcript：每个事件一行 JSON（NFR-4 可观测性）----
@@ -139,6 +152,33 @@ function handleCommand(line: string): boolean {
     case "/dump":
       writeLine(JSON.stringify(messages, null, 2));
       break;
+    case "/memories": {
+      const all = memoryStore.all();
+      if (all.length === 0) writeLine(paint.dim("（长期记忆为空）"));
+      for (const f of all.slice(-20)) writeLine(paint.dim(`  [${f.id}] ${f.content}`));
+      break;
+    }
+    case "/save": {
+      const name = line.split(" ")[1] ?? `session-${Date.now()}`;
+      mkdirSync(join(logsDir, "saved"), { recursive: true });
+      writeFileSync(join(logsDir, "saved", `${name}.json`), JSON.stringify({ savedAt: new Date().toISOString(), messages }, null, 2));
+      writeLine(paint.dim(`已保存会话：${name}（${messages.length} 条消息，/load ${name} 恢复）`));
+      break;
+    }
+    case "/load": {
+      const name = line.split(" ")[1] ?? "";
+      const file = join(logsDir, "saved", `${name}.json`);
+      if (!name || !existsSync(file)) {
+        writeLine(paint.yellow(`未找到会话 ${name}。可用：`));
+        for (const f of readdirSync(join(logsDir, "saved")).filter((n) => n.endsWith(".json"))) writeLine(paint.dim(`  ${f.replace(/\.json$/, "")}`));
+        break;
+      }
+      const data = JSON.parse(readFileSync(file, "utf8")) as { messages: ChatMessage[] };
+      messages.length = 0;
+      messages.push(...data.messages);
+      writeLine(paint.dim(`已恢复会话 ${name}（${data.messages.length} 条消息）`));
+      break;
+    }
     case "/think":
       config.thinking = true;
       writeLine(paint.dim("思考模式已开启（请求级 enable_thinking=true）"));
@@ -148,7 +188,7 @@ function handleCommand(line: string): boolean {
       writeLine(paint.dim("思考模式已关闭（请求级 enable_thinking=false；旧 /no_think 标记已废弃——两引擎实测无效，PROTOCOL §10）"));
       break;
     default:
-      writeLine(paint.yellow(`未知命令 ${line}（可用：/exit /reset /tools /dump /think /nothink）`));
+      writeLine(paint.yellow(`未知命令 ${line}（可用：/exit /reset /tools /dump /think /nothink /memories /save /load）`));
   }
   return true;
 }
@@ -176,6 +216,9 @@ function main(): void {
   }
   if (config.thinking !== undefined) {
     writeLine(paint.dim(`思考模式: ${config.thinking ? "开" : "关"}（/think /nothink 切换）`));
+  }
+  if (config.memoryInject > 0) {
+    writeLine(paint.dim(`长期记忆：${memoryStore.all().length} 条事实，注入最近 ${config.memoryInject} 条（/memories 查看）`));
   }
   if (config.reactMode) {
     const fmt = config.reactFormat ?? "json";

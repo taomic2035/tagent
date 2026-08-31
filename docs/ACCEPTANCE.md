@@ -200,3 +200,30 @@ node scripts/replay.mjs captures/ac-2-calculate/session/call-001/request.json --
 | AC5-3 CLI 真机 | ✅ | `step5-react/cli-smoke/`：--react（JSON 协议）S2 链式任务 6 轮完成，28×2=56 无幻觉 |
 | AC5-4 对比实验 | ✅ | `step5-react/summary.md` + 36 样本存证（上表） |
 | AC5-5 回归 | ✅ | core 62 + cli 34 全绿；native 路径行为与 Step 4 一致 |
+
+## Step 6 真机验收报告（AC6-1~5，2026-08-31）
+
+> 引擎：llama.cpp b10621 CPU ｜ 证据：`captures/step6-memory/`（四会话 session+transcript + 事实库快照）
+
+| # | 判定 | 证据 |
+|---|---|---|
+| AC6-1 存储单测 | ✅ | store.test.ts：append/load 跨实例往返、召回排序（相关>无关）、0 分不返回、坏行容错 |
+| AC6-2 工具单测 | ✅ | registry 路径（信封契约继承）；remember/recall zod 校验 |
+| AC6-3 跨会话真机 | ✅ | 会话1 模型主动 `remember {"content":"我喜欢喝美式咖啡，不加糖","tag":"preference"}` → /exit；**新进程**会话2 主动 `recall`（matched=1，score=3）→「您喜欢喝美式咖啡，不加糖」 |
+| AC6-4 取舍分析 | ✅ | 见下表 |
+| AC6-5 回归 | ✅ | core 66 + cli 34 全绿；无 --memory 时行为与 Step 5 一致 |
+
+### 记忆注入策略取舍（AC6-4，引用 Step 3 cache 实测）
+
+| 策略 | 召回相关性 | cache 前缀 | 实现状态 |
+|---|---|---|---|
+| **工具召回**（recall 按需） | 高（按问题评分） | 追加式，前缀稳定（78% 命中不受影响） | ✅ 主路径 |
+| **静态注入**（--memory N，启动时最近 N 条） | 低（不分问题） | 会话内稳定 ✓ | ✅ 辅助路径 |
+| 逐问动态注入 system | 高 | **每轮破坏**（Step 3 B 段实证：78%→26%） | ❌ 反模式，不实现 |
+
+**实测观察**：即使开了静态注入，模型回答偏好问题时仍**主动选择 recall 工具**（会话3）——
+工具召回的相关性优势是模型自己"用脚投票"的结果；静态注入的实际价值是背景兜底（模型没想起
+调工具时仍有信号）。两条路径互补。
+
+**记忆×预算交互**：注入块在 system prompt 内，天然被估算器计入（FR-37）；
+事实库无上限增长时，靠 `--max-context-tokens` 的双水位裁剪兜住（Step 3 机制复用，无新代码）。
