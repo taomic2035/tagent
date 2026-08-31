@@ -1,0 +1,316 @@
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"问"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"的是"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"火星"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"的天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"情况"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"根据"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"提供的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"列表"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我只"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"有一个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"查询"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"`"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"get"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"_weather"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"`"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"这个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"只"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"支持"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"查询"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"以下"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"城市的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"/"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"/"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"广州"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"/"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"深圳"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"/"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"杭州"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"火星"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"不是一个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"地球"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"上的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"城市"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"而且"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"不支持"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"查询"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"火星"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"的天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我需要"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"向"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"说明"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"这个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"限制"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我不"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"应该"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"编"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"造"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"火星"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"的天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"数据"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"而是"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"应该"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"诚"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"实地"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"告诉"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"限制"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"很"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"抱歉"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"目前"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"无法"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"查询"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"火星"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"的天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"信息"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"我的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"查询"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"功能"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"只"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"支持"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"查询"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"以下"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"城市的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"广州"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"深圳"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"-"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"杭州"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"火星"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"是一个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"行星"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"不在"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"支持"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"的城市"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"列表中"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"如果您"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"需要了解"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"这些"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"城市"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"之一的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"请"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"告诉我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"具体"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"城市"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"名称"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"马上"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"帮您"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"查询"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"。"}}]}
+
+data: {"choices":[{"index":0,"finish_reason":"stop","delta":{}}]}
+
+data: [DONE]
+

@@ -1,0 +1,132 @@
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"询问"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"怎么样"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"需要使用"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" get"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"_weather"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"来"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"查询"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"的天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"根据"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"描述"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"这个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"支持"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"查询"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"/"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"/"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"广州"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"/"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"深圳"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"/"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"杭州"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"的天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"是"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"支持"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"的城市"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"之一"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我需要"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"调用"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" get"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"_weather"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"参数"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" city"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"设置为"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\""}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"上海"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\""}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"id":"AsmwcMSI67bSRyaVTs4qigk8fKOF7Bvw","function":{"name":"get_weather","arguments":"{"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"city\":\""}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"上海"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\""}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"}"}}]}}]}
+
+data: {"choices":[{"index":0,"finish_reason":"tool_calls","delta":{}}]}
+
+data: [DONE]
+

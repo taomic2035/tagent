@@ -70,3 +70,22 @@ node scripts/replay.mjs captures/ac-2-calculate/session/call-001/request.json --
 - 手写的"轮子"：SSE 解析器、JSON Schema 生成（经 zod）、递归下降求值器、ANSI 渲染、存证/溯源/重放工具链
 - 代码量：core ~600 行 + cli ~400 行（不含测试）；测试 51 项全绿
 - 完整能力：流式对话、思考渲染、工具调用、错误自愈、多工具、迭代上限、会话存证、token 溯源、prompt 重放
+
+## 附录：引擎迁移复验（Windows / llama.cpp，2026-08-31）
+
+> 开发机 Mac(M5/MLX) → Windows(i7-14700/llama.cpp CPU)，六场景全量复跑。
+> 复现入口：`bash scripts/acceptance-win.sh`（需先 `.\start_llm.ps1 -Detach`）
+> **结论：agent 代码零改动**（`packages/`、`apps/` 无一行变更，仅 `--model` 传不同的模型路径）——NFR-7「同一份 core 代码可对接两引擎」实证，跨平台 NFR-3（Windows 可直接运行）实证，`pnpm build`+`pnpm test`（51 项）Windows 原生全绿。
+
+| # | 场景 | 判定 | 关键证据（captures/ 下） | 与 Mac 侧差异 |
+|---|---|---|---|---|
+| AC-1 | 北京天气 | ✅ | `win-ac-1-beijing-weather/` | 无（2 轮，回答引用 mock 数值 28°C/40%/55） |
+| AC-2 | 四则计算 | ✅ | `win-ac-2-calculate/` | 无（`calculate {"expression":"3.7 * 12 - 8.2"}` → 36.2，回答数值一致） |
+| AC-3 | 自我介绍（无工具滥用） | ✅ | `win-ac-3-self-intro/` | 无（0 次工具调用） |
+| AC-4 | 双城对比 | ✅ | `win-ac-4-two-cities/` | 无（同轮 get_weather(北京)+get_weather(上海)，逐 token 分片按 index 归位——比 MLX 更碎的分片被正确合并） |
+| AC-5 | 火星（错误路径） | ✅* | `win-ac-5-mars-error/`、`win-ac-5b-mars-forced/` | 见下注 |
+| AC-6 | /dump 全链路导出 | ✅ | `win-ac-6-dump/` | 无 |
+
+**AC-5 注（行为差异，如实记录）**：本引擎/量化组合下模型三次都**选择不调用** unsupported 城市——未强制（`win-ac-5-mars-error`：读工具描述后向用户如实说明）、强制要求调用（`win-ac-5b-mars-forced`：推理出「必须调用」与「工具不支持」矛盾，拒绝执行并解释）、换不明显的无效城市「莫斯科」（同样拒绝，未归档）。三个变体均不崩溃、无幻觉编造。错误信封（`{"ok":false,"error":...,"availableCities":[...]}`）的回填与自愈路径由单元测试覆盖（apps/cli/src/builtin-tools/weather.test.ts），模型侧未踩入；对比 Mac 侧该量化会直接调用。**这是同模型不同量化/温度下的行为差异样本**，留作 Step 4（思考模式实验）与 Step 8（模型能力对比）的分析素材。
+
+**性能**：CPU 后端生成 11.6~13.0 tok/s（agent 六场景可用，长思考偏慢），详见 SETUP.md §八。

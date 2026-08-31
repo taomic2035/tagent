@@ -1,0 +1,138 @@
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"要求"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"计算"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"7"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"乘以"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"1"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"再"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"减"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"的结果"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我已经"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"调"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"用了"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" calculate"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"得到了"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"结果"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"6"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"现在我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"可以直接"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"回答"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"7"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"乘以"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"1"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"再"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"减"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"的结果"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"是"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"6"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"。"}}]}
+
+data: {"choices":[{"index":0,"finish_reason":"stop","delta":{}}]}
+
+data: [DONE]
+

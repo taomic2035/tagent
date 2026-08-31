@@ -1,0 +1,138 @@
+{"ts":"2026-08-31T07:07:26.640Z","ev":{"type":"round-start","round":1}}
+{"ts":"2026-08-31T07:07:26.641Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"计算 3.7 乘以 12 再减 8.2 等于多少？"}]}}
+{"ts":"2026-08-31T07:07:35.006Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T07:07:35.093Z","ev":{"type":"reasoning-delta","delta":"让我"}}
+{"ts":"2026-08-31T07:07:35.174Z","ev":{"type":"reasoning-delta","delta":"计算"}}
+{"ts":"2026-08-31T07:07:35.257Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:35.342Z","ev":{"type":"reasoning-delta","delta":"3"}}
+{"ts":"2026-08-31T07:07:35.429Z","ev":{"type":"reasoning-delta","delta":"."}}
+{"ts":"2026-08-31T07:07:35.510Z","ev":{"type":"reasoning-delta","delta":"7"}}
+{"ts":"2026-08-31T07:07:35.594Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:35.675Z","ev":{"type":"reasoning-delta","delta":"乘以"}}
+{"ts":"2026-08-31T07:07:35.759Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:35.839Z","ev":{"type":"reasoning-delta","delta":"1"}}
+{"ts":"2026-08-31T07:07:35.928Z","ev":{"type":"reasoning-delta","delta":"2"}}
+{"ts":"2026-08-31T07:07:36.006Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:36.084Z","ev":{"type":"reasoning-delta","delta":"再"}}
+{"ts":"2026-08-31T07:07:36.166Z","ev":{"type":"reasoning-delta","delta":"减"}}
+{"ts":"2026-08-31T07:07:36.254Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:36.346Z","ev":{"type":"reasoning-delta","delta":"8"}}
+{"ts":"2026-08-31T07:07:36.434Z","ev":{"type":"reasoning-delta","delta":"."}}
+{"ts":"2026-08-31T07:07:36.522Z","ev":{"type":"reasoning-delta","delta":"2"}}
+{"ts":"2026-08-31T07:07:36.608Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:36.696Z","ev":{"type":"reasoning-delta","delta":"等于"}}
+{"ts":"2026-08-31T07:07:36.787Z","ev":{"type":"reasoning-delta","delta":"多少"}}
+{"ts":"2026-08-31T07:07:36.875Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T07:07:36.957Z","ev":{"type":"reasoning-delta","delta":"这是一个"}}
+{"ts":"2026-08-31T07:07:37.043Z","ev":{"type":"reasoning-delta","delta":"简单的"}}
+{"ts":"2026-08-31T07:07:37.126Z","ev":{"type":"reasoning-delta","delta":"四"}}
+{"ts":"2026-08-31T07:07:37.211Z","ev":{"type":"reasoning-delta","delta":"则"}}
+{"ts":"2026-08-31T07:07:37.294Z","ev":{"type":"reasoning-delta","delta":"运算"}}
+{"ts":"2026-08-31T07:07:37.383Z","ev":{"type":"reasoning-delta","delta":"表达式"}}
+{"ts":"2026-08-31T07:07:37.467Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T07:07:37.552Z","ev":{"type":"reasoning-delta","delta":"我"}}
+{"ts":"2026-08-31T07:07:37.639Z","ev":{"type":"reasoning-delta","delta":"需要使用"}}
+{"ts":"2026-08-31T07:07:37.730Z","ev":{"type":"reasoning-delta","delta":" calculate"}}
+{"ts":"2026-08-31T07:07:37.822Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:37.918Z","ev":{"type":"reasoning-delta","delta":"工具"}}
+{"ts":"2026-08-31T07:07:38.002Z","ev":{"type":"reasoning-delta","delta":"来计算"}}
+{"ts":"2026-08-31T07:07:38.094Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T07:07:38.188Z","ev":{"type":"reasoning-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T07:07:38.278Z","ev":{"type":"reasoning-delta","delta":"表达式"}}
+{"ts":"2026-08-31T07:07:38.363Z","ev":{"type":"reasoning-delta","delta":"是"}}
+{"ts":"2026-08-31T07:07:38.453Z","ev":{"type":"reasoning-delta","delta":"："}}
+{"ts":"2026-08-31T07:07:38.542Z","ev":{"type":"reasoning-delta","delta":"3"}}
+{"ts":"2026-08-31T07:07:38.630Z","ev":{"type":"reasoning-delta","delta":"."}}
+{"ts":"2026-08-31T07:07:38.720Z","ev":{"type":"reasoning-delta","delta":"7"}}
+{"ts":"2026-08-31T07:07:38.809Z","ev":{"type":"reasoning-delta","delta":" *"}}
+{"ts":"2026-08-31T07:07:38.894Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:38.978Z","ev":{"type":"reasoning-delta","delta":"1"}}
+{"ts":"2026-08-31T07:07:39.064Z","ev":{"type":"reasoning-delta","delta":"2"}}
+{"ts":"2026-08-31T07:07:39.145Z","ev":{"type":"reasoning-delta","delta":" -"}}
+{"ts":"2026-08-31T07:07:39.227Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:39.317Z","ev":{"type":"reasoning-delta","delta":"8"}}
+{"ts":"2026-08-31T07:07:39.415Z","ev":{"type":"reasoning-delta","delta":"."}}
+{"ts":"2026-08-31T07:07:39.501Z","ev":{"type":"reasoning-delta","delta":"2"}}
+{"ts":"2026-08-31T07:07:39.587Z","ev":{"type":"reasoning-delta","delta":"\n\n"}}
+{"ts":"2026-08-31T07:07:39.669Z","ev":{"type":"reasoning-delta","delta":"让我"}}
+{"ts":"2026-08-31T07:07:39.754Z","ev":{"type":"reasoning-delta","delta":"调用"}}
+{"ts":"2026-08-31T07:07:39.841Z","ev":{"type":"reasoning-delta","delta":" calculate"}}
+{"ts":"2026-08-31T07:07:39.930Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:40.014Z","ev":{"type":"reasoning-delta","delta":"工具"}}
+{"ts":"2026-08-31T07:07:40.103Z","ev":{"type":"reasoning-delta","delta":"来计算"}}
+{"ts":"2026-08-31T07:07:40.183Z","ev":{"type":"reasoning-delta","delta":"这个"}}
+{"ts":"2026-08-31T07:07:40.267Z","ev":{"type":"reasoning-delta","delta":"表达式"}}
+{"ts":"2026-08-31T07:07:40.354Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T07:07:40.441Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T07:07:43.822Z","ev":{"type":"tool-call","id":"fSPPQDnBEbj2MEGlFCIIDFYT77iDjndX","name":"calculate","args":{"expression":"3.7 * 12 - 8.2"}}}
+{"ts":"2026-08-31T07:07:43.825Z","ev":{"type":"tool-result","id":"fSPPQDnBEbj2MEGlFCIIDFYT77iDjndX","name":"calculate","result":"{\"ok\":true,\"data\":{\"expression\":\"3.7 * 12 - 8.2\",\"value\":36.2}}"}}
+{"ts":"2026-08-31T07:07:43.826Z","ev":{"type":"round-start","round":2}}
+{"ts":"2026-08-31T07:07:43.826Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"计算 3.7 乘以 12 再减 8.2 等于多少？"},{"role":"assistant","content":null,"tool_calls":[{"id":"fSPPQDnBEbj2MEGlFCIIDFYT77iDjndX","type":"function","function":{"name":"calculate","arguments":"{\"expression\":\"3.7 * 12 - 8.2\"}"}}]},{"role":"tool","tool_call_id":"fSPPQDnBEbj2MEGlFCIIDFYT77iDjndX","content":"{\"ok\":true,\"data\":{\"expression\":\"3.7 * 12 - 8.2\",\"value\":36.2}}"}]}}
+{"ts":"2026-08-31T07:07:45.258Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T07:07:45.351Z","ev":{"type":"reasoning-delta","delta":"要求"}}
+{"ts":"2026-08-31T07:07:45.434Z","ev":{"type":"reasoning-delta","delta":"计算"}}
+{"ts":"2026-08-31T07:07:45.517Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:45.595Z","ev":{"type":"reasoning-delta","delta":"3"}}
+{"ts":"2026-08-31T07:07:45.681Z","ev":{"type":"reasoning-delta","delta":"."}}
+{"ts":"2026-08-31T07:07:45.766Z","ev":{"type":"reasoning-delta","delta":"7"}}
+{"ts":"2026-08-31T07:07:45.854Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:45.943Z","ev":{"type":"reasoning-delta","delta":"乘以"}}
+{"ts":"2026-08-31T07:07:46.032Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:46.104Z","ev":{"type":"reasoning-delta","delta":"1"}}
+{"ts":"2026-08-31T07:07:46.189Z","ev":{"type":"reasoning-delta","delta":"2"}}
+{"ts":"2026-08-31T07:07:46.272Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:46.360Z","ev":{"type":"reasoning-delta","delta":"再"}}
+{"ts":"2026-08-31T07:07:46.440Z","ev":{"type":"reasoning-delta","delta":"减"}}
+{"ts":"2026-08-31T07:07:46.527Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:46.605Z","ev":{"type":"reasoning-delta","delta":"8"}}
+{"ts":"2026-08-31T07:07:46.690Z","ev":{"type":"reasoning-delta","delta":"."}}
+{"ts":"2026-08-31T07:07:46.770Z","ev":{"type":"reasoning-delta","delta":"2"}}
+{"ts":"2026-08-31T07:07:46.852Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:46.938Z","ev":{"type":"reasoning-delta","delta":"的结果"}}
+{"ts":"2026-08-31T07:07:47.022Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T07:07:47.110Z","ev":{"type":"reasoning-delta","delta":"我已经"}}
+{"ts":"2026-08-31T07:07:47.195Z","ev":{"type":"reasoning-delta","delta":"调"}}
+{"ts":"2026-08-31T07:07:47.283Z","ev":{"type":"reasoning-delta","delta":"用了"}}
+{"ts":"2026-08-31T07:07:47.373Z","ev":{"type":"reasoning-delta","delta":" calculate"}}
+{"ts":"2026-08-31T07:07:47.456Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:47.536Z","ev":{"type":"reasoning-delta","delta":"工具"}}
+{"ts":"2026-08-31T07:07:47.621Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-08-31T07:07:47.703Z","ev":{"type":"reasoning-delta","delta":"得到了"}}
+{"ts":"2026-08-31T07:07:47.784Z","ev":{"type":"reasoning-delta","delta":"结果"}}
+{"ts":"2026-08-31T07:07:47.872Z","ev":{"type":"reasoning-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:47.957Z","ev":{"type":"reasoning-delta","delta":"3"}}
+{"ts":"2026-08-31T07:07:48.038Z","ev":{"type":"reasoning-delta","delta":"6"}}
+{"ts":"2026-08-31T07:07:48.122Z","ev":{"type":"reasoning-delta","delta":"."}}
+{"ts":"2026-08-31T07:07:48.208Z","ev":{"type":"reasoning-delta","delta":"2"}}
+{"ts":"2026-08-31T07:07:48.291Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T07:07:48.378Z","ev":{"type":"reasoning-delta","delta":"现在我"}}
+{"ts":"2026-08-31T07:07:48.458Z","ev":{"type":"reasoning-delta","delta":"可以直接"}}
+{"ts":"2026-08-31T07:07:48.540Z","ev":{"type":"reasoning-delta","delta":"回答"}}
+{"ts":"2026-08-31T07:07:48.618Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-08-31T07:07:48.700Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-08-31T07:07:48.780Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-08-31T07:07:49.030Z","ev":{"type":"text-delta","delta":"3"}}
+{"ts":"2026-08-31T07:07:49.109Z","ev":{"type":"text-delta","delta":"."}}
+{"ts":"2026-08-31T07:07:49.191Z","ev":{"type":"text-delta","delta":"7"}}
+{"ts":"2026-08-31T07:07:49.268Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:49.354Z","ev":{"type":"text-delta","delta":"乘以"}}
+{"ts":"2026-08-31T07:07:49.440Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:49.529Z","ev":{"type":"text-delta","delta":"1"}}
+{"ts":"2026-08-31T07:07:49.603Z","ev":{"type":"text-delta","delta":"2"}}
+{"ts":"2026-08-31T07:07:49.682Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:49.766Z","ev":{"type":"text-delta","delta":"再"}}
+{"ts":"2026-08-31T07:07:49.845Z","ev":{"type":"text-delta","delta":"减"}}
+{"ts":"2026-08-31T07:07:49.925Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:50.010Z","ev":{"type":"text-delta","delta":"8"}}
+{"ts":"2026-08-31T07:07:50.092Z","ev":{"type":"text-delta","delta":"."}}
+{"ts":"2026-08-31T07:07:50.173Z","ev":{"type":"text-delta","delta":"2"}}
+{"ts":"2026-08-31T07:07:50.254Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:50.333Z","ev":{"type":"text-delta","delta":"的结果"}}
+{"ts":"2026-08-31T07:07:50.421Z","ev":{"type":"text-delta","delta":"是"}}
+{"ts":"2026-08-31T07:07:50.510Z","ev":{"type":"text-delta","delta":" "}}
+{"ts":"2026-08-31T07:07:50.595Z","ev":{"type":"text-delta","delta":"3"}}
+{"ts":"2026-08-31T07:07:50.675Z","ev":{"type":"text-delta","delta":"6"}}
+{"ts":"2026-08-31T07:07:50.754Z","ev":{"type":"text-delta","delta":"."}}
+{"ts":"2026-08-31T07:07:50.832Z","ev":{"type":"text-delta","delta":"2"}}
+{"ts":"2026-08-31T07:07:50.911Z","ev":{"type":"text-delta","delta":"。"}}
+{"ts":"2026-08-31T07:07:50.991Z","ev":{"type":"final","message":{"role":"assistant","content":"3.7 乘以 12 再减 8.2 的结果是 36.2。"},"rounds":2,"usage":{"promptTokens":0,"completionTokens":0}}}

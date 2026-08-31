@@ -1,0 +1,164 @@
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"让我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"计算"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"7"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"乘以"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"1"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"再"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"减"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"等于"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"多少"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"这是一个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"简单的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"四"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"则"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"运算"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"表达式"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"需要使用"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" calculate"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"来计算"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"表达式"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"是"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"3"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"7"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" *"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"1"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" -"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"."}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"让我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"调用"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" calculate"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"来计算"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"这个"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"表达式"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"id":"fSPPQDnBEbj2MEGlFCIIDFYT77iDjndX","function":{"name":"calculate","arguments":"{"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"expression\":\""}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"3"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"."}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"7"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":" *"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":" "}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"1"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"2"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":" -"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":" "}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"8"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"."}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"2"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\""}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"}"}}]}}]}
+
+data: {"choices":[{"index":0,"finish_reason":"tool_calls","delta":{}}]}
+
+data: [DONE]
+

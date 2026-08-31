@@ -1,0 +1,138 @@
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"询问"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"今天的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我已经"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"调用"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"get"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"_weather"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"获取"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"了"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"的天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"数据"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"根据"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"返回"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"结果"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"今天"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"晴朗"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"温度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"摄氏度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"湿度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"4"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"%，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"空气质量"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"指数"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"可以直接"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"向"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"汇报"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"这些信息"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"北京"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"今天"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"晴朗"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"气温"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"2"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"8"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"摄氏度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"湿度"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"4"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"0"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"%，"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"空气质量"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"指数"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"5"}}]}
+
+data: {"choices":[{"index":0,"delta":{"content":"。"}}]}
+
+data: {"choices":[{"index":0,"finish_reason":"stop","delta":{}}]}
+
+data: [DONE]
+
