@@ -15,7 +15,7 @@ import {
 import { z } from "zod";
 import { calculateTool } from "./builtin-tools/calculate.js";
 import { weatherTool } from "./builtin-tools/weather.js";
-import { RecordingClient } from "./recorder.js";
+import { createWireRecorder } from "./wire.js";
 import { parseFaults, withFaults, describeFaults } from "./faults.js";
 import { paint, writeChunk, writeLine } from "./ui.js";
 
@@ -49,11 +49,10 @@ const config: AgentConfig = {
 };
 
 // ---- 装配：壳依赖脑，脑不知道壳（依赖注入，ARCHITECTURE.md §4）----
-// RecordingClient 是装饰器：包住 OpenAIClient，每次调用落盘存证单元（TRACEABILITY.md §4）
-const client = new RecordingClient(
-  new OpenAIClient(config.baseUrl, config.model),
-  config.model,
-);
+// wire 记录器在 fetch 层 tee 原始字节（复盘修复：session 存证必须是引擎原始
+// 报文而非重建帧，TRACEABILITY.md §1/§4）；core 经 fetchImpl 注入点一行动不改
+const wire = createWireRecorder(join(process.cwd(), "logs", "sessions"));
+const client = new OpenAIClient(config.baseUrl, config.model, wire.fetchImpl);
 const registry = new ToolRegistry();
 // 故障注入（FR-16）：TAGENT_FAULTS 按剧本把内建工具搞坏，实验工具只进壳
 const faults = parseFaults(process.env.TAGENT_FAULTS);
