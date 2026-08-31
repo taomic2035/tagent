@@ -524,3 +524,11 @@ policy: {timeoutMs: 300_000}              // 子任务总预算（Step 2 策略�
 子过程事件不进父 transcript（隔离），但 wire 记录器在 fetch 层 tee 一切 LLM 调用——
 子 agent 的每次通信照样落存证单元（token 级溯源不断链，TRACEABILITY 制度自动覆盖嵌套）。
 delegate 信封里的 subRounds/subToolCalls 是父可见的过程摘要。
+
+## 17. Step 8 设计：模型对比实验（2026-08-31）
+
+- **方法学控制**：同羻具同任务集同温度同采样数；模型路径经环境变量注入（FR-43）；
+  9B 证据独立目录（step8-*），与 4B 存证并列对照
+- **速度预期**：CPU 带宽线性缩放（4B 11.9 → 9B 预计 ~5.5 tok/s），思考 ON 组
+  wall-clock 显著拉长（预算 1200 token × 33 样本）——后台执行，如实记录
+- **对照维度**：成功率 / 失败模式（不收敛 vs 截断 vs 格式）/ 轮次 / token / 行为差异（委托意愿、工具谨慎度）
