@@ -467,3 +467,32 @@ parseAction(text):
 双模式各跑 S1~S4 × 3 采样（temp 0.7、思考关——Step 4 结论），判据程序化；
 原生模式直接发协议请求（tools 定义 + 多轮 tool 消息演化，模拟 agent 循环），
 ReAct 模式用文本协议同法演化；每样本存 request/response + summary.md。
+
+## 15. Step 6 设计：记忆机制（2026-08-31）
+
+### 15.1 MemoryStore（core/store.ts，FR-33）
+
+```
+事实 = {id: 自增, ts, content, tag?}
+文件 = JSONL 追加（appendFileSync），load 读全量（事实量级小，全量内存）
+评分(query, content)：字符 bigram 交集数 + 空白分词交集数 ×2（中文友好，零依赖）
+recall(query, k=5)：评分>0 按分排序取前 k；全 0 分返回空（宁缺勿滥，防无关注入）
+```
+
+### 15.2 工具与注入（FR-34/36）
+
+- `remember/recall` 是**应用层工具**（apps/cli/builtin-tools/memory.ts，同 weather/calculate 地位）
+- 注入取舍（AC6-4 的分析对象）：
+  | 策略 | 召回相关性 | cache 前缀 | 依赖模型主动性 |
+  |---|---|---|---|
+  | 静态注入（--memory N，启动时最近 N 条） | 低（不区分问题） | **会话内稳定** ✓ | 否 |
+  | 工具召回（recall 按需） | 高 ✓ | 每次结果进上下文，前缀追加式 ✓ | 是（弱模型风险，native 模式实测可靠） |
+  | 逐问动态注入 | 高 | **每轮破坏** ✗（Step 3 B 段实证：命中率 78%→26%） | 否 |
+  → 实现前两者；第三种只做分析不实现（反模式入档）
+- 注入块格式：system prompt 尾部追加「## 长期记忆（最近 N 条）\n- …」，会被估算器计入（FR-37）
+
+### 15.3 会话持久化（FR-35）
+
+`/save 名` → logs/saved/<名>.json（messages 原样 + meta）；`/load 名` →
+messages.length=0 后回填（runAgent 的 system 只插一次逻辑天然兼容）；跨进程恢复后
+session 存证/wire 记录器照常工作（新会话目录）。
