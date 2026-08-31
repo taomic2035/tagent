@@ -240,3 +240,89 @@ mock 剧本示例（覆盖 AC-4 多工具）：
 4. `loop.ts` + mock 回放测试（此时无引擎也能全绿）
 5. CLI 壳 + get_weather + transcript
 6. 真机验收 AC-1~6，逐条记录到本仓库 issue/笔记
+
+## 11. Step 2 设计：工具执行策略层（2026-08-31，对应 REQUIREMENTS §6）
+
+### 11.1 数据结构扩展
+
+```ts
+// types.ts
+export interface ToolExecPolicy {
+  timeoutMs?: number;    // 单次执行超时；超时视为可重试失败
+  retries?: number;      // 可重试失败的重试次数（默认 0 = Step 1 行为）
+  retryDelayMs?: number; // 线性退避：第 n 次重试等待 n × retryDelayMs
+}
+export interface Tool<...> {
+  ...
+  policy?: ToolExecPolicy;   // 缺省 = 无策略（不超时不重试）
+}
+export interface AgentConfig {
+  ...
+  degradeOnCap?: boolean;    // 迭代触顶降级终答，默认 true（FR-15）
+}
+```
+
+### 11.2 错误分类与重试判定（tools.ts，FR-13 核心）
+
+```
+失败来源                     │ 可重试 │ 理由
+─────────────────────────────┼────────┼──────────────────────────────
+未知工具 / JSON 残缺 / schema │   ✗    │ 确定性失败：同参数重试必得同果，
+                             │        │ 重试的代价应花在"让模型改参数"上
+工具抛 TransientToolError    │   ✓    │ 业务自报瞬时故障（资源忙/下游抖动）
+执行超时（timeoutMs 到点）    │   ✓    │ 挂死/慢查询的另一面就是瞬时性
+工具抛普通 Error             │   ✗    │ 业务确定性 bug，重试无意义
+```
+
+`TransientToolError extends Error`（core 导出）：业务工具用它声明"我这次失败是瞬时的"。
+执行循环（executeEnvelope 第 4 段改造）：
+
+```
+attempts = retries + 1
+for n in 1..attempts:
+  controller = new AbortController()          // 每次尝试独立（FR-17）
+  结果 = await race( execute(args, {signal: controller.signal}),
+                     sleep(timeoutMs).then(throw TimeoutError) )
+  成功 → return {ok:true, data}
+  失败(Transient|Timeout) 且还有尝试次数 → await sleep(n × retryDelayMs)，继续
+  失败(其他) → 立即返回错误信封（不重试）
+重试耗尽 → {ok:false, error:"…已重试 N 次仍失败（瞬时故障持续），建议向用户说明或改用其他方案", retriesUsed: N}
+```
+
+要点：
+- **超时不强杀**：Promise.race 只能放弃不能终止；尊重 `ctx.signal` 的工具自行清理，不尊重的被放弃（其 resolve 结果丢弃，KV 无污染——registry 不回填它）
+- 信封 `retriesUsed` 仅在"因瞬时失败耗尽"时携带；`tool-result` 事件增可选 `retriesUsed`（NFR-9，事件契约向后兼容）
+- 无 policy 时行为与 Step 1 完全一致（回归零风险）
+
+### 11.3 迭代触顶降级（loop.ts，FR-15）
+
+for 循环走完（触顶且模型仍要工具）时，若 `degradeOnCap !== false`：
+
+1. 组装降级请求：`messages.concat([{role:"user", content:"（系统注入：已达工具调用次数上限…直接给出最终回答）"}])`——**副本拼接**，不污染调用方持有的 messages（不变量 1 不破）
+2. **不传 tools 参数**：协议层禁止再调工具（无 tools 定义 → 模板无工具段 → finish_reason 不可能是 tool_calls），降级是被协议保证的，不靠 prompt 恳求
+3. 流式照常透传，产出 final；末条 assistant 追加进真实 messages
+4. 降级请求自身失败（网络等）→ error 事件（兜底）
+
+`degradeOnCap:false` 时维持 Step 1 行为（直接 error 事件），供对照实验。
+
+### 11.4 故障注入（apps/cli/faults.ts，FR-16，实验工具不进 core）
+
+`TAGENT_FAULTS=get_weather:hang,get_weather:flaky:2,get_weather:down` 语法：
+
+| 剧本 | 行为 | 对应实验 |
+|---|---|---|
+| `hang` | execute 永不 resolve（且监听 signal，超时后安静退出） | AC2-1 超时 |
+| `flaky:N` | 前 N 次抛 TransientToolError，之后放行真实工具 | AC2-2 重试自愈 |
+| `down` | 恒抛 TransientToolError | AC2-3 重试耗尽 |
+
+实现为 Tool 包装器（装饰器，与 RecordingClient 同一手法）；注入只作用于壳装配期，core 不感知。
+
+### 11.5 测试增补（先行）
+
+| 对象 | 用例 | 
+|---|---|
+| registry 策略 | 挂死工具+timeoutMs → 超时信封且 registry 正常返回；flaky1+retries1 → 成功且执行 2 次；恒瞬时+retries2 → 耗尽信封含 retriesUsed=2；普通异常+retries2 → 只执行 1 次；schema 失败不进执行段 |
+| registry 退避 | retryDelayMs=20 两处尝试 → 时延 ≥20ms（宽松断言防 CI 抖动） |
+| signal | 超时后工具内 signal.aborted 为真（FR-17） |
+| loop 降级 | mock：round1 tool_calls + maxIterations=1 → 第二次请求无 tools 字段 + 含系统注入消息；messages 无注入痕迹；final 产出；degradeOnCap:false → error 事件 |
+| faults | 三种剧本的包装语义各一例 |

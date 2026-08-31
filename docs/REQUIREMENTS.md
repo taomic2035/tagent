@@ -1,6 +1,6 @@
 # 需求清单
 
-> 版本：v1.0（Step 1 范围）｜ 日期：2026-08-30
+> 版本：v1.1（Step 1 ✅ + Step 2 增补）｜ 日期：2026-08-31
 > 上游文档：[TECH_STACK.md](../TECH_STACK.md) ｜ 下游文档：[ARCHITECTURE.md](ARCHITECTURE.md)、[DESIGN.md](DESIGN.md)
 
 ## 1. 项目目标
@@ -59,3 +59,43 @@
 - 流式过程中的中途取消（AbortController 预留接口但 UI 不暴露）
 - 任何 GUI；任何云 API 对接（只对接本地引擎）
 - 认证、多用户、部署
+
+## 6. Step 2 需求增补：多工具错误处理的执行策略层（2026-08-31）
+
+> 背景：Step 1 已把「工具失败 → 错误信封回填 → 模型自愈」跑通（FR-10/AC-5）。
+> Step 2 补齐三种**执行策略**缺失：工具挂死无超时、瞬时失败无重试（模型自愈要花一整轮 LLM）、迭代触顶直接报错而非降级作答。
+> 实验方法论沿用项目原则：**故意搞坏一次，观察 agent 怎么失败/恢复**。
+
+### 6.1 功能需求
+
+| ID | 需求 | 说明 | 优先级 |
+|---|---|---|---|
+| FR-12 | 工具执行策略 | `Tool.policy`：`timeoutMs`（单次执行超时）、`retries`（瞬时失败重试次数，默认 0）、`retryDelayMs`（线性退避基数）；由 ToolRegistry 统一施加，业务工具无感 | P0 |
+| FR-13 | 错误可重试分类 | 仅两类可重试：① 工具抛 `TransientToolError`（业务自报瞬时故障）② 执行超时。**不可重试**：未知工具 / JSON 残缺 / schema 校验失败 / 普通异常（确定性失败，重试必得同果） | P0 |
+| FR-14 | 重试耗尽的降级信封 | 重试耗尽后的错误信封携带 `retriesUsed`，错误文案明示「已重试 N 次仍失败」，提示模型不要再调、转向如实说明或换方案 | P0 |
+| FR-15 | 迭代上限降级终答 | 触达 maxIterations 仍要工具时，追加一次**无 tools 参数**的请求（协议级禁止再调工具）+ 注入降级提示，迫使模型基于已有工具结果给出文本终答；`AgentConfig.degradeOnCap` 可关（默认开，关闭则维持 Step 1 报错行为） | P0 |
+| FR-16 | 故障注入实验开关 | CLI 环境变量 `TAGENT_FAULTS`（如 `get_weather:hang` / `get_weather:flaky:2` / `get_weather:down`），把内建工具按剧本搞坏——实验工具，只进壳（apps/cli）不进 core | P1 |
+| FR-17 | 超时的取消语义 | 超时通过 `ToolContext.signal`（AbortController）通知工具；尊重 signal 的工具可提前清理，不尊重的仅被放弃（结果丢弃） | P1 |
+
+### 6.2 非功能需求
+
+| ID | 需求 | 说明 | 优先级 |
+|---|---|---|---|
+| NFR-8 | core 依赖红线不动 | 策略层纯 TS（Promise.race + AbortController + setTimeout），core 依赖仍只有 zod | P0 |
+| NFR-9 | 策略对 loop 透明 | 超时/重试都发生在 registry.execute 内部，loop 与事件流契约不变（tool-result 事件仅增可选 `retriesUsed` 字段） | P0 |
+
+### 6.3 Step 2 验收标准（AC2-x，真实引擎 + 故障注入）
+
+| ID | 场景 | 通过标准 |
+|---|---|---|
+| AC2-1 | 工具挂死（`get_weather:hang`） | 到 `timeoutMs` 后返回超时信封回填，agent **不挂死**，模型向用户如实说明 |
+| AC2-2 | 瞬时故障自愈（`get_weather:flaky:1`，retries=1） | registry 内部重试成功，模型**一轮**拿到正常天气数据（LLM 视角无感知） |
+| AC2-3 | 瞬时故障耗尽（`get_weather:down`） | 重试耗尽信封带 `retriesUsed`；模型不再重调该工具，向用户说明失败 |
+| AC2-4 | 迭代上限降级（`--max-iterations 1` + 天气问题） | 第 1 轮工具执行后触顶 → 无 tools 降级请求 → 模型基于已有工具结果给出文本终答（而非报错死掉） |
+| AC2-5 | 回归 | 单测全绿；Step 1 六场景行为不变 |
+
+### 6.4 明确不做（Step 2）
+
+- 工具级熔断/限流（连续失败后临时摘除工具）——等真实需求出现再说（YAGNI）
+- 指数退避/jitter（线性退避已够学习用途，复杂度先不引入）
+- 并行工具执行的并发策略（Step 1 即串行回填，保持协议顺序）
