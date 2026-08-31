@@ -1,0 +1,54 @@
+data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"想了解"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"北京的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"今天"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"情况"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"我"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"需要使用"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" get"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"_weather"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"来"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"查询"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"北京的"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"信息"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+
+data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"id":"QbpZdSxBQIXWvnnR6JxLwDUICPDw9vqi","function":{"name":"get_weather","arguments":"{"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"city\":\""}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"北京"}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\""}}]}}]}
+
+data: {"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"}"}}]}}]}
+
+data: {"choices":[{"index":0,"finish_reason":"tool_calls","delta":{}}]}
+
+data: [DONE]
+

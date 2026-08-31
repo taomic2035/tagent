@@ -1,0 +1,13 @@
+tagent · 本地手搓 agent · /tools 查看工具，/exit 退出
+⚡ 故障注入已启用: get_weather=hang（TAGENT_FAULTS）
+引擎: http://127.0.0.1:8081/v1 · transcript: D:\vibecoding\tagent\logs\transcript-2026-08-31T07-55-27.jsonl
+你> 用户想了解北京的今天天气情况。我需要使用 get_weather 工具来查询北京的天气信息。
+
+⚙ get_weather {"city":"北京"}
+✔ 10322ms（重试 1 次后仍失败）
+
+工具返回了错误，提示瞬时故障。根据规则，当工具返回错误时，应向用户如实说明。
+很抱歉，我暂时无法获取北京的天气信息，系统出现了临时故障。请稍后再试，或者我可以尝试查询其他城市的天气。
+— 完成（2 轮 · prompt 0 + 生成 0 tokens）—
+
+你> 再见。

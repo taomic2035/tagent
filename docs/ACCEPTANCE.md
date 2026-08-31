@@ -89,3 +89,22 @@ node scripts/replay.mjs captures/ac-2-calculate/session/call-001/request.json --
 **AC-5 注（行为差异，如实记录）**：本引擎/量化组合下模型三次都**选择不调用** unsupported 城市——未强制（`win-ac-5-mars-error`：读工具描述后向用户如实说明）、强制要求调用（`win-ac-5b-mars-forced`：推理出「必须调用」与「工具不支持」矛盾，拒绝执行并解释）、换不明显的无效城市「莫斯科」（同样拒绝，未归档）。三个变体均不崩溃、无幻觉编造。错误信封（`{"ok":false,"error":...,"availableCities":[...]}`）的回填与自愈路径由单元测试覆盖（apps/cli/src/builtin-tools/weather.test.ts），模型侧未踩入；对比 Mac 侧该量化会直接调用。**这是同模型不同量化/温度下的行为差异样本**，留作 Step 4（思考模式实验）与 Step 8（模型能力对比）的分析素材。
 
 **性能**：CPU 后端生成 11.6~13.0 tok/s（agent 六场景可用，长思考偏慢），详见 SETUP.md §八。
+
+## Step 2 真机验收报告（AC2-1~4，故障注入法）
+
+> 验收日期：2026-08-31 ｜ 引擎：llama.cpp b10621（MTP 投机解码开启；行为验收不受 §10 复现例外影响）
+> 复现入口：`bash scripts/acceptance-step2.sh`（需先 `.\start_llm.ps1 -Detach`）
+> 方法论：**故意搞坏一次**——`TAGENT_FAULTS` 把 get_weather 按剧本搞坏，观察 agent 的失败与恢复
+
+| # | 场景 | 判定 | 关键行为（证据：captures/step2-*） |
+|---|---|---|---|
+| AC2-1 | 工具挂死（`:hang`） | ✅ | 挂死 5s 超时 → 重试再挂 5s → 耗尽信封（`retriesUsed=1`）回填；CLI 渲染 `✔ 10322ms（重试 1 次后仍失败）`；模型如实说明"临时故障，请稍后再试"，**不挂死不崩溃** |
+| AC2-2 | 瞬时故障自愈（`:flaky:1`） | ✅ | registry 内部重试成功，模型**一轮**拿到干净数据（`ok=true`，tempC=28）——LLM 对失败零感知，省下一整轮重调 |
+| AC2-3 | 重试耗尽（`:down`） | ✅ | 两次尝试均注入故障 → 信封带 `[faults:down]` + `retriesUsed=1`；模型不再重调，转向如实说明 |
+| AC2-4 | 迭代上限降级（`--max-iterations 1`） | ✅ | 第 1 轮同轮执行北京+上海两次调用后触顶 → 降级请求**无 tools 字段**（call-002/request.json 实证）+ 系统注入提示 → 模型基于已有数据给出正经的双城对比终答（而非 Step 1 的报错死掉） |
+| 回归 | 单测 + Step 1 六场景 | ✅ | core 37 + cli 31 全绿；无 policy 工具行为与 Step 1 完全一致（policy 全部可选） |
+
+**有含金量的观察**：
+- FR-13 分类设计的实证价值：`:down` 场景若对确定性失败也重试，只会白等两轮；若对瞬时失败不重试（Step 1 行为），AC2-2 就要模型自己再调一轮（多花一次 LLM 请求 + 一轮延迟）。分类正确时两类场景都是最优路径。
+- 降级的协议级保证优于 prompt 恳求：call-002 的请求体里根本没有 `tools` 字段，模板层就没了工具段——模型"想调也没得调"，`finish_reason` 不可能是 `tool_calls`。
+- AC2-1 的 10.3s 工具耗时全部花在两次 5s 超时等待上——生产上 `timeoutMs` 应按工具的真实延迟分布设定（本实验故意放宽以便观察）。
