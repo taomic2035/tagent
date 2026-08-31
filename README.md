@@ -56,7 +56,7 @@ bash scripts/acceptance-win.sh      # Windows（llama.cpp 引擎，Git Bash）
 
 ```
 tagent/
-├── SETUP.md          # 环境搭建全记录：选型、实测数据、踩坑
+├── SETUP.md          # 环境搭建全记录：选型、实测数据、踩坑（§八 = Windows 迁移）
 ├── TECH_STACK.md     # 技术选型报告：语言、架构、跨平台路线
 ├── docs/
 │   ├── REQUIREMENTS.md   # 需求清单（Step 1 范围，含验收标准）
@@ -64,7 +64,8 @@ tagent/
 │   ├── DESIGN.md         # 方案设计：类型、接口、算法、测试（可直接照写代码）
 │   ├── PROTOCOL.md       # 通信协议拆解：与 LLM 引擎双方通信逐字段分析
 │   ├── TRACEABILITY.md   # 溯源制度：每次通信全量存证，每个 token 有据可循
-│   └── ACCEPTANCE.md     # Step1 真机验收报告：AC-1~6 + token 级复现实证
+│   ├── ACCEPTANCE.md     # Step1 真机验收报告：AC-1~6 + token 级复现实证
+│   └── WINDOWS-ENV.md    # Windows 环境对齐总结：清单、速查、与 Mac 差异
 ├── captures/         # 原始报文存证：请求体 + 响应头 + 响应体（抓取脚本可复现）
 ├── start_llm.sh      # 一键启动本地推理服务
 ├── LICENSE           # MIT
