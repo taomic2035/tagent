@@ -33,17 +33,24 @@
 
 ```
 packages/core/src/
-├── types.ts      # 全部共享类型（消息、工具、事件）——单一事实来源
-├── client.ts     # LLMClient：OpenAI 兼容 HTTP + SSE 流式解析
-├── tools.ts      # ToolRegistry：zod 工具定义 → JSON Schema；参数校验；执行
-├── loop.ts       # runAgent：主循环编排（本项目的学习核心）
+├── types.ts      # 全部共享类型（消息、工具、事件、guards、SteeringChannel）——单一事实来源
+├── client.ts     # LLMClient：OpenAI 兼容 HTTP + SSE 流式解析（timings→usage 回退、AbortSignal）
+├── tools.ts      # ToolRegistry：zod→JSON Schema；参数校验；执行策略（超时/重试）+ 互斥键 FIFO
+├── loop.ts       # runAgent：主循环编排（守卫/steering/压缩触发/并行工具/取消，学习核心）
+├── memory.ts     # token 估算、单元级裁剪（user 绝不丢）、摘要压缩阶梯
+├── react.ts      # runReAct：文本/JSON 双协议 ReAct 引擎（与 runAgent 同事件契约）
+├── store.ts      # MemoryStore：长期记忆 JSONL + bigram 召回评分
+├── predicate.ts  # 完成谓词：任务完成由事件流事实机器裁决（Step 15）
 └── index.ts      # 导出公共 API
 
 apps/cli/src/
-├── main.ts       # 入口：装配 client + registry + loop，启动 REPL
-├── ui.ts         # 流式渲染（正文/思考分色）、颜色
-├── commands.ts   # 斜杠命令处理
-└── builtin-tools/  # get_weather、calculate 的实现（应用层工具）
+├── main.ts       # 入口：装配 client + registry + loop + steering 队列 + 取消，REPL
+├── ui.ts         # 流式渲染（正文/思考/守卫/取消分色）、颜色
+├── wire.ts       # fetch 层原始字节 tee（会话存证 = 引擎原始报文）
+├── trace.ts      # traceSse：token 级溯源（seq→frame→line→byte 三方印证，单一实现）
+├── faults.ts     # 工具层故障注入（实验道具）
+├── llm-faults.ts # LLM 层故障注入（守卫验收道具，Step 9）
+└── builtin-tools/  # weather / calculate / memory / delegate（应用层工具）
 ```
 
 依赖方向（编译期强制，core 不 import apps，apps 单向依赖 core）：
@@ -102,16 +109,23 @@ core 内部三模块通过以下接口协作（完整签名见 DESIGN.md）：
 
 ```
 AgentEvent =
-  | { type: "round-start", round }          // 新循环轮次
-  | { type: "llm-request", messages }       // 即将调用 LLM（debug 用）
-  | { type: "reasoning-delta", delta }      // 思考 token（CLI 灰色渲染）
-  | { type: "text-delta", delta }           // 正文 token（流式渲染）
-  | { type: "tool-call", name, args }       // 模型发起工具调用
-  | { type: "tool-result", name, result }   // 工具执行完毕
-  | { type: "round-end", round }            // 本轮结束
-  | { type: "final", message, usage }       // 最终回答 + 统计
-  | { type: "error", error, recoverable }   // 可恢复错误（已回填模型）
+  | { type: "round-start", round }                          // 新循环轮次
+  | { type: "llm-request", messages }                       // 即将调用 LLM（transcript/谓词消费）
+  | { type: "reasoning-delta", delta }                      // 思考 token（CLI 灰色渲染）
+  | { type: "text-delta", delta }                           // 正文 token（流式渲染）
+  | { type: "tool-call", name, args }                       // 模型发起工具调用（并行时按源序先发全部）
+  | { type: "tool-result", name, result, retriesUsed? }     // 工具执行完毕（含守卫回填的未执行说明）
+  | { type: "context-trimmed", removedMessages, from/to }   // 裁剪即遗忘（明示）
+  | { type: "context-compacted", 去重/降级/摘要轮数 }        // 压缩 ≠ 丢弃（Step 11，两事件严格区分）
+  | { type: "guard", guard, detail }                        // 守卫动作（空响应/复读/截断，Step 9）
+  | { type: "steering", message }                           // 用户中途指令注入（Step 10）
+  | { type: "interrupted", partialText, partialToolCalls }  // 取消：半截量进事件不进 messages（Step 14）
+  | { type: "final", message, rounds, usage }               // 最终回答 + 统计（usage 含 timings 回退）
+  | { type: "error", message, recoverable }                 // 不可恢复错误（含 user 钉住溢出拒续）
 ```
+
+事件流是三件事的共同物理基础：CLI 渲染、transcript 存证（NFR-4）、完成谓词机器裁决
+（Step 15，verify-acceptance.mjs 重放事件流断言任务完成）。
 
 CLI 消费事件流做渲染，transcript 记录器也消费同一事件流——**一份事件流，多个观察者**，这是 NFR-4（可观测性）的实现基础。
 

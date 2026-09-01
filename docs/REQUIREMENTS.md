@@ -50,6 +50,14 @@
 | AC-5 | 构造无效参数（如 `get_weather("火星")`） | agent 不崩溃；错误信息回填后模型向用户说明或换参数重试 |
 | AC-6 | `/dump` 导出 | JSONL 中可逐帧看到：用户消息 → assistant(tool_calls) → tool 结果 → assistant(最终回答) 的完整链路 |
 
+## 4.5 编号对照说明（2026-09-01 审计补记）
+
+- **AC 组号与 Step 号错位 1**：R3 移动端插入了 AC9，之后调研驱动步沿用 AC(N+1)-x
+  （Step 9→AC10，Step 15→AC16）。各组对应关系在 ACCEPTANCE 各报告标题中已写明，
+  不重排（历史编号一旦发布即不可变，重排会切断旧报告引用）。
+- **FR-32 为空号**：Step 5 需求增补时跳号，无对应需求（FR-31 曾同样失联，
+  2026-09-01 审计回补——见 §9 表内注记）。
+
 ## 5. 明确不做（Out of Scope，Step 1）
 
 - 长期记忆 / 会话持久化恢复（Step 6）
@@ -178,6 +186,7 @@
 | FR-28 | ReAct 引擎 | runReAct 与 runAgent 同契约：同 events（CLI 渲染/transcript 零改动）、同 messages 原地演化、同 maxIterations/思考开关/降级配置；工具执行仍走 ToolRegistry（复用全部安全层） | P0 |
 | FR-29 | CLI 模式开关 | `--react` 启动文本协议模式（缺省 = 原生 tool_calls 模式）；横幅显示当前模式 | P1 |
 | FR-30 | 双模式对比实验 | 链式任务集（天气→计算依赖链）× 双模式 × 3 采样，成功率/轮次/token 三维对比 + 存证 | P0 |
+| FR-31 | 受限解码与协议形态（回补 2026-09-01） | `--react-format json` = 单 JSON 步骤 + `response_format json_schema`（GBNF 约束，格式纪律由解码器保证）；`text` = 经典文本标记。**此条系审计回补**：实现与引用（client.ts/react.ts/FALLBACK.md）自 Step 5 起就存在，需求清单却漏写——"被引用的编号必须在案"从此为纪律 | P0 |
 
 ### 9.2 链式任务集（判据程序化）
 

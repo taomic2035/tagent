@@ -90,7 +90,8 @@ tagent/
 │       ├── src/loop.ts      #   agent 主循环
 │       ├── src/tools.ts     #   zod 工具定义 → JSON Schema
 │       ├── src/client.ts    #   OpenAI 兼容客户端（手写 SSE 解析）
-│       └── src/memory.ts    #   （Step 3）上下文裁剪与记忆
+│       ├── src/memory.ts    #   上下文裁剪（user 绝不丢）与摘要压缩（Step 3/11/13）
+│       └── src/predicate.ts #   （Step 15）完成谓词：任务完成机器裁决
 ├── apps/
 │   ├── cli/                 # 终端 agent（第一个可用产品）
 │   ├── mobile/              # （R3 已落地）Android 瘦客户端：Java + 零依赖手写 SSE，

@@ -279,6 +279,13 @@ D:\LLM\
 
 27B 边界：纯 CPU 带宽线性外推 <2 tok/s，实验电池不可行，未做（REQUIREMENTS §12.1）。
 
+### 8.8b 实验与验证脚本清单（Step 9~15 新增，2026-09-01 归档）
+
+`guard-sampling.mjs`（守卫真实采样：E1 空响应/E2 复读/E3 截断形态）、`cancel-verify.mjs`
+（硬取消全链路验证：Windows 无法注入 CTRL_C_EVENT 的等价方案）、`verify-task.mjs` +
+`verify-acceptance.mjs`（完成谓词机器裁决，六场景验收第三条腿）、`check-all.sh`
+（提交前总闸：build→test→privacy，退出码非零即拦）。
+
 ### 8.9 Android 瘦客户端环境（R3，2026-09-01）
 
 | 组件 | 位置/值 | 说明 |

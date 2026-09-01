@@ -544,3 +544,38 @@ interrupted 事件、messages 完整性、续问可续的全部断言；仅 read
   "完成"（AC-5 本意），谓词表达的是意图而非形式
 - 诚实边界：谓词断言事件流事实；外部世界真实效果（若工具真有副作用）事件流
   之外不可机检——tagent 工具均为本地确定性，暂无实际影响，如实记录
+
+## 全面审计报告（2026-09-01，用户指令"全面回顾 查缺补漏 严谨全面"）
+
+> 方法：文档一致性人工比对（FR/AC 编号、测试数、报告对照）+ 双路只读扫描
+> （代码债/测试缺口 + captures 脱敏盲区 927 文件）+ 证据漂移核查。
+> 本报告本身也受"实事求是"约束：失实处照实写。
+
+### 发现与处置（按严重度）
+
+| # | 发现 | 级别 | 处置 |
+|---|---|---|---|
+| 1 | **FR-31 需求失联**：受限解码/协议形态被 client.ts/react.ts/FALLBACK 引用自 Step 5，需求清单从未定义（FR-26~30 直接跳 33） | 必修 | ✅ 回补条目（REQUIREMENTS §9，标注"审计回补"）；"被引用的编号必须在案"从此为纪律 |
+| 2 | **测试数失实**：Step 15 提交信息与记忆写"146 项（core 105）"，实际 140（core 99）——93+6 算错 | 必修 | ✅ 记忆更正；git 提交信息不可改，此处如实记录（当前实际：148 项 = core 99 + cli 49） |
+| 3 | **四文档滞后**：ARCHITECTURE/TRACEABILITY/TECH_STACK/SETUP 对 Step 9~15 七个新能力零覆盖（ARCHITECTURE 事件面还列着不存在的 round-end） | 必修 | ✅ 全部刷新（模块图/事件 union/机器裁决/滚动证据注记/脚本清单） |
+| 4 | **cli 测试缺口**：trace.ts（溯源制度单一实现，仅间接覆盖）、builtin-tools/memory.ts（零覆盖） | 应修 | ✅ 补直接测试 8 项（含 Buffer 字节偏移断言——string.slice 对中文错位，实测踩坑）；ui.ts/main.ts 记录在案（渲染与 REPL 靠真机验收覆盖） |
+| 5 | mobile rootProject 仍叫 "HelloWorld"（模板痕迹） | 应修 | ✅ 改名 tagent |
+| 6 | AC 组号与 Step 号错位 1（R3 插入 AC9 所致）、FR-32 空号 | 记录 | ✅ REQUIREMENTS §4.5 对照说明（历史编号不重排——重排会切断旧报告引用） |
+| 7 | **win-ac-* 滚动证据漂移**：七步连刷，报告引用的"当次证据"已被后续覆盖 | 记录 | ✅ TRACEABILITY §5.5 制度注记（当次证据在 git 历史） |
+| 8 | core 8 个值导出仅测试消费（CORE_VERSION/错误类/sseEvents/scoreRecall/estimateTokens/finalAnswers/all）、12 个类型导出零外部消费 | 记录在案 | 学习项目刻意暴露完整协议面（教学库定位），不收缩 |
+| 9 | mobile 无测试机制（337 行 Java）；ReAct 不接 steering/取消；互斥键不跨 delegate 子 registry | 记录在案 | 各步验收报告已有边界记录，YAGNI |
+
+### 扫描结论（干净项）
+
+- **captures/ 脱敏**：923 个文本文件敏感模式全零命中（凭据/真实路径/用户名/私钥），
+  step9~15 新目录逐字段审查干净；4 张 PNG 无文本元数据块，疑似命中确认为 zlib
+  巧合字节；.env.local 隔离正确
+- **TODO/FIXME 残留**：零；**tsconfig 一致性**：两包完全一致（strict + noUncheckedIndexedAccess 全开）
+- **core 零依赖红线**：dependencies 仅 zod ✓；**AC↔报告对照**：AC-1~6、AC2~16 每组均有对应验收报告
+
+### 审计中被打脸的两次（如实）
+
+- 疑似"traceSse 不支持 tool 分片"——实为我在 shell 多层转义里构造坏了测试 JSON
+  （改为 JS 对象构造后通过）；疑似 Bug 先存证再下结论的纪律再次生效
+- python heredoc 补丁连续三次锚定失败未写盘——转义地狱里改代码应当用文件编辑工具
+  而非管道拼字符串（Windows 环境坑清单 +1）

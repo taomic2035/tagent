@@ -58,6 +58,15 @@ trace.jsonl 第 N 行
 溯源文件由原始报文派生，继承同一条脱敏规则：入库前 `/Users/<user>/`、`<SYSTEM_FINGERPRINT>` 占位化。trace-sse.mjs 不引入新的敏感字段（它只搬运原始数据的位置与内容）。
 
 
+## 5.5 机器裁决（Step 15 起，验收的第三条腿）
+
+transcript 不仅是人看的日志——`scripts/verify-task.mjs` / `verify-acceptance.mjs` 重放
+事件流跑完成谓词（core/predicate.ts：toolCalled/toolResultOk/finalAnswers/all），
+**任务完成由机器断言而非 LLM 自证**。证据引用具体事件（调用 id/结果信封/终答片段），
+与 §2 的溯源公式衔接：谓词消费的正是存证里的同一事件流。
+另一制度注记：captures/win-ac-* 为**滚动证据**（每步回归刷新），某步代码对应的
+证据在 git 历史（`git log -- captures/win-ac-*`）——报告引用以"验收当次"为准。
+
 ## 6. 复现口径（2026-08-31 复盘确立）
 
 - **token 级追溯**：seq→frame→line→byte 三方印证，对 captures 三件套与 CLI session 单元（wire 记录器）均成立
