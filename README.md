@@ -69,7 +69,8 @@ tagent/
 │   ├── TRACEABILITY.md   # 溯源制度：每次通信全量存证，每个 token 有据可循
 │   ├── ACCEPTANCE.md     # 真机验收报告：AC-1~6 + Windows 引擎复验附录
 │   ├── WINDOWS-ENV.md    # Windows 环境对齐总结：清单、速查、与 Mac 差异
-│   └── FALLBACK.md       # Agent 兜底工程模式：弱模型失败的系统级对策（Step 1~5 沉淀）
+│   ├── FALLBACK.md       # Agent 兜底工程模式：弱模型失败的系统级对策（Step 1~5 沉淀）
+│   └── SURVEY.md         # 三开源 agent（hermes-agent/pi/clowder-ai）核心机制调研与缺口分析
 ├── captures/         # 原始报文存证：01~06（MLX）、07~10（llama.cpp）、ac-*/win-ac-*/step*（验收）
 ├── scripts/          # 验收（acceptance*.sh）、抓包（capture*.sh）、溯源/重放、隐私检查
 ├── packages/core/    # agent 大脑（零依赖，仅 zod）
