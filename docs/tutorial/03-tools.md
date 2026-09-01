@@ -109,6 +109,15 @@ tool_calls=要干活 / length=被截断）；`content: null`（也可能与文�
 3. **`--jinja` 生死的解释**：不开模板渲染，tools 就根本没进上下文——
    模型看不见说明书，自然永远只会 `<|im_end|>` 收尾（finish_reason 恒 stop）
 
+**模型怎么从说明书里选出工具**：推理时它做的事是**语义匹配**——把你的意图
+（"北京多少度"）与每份说明书的 description（"查询指定城市的实时天气"）对上，
+选最贴切的，再按 parameters 的 JSON Schema 逐 token 生成参数。这个能力来自
+训练：它见过海量的"指令 + 说明书 → 正确调用"样本。两个直接推论——
+description 的质量就是匹配的质量（写得含糊，模型就选错或编参数）；
+以及一个常见误会的破除：某些托管平台的"联网搜索"看起来是模型自己上网，
+实际仍是平台服务端代码在执行搜索工具，只是工具实现被平台收走了。
+判断标准永远不变：**模型本体只生成 token，其余都是某处的代码在替它跑**。
+
 ## 深入一层 ②：tool_calls 的文本本质——引擎在替你"后处理"
 
 那响应里的结构化 `tool_calls` 字段哪来的？**引擎的流式后处理器**：
@@ -251,6 +260,39 @@ export const weatherTool: Tool<z.ZodObject<{ city: z.ZodString }>> = {
 
 `.describe()` 与 description 都是**写给模型看的 prompt**——写得越明确
 （包括"其他城市无数据"），模型越少乱猜。
+
+### 从模拟到真实：工具实现的唯一要改的地方
+
+模型、循环、协议、验收**一行都不用动**——只有 `execute` 的函数体从查常量表
+换成调真实 API。真实天气工具的形态：
+
+```ts
+export const realWeatherTool: Tool<z.ZodObject<{ city: z.ZodString }>> = {
+  name: "get_weather",
+  description: "查询指定城市的实时天气",     // 这两行与模拟版一字不差
+  schema: z.object({ city: z.string() }),   // 说明书不变，模型行为不变
+  policy: { timeoutMs: 8000, retries: 1, retryDelayMs: 500 },  // 第 4 章的策略
+  execute: async (args, ctx) => {
+    // 就是一段普通程序：发 HTTP、解析返回、提取字段
+    const res = await fetch(
+      `https://api.example.com/weather?city=${encodeURIComponent(args.city)}`,
+      { signal: ctx.signal },               // 超时/取消的协作通道（第 4 章深入②）
+    );
+    if (!res.ok) {
+      // 失败也是数据（第 5 章火星场景的诚实语义）——不抛给用户，喂给模型
+      return { error: `天气服务返回 ${res.status}` };
+    }
+    const json = (await res.json()) as { temp: number; text: string };
+    return { city: args.city, tempC: json.temp, condition: json.text };
+  },
+};
+```
+
+三个要点：**工具是普通代码**——你在里面能做任何程序能做的事（网络、文件、
+数据库），模型对此一无所知也不需要知道；**结果必须可序列化**（它终将变成
+tool 消息的字符串进上下文，几 MB 的返回会撑爆窗口——裁剪/截断在工具里做，
+第 6 章）；**外部 API 的失败是常态**（限流/超时/格式变更），所以真实工具
+几乎总要配 policy 和错误分支——第 4 章的一切在这里兑现。
 
 ## 3.3 循环第一版与四面墙
 
