@@ -133,7 +133,9 @@ steering 是"下一轮生效"，取消是"现在就停"。通道是 Web 标准 A
 三层贯穿：
 
 ```ts
-// 1. fetch 层（内部字段，从不进报文）：
+// 0. 前置：ChatRequest 加 signal?: AbortSignal（内部字段，构造请求体前剥离
+//    ——从不进 HTTP 报文；缺省不携带，请求体与旧版同形）
+// 1. fetch 层：
 const res = await fetch(url, { ...init, signal: req.signal });
 
 // 2. 工具层：外层 signal 与超时 signal 组合——单独听超时会覆盖外层，

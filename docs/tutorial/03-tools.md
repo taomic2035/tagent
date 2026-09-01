@@ -437,19 +437,64 @@ if (Array.isArray(tcs)) {
   }
 }
 // finish_reason 判定加 "tool_calls"（三值联合：变量声明与判定同步改）；
-// 另两处：ChatRequest 加 tools?: ToolDef[]（stream 请求体序列化带上
-// tools: req.tools）；sseEvents 的 cast 类型加 tool_calls?: unknown
+// sseEvents 的 cast 类型加 tool_calls?: unknown
 ```
 
-壳渲染（`apps/cli/src/main.ts` 循环调用处）：
+**还有一处极易静默漏掉的（真机端到端抓到的坑）**：ChatRequest 加
+`tools?: ToolDef[]` 字段之后，`stream` 方法的请求体序列化里必须真实插入
+`tools: req.tools,` 这一行（`messages: req.messages,` 之后）。漏掉它
+**编译绿、测试绿、但 tools 根本不进请求**——模型收不到说明书，4B 实测
+直接编造天气数据（编得有零有整还有假图片 URL）。改完在引擎日志或请求
+存证里亲眼确认 tools 在场——编译通过不算数。
+
+壳的 v0.4 装配（`apps/cli/src/main.ts` **全量替换**——registry 组装 + 终答回填
+历史；第 4 章起 weather 要包 withFaults，届时只改 register 那一行）：
 
 ```ts
-process.stdout.write("ai> ");
-for await (const ev of runAgent({ client, registry, maxIterations: 8 }, history)) {
-  if (ev.type === "text-delta") process.stdout.write(ev.delta);
-  else if (ev.type === "tool-call") process.stdout.write(`\n⚙ ${ev.name} ${ev.args}`);
-  else if (ev.type === "tool-result") process.stdout.write(`\n  ↳ ${ev.result.slice(0, 120)}`);
-}
+import { createInterface } from "node:readline";
+import { OpenAIClient, runAgent, ToolRegistry, type ChatMessage } from "@my-agent/core";
+import { weatherTool } from "./weather.js";
+
+const client = new OpenAIClient(
+  "http://127.0.0.1:8081/v1",
+  process.env.TAGENT_MODEL ?? "D:/LLM/models/<文件名>.gguf",
+);
+const registry = new ToolRegistry();
+registry.register(weatherTool);
+
+const history: ChatMessage[] = [
+  { role: "system", content: "你是运行在用户本地终端的助手。可以使用提供的工具获取实时信息或进行计算；需要实时或准确数据的问题必须调用工具，不要编造。" },
+];
+const rl = createInterface({ input: process.stdin, output: process.stdout });
+rl.setPrompt("你> ");
+rl.prompt();
+
+rl.on("line", async (line) => {
+  const text = line.trim();
+  if (!text || text === "/exit") { rl.close(); return; }
+  history.push({ role: "user", content: text });
+  process.stdout.write("ai> ");
+  let finalText = "";
+  for await (const ev of runAgent({ client, registry, maxIterations: 8 }, history)) {
+    if (ev.type === "text-delta") process.stdout.write(ev.delta);
+    else if (ev.type === "tool-call") process.stdout.write(`\n⚙ ${ev.name} ${ev.args}`);
+    else if (ev.type === "tool-result") process.stdout.write(`\n  ↳ ${ev.result.slice(0, 120)}`);
+    else if (ev.type === "final" && ev.message.role === "assistant") {
+      finalText = ev.message.content ?? "";      // 终答回填历史（多轮要用）
+    }
+  }
+  history.push({ role: "assistant", content: finalText });
+  process.stdout.write("\n\n");
+  rl.prompt();
+});
+```
+
+index.ts 登记本章新导出（追加）：
+
+```ts
+export { ToolRegistry } from "./tools.js";
+export { runAgent } from "./loop.js";
+export type { Tool, ToolDef, ToolCallData } from "./types.js";
 ```
 
 多步任务的现场（决策链）：

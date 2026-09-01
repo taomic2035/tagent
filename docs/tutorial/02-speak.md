@@ -54,6 +54,10 @@ packages:
 ```json
 {
   "name": "@my-agent/core", "type": "module", "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  // main/types 不能省：没有入口声明，import "@my-agent/core" 找不到模块
+  //（真机踩坑）；指向的 index.js 见本章末"导出入口"一节
   "scripts": { "build": "tsc", "test": "node --test \"dist/**/*.test.js\"" },
   "devDependencies": { "typescript": "^5.9.0", "@types/node": "^24.0.0" }
 }
@@ -334,6 +338,9 @@ test("SSE：1 字节/块下中文、行界、CRLF、注释帧全兼容", async (
 client 装流式接口（`OpenAIClient` 类内追加，并把 `LLMClient` 接口立起来）：
 
 ```ts
+// ⚠️ 拼装指令：下面骨架只为展示 stream 方法体——把 async *stream 整个方法
+// 【并入】你已有的 OpenAIClient 类内（complete 之后），接口放类外。
+// 整块直接粘贴会得到第二个同名类（Duplicate identifier——真机验证踩坑）
 export interface LLMClient {
   stream(req: ChatRequest): AsyncIterable<StreamEvent>;
 }
@@ -373,7 +380,9 @@ export class OpenAIClient implements LLMClient {
 {
   "name": "@my-agent/cli", "type": "module", "version": "0.1.0",
   "scripts": { "build": "tsc", "test": "node --test \"dist/**/*.test.js\"" },
-  "dependencies": { "@my-agent/core": "workspace:*" },
+  "dependencies": { "@my-agent/core": "workspace:*", "zod": "^4.5.4" },
+  // zod 不能省：第 3 章起壳侧工具（weather.ts）直接用它声明 schema——
+  // workspace 链接不透传依赖（缺它 cli 编译报 Cannot find module，真机踩坑）
   "devDependencies": { "typescript": "^5.9.0", "@types/node": "^24.0.0" }
 }
 ```
@@ -391,7 +400,11 @@ const client = new OpenAIClient(
   process.env.TAGENT_MODEL ?? "D:/LLM/models/<文件名>.gguf",
 );
 
-const history: ChatMessage[] = [];
+// system 提示词从这里就要有：真机实证无 system 时 4B 会拒绝调工具甚至编造
+// （temperature 0 下行为不稳定）——"需要实时数据必须调用工具"是行为锚
+const history: ChatMessage[] = [
+  { role: "system", content: "你是运行在用户本地终端的助手。可以使用提供的工具获取实时信息或进行计算；需要实时或准确数据的问题必须调用工具，不要编造。" },
+];
 const rl = createInterface({ input: process.stdin, output: process.stdout });
 rl.setPrompt("你> ");
 rl.prompt();
@@ -426,6 +439,18 @@ node apps/cli/dist/main.js
 ai> 你好小明！
 你> 我叫什么？              ← 它"记得"：因为你全量重发了，且第二问的 cache_n
 ai> 你叫小明。                 覆盖了第一问前缀（第 1 章③的观测习惯回本了）
+```
+
+### 收尾一步：core 的导出入口 index.ts
+
+壳 `import ... from "@my-agent/core"` 的一切都从这里出（配合 package.json 的
+main 字段）。此后每章给 core 加新导出，都要回这里登记：
+
+```ts
+// packages/core/src/index.ts（v0.3 版，全量）
+export type { ChatMessage } from "./types.js";
+export { OpenAIClient, sseEvents } from "./client.js";
+export type { ChatRequest, LLMClient, StreamEvent } from "./client.js";
 ```
 
 ## 2.5 搞坏实验

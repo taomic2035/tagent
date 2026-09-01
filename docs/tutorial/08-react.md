@@ -31,6 +31,12 @@ Final Answer: 上海更热，31 度。
 出口判定换成**文本解析**：
 
 ```ts
+// ActionParse 的类型定义（放 parseAction 之前）：
+export type ActionParse =
+  | { kind: "final"; answer: string }
+  | { kind: "action"; name: string; args: string }
+  | { kind: "parse-error"; message: string };
+
 export function parseAction(text: string): ActionParse {
   const action = text.match(/Action:\s*(\S+)/);
   const input = text.match(/Action Input:\s*([\s\S]*?)(?:\n|$)/);

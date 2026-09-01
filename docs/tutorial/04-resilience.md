@@ -183,7 +183,9 @@ async function runWithPolicy(
   }
   return {
     ok: false,
-    error: `瞬时故障持续：${lastTransient?.message}（已重试 ${policy.retries} 次仍失败，不建议再次调用；请向用户如实说明或改用其他方案）`,
+    // 注意 ?? 0：policy.retries 缺省是 undefined，直接插值渲染成
+    // "已重试 undefined 次"（真机故障注入实录抓到）
+    error: `瞬时故障持续：${lastTransient?.message}（已重试 ${policy.retries ?? 0} 次仍失败，不建议再次调用；请向用户如实说明或改用其他方案）`,
     retriesUsed: policy.retries,
   } as ToolResultEnvelope;
 }
@@ -243,9 +245,10 @@ test("确定性失败不重试：fatal 一次即返回", async () => {
 });
 
 test("超时：hang 工具被 abort 唤醒（协作式收尾的证据）", async () => {
-  const hang = { name: "hang", description: "", schema: z.object({}),
+  // 注意类型标注：strict 模式下 (_a, ctx) 不标注会报隐式 any（真机验证踩坑）
+  const hang: Tool<z.ZodObject<{}>> = { name: "hang", description: "", schema: z.object({}),
     policy: { timeoutMs: 50 },
-    execute: async (_a, ctx) => new Promise((resolve) => {
+    execute: async (_a: unknown, ctx: ToolContext) => new Promise((resolve) => {
       ctx.signal?.addEventListener("abort", () => resolve("被唤醒"), { once: true });
     }) };
   const reg = new ToolRegistry(); reg.register(hang);
@@ -315,7 +318,7 @@ export function withFaults(tool: Tool): Tool {
   const inner = tool.execute.bind(tool);
   return {
     ...tool,
-    async execute(args: never, ctx: { signal?: AbortSignal }) {
+    async execute(args: unknown, ctx: { signal?: AbortSignal }) {
       calls++;
       if (kind === "hang") {
         return new Promise(() => { ctx.signal?.addEventListener("abort", () => {}, { once: true }); });
@@ -363,6 +366,13 @@ $env:TAGENT_FAULTS = "get_weather:hang"      # → 3s 超时（配 policy.timeou
       hang 测试的 resolve 在 abort 监听里
 - [ ] 能讲降级的机制级解释（说明书从渲染产物中消失 vs 恳求改心情）
 - [ ] 三组重试测试+三个注入场景全过、各有一份存证
+
+index.ts 登记本章新导出（追加）：
+
+```ts
+export { ToolRegistry, TransientToolError } from "./tools.js";
+export type { ToolExecPolicy, ToolContext } from "./types.js";
+```
 
 **与 tagent 对照**：你的 tools.ts ≈ tagent 完全体（多互斥键队列——二册 v0.11）。
 下一章不写新代码：把 v0.1~v0.7 放进一次正式总验收。
