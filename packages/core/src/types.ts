@@ -124,6 +124,9 @@ export interface AgentConfig {
   memoryInject?: number;
   /** 是否注册 delegate 委托工具（Step 7，FR-42，CLI 装配字段） */
   delegate?: boolean;
+  /** 摘要压缩（Step 11，FR-60/61）：true 时上下文超预算先压缩（去重/降级/LLM 摘要，
+   *  用户消息原文钉住），仍超才走裁剪兜底。缺省 = Step 3 纯裁剪行为。 */
+  compaction?: boolean;
   /** 循环守卫开关（Step 9，FR-52~55）：缺省全开；置 false 可逐项关闭（实验对照） */
   guards?: AgentGuards;
 }

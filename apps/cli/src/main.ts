@@ -43,6 +43,9 @@ const config: AgentConfig = {
   maxIterations: Number(args["max-iterations"] ?? 8),
   // Step 3（FR-22）：上下文预算（估算 token），超出触发双水位裁剪；缺省不裁剪
   ...(args["max-context-tokens"] ? { contextBudgetTokens: Number(args["max-context-tokens"]) } : {}),
+  // Step 11（FR-60/61）：--compact = 超预算先压缩（去重/降级/LLM 摘要，用户消息原文
+  // 钉住），仍超才裁剪兜底；缺省维持纯裁剪（实验对照）
+  compaction: args.compact !== undefined,
   // Step 5（FR-29）：--react = 文本协议模式（Thought/Action/Observation）；缺省原生 tool_calls
   reactMode: args.react !== undefined,
   // CLI 层默认 json（弱模型鲁棒）；--react-format text 选经典文本协议
@@ -129,6 +132,13 @@ function render(ev: AgentEvent, state: { toolStart: number }): void {
       break;
     case "context-trimmed":
       writeLine(paint.yellow(`⚡ 上下文已裁剪：${ev.fromTokens} → ${ev.toTokens} 估算 token（移除 ${ev.removedMessages} 条消息；裁剪即遗忘，旧回合不再可见）`));
+      break;
+    case "context-compacted":
+      writeLine(
+        paint.yellow(
+          `🗜 上下文已压缩：${ev.fromTokens} → ${ev.toTokens} 估算 token（去重 user ${ev.dedupedUsers} 条、降级工具结果 ${ev.degradedToolResults} 条、摘要 ${ev.summarizedTurns} 轮；用户指令原文保留）`,
+        ),
+      );
       break;
     case "guard":
       writeLine(paint.yellow(`🛡 守卫[${ev.guard}]：${ev.detail}`));
@@ -235,10 +245,35 @@ async function chat(input: string): Promise<void> {
   messages.push({ role: "user", content: input });
   const state = { toolStart: 0 };
   const engine = config.reactMode ? runReAct : runAgent; // 两引擎同事件契约（FR-28）
+  // Step 11 摘要通道：--compact 时给 runAgent 注入摘要函数（core 不做 LLM 调用，
+  // 装配在此）。temp=0 + 思考关（省 token 且 4B 思考不收敛已实证）；调用走同一
+  // client → wire 存证自动覆盖摘要请求（溯源不丢）。aux 模型分层留待多模型环境。
+  const summarize = config.compaction
+    ? async (raw: string): Promise<string> => {
+        let text = "";
+        for await (const ev of client.stream({
+          messages: [
+            {
+              role: "system",
+              content:
+                "你是上下文压缩器。把下面的 agent 对话历史压缩为一段事实性摘要：保留关键数据（数字/结果）、已做的决定、文件名/路径、错误信息原文；不要加入建议或新信息；用中文；不超过 150 字。",
+            },
+            { role: "user", content: raw },
+          ],
+          temperature: 0,
+          chatTemplateKwargs: { enable_thinking: false },
+        })) {
+          if (ev.type === "text-delta") text += ev.delta;
+        }
+        return text === "" ? "（摘要生成为空，已退回裁剪）" : text;
+      }
+    : undefined;
   // steering 只接 runAgent（ReAct 引擎留待需要时，REQUIREMENTS §15 边界）
   const gen = config.reactMode
     ? engine({ client, registry, config }, messages)
-    : runAgent({ client, registry, config }, messages, undefined, { take: () => steeringQueue.splice(0) });
+    : runAgent({ client, registry, config, ...(summarize ? { summarize } : {}) }, messages, undefined, {
+        take: () => steeringQueue.splice(0),
+      });
   for await (const ev of gen) {
     record(ev); // 每个事件落盘（制度：NFR-4）
     render(ev, state);
@@ -257,7 +292,13 @@ function main(): void {
     writeLine(paint.red(`⚡ LLM 故障注入已启用: ${describeLlmFaults(llmFaults)}（TAGENT_LLM_FAULTS）`));
   }
   if (config.contextBudgetTokens) {
-    writeLine(paint.dim(`上下文预算: ${config.contextBudgetTokens} 估算 token（双水位裁剪）`));
+    writeLine(
+      paint.dim(
+        config.compaction
+          ? `上下文预算: ${config.contextBudgetTokens} 估算 token（摘要压缩：去重→降级→LLM 摘要，用户消息原文钉住；仍超才裁剪兜底）`
+          : `上下文预算: ${config.contextBudgetTokens} 估算 token（双水位裁剪）`,
+      ),
+    );
   }
   if (config.thinking !== undefined) {
     writeLine(paint.dim(`思考模式: ${config.thinking ? "开" : "关"}（/think /nothink 切换）`));

@@ -128,3 +128,129 @@ test("双水位语义：预算内不裁、刚超预算一次裁到一半（不�
   assert.ok(r.afterTokens <= Math.ceil(budget * 0.5) + 40, "应一次裁到低水位附近，而非只裁一条");
   assert.ok(r.removed.length >= 4, "整回合裁剪至少移除一个完整回合（4 条消息）");
 });
+
+// ============================================================
+// Step 11 摘要压缩测试（FR-59~63）
+// ============================================================
+
+import { compactMessages } from "./memory.js";
+
+/** 构造一个用户轮：user + assistant(tool_calls) + tool 结果 + assistant 终答 */
+function turn(user: string, toolResult: string, final: string): ChatMessage[] {
+  return [
+    { role: "user", content: user },
+    { role: "assistant", content: null, tool_calls: [{ id: "t1", type: "function", function: { name: "get_weather", arguments: '{"city":"北京"}' } }] },
+    { role: "tool", tool_call_id: "t1", content: toolResult },
+    { role: "assistant", content: final },
+  ];
+}
+
+test("压缩·阶段0：相邻完全相同的 user 去重，不同内容/不相邻不去（FR-59）", async () => {
+  const messages: ChatMessage[] = [
+    { role: "system", content: "sys" },
+    { role: "user", content: "查北京天气" },
+    { role: "user", content: "查北京天气" }, // 手滑重发 → 去重
+    { role: "user", content: "顺便上海也看看" }, // 不同内容 → 保留
+    { role: "assistant", content: "好的" },
+    { role: "user", content: "查北京天气" }, // 不相邻（语义上可能是强调）→ 保留
+  ];
+  const r = await compactMessages(messages, { budget: 10000 });
+  assert.equal(r.dedupedUsers, 1);
+  assert.equal(r.messages.filter((m) => m.role === "user" && m.content === "查北京天气").length, 2);
+});
+
+test("压缩·不超预算：零动作原样返回（阶梯的零成本路径）", async () => {
+  const messages = turn("问", "短结果", "答");
+  const r = await compactMessages(messages, { budget: 10000 });
+  assert.equal(r.dedupedUsers + r.degradedToolResults + r.summarizedTurns, 0);
+  assert.equal(r.changed, false);
+  assert.deepEqual(r.messages, messages);
+});
+
+test("压缩·阶段1：超预算先降级旧 tool 结果，达标则零 LLM 调用（FR-60）", async () => {
+  const longTool = "x".repeat(400);
+  const messages = [...turn("第一问", longTool, "第一答"), ...turn("第二问", longTool, "第二答")];
+  let llmCalls = 0;
+  const r = await compactMessages(messages, {
+    budget: estimateMessagesTokens(messages) - 50, // 逼降级
+    summarize: async () => (llmCalls++, "摘要"),
+  });
+  assert.ok(r.degradedToolResults >= 1, "至少降级了一条旧 tool 结果");
+  assert.equal(r.summarizedTurns, 0, "降级已达标，不发起 LLM 摘要");
+  assert.equal(llmCalls, 0);
+  // 降级保留前 120 字 + 标注原文长度
+  const degraded = r.messages.find((m) => m.role === "tool" && m.content.includes("[工具结果已降级"));
+  assert.ok(degraded);
+});
+
+test("压缩·阶段2：摘要替换结构 = system头 + user原文钉住 + system摘要 + kept尾部（FR-61）", async () => {
+  const longTool = "数据 " + "细节内容 ".repeat(60) + "路径 D:/LLM/models/qwen.gguf 版本 4.1.2 ";
+  const messages = [
+    { role: "system" as const, content: "系统提示" },
+    ...turn("第一问", longTool, "第一答"),
+    ...turn("第二问", longTool, "第二答"),
+    ...turn("最后一问", "短结果", "最后一答"),
+  ];
+  const rawInputs: string[] = [];
+  const r = await compactMessages(messages, {
+    budget: 150, // 压到降级也无法独立达标 → 必走 LLM 摘要路径
+    summarize: async (raw) => {
+      rawInputs.push(raw);
+      return "两轮天气查询已完成，结果正常。";
+    },
+  });
+  assert.equal(r.summarizedTurns, 2);
+  assert.equal(rawInputs.length, 1, "一次调用摘要全部被压缩轮");
+  // 结构：system 头仍在最前（不被挤到中间）
+  assert.equal(r.messages[0]?.role, "system");
+  assert.equal(r.messages[0]?.role === "system" && r.messages[0].content, "系统提示");
+  // user 原文钉住：字节级一致，语气词原样（FR-61 + §16.1 不改写）
+  assert.deepEqual(
+    r.messages.slice(1, 3).map((m) => (m.role === "user" ? m.content : "")),
+    ["第一问", "第二问"],
+  );
+  // 摘要消息存在且带 anchor（FR-62：路径与版本号程序提取）；
+  // 角色是 user（Qwen 模板禁止非头部 system，真机 500 实证后修正）
+  const summary = r.messages.find((m) => m.role === "user" && m.content.includes("历史工作摘要"));
+  assert.ok(summary);
+  assert.ok(summary.role === "user" && summary.content.includes("两轮天气查询已完成"));
+  assert.ok(summary.role === "user" && summary.content.includes("D:/LLM/models/qwen.gguf"), "路径 anchor 兜底");
+  assert.ok(summary.role === "user" && summary.content.includes("4.1.2"), "版本号 anchor 兜底");
+  // kept 尾部完整（最后一轮原文在）
+  assert.ok(r.messages.some((m) => m.role === "user" && m.content === "最后一问"));
+});
+
+test("压缩·兜底：summarize 抛异常退回纯裁剪（FR-61/AC12-3）", async () => {
+  const longTool = "y".repeat(500);
+  // 3 个大工作旧轮 + 最后小轮：被压区间 > 摘要上限，划算预检通过 → 真的调用 summarize
+  const messages = [
+    ...turn("问一", longTool, "答一"),
+    ...turn("问二", longTool, "答二"),
+    ...turn("问三", longTool, "答三"),
+    ...turn("最后", "ok", "答"),
+  ];
+  const r = await compactMessages(messages, {
+    budget: 150,
+    summarize: async () => {
+      throw new Error("引擎不可用");
+    },
+  });
+  assert.equal(r.summarizedTurns, 0, "摘要失败不计轮");
+  // 压缩函数不丢弃：历史保持原样（丢弃由上层 trim 兜底并以裁剪事件可见）
+  assert.ok(r.messages.some((m) => m.role === "user" && m.content === "问一"), "压缩失败不动历史");
+});
+
+test("压缩·划算预检：被压工作小于摘要上限时不开 LLM 调用，直接裁剪兜底（真机 327→362 教训）", async () => {
+  const longTool = "y".repeat(500);
+  const messages = [...turn("问一", longTool, "答一"), ...turn("问二", longTool, "答二"), ...turn("最后", "ok", "答")];
+  let llmCalls = 0;
+  const r = await compactMessages(messages, {
+    budget: 150,
+    summarize: async () => (llmCalls++, "摘要"),
+  });
+  // 预检：钉住 user 原文 + 摘要占位(340) 不会小于原文 → 摘要不划算，省一次 LLM 调用；
+  // 且不动作（丢弃交给上层 trim，不能冒充压缩）
+  assert.equal(llmCalls, 0, "预检拦下，不调 LLM");
+  assert.equal(r.summarizedTurns, 0);
+  assert.ok(r.messages.some((m) => m.role === "user" && m.content === "问一"), "不划算时不动作，历史原样");
+});

@@ -47,6 +47,9 @@ export {
   estimateTokens,
   estimateMessagesTokens,
   trimMessages,
+  compactMessages,
   type TrimPolicy,
   type TrimResult,
+  type CompactPolicy,
+  type CompactResult,
 } from "./memory.js";

@@ -54,6 +54,7 @@ bash scripts/acceptance-win.sh      # Windows（llama.cpp 引擎，Git Bash）
 - [x] **Step 8** 模型能力对比——**已验收（AC8-1~4），学习路线收官**：9B 复测三组实验，反直觉双结论——思考不收敛随规模**加剧**（82%→68%），格式纪律随规模**解决**（75%→100%）；工程兜底价值不随模型变强而消失
 - [x] **Step 9** 循环守卫（调研驱动，[SURVEY.md](docs/SURVEY.md) 缺口 1）——**已验收（AC10-1~4）**：空响应 nudge / 复读检测 / length 截断判错三件套（`config.guards`），LLM 层故障注入验收；发现 llama.cpp 历史非法 args 直接 500 的新差异（PROTOCOL §8）
 - [x] **Step 10** Steering 打断通道（调研驱动，SURVEY.md 缺口 2）——**已验收（AC11-1~4）**：生成期间用户输入排队、下轮 LLM 请求前以 user 消息注入（前缀只增不改）；真机改向实证（北京→上海）；余量按 followUp 转下轮
+- [x] **Step 11** 摘要压缩（调研驱动，SURVEY.md 缺口 3）——**已验收（AC12-1~4）**：去重→降级→LLM 摘要阶梯（`--compact`），user 原文钉住永不改写；真机三发现——摘要越压越大需划算预检、丢弃不得冒充压缩、Qwen 模板禁非头部 system（PROTOCOL §8）
 
 ## 目录结构
 

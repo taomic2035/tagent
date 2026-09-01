@@ -629,3 +629,38 @@ test("steering·多轮注入与守卫共存：nudge/steering 都是 user 追加�
   const roles = messages.map((m) => m.role);
   assert.deepEqual(roles, ["user", "assistant", "user", "user", "assistant", "tool", "assistant"]);
 });
+
+// ============================================================
+// 摘要压缩集成（Step 11，FR-63）：loop 内事件与零 LLM 路径
+// ============================================================
+
+test("压缩集成·loop 触发：大 tool 结果超预算 → context-compacted 事件（降级路径零 LLM 调用）", async () => {
+  const bigText = "z".repeat(600); // echo 工具会原样回显 → tool 结果 ~600 字
+  const messages: ChatMessage[] = [{ role: "user", content: "任务" }];
+  const summarizeCalls: string[] = [];
+  const deps: AgentDeps = {
+    client: scriptedClient([
+      // 两轮工具：第一轮的旧大结果可降级，第二轮的最近结果受保护
+      [toolDelta(0, "id-1", JSON.stringify({ text: bigText })), done("tool_calls")],
+      [toolDelta(0, "id-2", JSON.stringify({ text: bigText })), done("tool_calls")],
+      [{ type: "text-delta", delta: "完成" }, done("stop")],
+    ]),
+    registry: makeRegistry(),
+    config: { ...config, systemPrompt: "", compaction: true, contextBudgetTokens: 300, maxIterations: 4 },
+    summarize: async (raw) => (summarizeCalls.push(raw), "不应被调用的摘要"),
+  };
+  const events = await collect(runAgent(deps, messages));
+  const compacted = events.find((e): e is Extract<AgentEvent, { type: "context-compacted" }> => e.type === "context-compacted");
+  assert.ok(compacted, "超预算触发压缩事件");
+  assert.ok((compacted?.degradedToolResults ?? 0) >= 1, "tool 结果被降级");
+  assert.equal(compacted?.summarizedTurns, 0, "降级已达标，零 LLM 摘要调用");
+  assert.equal(summarizeCalls.length, 0);
+  assert.ok(messages.some((m) => m.role === "tool" && m.content.includes("[工具结果已降级")), "messages 里可见降级标注");
+  // 压缩在第二轮工具完成后、第三轮请求前触发（单条工具结果时它是"最近一条"受保护，
+  // 两条才可降旧保新）——第三轮请求带的是降级后的上下文
+  const requests = events.filter((e): e is Extract<AgentEvent, { type: "llm-request" }> => e.type === "llm-request");
+  const r3 = requests[2];
+  assert.ok(r3, "三轮请求齐全");
+  assert.ok(r3.messages.some((m) => m.role === "tool" && m.content.includes("[工具结果已降级")), "第三轮请求可见降级标注");
+  assert.ok(events.at(-1)?.type === "final");
+});

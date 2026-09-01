@@ -1,7 +1,7 @@
 import type { AgentConfig, ChatMessage, SteeringChannel, ToolContext, Usage } from "./types.js";
 import type { LLMClient } from "./client.js";
 import type { ToolRegistry } from "./tools.js";
-import { trimMessages } from "./memory.js";
+import { compactMessages, trimMessages } from "./memory.js";
 
 // ============================================================
 // AgentEvent：loop 对外暴露的事件流
@@ -18,6 +18,14 @@ export type AgentEvent =
   | { type: "context-trimmed"; removedMessages: number; fromTokens: number; toTokens: number }
   | { type: "guard"; guard: "empty-response" | "repetition" | "length-truncated"; detail: string }
   | { type: "steering"; message: string }
+  | {
+      type: "context-compacted";
+      dedupedUsers: number;
+      degradedToolResults: number;
+      summarizedTurns: number;
+      fromTokens: number;
+      toTokens: number;
+    }
   | { type: "final"; message: ChatMessage; rounds: number; usage: Usage }
   | { type: "error"; message: string; recoverable: boolean };
 
@@ -25,6 +33,8 @@ export interface AgentDeps {
   client: LLMClient;
   registry: ToolRegistry;
   config: AgentConfig;
+  /** 摘要压缩的 LLM 通道（Step 11，FR-61）：缺省 = 纯降级+裁剪，不发起摘要调用 */
+  summarize?: (raw: string) => Promise<string>;
 }
 
 /**
@@ -43,7 +53,7 @@ export async function* runAgent(
   ctx?: ToolContext,
   steering?: SteeringChannel,
 ): AsyncGenerator<AgentEvent> {
-  const { client, registry, config } = deps;
+  const { client, registry, config, summarize } = deps;
 
   // system prompt：非空且头部没有 system 消息时插入一次（多轮会话不重复插）
   if (config.systemPrompt && messages[0]?.role !== "system") {
@@ -66,7 +76,24 @@ export async function* runAgent(
   let lastBatchSig = "";
 
   for (let round = 1; round <= config.maxIterations; round++) {
-    // ---- 上下文预算检查（Step 3，FR-20/21）：每轮请求前，超预算才裁，一次裁到低水位 ----
+    // ---- 上下文预算检查（Step 11，FR-60/61/63）：压缩优先（保信息），丢弃兜底（保预算）----
+    if (config.contextBudgetTokens && config.compaction) {
+      const c = await compactMessages(messages, { budget: config.contextBudgetTokens, summarize });
+      if (c.changed) {
+        messages.length = 0;
+        messages.push(...c.messages);
+        yield {
+          type: "context-compacted",
+          dedupedUsers: c.dedupedUsers,
+          degradedToolResults: c.degradedToolResults,
+          summarizedTurns: c.summarizedTurns,
+          fromTokens: c.beforeTokens,
+          toTokens: c.afterTokens,
+        };
+      }
+    }
+
+    // ---- 丢弃兜底（Step 3，FR-20/21）：压缩后仍超预算才裁，一次裁到低水位 ----
     if (config.contextBudgetTokens) {
       const t = trimMessages(messages, { budget: config.contextBudgetTokens });
       if (t.removed.length > 0) {

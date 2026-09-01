@@ -1,260 +1,241 @@
-{"seq":1,"kind":"reasoning","frame":2,"line":3,"byte":295,"text":"用户"}
-{"seq":2,"kind":"reasoning","frame":3,"line":5,"byte":585,"text":"想要"}
-{"seq":3,"kind":"reasoning","frame":4,"line":7,"byte":875,"text":"对比"}
-{"seq":4,"kind":"reasoning","frame":5,"line":9,"byte":1165,"text":"北京"}
-{"seq":5,"kind":"reasoning","frame":6,"line":11,"byte":1455,"text":"和"}
-{"seq":6,"kind":"reasoning","frame":7,"line":13,"byte":1742,"text":"上海的"}
-{"seq":7,"kind":"reasoning","frame":8,"line":15,"byte":2035,"text":"天气"}
-{"seq":8,"kind":"reasoning","frame":9,"line":17,"byte":2325,"text":"。"}
-{"seq":9,"kind":"reasoning","frame":10,"line":19,"byte":2612,"text":"我已经"}
-{"seq":10,"kind":"reasoning","frame":11,"line":21,"byte":2905,"text":"通过"}
-{"seq":11,"kind":"reasoning","frame":12,"line":23,"byte":3195,"text":"工具"}
-{"seq":12,"kind":"reasoning","frame":13,"line":25,"byte":3485,"text":"获取"}
-{"seq":13,"kind":"reasoning","frame":14,"line":27,"byte":3775,"text":"了两个"}
-{"seq":14,"kind":"reasoning","frame":15,"line":29,"byte":4068,"text":"城市"}
-{"seq":15,"kind":"reasoning","frame":16,"line":31,"byte":4358,"text":"的气"}
-{"seq":16,"kind":"reasoning","frame":17,"line":33,"byte":4648,"text":"象"}
-{"seq":17,"kind":"reasoning","frame":18,"line":35,"byte":4935,"text":"数据"}
-{"seq":18,"kind":"reasoning","frame":19,"line":37,"byte":5225,"text":"，"}
-{"seq":19,"kind":"reasoning","frame":20,"line":39,"byte":5512,"text":"现在"}
-{"seq":20,"kind":"reasoning","frame":21,"line":41,"byte":5802,"text":"可以"}
-{"seq":21,"kind":"reasoning","frame":22,"line":43,"byte":6092,"text":"整理"}
-{"seq":22,"kind":"reasoning","frame":23,"line":45,"byte":6382,"text":"并"}
-{"seq":23,"kind":"reasoning","frame":24,"line":47,"byte":6669,"text":"对比"}
-{"seq":24,"kind":"reasoning","frame":25,"line":49,"byte":6959,"text":"这些信息"}
-{"seq":25,"kind":"reasoning","frame":26,"line":51,"byte":7255,"text":"。"}
-{"seq":26,"kind":"reasoning","frame":27,"line":53,"byte":7542,"text":"\n\n"}
-{"seq":27,"kind":"reasoning","frame":28,"line":55,"byte":7830,"text":"北京"}
-{"seq":28,"kind":"reasoning","frame":29,"line":57,"byte":8120,"text":"天气"}
-{"seq":29,"kind":"reasoning","frame":30,"line":59,"byte":8410,"text":"："}
-{"seq":30,"kind":"reasoning","frame":31,"line":61,"byte":8697,"text":"\n"}
-{"seq":31,"kind":"reasoning","frame":32,"line":63,"byte":8983,"text":"-"}
-{"seq":32,"kind":"reasoning","frame":33,"line":65,"byte":9268,"text":" "}
-{"seq":33,"kind":"reasoning","frame":34,"line":67,"byte":9553,"text":"天气"}
-{"seq":34,"kind":"reasoning","frame":35,"line":69,"byte":9843,"text":"状况"}
-{"seq":35,"kind":"reasoning","frame":36,"line":71,"byte":10133,"text":"："}
-{"seq":36,"kind":"reasoning","frame":37,"line":73,"byte":10420,"text":"晴"}
-{"seq":37,"kind":"reasoning","frame":38,"line":75,"byte":10707,"text":"\n"}
-{"seq":38,"kind":"reasoning","frame":39,"line":77,"byte":10993,"text":"-"}
-{"seq":39,"kind":"reasoning","frame":40,"line":79,"byte":11278,"text":" "}
-{"seq":40,"kind":"reasoning","frame":41,"line":81,"byte":11563,"text":"温度"}
-{"seq":41,"kind":"reasoning","frame":42,"line":83,"byte":11853,"text":"："}
-{"seq":42,"kind":"reasoning","frame":43,"line":85,"byte":12140,"text":"2"}
-{"seq":43,"kind":"reasoning","frame":44,"line":87,"byte":12425,"text":"8"}
-{"seq":44,"kind":"reasoning","frame":45,"line":89,"byte":12710,"text":"°C"}
-{"seq":45,"kind":"reasoning","frame":46,"line":91,"byte":12997,"text":"\n"}
-{"seq":46,"kind":"reasoning","frame":47,"line":93,"byte":13283,"text":"-"}
-{"seq":47,"kind":"reasoning","frame":48,"line":95,"byte":13568,"text":" "}
-{"seq":48,"kind":"reasoning","frame":49,"line":97,"byte":13853,"text":"湿度"}
-{"seq":49,"kind":"reasoning","frame":50,"line":99,"byte":14143,"text":"："}
-{"seq":50,"kind":"reasoning","frame":51,"line":101,"byte":14430,"text":"4"}
-{"seq":51,"kind":"reasoning","frame":52,"line":103,"byte":14715,"text":"0"}
-{"seq":52,"kind":"reasoning","frame":53,"line":105,"byte":15000,"text":"%"}
-{"seq":53,"kind":"reasoning","frame":54,"line":107,"byte":15285,"text":"\n"}
-{"seq":54,"kind":"reasoning","frame":55,"line":109,"byte":15571,"text":"-"}
-{"seq":55,"kind":"reasoning","frame":56,"line":111,"byte":15856,"text":" AQ"}
-{"seq":56,"kind":"reasoning","frame":57,"line":113,"byte":16143,"text":"I"}
-{"seq":57,"kind":"reasoning","frame":58,"line":115,"byte":16428,"text":"："}
-{"seq":58,"kind":"reasoning","frame":59,"line":117,"byte":16715,"text":"5"}
-{"seq":59,"kind":"reasoning","frame":60,"line":119,"byte":17000,"text":"5"}
-{"seq":60,"kind":"reasoning","frame":61,"line":121,"byte":17285,"text":"\n\n"}
-{"seq":61,"kind":"reasoning","frame":62,"line":123,"byte":17573,"text":"上海"}
-{"seq":62,"kind":"reasoning","frame":63,"line":125,"byte":17863,"text":"天气"}
-{"seq":63,"kind":"reasoning","frame":64,"line":127,"byte":18153,"text":"："}
-{"seq":64,"kind":"reasoning","frame":65,"line":129,"byte":18440,"text":"\n"}
-{"seq":65,"kind":"reasoning","frame":66,"line":131,"byte":18726,"text":"-"}
-{"seq":66,"kind":"reasoning","frame":67,"line":133,"byte":19011,"text":" "}
-{"seq":67,"kind":"reasoning","frame":68,"line":135,"byte":19296,"text":"天气"}
-{"seq":68,"kind":"reasoning","frame":69,"line":137,"byte":19586,"text":"状况"}
-{"seq":69,"kind":"reasoning","frame":70,"line":139,"byte":19876,"text":"："}
-{"seq":70,"kind":"reasoning","frame":71,"line":141,"byte":20163,"text":"多云"}
-{"seq":71,"kind":"reasoning","frame":72,"line":143,"byte":20453,"text":"\n"}
-{"seq":72,"kind":"reasoning","frame":73,"line":145,"byte":20739,"text":"-"}
-{"seq":73,"kind":"reasoning","frame":74,"line":147,"byte":21024,"text":" "}
-{"seq":74,"kind":"reasoning","frame":75,"line":149,"byte":21309,"text":"温度"}
-{"seq":75,"kind":"reasoning","frame":76,"line":151,"byte":21599,"text":"："}
-{"seq":76,"kind":"reasoning","frame":77,"line":153,"byte":21886,"text":"3"}
-{"seq":77,"kind":"reasoning","frame":78,"line":155,"byte":22171,"text":"1"}
-{"seq":78,"kind":"reasoning","frame":79,"line":157,"byte":22456,"text":"°C"}
-{"seq":79,"kind":"reasoning","frame":80,"line":159,"byte":22743,"text":"\n"}
-{"seq":80,"kind":"reasoning","frame":81,"line":161,"byte":23029,"text":"-"}
-{"seq":81,"kind":"reasoning","frame":82,"line":163,"byte":23314,"text":" "}
-{"seq":82,"kind":"reasoning","frame":83,"line":165,"byte":23599,"text":"湿度"}
-{"seq":83,"kind":"reasoning","frame":84,"line":167,"byte":23889,"text":"："}
-{"seq":84,"kind":"reasoning","frame":85,"line":169,"byte":24176,"text":"7"}
-{"seq":85,"kind":"reasoning","frame":86,"line":171,"byte":24461,"text":"0"}
-{"seq":86,"kind":"reasoning","frame":87,"line":173,"byte":24746,"text":"%"}
-{"seq":87,"kind":"reasoning","frame":88,"line":175,"byte":25031,"text":"\n"}
-{"seq":88,"kind":"reasoning","frame":89,"line":177,"byte":25317,"text":"-"}
-{"seq":89,"kind":"reasoning","frame":90,"line":179,"byte":25602,"text":" AQ"}
-{"seq":90,"kind":"reasoning","frame":91,"line":181,"byte":25889,"text":"I"}
-{"seq":91,"kind":"reasoning","frame":92,"line":183,"byte":26174,"text":"："}
-{"seq":92,"kind":"reasoning","frame":93,"line":185,"byte":26461,"text":"4"}
-{"seq":93,"kind":"reasoning","frame":94,"line":187,"byte":26746,"text":"8"}
-{"seq":94,"kind":"reasoning","frame":95,"line":189,"byte":27031,"text":"\n\n"}
-{"seq":95,"kind":"reasoning","frame":96,"line":191,"byte":27319,"text":"现在"}
-{"seq":96,"kind":"reasoning","frame":97,"line":193,"byte":27609,"text":"可以"}
-{"seq":97,"kind":"reasoning","frame":98,"line":195,"byte":27899,"text":"给出"}
-{"seq":98,"kind":"reasoning","frame":99,"line":197,"byte":28189,"text":"一个"}
-{"seq":99,"kind":"reasoning","frame":100,"line":199,"byte":28479,"text":"清晰的"}
-{"seq":100,"kind":"reasoning","frame":101,"line":201,"byte":28772,"text":"对比"}
-{"seq":101,"kind":"reasoning","frame":102,"line":203,"byte":29062,"text":"。"}
-{"seq":102,"kind":"reasoning","frame":103,"line":205,"byte":29349,"text":"\n"}
-{"seq":103,"kind":"text","frame":104,"line":207,"byte":29635,"text":"以下是"}
-{"seq":104,"kind":"text","frame":105,"line":209,"byte":29918,"text":"北京"}
-{"seq":105,"kind":"text","frame":106,"line":211,"byte":30198,"text":"和上海"}
-{"seq":106,"kind":"text","frame":107,"line":213,"byte":30481,"text":"当前"}
-{"seq":107,"kind":"text","frame":108,"line":215,"byte":30761,"text":"天气"}
-{"seq":108,"kind":"text","frame":109,"line":217,"byte":31041,"text":"的"}
-{"seq":109,"kind":"text","frame":110,"line":219,"byte":31318,"text":"对比"}
-{"seq":110,"kind":"text","frame":111,"line":221,"byte":31598,"text":"："}
-{"seq":111,"kind":"text","frame":112,"line":223,"byte":31875,"text":"\n\n"}
-{"seq":112,"kind":"text","frame":113,"line":225,"byte":32153,"text":"|"}
-{"seq":113,"kind":"text","frame":114,"line":227,"byte":32428,"text":" "}
-{"seq":114,"kind":"text","frame":115,"line":229,"byte":32703,"text":"指标"}
-{"seq":115,"kind":"text","frame":116,"line":231,"byte":32983,"text":" |"}
-{"seq":116,"kind":"text","frame":117,"line":233,"byte":33259,"text":" "}
-{"seq":117,"kind":"text","frame":118,"line":235,"byte":33534,"text":"北京"}
-{"seq":118,"kind":"text","frame":119,"line":237,"byte":33814,"text":" |"}
-{"seq":119,"kind":"text","frame":120,"line":239,"byte":34090,"text":" "}
-{"seq":120,"kind":"text","frame":121,"line":241,"byte":34365,"text":"上海"}
-{"seq":121,"kind":"text","frame":122,"line":243,"byte":34645,"text":" |"}
-{"seq":122,"kind":"text","frame":123,"line":245,"byte":34921,"text":"\n"}
-{"seq":123,"kind":"text","frame":124,"line":247,"byte":35197,"text":"|"}
-{"seq":124,"kind":"text","frame":125,"line":249,"byte":35472,"text":"------"}
-{"seq":125,"kind":"text","frame":126,"line":251,"byte":35752,"text":"|"}
-{"seq":126,"kind":"text","frame":127,"line":253,"byte":36027,"text":"------"}
-{"seq":127,"kind":"text","frame":128,"line":255,"byte":36307,"text":"|"}
-{"seq":128,"kind":"text","frame":129,"line":257,"byte":36582,"text":"------"}
-{"seq":129,"kind":"text","frame":130,"line":259,"byte":36862,"text":"|"}
-{"seq":130,"kind":"text","frame":131,"line":261,"byte":37137,"text":"\n"}
-{"seq":131,"kind":"text","frame":132,"line":263,"byte":37413,"text":"|"}
-{"seq":132,"kind":"text","frame":133,"line":265,"byte":37688,"text":" **"}
-{"seq":133,"kind":"text","frame":134,"line":267,"byte":37965,"text":"天气"}
-{"seq":134,"kind":"text","frame":135,"line":269,"byte":38245,"text":"状况"}
-{"seq":135,"kind":"text","frame":136,"line":271,"byte":38525,"text":"**"}
-{"seq":136,"kind":"text","frame":137,"line":273,"byte":38801,"text":" |"}
-{"seq":137,"kind":"text","frame":138,"line":275,"byte":39077,"text":" "}
-{"seq":138,"kind":"text","frame":139,"line":277,"byte":39352,"text":"晴"}
-{"seq":139,"kind":"text","frame":140,"line":279,"byte":39629,"text":" |"}
-{"seq":140,"kind":"text","frame":141,"line":281,"byte":39905,"text":" "}
-{"seq":141,"kind":"text","frame":142,"line":283,"byte":40180,"text":"多云"}
-{"seq":142,"kind":"text","frame":143,"line":285,"byte":40460,"text":" |"}
-{"seq":143,"kind":"text","frame":144,"line":287,"byte":40736,"text":"\n"}
-{"seq":144,"kind":"text","frame":145,"line":289,"byte":41012,"text":"|"}
-{"seq":145,"kind":"text","frame":146,"line":291,"byte":41287,"text":" **"}
-{"seq":146,"kind":"text","frame":147,"line":293,"byte":41564,"text":"温度"}
-{"seq":147,"kind":"text","frame":148,"line":295,"byte":41844,"text":"**"}
-{"seq":148,"kind":"text","frame":149,"line":297,"byte":42120,"text":" |"}
-{"seq":149,"kind":"text","frame":150,"line":299,"byte":42396,"text":" "}
-{"seq":150,"kind":"text","frame":151,"line":301,"byte":42671,"text":"2"}
-{"seq":151,"kind":"text","frame":152,"line":303,"byte":42946,"text":"8"}
-{"seq":152,"kind":"text","frame":153,"line":305,"byte":43221,"text":"°C"}
-{"seq":153,"kind":"text","frame":154,"line":307,"byte":43498,"text":" |"}
-{"seq":154,"kind":"text","frame":155,"line":309,"byte":43774,"text":" "}
-{"seq":155,"kind":"text","frame":156,"line":311,"byte":44049,"text":"3"}
-{"seq":156,"kind":"text","frame":157,"line":313,"byte":44324,"text":"1"}
-{"seq":157,"kind":"text","frame":158,"line":315,"byte":44599,"text":"°C"}
-{"seq":158,"kind":"text","frame":159,"line":317,"byte":44876,"text":" |"}
-{"seq":159,"kind":"text","frame":160,"line":319,"byte":45152,"text":"\n"}
-{"seq":160,"kind":"text","frame":161,"line":321,"byte":45428,"text":"|"}
-{"seq":161,"kind":"text","frame":162,"line":323,"byte":45703,"text":" **"}
-{"seq":162,"kind":"text","frame":163,"line":325,"byte":45980,"text":"湿度"}
-{"seq":163,"kind":"text","frame":164,"line":327,"byte":46260,"text":"**"}
-{"seq":164,"kind":"text","frame":165,"line":329,"byte":46536,"text":" |"}
-{"seq":165,"kind":"text","frame":166,"line":331,"byte":46812,"text":" "}
-{"seq":166,"kind":"text","frame":167,"line":333,"byte":47087,"text":"4"}
-{"seq":167,"kind":"text","frame":168,"line":335,"byte":47362,"text":"0"}
-{"seq":168,"kind":"text","frame":169,"line":337,"byte":47637,"text":"%"}
-{"seq":169,"kind":"text","frame":170,"line":339,"byte":47912,"text":" |"}
-{"seq":170,"kind":"text","frame":171,"line":341,"byte":48188,"text":" "}
-{"seq":171,"kind":"text","frame":172,"line":343,"byte":48463,"text":"7"}
-{"seq":172,"kind":"text","frame":173,"line":345,"byte":48738,"text":"0"}
-{"seq":173,"kind":"text","frame":174,"line":347,"byte":49013,"text":"%"}
-{"seq":174,"kind":"text","frame":175,"line":349,"byte":49288,"text":" |"}
-{"seq":175,"kind":"text","frame":176,"line":351,"byte":49564,"text":"\n"}
-{"seq":176,"kind":"text","frame":177,"line":353,"byte":49840,"text":"|"}
-{"seq":177,"kind":"text","frame":178,"line":355,"byte":50115,"text":" **"}
-{"seq":178,"kind":"text","frame":179,"line":357,"byte":50392,"text":"AQ"}
-{"seq":179,"kind":"text","frame":180,"line":359,"byte":50668,"text":"I"}
-{"seq":180,"kind":"text","frame":181,"line":361,"byte":50943,"text":"**"}
-{"seq":181,"kind":"text","frame":182,"line":363,"byte":51219,"text":" |"}
-{"seq":182,"kind":"text","frame":183,"line":365,"byte":51495,"text":" "}
-{"seq":183,"kind":"text","frame":184,"line":367,"byte":51770,"text":"5"}
-{"seq":184,"kind":"text","frame":185,"line":369,"byte":52045,"text":"5"}
-{"seq":185,"kind":"text","frame":186,"line":371,"byte":52320,"text":" |"}
-{"seq":186,"kind":"text","frame":187,"line":373,"byte":52596,"text":" "}
-{"seq":187,"kind":"text","frame":188,"line":375,"byte":52871,"text":"4"}
-{"seq":188,"kind":"text","frame":189,"line":377,"byte":53146,"text":"8"}
-{"seq":189,"kind":"text","frame":190,"line":379,"byte":53421,"text":" |"}
-{"seq":190,"kind":"text","frame":191,"line":381,"byte":53697,"text":"\n\n"}
-{"seq":191,"kind":"text","frame":192,"line":383,"byte":53975,"text":"**"}
-{"seq":192,"kind":"text","frame":193,"line":385,"byte":54251,"text":"简要"}
-{"seq":193,"kind":"text","frame":194,"line":387,"byte":54531,"text":"对比"}
-{"seq":194,"kind":"text","frame":195,"line":389,"byte":54811,"text":"：**"}
-{"seq":195,"kind":"text","frame":196,"line":391,"byte":55090,"text":"\n"}
-{"seq":196,"kind":"text","frame":197,"line":393,"byte":55366,"text":"-"}
-{"seq":197,"kind":"text","frame":198,"line":395,"byte":55641,"text":" "}
-{"seq":198,"kind":"text","frame":199,"line":397,"byte":55916,"text":"上海"}
-{"seq":199,"kind":"text","frame":200,"line":399,"byte":56196,"text":"比"}
-{"seq":200,"kind":"text","frame":201,"line":401,"byte":56473,"text":"北京"}
-{"seq":201,"kind":"text","frame":202,"line":403,"byte":56753,"text":"更"}
-{"seq":202,"kind":"text","frame":203,"line":405,"byte":57030,"text":"热"}
-{"seq":203,"kind":"text","frame":204,"line":407,"byte":57307,"text":"（"}
-{"seq":204,"kind":"text","frame":205,"line":409,"byte":57584,"text":"3"}
-{"seq":205,"kind":"text","frame":206,"line":411,"byte":57859,"text":"1"}
-{"seq":206,"kind":"text","frame":207,"line":413,"byte":58134,"text":"°C"}
-{"seq":207,"kind":"text","frame":208,"line":415,"byte":58411,"text":" vs"}
-{"seq":208,"kind":"text","frame":209,"line":417,"byte":58688,"text":" "}
-{"seq":209,"kind":"text","frame":210,"line":419,"byte":58963,"text":"2"}
-{"seq":210,"kind":"text","frame":211,"line":421,"byte":59238,"text":"8"}
-{"seq":211,"kind":"text","frame":212,"line":423,"byte":59513,"text":"°C"}
-{"seq":212,"kind":"text","frame":213,"line":425,"byte":59790,"text":"）"}
-{"seq":213,"kind":"text","frame":214,"line":427,"byte":60067,"text":"\n"}
-{"seq":214,"kind":"text","frame":215,"line":429,"byte":60343,"text":"-"}
-{"seq":215,"kind":"text","frame":216,"line":431,"byte":60618,"text":" "}
-{"seq":216,"kind":"text","frame":217,"line":433,"byte":60893,"text":"北京的"}
-{"seq":217,"kind":"text","frame":218,"line":435,"byte":61176,"text":"湿度"}
-{"seq":218,"kind":"text","frame":219,"line":437,"byte":61456,"text":"更低"}
-{"seq":219,"kind":"text","frame":220,"line":439,"byte":61736,"text":"（"}
-{"seq":220,"kind":"text","frame":221,"line":441,"byte":62013,"text":"4"}
-{"seq":221,"kind":"text","frame":222,"line":443,"byte":62288,"text":"0"}
-{"seq":222,"kind":"text","frame":223,"line":445,"byte":62563,"text":"%"}
-{"seq":223,"kind":"text","frame":224,"line":447,"byte":62838,"text":" vs"}
-{"seq":224,"kind":"text","frame":225,"line":449,"byte":63115,"text":" "}
-{"seq":225,"kind":"text","frame":226,"line":451,"byte":63390,"text":"7"}
-{"seq":226,"kind":"text","frame":227,"line":453,"byte":63665,"text":"0"}
-{"seq":227,"kind":"text","frame":228,"line":455,"byte":63940,"text":"%"}
-{"seq":228,"kind":"text","frame":229,"line":457,"byte":64215,"text":"），"}
-{"seq":229,"kind":"text","frame":230,"line":459,"byte":64495,"text":"感觉"}
-{"seq":230,"kind":"text","frame":231,"line":461,"byte":64775,"text":"会更"}
-{"seq":231,"kind":"text","frame":232,"line":463,"byte":65055,"text":"干燥"}
-{"seq":232,"kind":"text","frame":233,"line":465,"byte":65335,"text":"舒适"}
-{"seq":233,"kind":"text","frame":234,"line":467,"byte":65615,"text":"\n"}
-{"seq":234,"kind":"text","frame":235,"line":469,"byte":65891,"text":"-"}
-{"seq":235,"kind":"text","frame":236,"line":471,"byte":66166,"text":" "}
-{"seq":236,"kind":"text","frame":237,"line":473,"byte":66441,"text":"上海的"}
-{"seq":237,"kind":"text","frame":238,"line":475,"byte":66724,"text":"空气质量"}
-{"seq":238,"kind":"text","frame":239,"line":477,"byte":67010,"text":"更好"}
-{"seq":239,"kind":"text","frame":240,"line":479,"byte":67290,"text":"（"}
-{"seq":240,"kind":"text","frame":241,"line":481,"byte":67567,"text":"AQ"}
-{"seq":241,"kind":"text","frame":242,"line":483,"byte":67843,"text":"I"}
-{"seq":242,"kind":"text","frame":243,"line":485,"byte":68118,"text":" "}
-{"seq":243,"kind":"text","frame":244,"line":487,"byte":68393,"text":"4"}
-{"seq":244,"kind":"text","frame":245,"line":489,"byte":68668,"text":"8"}
-{"seq":245,"kind":"text","frame":246,"line":491,"byte":68943,"text":" vs"}
-{"seq":246,"kind":"text","frame":247,"line":493,"byte":69220,"text":" "}
-{"seq":247,"kind":"text","frame":248,"line":495,"byte":69495,"text":"5"}
-{"seq":248,"kind":"text","frame":249,"line":497,"byte":69770,"text":"5"}
-{"seq":249,"kind":"text","frame":250,"line":499,"byte":70045,"text":"）"}
-{"seq":250,"kind":"text","frame":251,"line":501,"byte":70322,"text":"\n"}
-{"seq":251,"kind":"text","frame":252,"line":503,"byte":70598,"text":"-"}
-{"seq":252,"kind":"text","frame":253,"line":505,"byte":70873,"text":" "}
-{"seq":253,"kind":"text","frame":254,"line":507,"byte":71148,"text":"北京"}
-{"seq":254,"kind":"text","frame":255,"line":509,"byte":71428,"text":"是"}
-{"seq":255,"kind":"text","frame":256,"line":511,"byte":71705,"text":"晴天"}
-{"seq":256,"kind":"text","frame":257,"line":513,"byte":71985,"text":"，"}
-{"seq":257,"kind":"text","frame":258,"line":515,"byte":72262,"text":"上海"}
-{"seq":258,"kind":"text","frame":259,"line":517,"byte":72542,"text":"是"}
-{"seq":259,"kind":"text","frame":260,"line":519,"byte":72819,"text":"多云"}
-{"seq":260,"kind":"text","frame":261,"line":521,"byte":73099,"text":"天气"}
+{"seq":1,"kind":"reasoning","frame":2,"line":3,"byte":295,"text":"好的"}
+{"seq":2,"kind":"reasoning","frame":3,"line":5,"byte":585,"text":"，"}
+{"seq":3,"kind":"reasoning","frame":4,"line":7,"byte":872,"text":"现在"}
+{"seq":4,"kind":"reasoning","frame":5,"line":9,"byte":1162,"text":"我有"}
+{"seq":5,"kind":"reasoning","frame":6,"line":11,"byte":1452,"text":"北京"}
+{"seq":6,"kind":"reasoning","frame":7,"line":13,"byte":1742,"text":"和"}
+{"seq":7,"kind":"reasoning","frame":8,"line":15,"byte":2029,"text":"上海的"}
+{"seq":8,"kind":"reasoning","frame":9,"line":17,"byte":2322,"text":"天气"}
+{"seq":9,"kind":"reasoning","frame":10,"line":19,"byte":2612,"text":"数据"}
+{"seq":10,"kind":"reasoning","frame":11,"line":21,"byte":2902,"text":"了"}
+{"seq":11,"kind":"reasoning","frame":12,"line":23,"byte":3189,"text":"。"}
+{"seq":12,"kind":"reasoning","frame":13,"line":25,"byte":3476,"text":"让我"}
+{"seq":13,"kind":"reasoning","frame":14,"line":27,"byte":3766,"text":"来"}
+{"seq":14,"kind":"reasoning","frame":15,"line":29,"byte":4053,"text":"整理"}
+{"seq":15,"kind":"reasoning","frame":16,"line":31,"byte":4343,"text":"一下"}
+{"seq":16,"kind":"reasoning","frame":17,"line":33,"byte":4633,"text":"对比"}
+{"seq":17,"kind":"reasoning","frame":18,"line":35,"byte":4923,"text":"信息"}
+{"seq":18,"kind":"reasoning","frame":19,"line":37,"byte":5213,"text":"："}
+{"seq":19,"kind":"reasoning","frame":20,"line":39,"byte":5500,"text":"\n\n"}
+{"seq":20,"kind":"reasoning","frame":21,"line":41,"byte":5788,"text":"北京"}
+{"seq":21,"kind":"reasoning","frame":22,"line":43,"byte":6078,"text":"："}
+{"seq":22,"kind":"reasoning","frame":23,"line":45,"byte":6365,"text":"\n"}
+{"seq":23,"kind":"reasoning","frame":24,"line":47,"byte":6651,"text":"-"}
+{"seq":24,"kind":"reasoning","frame":25,"line":49,"byte":6936,"text":" "}
+{"seq":25,"kind":"reasoning","frame":26,"line":51,"byte":7221,"text":"天气"}
+{"seq":26,"kind":"reasoning","frame":27,"line":53,"byte":7511,"text":"："}
+{"seq":27,"kind":"reasoning","frame":28,"line":55,"byte":7798,"text":"晴"}
+{"seq":28,"kind":"reasoning","frame":29,"line":57,"byte":8085,"text":"\n"}
+{"seq":29,"kind":"reasoning","frame":30,"line":59,"byte":8371,"text":"-"}
+{"seq":30,"kind":"reasoning","frame":31,"line":61,"byte":8656,"text":" "}
+{"seq":31,"kind":"reasoning","frame":32,"line":63,"byte":8941,"text":"温度"}
+{"seq":32,"kind":"reasoning","frame":33,"line":65,"byte":9231,"text":"："}
+{"seq":33,"kind":"reasoning","frame":34,"line":67,"byte":9518,"text":"2"}
+{"seq":34,"kind":"reasoning","frame":35,"line":69,"byte":9803,"text":"8"}
+{"seq":35,"kind":"reasoning","frame":36,"line":71,"byte":10088,"text":"°C"}
+{"seq":36,"kind":"reasoning","frame":37,"line":73,"byte":10375,"text":"\n"}
+{"seq":37,"kind":"reasoning","frame":38,"line":75,"byte":10661,"text":"-"}
+{"seq":38,"kind":"reasoning","frame":39,"line":77,"byte":10946,"text":" "}
+{"seq":39,"kind":"reasoning","frame":40,"line":79,"byte":11231,"text":"湿度"}
+{"seq":40,"kind":"reasoning","frame":41,"line":81,"byte":11521,"text":"："}
+{"seq":41,"kind":"reasoning","frame":42,"line":83,"byte":11808,"text":"4"}
+{"seq":42,"kind":"reasoning","frame":43,"line":85,"byte":12093,"text":"0"}
+{"seq":43,"kind":"reasoning","frame":44,"line":87,"byte":12378,"text":"%"}
+{"seq":44,"kind":"reasoning","frame":45,"line":89,"byte":12663,"text":"\n"}
+{"seq":45,"kind":"reasoning","frame":46,"line":91,"byte":12949,"text":"-"}
+{"seq":46,"kind":"reasoning","frame":47,"line":93,"byte":13234,"text":" AQ"}
+{"seq":47,"kind":"reasoning","frame":48,"line":95,"byte":13521,"text":"I"}
+{"seq":48,"kind":"reasoning","frame":49,"line":97,"byte":13806,"text":"："}
+{"seq":49,"kind":"reasoning","frame":50,"line":99,"byte":14093,"text":"5"}
+{"seq":50,"kind":"reasoning","frame":51,"line":101,"byte":14378,"text":"5"}
+{"seq":51,"kind":"reasoning","frame":52,"line":103,"byte":14663,"text":"\n\n"}
+{"seq":52,"kind":"reasoning","frame":53,"line":105,"byte":14951,"text":"上海"}
+{"seq":53,"kind":"reasoning","frame":54,"line":107,"byte":15241,"text":"："}
+{"seq":54,"kind":"reasoning","frame":55,"line":109,"byte":15528,"text":"\n"}
+{"seq":55,"kind":"reasoning","frame":56,"line":111,"byte":15814,"text":"-"}
+{"seq":56,"kind":"reasoning","frame":57,"line":113,"byte":16099,"text":" "}
+{"seq":57,"kind":"reasoning","frame":58,"line":115,"byte":16384,"text":"天气"}
+{"seq":58,"kind":"reasoning","frame":59,"line":117,"byte":16674,"text":"："}
+{"seq":59,"kind":"reasoning","frame":60,"line":119,"byte":16961,"text":"多云"}
+{"seq":60,"kind":"reasoning","frame":61,"line":121,"byte":17251,"text":"\n"}
+{"seq":61,"kind":"reasoning","frame":62,"line":123,"byte":17537,"text":"-"}
+{"seq":62,"kind":"reasoning","frame":63,"line":125,"byte":17822,"text":" "}
+{"seq":63,"kind":"reasoning","frame":64,"line":127,"byte":18107,"text":"温度"}
+{"seq":64,"kind":"reasoning","frame":65,"line":129,"byte":18397,"text":"："}
+{"seq":65,"kind":"reasoning","frame":66,"line":131,"byte":18684,"text":"3"}
+{"seq":66,"kind":"reasoning","frame":67,"line":133,"byte":18969,"text":"1"}
+{"seq":67,"kind":"reasoning","frame":68,"line":135,"byte":19254,"text":"°C"}
+{"seq":68,"kind":"reasoning","frame":69,"line":137,"byte":19541,"text":"\n"}
+{"seq":69,"kind":"reasoning","frame":70,"line":139,"byte":19827,"text":"-"}
+{"seq":70,"kind":"reasoning","frame":71,"line":141,"byte":20112,"text":" "}
+{"seq":71,"kind":"reasoning","frame":72,"line":143,"byte":20397,"text":"湿度"}
+{"seq":72,"kind":"reasoning","frame":73,"line":145,"byte":20687,"text":"："}
+{"seq":73,"kind":"reasoning","frame":74,"line":147,"byte":20974,"text":"7"}
+{"seq":74,"kind":"reasoning","frame":75,"line":149,"byte":21259,"text":"0"}
+{"seq":75,"kind":"reasoning","frame":76,"line":151,"byte":21544,"text":"%"}
+{"seq":76,"kind":"reasoning","frame":77,"line":153,"byte":21829,"text":"\n"}
+{"seq":77,"kind":"reasoning","frame":78,"line":155,"byte":22115,"text":"-"}
+{"seq":78,"kind":"reasoning","frame":79,"line":157,"byte":22400,"text":" AQ"}
+{"seq":79,"kind":"reasoning","frame":80,"line":159,"byte":22687,"text":"I"}
+{"seq":80,"kind":"reasoning","frame":81,"line":161,"byte":22972,"text":"："}
+{"seq":81,"kind":"reasoning","frame":82,"line":163,"byte":23259,"text":"4"}
+{"seq":82,"kind":"reasoning","frame":83,"line":165,"byte":23544,"text":"8"}
+{"seq":83,"kind":"reasoning","frame":84,"line":167,"byte":23829,"text":"\n\n"}
+{"seq":84,"kind":"reasoning","frame":85,"line":169,"byte":24117,"text":"我可以"}
+{"seq":85,"kind":"reasoning","frame":86,"line":171,"byte":24410,"text":"给用户"}
+{"seq":86,"kind":"reasoning","frame":87,"line":173,"byte":24703,"text":"一个"}
+{"seq":87,"kind":"reasoning","frame":88,"line":175,"byte":24993,"text":"简洁"}
+{"seq":88,"kind":"reasoning","frame":89,"line":177,"byte":25283,"text":"的"}
+{"seq":89,"kind":"reasoning","frame":90,"line":179,"byte":25570,"text":"对比"}
+{"seq":90,"kind":"reasoning","frame":91,"line":181,"byte":25860,"text":"。"}
+{"seq":91,"kind":"reasoning","frame":92,"line":183,"byte":26147,"text":"\n"}
+{"seq":92,"kind":"text","frame":93,"line":185,"byte":26433,"text":"以下是"}
+{"seq":93,"kind":"text","frame":94,"line":187,"byte":26716,"text":"北京"}
+{"seq":94,"kind":"text","frame":95,"line":189,"byte":26996,"text":"和上海"}
+{"seq":95,"kind":"text","frame":96,"line":191,"byte":27279,"text":"今天的"}
+{"seq":96,"kind":"text","frame":97,"line":193,"byte":27562,"text":"天气"}
+{"seq":97,"kind":"text","frame":98,"line":195,"byte":27842,"text":"对比"}
+{"seq":98,"kind":"text","frame":99,"line":197,"byte":28122,"text":"："}
+{"seq":99,"kind":"text","frame":100,"line":199,"byte":28399,"text":"\n\n"}
+{"seq":100,"kind":"text","frame":101,"line":201,"byte":28677,"text":"|"}
+{"seq":101,"kind":"text","frame":102,"line":203,"byte":28952,"text":" "}
+{"seq":102,"kind":"text","frame":103,"line":205,"byte":29227,"text":"项目"}
+{"seq":103,"kind":"text","frame":104,"line":207,"byte":29507,"text":" |"}
+{"seq":104,"kind":"text","frame":105,"line":209,"byte":29783,"text":" "}
+{"seq":105,"kind":"text","frame":106,"line":211,"byte":30058,"text":"北京"}
+{"seq":106,"kind":"text","frame":107,"line":213,"byte":30338,"text":" |"}
+{"seq":107,"kind":"text","frame":108,"line":215,"byte":30614,"text":" "}
+{"seq":108,"kind":"text","frame":109,"line":217,"byte":30889,"text":"上海"}
+{"seq":109,"kind":"text","frame":110,"line":219,"byte":31169,"text":" |"}
+{"seq":110,"kind":"text","frame":111,"line":221,"byte":31445,"text":"\n"}
+{"seq":111,"kind":"text","frame":112,"line":223,"byte":31721,"text":"|"}
+{"seq":112,"kind":"text","frame":113,"line":225,"byte":31996,"text":"------"}
+{"seq":113,"kind":"text","frame":114,"line":227,"byte":32276,"text":"|"}
+{"seq":114,"kind":"text","frame":115,"line":229,"byte":32551,"text":"------"}
+{"seq":115,"kind":"text","frame":116,"line":231,"byte":32831,"text":"|"}
+{"seq":116,"kind":"text","frame":117,"line":233,"byte":33106,"text":"------"}
+{"seq":117,"kind":"text","frame":118,"line":235,"byte":33386,"text":"|"}
+{"seq":118,"kind":"text","frame":119,"line":237,"byte":33661,"text":"\n"}
+{"seq":119,"kind":"text","frame":120,"line":239,"byte":33937,"text":"|"}
+{"seq":120,"kind":"text","frame":121,"line":241,"byte":34212,"text":" "}
+{"seq":121,"kind":"text","frame":122,"line":243,"byte":34487,"text":"天气"}
+{"seq":122,"kind":"text","frame":123,"line":245,"byte":34767,"text":" |"}
+{"seq":123,"kind":"text","frame":124,"line":247,"byte":35043,"text":" "}
+{"seq":124,"kind":"text","frame":125,"line":249,"byte":35318,"text":"晴"}
+{"seq":125,"kind":"text","frame":126,"line":251,"byte":35595,"text":" |"}
+{"seq":126,"kind":"text","frame":127,"line":253,"byte":35871,"text":" "}
+{"seq":127,"kind":"text","frame":128,"line":255,"byte":36146,"text":"多云"}
+{"seq":128,"kind":"text","frame":129,"line":257,"byte":36426,"text":" |"}
+{"seq":129,"kind":"text","frame":130,"line":259,"byte":36702,"text":"\n"}
+{"seq":130,"kind":"text","frame":131,"line":261,"byte":36978,"text":"|"}
+{"seq":131,"kind":"text","frame":132,"line":263,"byte":37253,"text":" "}
+{"seq":132,"kind":"text","frame":133,"line":265,"byte":37528,"text":"温度"}
+{"seq":133,"kind":"text","frame":134,"line":267,"byte":37808,"text":" |"}
+{"seq":134,"kind":"text","frame":135,"line":269,"byte":38084,"text":" "}
+{"seq":135,"kind":"text","frame":136,"line":271,"byte":38359,"text":"2"}
+{"seq":136,"kind":"text","frame":137,"line":273,"byte":38634,"text":"8"}
+{"seq":137,"kind":"text","frame":138,"line":275,"byte":38909,"text":"°C"}
+{"seq":138,"kind":"text","frame":139,"line":277,"byte":39186,"text":" |"}
+{"seq":139,"kind":"text","frame":140,"line":279,"byte":39462,"text":" "}
+{"seq":140,"kind":"text","frame":141,"line":281,"byte":39737,"text":"3"}
+{"seq":141,"kind":"text","frame":142,"line":283,"byte":40012,"text":"1"}
+{"seq":142,"kind":"text","frame":143,"line":285,"byte":40287,"text":"°C"}
+{"seq":143,"kind":"text","frame":144,"line":287,"byte":40564,"text":" |"}
+{"seq":144,"kind":"text","frame":145,"line":289,"byte":40840,"text":"\n"}
+{"seq":145,"kind":"text","frame":146,"line":291,"byte":41116,"text":"|"}
+{"seq":146,"kind":"text","frame":147,"line":293,"byte":41391,"text":" "}
+{"seq":147,"kind":"text","frame":148,"line":295,"byte":41666,"text":"湿度"}
+{"seq":148,"kind":"text","frame":149,"line":297,"byte":41946,"text":" |"}
+{"seq":149,"kind":"text","frame":150,"line":299,"byte":42222,"text":" "}
+{"seq":150,"kind":"text","frame":151,"line":301,"byte":42497,"text":"4"}
+{"seq":151,"kind":"text","frame":152,"line":303,"byte":42772,"text":"0"}
+{"seq":152,"kind":"text","frame":153,"line":305,"byte":43047,"text":"%"}
+{"seq":153,"kind":"text","frame":154,"line":307,"byte":43322,"text":" |"}
+{"seq":154,"kind":"text","frame":155,"line":309,"byte":43598,"text":" "}
+{"seq":155,"kind":"text","frame":156,"line":311,"byte":43873,"text":"7"}
+{"seq":156,"kind":"text","frame":157,"line":313,"byte":44148,"text":"0"}
+{"seq":157,"kind":"text","frame":158,"line":315,"byte":44423,"text":"%"}
+{"seq":158,"kind":"text","frame":159,"line":317,"byte":44698,"text":" |"}
+{"seq":159,"kind":"text","frame":160,"line":319,"byte":44974,"text":"\n"}
+{"seq":160,"kind":"text","frame":161,"line":321,"byte":45250,"text":"|"}
+{"seq":161,"kind":"text","frame":162,"line":323,"byte":45525,"text":" AQ"}
+{"seq":162,"kind":"text","frame":163,"line":325,"byte":45802,"text":"I"}
+{"seq":163,"kind":"text","frame":164,"line":327,"byte":46077,"text":" |"}
+{"seq":164,"kind":"text","frame":165,"line":329,"byte":46353,"text":" "}
+{"seq":165,"kind":"text","frame":166,"line":331,"byte":46628,"text":"5"}
+{"seq":166,"kind":"text","frame":167,"line":333,"byte":46903,"text":"5"}
+{"seq":167,"kind":"text","frame":168,"line":335,"byte":47178,"text":" |"}
+{"seq":168,"kind":"text","frame":169,"line":337,"byte":47454,"text":" "}
+{"seq":169,"kind":"text","frame":170,"line":339,"byte":47729,"text":"4"}
+{"seq":170,"kind":"text","frame":171,"line":341,"byte":48004,"text":"8"}
+{"seq":171,"kind":"text","frame":172,"line":343,"byte":48279,"text":" |"}
+{"seq":172,"kind":"text","frame":173,"line":345,"byte":48555,"text":"\n\n"}
+{"seq":173,"kind":"text","frame":174,"line":347,"byte":48833,"text":"**"}
+{"seq":174,"kind":"text","frame":175,"line":349,"byte":49109,"text":"主要"}
+{"seq":175,"kind":"text","frame":176,"line":351,"byte":49389,"text":"差异"}
+{"seq":176,"kind":"text","frame":177,"line":353,"byte":49669,"text":"：**"}
+{"seq":177,"kind":"text","frame":178,"line":355,"byte":49948,"text":"\n"}
+{"seq":178,"kind":"text","frame":179,"line":357,"byte":50224,"text":"-"}
+{"seq":179,"kind":"text","frame":180,"line":359,"byte":50499,"text":" "}
+{"seq":180,"kind":"text","frame":181,"line":361,"byte":50774,"text":"上海"}
+{"seq":181,"kind":"text","frame":182,"line":363,"byte":51054,"text":"比"}
+{"seq":182,"kind":"text","frame":183,"line":365,"byte":51331,"text":"北京"}
+{"seq":183,"kind":"text","frame":184,"line":367,"byte":51611,"text":"温度"}
+{"seq":184,"kind":"text","frame":185,"line":369,"byte":51891,"text":"高"}
+{"seq":185,"kind":"text","frame":186,"line":371,"byte":52168,"text":"3"}
+{"seq":186,"kind":"text","frame":187,"line":373,"byte":52443,"text":"度"}
+{"seq":187,"kind":"text","frame":188,"line":375,"byte":52720,"text":"，"}
+{"seq":188,"kind":"text","frame":189,"line":377,"byte":52997,"text":"但"}
+{"seq":189,"kind":"text","frame":190,"line":379,"byte":53274,"text":"湿度"}
+{"seq":190,"kind":"text","frame":191,"line":381,"byte":53554,"text":"也"}
+{"seq":191,"kind":"text","frame":192,"line":383,"byte":53831,"text":"明显"}
+{"seq":192,"kind":"text","frame":193,"line":385,"byte":54111,"text":"更高"}
+{"seq":193,"kind":"text","frame":194,"line":387,"byte":54391,"text":"（"}
+{"seq":194,"kind":"text","frame":195,"line":389,"byte":54668,"text":"7"}
+{"seq":195,"kind":"text","frame":196,"line":391,"byte":54943,"text":"0"}
+{"seq":196,"kind":"text","frame":197,"line":393,"byte":55218,"text":"%"}
+{"seq":197,"kind":"text","frame":198,"line":395,"byte":55493,"text":" vs"}
+{"seq":198,"kind":"text","frame":199,"line":397,"byte":55770,"text":" "}
+{"seq":199,"kind":"text","frame":200,"line":399,"byte":56045,"text":"4"}
+{"seq":200,"kind":"text","frame":201,"line":401,"byte":56320,"text":"0"}
+{"seq":201,"kind":"text","frame":202,"line":403,"byte":56595,"text":"%"}
+{"seq":202,"kind":"text","frame":203,"line":405,"byte":56870,"text":"）"}
+{"seq":203,"kind":"text","frame":204,"line":407,"byte":57147,"text":"\n"}
+{"seq":204,"kind":"text","frame":205,"line":409,"byte":57423,"text":"-"}
+{"seq":205,"kind":"text","frame":206,"line":411,"byte":57698,"text":" "}
+{"seq":206,"kind":"text","frame":207,"line":413,"byte":57973,"text":"北京"}
+{"seq":207,"kind":"text","frame":208,"line":415,"byte":58253,"text":"是"}
+{"seq":208,"kind":"text","frame":209,"line":417,"byte":58530,"text":"晴天"}
+{"seq":209,"kind":"text","frame":210,"line":419,"byte":58810,"text":"，"}
+{"seq":210,"kind":"text","frame":211,"line":421,"byte":59087,"text":"上海"}
+{"seq":211,"kind":"text","frame":212,"line":423,"byte":59367,"text":"是"}
+{"seq":212,"kind":"text","frame":213,"line":425,"byte":59644,"text":"多云"}
+{"seq":213,"kind":"text","frame":214,"line":427,"byte":59924,"text":"天气"}
+{"seq":214,"kind":"text","frame":215,"line":429,"byte":60204,"text":"\n"}
+{"seq":215,"kind":"text","frame":216,"line":431,"byte":60480,"text":"-"}
+{"seq":216,"kind":"text","frame":217,"line":433,"byte":60755,"text":" "}
+{"seq":217,"kind":"text","frame":218,"line":435,"byte":61030,"text":"空气质量"}
+{"seq":218,"kind":"text","frame":219,"line":437,"byte":61316,"text":"指数"}
+{"seq":219,"kind":"text","frame":220,"line":439,"byte":61596,"text":"（"}
+{"seq":220,"kind":"text","frame":221,"line":441,"byte":61873,"text":"AQ"}
+{"seq":221,"kind":"text","frame":222,"line":443,"byte":62149,"text":"I"}
+{"seq":222,"kind":"text","frame":223,"line":445,"byte":62424,"text":"）"}
+{"seq":223,"kind":"text","frame":224,"line":447,"byte":62701,"text":"上海"}
+{"seq":224,"kind":"text","frame":225,"line":449,"byte":62981,"text":"略"}
+{"seq":225,"kind":"text","frame":226,"line":451,"byte":63258,"text":"好于"}
+{"seq":226,"kind":"text","frame":227,"line":453,"byte":63538,"text":"北京"}
+{"seq":227,"kind":"text","frame":228,"line":455,"byte":63818,"text":"\n\n"}
+{"seq":228,"kind":"text","frame":229,"line":457,"byte":64096,"text":"总体来说"}
+{"seq":229,"kind":"text","frame":230,"line":459,"byte":64382,"text":"，"}
+{"seq":230,"kind":"text","frame":231,"line":461,"byte":64659,"text":"上海"}
+{"seq":231,"kind":"text","frame":232,"line":463,"byte":64939,"text":"今天"}
+{"seq":232,"kind":"text","frame":233,"line":465,"byte":65219,"text":"更"}
+{"seq":233,"kind":"text","frame":234,"line":467,"byte":65496,"text":"温暖"}
+{"seq":234,"kind":"text","frame":235,"line":469,"byte":65776,"text":"湿润"}
+{"seq":235,"kind":"text","frame":236,"line":471,"byte":66056,"text":"，"}
+{"seq":236,"kind":"text","frame":237,"line":473,"byte":66333,"text":"北京"}
+{"seq":237,"kind":"text","frame":238,"line":475,"byte":66613,"text":"则"}
+{"seq":238,"kind":"text","frame":239,"line":477,"byte":66890,"text":"相对"}
+{"seq":239,"kind":"text","frame":240,"line":479,"byte":67170,"text":"干燥"}
+{"seq":240,"kind":"text","frame":241,"line":481,"byte":67450,"text":"一些"}
+{"seq":241,"kind":"text","frame":242,"line":483,"byte":67730,"text":"。"}

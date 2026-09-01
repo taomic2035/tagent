@@ -174,6 +174,7 @@ Cache-Control: no-cache
 | model 回显 | 原样路径 | 会把正斜杠归一为反斜杠回显（`D:/` → `D:\`） |
 | HTTP 版本 | 1.0（连接关闭收尾） | 1.1 + Keep-Alive |
 | **历史中非法 JSON 的 tool_call args** | 容忍（原样存储） | **HTTP 500**：服务端渲染模板时重新解析 assistant.tool_calls.arguments，截断片段 `{"city":"北` 直接炸（Step 9 守卫实测，captures/step9-guards/ac10-3-first-attempt）——回填前须把传输层 args 改写为合法 `{}`，原始字节挪进 tool 结果文本保存 |
+| **非头部 system 消息** | 容忍 | **HTTP 500**：Qwen chat 模板 `raise_exception('System message must be at the beginning')`（Step 11 摘要压缩实测）——上下文注入一律用 user 角色 + （系统注入：…）标注，与 nudge/steering 惯例统一 |
 | 默认端口 | 8080（将改 9931，启动日志警告） | 8080（两引擎都由启动脚本固定 8081） |
 
 ### 8.1 默认温度暗坑（跨引擎对照实验最重要的参数）
