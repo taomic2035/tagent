@@ -1,4 +1,10 @@
 #!/bin/sh
 # pre-commit 钩子（版本化存储，通过 core.hooksPath 启用，见 README「开发约定」）
 DIR=$(cd "$(dirname "$0")/../.." && pwd)
-exec sh "$DIR/scripts/check-privacy.sh"
+sh "$DIR/scripts/check-privacy.sh" || exit 1
+# Step 13：构建检查进钩子（FALLBACK 清单第 8 条自动化——"静默构建失败"
+# 曾连续漏检，靠自觉不可靠）。只做类型检查级构建，测试由 check-all.sh 覆盖
+cd "$DIR" && pnpm build > /dev/null 2>&1 || {
+  echo "✖ pre-commit: pnpm build 失败（详情跑 bash scripts/check-all.sh）" >&2
+  exit 1
+}

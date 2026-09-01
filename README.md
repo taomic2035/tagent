@@ -56,6 +56,7 @@ bash scripts/acceptance-win.sh      # Windows（llama.cpp 引擎，Git Bash）
 - [x] **Step 10** Steering 打断通道（调研驱动，SURVEY.md 缺口 2）——**已验收（AC11-1~4）**：生成期间用户输入排队、下轮 LLM 请求前以 user 消息注入（前缀只增不改）；真机改向实证（北京→上海）；余量按 followUp 转下轮
 - [x] **Step 11** 摘要压缩（调研驱动，SURVEY.md 缺口 3）——**已验收（AC12-1~4）**：去重→降级→LLM 摘要阶梯（`--compact`），user 原文钉住永不改写；真机三发现——摘要越压越大需划算预检、丢弃不得冒充压缩、Qwen 模板禁非头部 system（PROTOCOL §8）
 - [x] **Step 12** 并行工具+互斥键队列（调研驱动，SURVEY.md 缺口 4）——**已验收（AC13-1~4），调研路线收官**：同批并发执行、源序回填（transcript 确定性）；`Tool.serialize` 互斥键 FIFO（memory 写真实接线）；真机一帧三调用实证
+- [x] **Step 13** 严谨性修订与真实采样（用户裁决驱动）——**已验收（AC14-1~4）**：user 消息收紧为绝不丢（溢出宁可报错拒续）；守卫真实采样三实验（复读真实存在 1/6、空响应日常零发生、截断集中在思考场景——频率差异如实入档）；usage timings 回退修复恒 0；SURVEY 六条核查（5 属实 1 修正）
 
 ## 目录结构
 

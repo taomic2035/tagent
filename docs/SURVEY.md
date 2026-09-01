@@ -53,7 +53,8 @@
   schema 手写 dict 输出 OpenAI function-calling 格式；自动发现用 **AST 扫描**（mtime+size 记忆化）。
 - **可用性探测**：`check_fn` 结果 TTL 缓存 ~30s + 60s"瞬时失败宽限"（吸收 Docker/Playwright 探针抖动）。
 - 错误处理：`dispatch()` 捕获所有异常并消毒；**`_bound_error_text` 把错误体截到 2048 字符**——
-  防重试循环中错误信息撑爆上下文。
+  防重试循环中错误信息撑爆上下文。（Step 13 核查修正：函数在 `tools/registry.py`，
+  初版误记 toolsets.py——原调研标注的旧仓库布局）
 - 并行：支持 per-message 多 tool_calls；注册表 RLock + `_generation` 计数（MCP 动态刷新并发安全）。
 - 沙箱：七种终端后端（local/Docker/SSH/Singularity/Modal/Daytona/Vercel Sandbox）；
   `execute_code` 独立安全包络（env 清洗剥离 KEY/TOKEN/SECRET、白名单工具、50 次/调用上限、
@@ -449,3 +450,13 @@ Active Run（内存中一次 admitted 调用）。核心不变量：
 > hermes 两处对 max_iterations 默认值的表述存在文档性出入（已标注）；pi 的步进 harness 是 API 骨架
 > （运行时抛 Not Implemented），生产实现在 coding-agent。调研方法：WebFetch 抓 raw 源码与 docs 原文，
 > 三路独立进行，未运行任何被调研代码。
+
+---
+
+## 附录二：转述核查记录（Step 13，2026-09-01）
+
+本报告为二手转述（子 agent 读源码写成）。Step 13 对 6 条关键结论回原仓库抽查核实
+（raw/jsDelivr/grep.app 三路交叉）：**5 条完全属实**（execute_code RPC 管道、
+"用户消息永不压缩"原文、pi steer/followUp 语义、file-mutation-queue 实现、
+compaction 切点注释逐字命中），1 条（错误体 2048 截断）机制属实但文件路径过时，
+已在 §1.2 修正。未发现实质性转述幻觉。

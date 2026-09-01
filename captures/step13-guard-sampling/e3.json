@@ -1,0 +1,58 @@
+[
+  {
+    "i": 0,
+    "finish": "tool_calls",
+    "hasToolCall": true,
+    "argsBroken": false,
+    "argsTail": "{\"city\":\"北京\"}"
+  },
+  {
+    "i": 1,
+    "finish": "tool_calls",
+    "hasToolCall": true,
+    "argsBroken": false,
+    "argsTail": "{\"city\":\"北京\"}"
+  },
+  {
+    "i": 2,
+    "finish": "tool_calls",
+    "hasToolCall": true,
+    "argsBroken": false,
+    "argsTail": "{\"city\":\"北京\"}"
+  },
+  {
+    "i": 3,
+    "finish": "tool_calls",
+    "hasToolCall": true,
+    "argsBroken": false,
+    "argsTail": "{\"city\":\"北京\"}"
+  },
+  {
+    "i": 4,
+    "finish": "tool_calls",
+    "hasToolCall": true,
+    "argsBroken": false,
+    "argsTail": "{\"city\":\"北京\"}"
+  },
+  {
+    "i": 5,
+    "finish": "tool_calls",
+    "hasToolCall": true,
+    "argsBroken": false,
+    "argsTail": "{\"city\":\"北京\"}"
+  },
+  {
+    "i": 6,
+    "finish": "tool_calls",
+    "hasToolCall": true,
+    "argsBroken": false,
+    "argsTail": "{\"city\":\"北京\"}"
+  },
+  {
+    "i": 7,
+    "finish": "tool_calls",
+    "hasToolCall": true,
+    "argsBroken": false,
+    "argsTail": "{\"city\":\"北京\"}"
+  }
+]

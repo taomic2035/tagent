@@ -1,0 +1,14 @@
+{
+  "e1_e2": {
+    "tasks": 16,
+    "emptyResponse": 0,
+    "repetition": 1,
+    "lengthTruncated": 0
+  },
+  "e3": {
+    "probes": 8,
+    "lengthFinish": 0,
+    "lengthWithToolCall": 0,
+    "brokenArgs": 0
+  }
+}

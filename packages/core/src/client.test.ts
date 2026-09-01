@@ -189,3 +189,19 @@ test("chatTemplateKwargs 存在时进请求体，缺省时不携带（与旧版�
   assert.match(bodies[0] ?? "", /"chat_template_kwargs":\{"enable_thinking":true\}/);
   assert.doesNotMatch(bodies[1] ?? "", /chat_template_kwargs/);
 });
+
+// ============================================================
+// llama.cpp timings 回退（Step 13 修复：此前 CLI usage 恒显示 0）
+// ============================================================
+
+test("usage 回退：无标准 usage 但末帧带 timings 时，prompt=cache_n+prompt_n（Step 13）", async () => {
+  const sse = [
+    'data: {"choices":[{"delta":{"content":"hi"},"index":0}]}',
+    'data: {"choices":[{"finish_reason":"stop","index":0}],"timings":{"cache_n":432,"prompt_n":7,"predicted_n":65}}',
+    "data: [DONE]",
+  ].join("\n\n");
+  const events = await collect(streamFrom([sse]));
+  const done = events.at(-1);
+  assert.ok(done && done.type === "done" && done.usage);
+  assert.deepEqual(done.usage, { promptTokens: 439, completionTokens: 65 });
+});

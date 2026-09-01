@@ -344,9 +344,14 @@ function main(): void {
       return;
     }
     if (busy) {
-      // 生成期间：普通输入进 steering 队列（下一轮请求前注入），命令保持即时
+      // 生成期间：普通输入进 steering 队列，命令保持即时。ReAct 引擎不接
+      // steering（REQUIREMENTS §15 边界）——如实告知去向，不静默积压
       steeringQueue.push(text);
-      writeLine(paint.yellow(`↪ 已接收（队列 ${steeringQueue.length} 条），将在下一轮生效`));
+      writeLine(
+        config.reactMode
+          ? paint.yellow(`↪ 已排队（ReAct 模式暂不支持生成中改向，本轮结束后将作为下一条提问）`)
+          : paint.yellow(`↪ 已接收（队列 ${steeringQueue.length} 条），将在下一轮生效`),
+      );
       rl.prompt();
       return;
     }

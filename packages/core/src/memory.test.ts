@@ -76,20 +76,24 @@ test("未超预算：恒等返回且不动原数组（平凡轮次零成本）",
   assert.deepEqual(msgs, before); // 原数组未被改动
 });
 
-test("超预算：从最旧回合整回合裁剪，保 system 与最后一回合", () => {
+test("超预算：丢最旧轮内工作，user 全保 + 最后一回合（Step 13 钉住语义）", () => {
   const msgs = makeTurns(8, "这是一段比较长的对话内容用来撑大上下文");
   const total = estimateMessagesTokens(msgs);
   const budget = Math.ceil(total * 0.6); // 触发裁剪
   const r = trimMessages(msgs, { budget });
-  assert.ok(r.removed.length > 0, "应有回合被裁");
+  assert.ok(r.removed.length > 0, "应有轮内工作被裁");
   assert.equal(r.kept[0]?.role, "system", "system 永远保留");
   // 最后一回合保留：末尾还是第 8 轮的终答
   assert.deepEqual(r.kept.at(-1), msgs.at(-1));
-  // 裁的是最旧的：kept 从某个 user 开始，回合序号 > 1
+  // user 绝不丢（Step 13 裁决）：第 1 轮的 user 原文仍在
   const firstUser = r.kept.find((m) => m.role === "user");
-  assert.match(firstUser?.role === "user" ? firstUser.content : "", /第[2-8]轮/);
-  // 裁到低水位（预算一半）以内
-  assert.ok(r.afterTokens <= Math.ceil(budget * 0.5), `after=${r.afterTokens} ≤ ${budget * 0.5}`);
+  assert.match(firstUser?.role === "user" ? firstUser.content : "", /第1轮/);
+  assert.equal(r.kept.filter((m) => m.role === "user").length, 8, "全部 user 钉住");
+  // removed 只含轮内工作（assistant/tool），绝不含 user
+  assert.ok(r.removed.every((m) => m.role !== "user"), "被丢弃的只有工作");
+  // 钉住语义下低水位从保证降为尽力：显著缩小且 ≤ 预算即合格
+  assert.ok(r.afterTokens < r.beforeTokens && r.afterTokens <= budget);
+  assert.equal(r.userPinnedOverflow, undefined, "此预算下 user 装得下，不溢出");
 });
 
 test("回合完整性：裁剪后不存在孤立的 tool 消息或悬空 tool_call_id", () => {
@@ -109,24 +113,26 @@ test("回合完整性：裁剪后不存在孤立的 tool 消息或悬空 tool_ca
   assert.ok(idx >= 0 && idx <= 1, "首个非 system 消息应是 user");
 });
 
-test("极小预算：仅剩 system+最后回合也不死循环，如实返回", () => {
+test("极小预算：丢无可丢仍超 → userPinnedOverflow 如实报告（宁可报错不丢 user）", () => {
   const msgs = makeTurns(5, "特别长的内容".repeat(50));
   const r = trimMessages(msgs, { budget: 10 });
   assert.equal(r.kept[0]?.role, "system");
   assert.equal(r.kept.at(-1), msgs.at(-1), "最后一回合永远保留");
-  // 所有中间回合都被裁掉
-  assert.ok(r.kept.length <= 1 + 4 + 1, "至多 system + 最后回合 + 相邻残留");
+  // user 消息总量本就超过预算：钉住后仍超 → 溢出标志（调用方报错拒续）
+  assert.equal(r.userPinnedOverflow, true);
+  assert.equal(r.kept.filter((m) => m.role === "user").length, 5, "溢出时 user 也一条不丢");
+  assert.ok(r.afterTokens > 10);
 });
 
-test("双水位语义：预算内不裁、刚超预算一次裁到一半（不是裁一点）", () => {
+test("双水位语义（钉住版）：刚超预算一次裁掉全部旧轮工作（不是裁一点）", () => {
   const msgs = makeTurns(6, "中等长度的对话内容占位");
   const total = estimateMessagesTokens(msgs);
-  // 预算设为 total×0.95：仍会触发（> budget 的时刻不存在——此时 total>budget? 否）
-  // 正确触发姿势：budget = total - 1（刚好超）
-  const budget = total - 1;
+  const budget = total - 1; // 刚好超
   const r = trimMessages(msgs, { budget });
-  assert.ok(r.afterTokens <= Math.ceil(budget * 0.5) + 40, "应一次裁到低水位附近，而非只裁一条");
-  assert.ok(r.removed.length >= 4, "整回合裁剪至少移除一个完整回合（4 条消息）");
+  // 钉住版尽力而为：应丢掉多个旧轮的工作（每轮工作 3 条），显著低于预算
+  assert.ok(r.removed.length >= 3, "至少移除一轮工作（3 条：assistant/tool/终答）");
+  assert.ok(r.afterTokens <= budget, `after=${r.afterTokens} ≤ budget`);
+  assert.ok(r.removed.every((m) => m.role !== "user"), "user 不在被裁之列");
 });
 
 // ============================================================

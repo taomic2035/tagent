@@ -341,25 +341,55 @@ test("裁剪·预算触发：context-trimmed 事件 + messages 原地替换 + �
       yield done("tool_calls");
     },
   };
-  // 只跑 1 轮（触发一次请求），预算设小到必然裁剪历史回合
+  // 只跑 1 轮。Step 13 钉住语义：预算须装得下 user 群（120 会走溢出报错，独立用例覆盖）
+  // 1150 保 user 群（约 880）+ 最近工作单元前提下裁旧轮工作
   const events = await collect(
     runAgent(
-      { client, registry: makeRegistry(), config: { ...config, systemPrompt: "", maxIterations: 1, contextBudgetTokens: 120 } },
+      { client, registry: makeRegistry(), config: { ...config, systemPrompt: "", maxIterations: 1, contextBudgetTokens: 1150 } },
       messages,
     ),
   );
   const trimmed = events.find((e) => e.type === "context-trimmed");
   assert.ok(trimmed, "应产生 context-trimmed 事件");
   if (trimmed?.type === "context-trimmed") {
-    assert.ok(trimmed.removedMessages >= 2, "至少裁掉一个完整回合");
+    assert.ok(trimmed.removedMessages >= 1, "至少裁掉一轮工作");
     assert.ok(trimmed.toTokens < trimmed.fromTokens);
   }
   assert.equal(messages, messagesRef, "messages 引用不变（原地替换）");
   assert.ok(messages[0]?.role === "user", "裁剪后首条应是 user（无 system 配置时）");
   assert.equal(messages.at(-1)?.role, "assistant", "runAgent 结束后末条是终答 assistant");
   assert.ok(requests[0] !== undefined && requests[0]! < 11, "请求消息数应显著小于裁剪前");
-  // 当前轮 user 保留（否则模型不知道要干什么）
+  // user 绝不丢（Step 13 钉住语义）：含当前轮共 6 条 user 全保留
+  assert.equal(messages.filter((m) => m.role === "user").length, 6);
   assert.ok(messages.some((m) => m.role === "user" && m.content.includes("echo")));
+});
+
+
+test("裁剪·溢出拒续（Step 13）：预算装不下 user 总量 → error 事件，绝不静默丢指令", async () => {
+  const messages: ChatMessage[] = [
+    { role: "user", content: "很长的指令".repeat(40) },
+    { role: "assistant", content: "回答" },
+    { role: "user", content: "又一条很长的指令".repeat(40) },
+  ];
+  let calls = 0;
+  const client = {
+    async *stream(): AsyncGenerator<StreamEvent> {
+      calls++;
+      yield { type: "text-delta", delta: "不应到达" };
+      yield done("stop");
+    },
+  };
+  const events = await collect(
+    runAgent(
+      { client, registry: makeRegistry(), config: { ...config, systemPrompt: "", maxIterations: 2, contextBudgetTokens: 100 } },
+      messages,
+    ),
+  );
+  const err = events.find((e): e is Extract<AgentEvent, { type: "error" }> => e.type === "error");
+  assert.ok(err, "应产生 error 事件");
+  assert.match(err?.message ?? "", /user 消息绝不丢弃/);
+  assert.equal(calls, 0, "拒续：一次 LLM 请求都不发");
+  assert.equal(messages.filter((m) => m.role === "user").length, 2, "user 一条没少");
 });
 
 test("裁剪·无预算零事件（回归：Step 1/2 行为不变）", async () => {

@@ -52,14 +52,22 @@ export interface TrimResult {
   removed: ChatMessage[];
   beforeTokens: number;
   afterTokens: number;
+  /** 钉住语义（Step 13 用户裁决）：把可丢的轮内工作全丢后仍超预算——
+   *  user 消息绝不丢，宁可让调用方报错拒续（裁剪兜底到此为止） */
+  userPinnedOverflow?: boolean;
 }
 
 /**
- * 回合完整的历史裁剪（纯函数，不修改入参）。
+ * 历史裁剪（丢弃兜底，纯函数，不修改入参）。
  *
- * 回合定义：从 user 消息起、到下一个 user 消息前的全部消息
- * （含中间的 assistant(tool_calls)/tool 配对与 assistant 终答）。
- * system 永远保留；最后一回合永远保留；裁剪以整回合为单位从最旧开始。
+ * Step 13 用户裁决（2026-09-01）：**user 消息绝不丢**——极端超预算宁可报错拒续。
+ * 丢弃单位 = "工作单元"：一次调用对（assistant(tool_calls)+其 tool 结果）或一条
+ * assistant 纯文本。从最旧单元丢起；**最近 2 个单元保留**（正在使用的工作状态，
+ * 与 compact 的"最近一条 tool 结果保护"语义对齐）。user/system 恒保留。
+ * 丢完可丢的仍超预算 → userPinnedOverflow（调用方报错拒续）。
+ *
+ * 注：不按"最后一轮整体保留"（Step 13 前语义）——单轮多回合任务全部消息同属
+ * 最后一轮，按轮保护 = 零压缩空间 = 超预算即拒续（集成测试实证的缺陷）。
  */
 export function trimMessages(messages: ChatMessage[], policy: TrimPolicy): TrimResult {
   const { budget, lowRatio = 0.5 } = policy;
@@ -69,21 +77,81 @@ export function trimMessages(messages: ChatMessage[], policy: TrimPolicy): TrimR
   }
   const low = Math.ceil(budget * lowRatio);
 
-  // 分离 system（如果有）并按回合分组
-  const head = messages[0];
-  const system: ChatMessage[] = head && head.role === "system" ? [head] : [];
-  const body = system.length > 0 ? messages.slice(1) : messages;
+  // 划分单元：user 独立保留；assistant(tool_calls) 吞后续连续 tool 为一个调用单元；
+  // assistant 纯文本自成一单元；system 恒保
+  type Unit = { kind: "pinned" | "work"; msgs: ChatMessage[] };
+  const units: Unit[] = [];
+  let headSystem: ChatMessage[] = [];
+  for (let i = 0; i < messages.length; i++) {
+    const m = messages[i];
+    if (!m) continue;
+    if (i === 0 && m.role === "system") {
+      headSystem = [m];
+      continue;
+    }
+    if (m.role === "user" || m.role === "system") {
+      units.push({ kind: "pinned", msgs: [m] });
+      continue;
+    }
+    if (m.role === "assistant" && m.tool_calls && m.tool_calls.length > 0) {
+      const block: ChatMessage[] = [m];
+      let j = i + 1;
+      while (j < messages.length && messages[j]?.role === "tool") {
+        const t = messages[j];
+        if (t) block.push(t);
+        j++;
+      }
+      units.push({ kind: "work", msgs: block });
+      i = j - 1;
+      continue;
+    }
+    units.push({ kind: "work", msgs: [m] }); // assistant 纯文本 / 孤立 tool（理论不出现）
+  }
 
+  // 工作单元索引（保最近 1 个），从最旧开始丢
+  const workIdx = units.map((u, i) => (u.kind === "work" ? i : -1)).filter((i) => i >= 0);
+  const protectedTail = new Set(workIdx.slice(-1)); // 最近工作状态
+  const removed: ChatMessage[] = [];
+  let keptUnits = units;
+  for (const wi of workIdx) {
+    if (protectedTail.has(wi)) break; // 保住尾部后停止丢弃
+    const est = estimateMessagesTokens([...headSystem, ...keptUnits.flatMap((u) => u.msgs)]);
+    if (est <= low) break;
+    removed.push(...(units[wi]?.msgs ?? []));
+    keptUnits = keptUnits.map((u, i) => (i === wi ? { kind: "pinned" as const, msgs: [] } : u)); // 置空标记
+  }
+  const kept = [...headSystem, ...keptUnits.flatMap((u) => u.msgs)];
+
+  const afterTokens = estimateMessagesTokens(kept);
+  const userPinnedOverflow = afterTokens > budget;
+  return { kept, removed, beforeTokens, afterTokens, ...(userPinnedOverflow ? { userPinnedOverflow: true } : {}) };
+}
+
+/** 按用户轮分组（user 起始新回合；回合内含 assistant/tool 配对与终答） */
+function splitTurns(body: ChatMessage[]): ChatMessage[][] {
   const turns: ChatMessage[][] = [];
   for (const m of body) {
     if (m.role === "user" || turns.length === 0) turns.push([]);
     turns[turns.length - 1]?.push(m);
   }
-  if (turns.length === 0) {
-    return { kept: messages, removed: [], beforeTokens, afterTokens: beforeTokens };
-  }
+  return turns;
+}
 
-  // 从最旧回合开始丢弃，直到 ≤ 低水位或只剩最后一回合（防死循环：极小预算也保最后回合）
+/**
+ * 摘要压缩的区间选择（Step 13 与 trim 语义分离）：仍按【整回合】从最旧开始选，
+ * 供 compactMessages 使用——被选轮的工作交给 LLM 摘要、user 原文由 compact 钉住。
+ * 这是"压缩区间选择"，不是丢弃兜底，与 trimMessages 的钉住语义刻意不同。
+ */
+export function selectCompactRange(messages: ChatMessage[], policy: TrimPolicy): { kept: ChatMessage[]; removed: ChatMessage[] } {
+  const { budget, lowRatio = 0.5 } = policy;
+  const beforeTokens = estimateMessagesTokens(messages);
+  const low = Math.ceil(budget * lowRatio);
+
+  const head = messages[0];
+  const system: ChatMessage[] = head && head.role === "system" ? [head] : [];
+  const body = system.length > 0 ? messages.slice(1) : messages;
+  const turns = splitTurns(body);
+
   const removed: ChatMessage[] = [];
   let keptTurns = turns;
   while (keptTurns.length > 1) {
@@ -92,9 +160,7 @@ export function trimMessages(messages: ChatMessage[], policy: TrimPolicy): TrimR
     removed.push(...(keptTurns[0] ?? []));
     keptTurns = keptTurns.slice(1);
   }
-
-  const kept = [...system, ...keptTurns.flat()];
-  return { kept, removed, beforeTokens, afterTokens: estimateMessagesTokens(kept) };
+  return { kept: [...system, ...keptTurns.flat()], removed: beforeTokens <= budget ? [] : removed };
 }
 
 // ---------------- 摘要压缩（Step 11，FR-59~63）----------------
@@ -167,7 +233,15 @@ export async function compactMessages(messages: ChatMessage[], policy: CompactPo
 
   // ---- 阶段 2：LLM 摘要（FR-61/62）——注意从【原文】取被压缩区间：
   //      降级会砍掉尾部标识符，摘要输入必须信息无损（anchor 才能抽到）----
-  const t = trimMessages(work, { budget, lowRatio });
+  const t = selectCompactRange(work, { budget, lowRatio });
+  if (t.removed.length === 0) {
+    // 没有整轮可摘（如单轮多回合任务的历史）——降级是唯一压缩手段：
+    // 应用试探结果（Step 13 修复：此前该场景试探产物被静默丢弃，事件消失）
+    if (degraded.count > 0) {
+      work = degraded.messages;
+      degradedToolResults = degraded.count;
+    }
+  }
   if (t.removed.length > 0) {
     const pinnedUsers = t.removed.filter((m) => m.role === "user");
     const raw = t.removed.map(renderForSummary).join("\n");
@@ -210,11 +284,21 @@ export async function compactMessages(messages: ChatMessage[], policy: CompactPo
     }
   }
 
-  // 摘要产物若仍超预算，对保留区再做确定性降级（最后一轮永不降级）
+  // 摘要产物若仍超预算，对保留区再做确定性降级（最近一条仍保护）
   if (estimateMessagesTokens(work) > budget) {
     const d2 = degradeOldToolResults(work, { low, degradeThreshold });
     work = d2.messages;
     degradedToolResults += d2.count;
+  }
+  // 绝望降级（Step 13）：仍超预算时连"最近一条 tool 结果"也降级——降级不是丢弃
+  // （消息保留、截断到一行），符合"user 绝不丢"裁决的边界；不这么做 trim 只能拒续，
+  // 单调用对 + 小预算场景会被保护语义死锁（loop 集成测试实证）
+  if (estimateMessagesTokens(work) > budget) {
+    const d3 = degradeOldToolResults(work, { low: budget, degradeThreshold: 0, protectLast: false });
+    if (d3.count > 0) {
+      work = d3.messages;
+      degradedToolResults += d3.count;
+    }
   }
   return finish(work, messages, { dedupedUsers, degradedToolResults, summarizedTurns, beforeTokens });
 }
@@ -239,15 +323,16 @@ function finish(
  *  最近一条 tool 结果（正在使用的工作状态）永不降级 */
 function degradeOldToolResults(
   messages: ChatMessage[],
-  opts: { low: number; degradeThreshold: number },
+  opts: { low: number; degradeThreshold: number; protectLast?: boolean },
 ): { messages: ChatMessage[]; count: number } {
   let out = messages;
   let count = 0;
+  const protectLast = opts.protectLast !== false;
   for (let i = 0; i < out.length; i++) {
     if (estimateMessagesTokens(out) <= opts.low) break;
     const m = out[i];
     if (!m) continue;
-    if (m.role === "tool" && m.content.length > opts.degradeThreshold && !isLastToolResult(out, i)) {
+    if (m.role === "tool" && m.content.length > opts.degradeThreshold && (!protectLast || !isLastToolResult(out, i))) {
       const sliced = m.content.slice(0, 120);
       const total = m.content.length;
       out = out.map((x, j) => (j === i ? { ...x, content: `[工具结果已降级｜原文约${total}字] ${sliced}…` } : x));

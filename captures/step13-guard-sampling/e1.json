@@ -1,0 +1,52 @@
+[
+  {
+    "label": "t1",
+    "prompt": "用一句话介绍你自己",
+    "guards": []
+  },
+  {
+    "label": "t2",
+    "prompt": "查一下北京天气",
+    "guards": []
+  },
+  {
+    "label": "t3",
+    "prompt": "算一下 12345 乘以 67 等于多少",
+    "guards": []
+  },
+  {
+    "label": "t4",
+    "prompt": "今天穿什么衣服合适？",
+    "guards": []
+  },
+  {
+    "label": "t5",
+    "prompt": "帮我记住我喜欢喝美式咖啡",
+    "guards": []
+  },
+  {
+    "label": "t6",
+    "prompt": "北京和上海哪个更适合旅游？说说理由",
+    "guards": []
+  },
+  {
+    "label": "t7",
+    "prompt": "写一句关于秋天的诗",
+    "guards": []
+  },
+  {
+    "label": "t8",
+    "prompt": "你有哪些工具可以用？",
+    "guards": []
+  },
+  {
+    "label": "t9",
+    "prompt": "用 calculate 算 (45+55)/2 再乘以 3",
+    "guards": []
+  },
+  {
+    "label": "t10",
+    "prompt": "上海明天会下雨吗？",
+    "guards": []
+  }
+]

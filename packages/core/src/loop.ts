@@ -93,9 +93,18 @@ export async function* runAgent(
       }
     }
 
-    // ---- 丢弃兜底（Step 3，FR-20/21）：压缩后仍超预算才裁，一次裁到低水位 ----
+    // ---- 丢弃兜底（Step 3 FR-20/21 + Step 13 钉住语义）：压缩后仍超预算才裁 ----
     if (config.contextBudgetTokens) {
       const t = trimMessages(messages, { budget: config.contextBudgetTokens });
+      // user 绝不丢（Step 13 用户裁决）：丢无可丢仍超预算 → 报错拒续，不静默丢弃指令
+      if (t.userPinnedOverflow) {
+        yield {
+          type: "error",
+          message: `上下文预算 ${config.contextBudgetTokens} 估算 token 连用户指令总量都装不下（user 消息绝不丢弃）。请调大 --max-context-tokens，或 /reset 开新会话`,
+          recoverable: false,
+        };
+        return;
+      }
       if (t.removed.length > 0) {
         // 原地替换：调用方持有的 messages 引用不变（不变量1 的载体）
         messages.length = 0;

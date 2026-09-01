@@ -209,11 +209,24 @@ function pickStr(obj: Record<string, unknown>, key: string): string | undefined 
 function extractUsage(chunk: unknown): Usage | undefined {
   if (!isObj(chunk)) return undefined;
   const u = chunk["usage"];
-  if (!isObj(u)) return undefined;
-  const p = u["prompt_tokens"];
-  const c = u["completion_tokens"];
-  if (typeof p !== "number" || typeof c !== "number") return undefined;
-  return { promptTokens: p, completionTokens: c };
+  if (isObj(u)) {
+    const p = u["prompt_tokens"];
+    const c = u["completion_tokens"];
+    if (typeof p === "number" && typeof c === "number") return { promptTokens: p, completionTokens: c };
+  }
+  // llama.cpp 非标准回退（Step 13 修复）：流式不带标准 usage，但末帧带 timings——
+  // prompt_n 是本次实际处理的 prompt token（不含缓存命中），全量 = prompt_n + cache_n；
+  // predicted_n 是生成 token。此前 CLI 恒显示 0 是误导性 UI（实测 captures/win-ac-*）
+  const t = chunk["timings"];
+  if (isObj(t)) {
+    const pn = t["prompt_n"];
+    const cn = t["cache_n"];
+    const gn = t["predicted_n"];
+    if (typeof pn === "number" && typeof gn === "number") {
+      return { promptTokens: pn + (typeof cn === "number" ? cn : 0), completionTokens: gn };
+    }
+  }
+  return undefined;
 }
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
