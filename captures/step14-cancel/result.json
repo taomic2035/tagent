@@ -1,0 +1,25 @@
+{
+  "cancelRun": {
+    "ms": 3506,
+    "interrupted": true,
+    "finalContent": null
+  },
+  "resumeRun": {
+    "ms": 12100,
+    "hasFinal": true
+  },
+  "messagesRoles": [
+    "system",
+    "user",
+    "user",
+    "assistant",
+    "tool",
+    "assistant"
+  ],
+  "checks": {
+    "interruptedFired": true,
+    "cancelWasFast": true,
+    "resumeSucceeded": true,
+    "noOrphanTool": true
+  }
+}

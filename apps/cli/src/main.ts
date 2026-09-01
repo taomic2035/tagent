@@ -146,6 +146,13 @@ function render(ev: AgentEvent, state: { toolStart: number }): void {
     case "steering":
       writeLine(paint.yellow(`↪ 注入用户中途指令：${ev.message}`));
       break;
+    case "interrupted":
+      writeLine(
+        paint.yellow(
+          `⛔ 已取消（截获正文 ${ev.partialText.length} 字、工具调用分片 ${ev.partialToolCalls} 个——半截内容不入上下文，可继续提问）`,
+        ),
+      );
+      break;
     case "tool-call":
       state.toolStart = Date.now();
       writeLine();
@@ -241,7 +248,7 @@ function handleCommand(line: string): boolean {
 const steeringQueue: string[] = [];
 let busy = false;
 
-async function chat(input: string): Promise<void> {
+async function chat(input: string, cancelSignal?: AbortSignal): Promise<void> {
   messages.push({ role: "user", content: input });
   const state = { toolStart: 0 };
   const engine = config.reactMode ? runReAct : runAgent; // 两引擎同事件契约（FR-28）
@@ -269,11 +276,17 @@ async function chat(input: string): Promise<void> {
       }
     : undefined;
   // steering 只接 runAgent（ReAct 引擎留待需要时，REQUIREMENTS §15 边界）
+  // 取消信号经 ToolContext 传入（Step 14，FR-74/76）：fetch 中断 + 工具协作取消
   const gen = config.reactMode
     ? engine({ client, registry, config }, messages)
-    : runAgent({ client, registry, config, ...(summarize ? { summarize } : {}) }, messages, undefined, {
-        take: () => steeringQueue.splice(0),
-      });
+    : runAgent(
+        { client, registry, config, ...(summarize ? { summarize } : {}) },
+        messages,
+        cancelSignal ? { signal: cancelSignal } : undefined,
+        {
+          take: () => steeringQueue.splice(0),
+        },
+      );
   for await (const ev of gen) {
     record(ev); // 每个事件落盘（制度：NFR-4）
     render(ev, state);
@@ -317,12 +330,33 @@ function main(): void {
 
   const rl = createInterface({ input: process.stdin, output: process.stdout, prompt: paint.green("你> ") });
   rl.prompt();
+  // Ctrl-C 取消（Step 14，FR-77）：第一次中断当前生成（回提示符，会话可续），
+  // 1 秒内连按两次才退出进程；ReAct 模式不接取消（签名无 ctx，§19 边界）
+  let lastSigint = 0;
+  let cancelController: AbortController | undefined;
+  rl.on("SIGINT", () => {
+    if (!busy) {
+      process.exit(0); // 空闲时 Ctrl-C 直接退出（readline 默认行为兜底）
+    }
+    const now = Date.now();
+    if (now - lastSigint < 1000) {
+      writeLine(paint.red("⛔ 连续中断，退出"));
+      process.exit(130);
+    }
+    lastSigint = now;
+    if (cancelController) cancelController.abort();
+    else process.exit(130);
+  });
+
   const submit = (text: string): void => {
     busy = true;
-    chat(text)
+    cancelController = new AbortController();
+    const signal = cancelController.signal;
+    chat(text, signal)
       .catch((err) => writeLine(paint.red(`✖ ${err.message}`)))
       .finally(() => {
         busy = false;
+        cancelController = undefined;
         writeLine();
         // followUp（FR-58）：生成结束后队列余量合并为下一轮提问
         const follow = steeringQueue.splice(0);

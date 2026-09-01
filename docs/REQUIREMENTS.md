@@ -460,3 +460,27 @@
 | AC14-2 | user 绝不丢 | 单测：溢出时 error 事件 + user 一条不少 + 零 LLM 请求；正常路径 user 全保 |
 | AC14-3 | 瑕疵四件 | ReAct 警告可见；check-all.sh 顺序正确非零退出；pre-commit 拦截构建失败；SURVEY 修正引用并附核查附录 |
 | AC14-4 | 真实采样 | 三实验产出数据入 captures/step13-guard-sampling/，结论如实写入 ACCEPTANCE（含"未发生"也是结论） |
+
+## 19. Step 14 需求增补：硬取消（AbortSignal 贯穿）（2026-09-01）
+
+> 来源：Step 10 明确留界"硬取消留待并发步"；Step 12 补了并发（并行执行），
+> 本步补另一半（取消语义）。现状 Ctrl-C 直接杀进程——会话与已回填状态全丢。
+> 知识点：AbortController 传播、fetch 中断、协作式工具取消、取消的同步点。
+
+### 19.1 功能需求
+
+| ID | 需求 | 说明 | 优先级 |
+|---|---|---|---|
+| FR-74 | 流取消 | ChatRequest 携带 signal（内部字段，发送前剥离）：fetch 中断 → loop 捕获 AbortError → `interrupted` 事件 → 干净退出 | P0 |
+| FR-75 | messages 完整性 | 取消时半截内容绝不组装回填：残缺 tool_calls 不回填（Step 9 教训），半截文本不进 messages（停在最后完整状态）；半截量进事件供存证 | P0 |
+| FR-76 | 工具协作取消 | 外层 signal 与超时 signal 组合（AbortSignal.any，修复超时覆盖外层的既有断点）传给工具；attempt 间检查外层 aborted → 中断信封；下个同步点退出 | P0 |
+| FR-77 | CLI 取消语义 | Ctrl-C 取消当前生成回提示符（会话可续），1 秒内连按两次退出进程；ReAct 引擎不接取消（签名无 ctx，如实记录边界） | P0 |
+
+### 19.2 验收标准（AC15-x）
+
+| ID | 场景 | 通过标准 |
+|---|---|---|
+| AC15-1 | 流中断 | 单测：abort 后 interrupted 事件、messages 无半截 assistant、fetch 收到 signal |
+| AC15-2 | 工具取消 | 单测：hang 工具监听 signal 被唤醒退出；外层 signal 不再被超时覆盖 |
+| AC15-3 | 真机取消可续 | CLI 长任务运行中 SIGINT → 回提示符 → 同一会话继续提问正常作答（messages 保留） |
+| AC15-4 | 回归 | 131 项既有测试全绿；六场景验收不回归 |

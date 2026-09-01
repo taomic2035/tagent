@@ -31,6 +31,8 @@ export interface ChatRequest {
   messages: ChatMessage[];
   tools?: ToolDef[];
   temperature?: number;
+  /** 取消信号（Step 14，FR-74）：内部字段，构造请求体前剥离——不进 HTTP 报文 */
+  signal?: AbortSignal;
   /** 请求级模板参数（Step 4，FR-23）：如 {enable_thinking:false}。
    *  llama.cpp 实测有效；MLX 侧忽略未知字段。缺省不携带（请求体与旧版逐字节同形）。 */
   chatTemplateKwargs?: Record<string, unknown>;
@@ -66,6 +68,9 @@ export class OpenAIClient implements LLMClient {
     const init: RequestInit = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      // 取消信号直通 fetch（Step 14，FR-74）：abort 时 fetch 抛 AbortError，
+      // 由 loop 捕获转 interrupted 事件。signal 是内部字段，从不进请求体
+      ...(req.signal ? { signal: req.signal } : {}),
       body: JSON.stringify({
         model: this.model,
         messages: req.messages,

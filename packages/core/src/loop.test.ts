@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { z } from "zod";
 import { runAgent, type AgentEvent, type AgentDeps } from "./loop.js";
+import { TransientToolError } from "./tools.js";
 import { ToolRegistry } from "./tools.js";
 import type { LLMClient } from "./client.js";
 import type { AgentConfig, ChatMessage, StreamEvent, Tool } from "./types.js";
@@ -777,4 +778,116 @@ test("并行·同帧两个 remember 走互斥键串行（FR-66，registry 队列
   );
   // 并行批次内部，同键的两个写被队列串行化（时间线无交错）
   assert.deepEqual(timeline, ["start-甲", "end-甲", "start-乙", "end-乙"]);
+});
+
+// ============================================================
+// 硬取消（Step 14，FR-74~76）
+// ============================================================
+
+test("取消·流中断：abort 后 interrupted 事件，messages 无半截内容（FR-74/75）", async () => {
+  const messages: ChatMessage[] = [{ role: "user", content: "长任务" }];
+  const controller = new AbortController();
+  // 模拟流传输中 abort：吐几个 delta 后触发 signal，fetch 层抛 AbortError
+  const client: LLMClient = {
+    async *stream(req: { signal?: AbortSignal }) {
+      yield { type: "text-delta", delta: "已经生成了半截" };
+      controller.abort();
+      // 模拟 fetch 感知 signal 后抛出（真实 fetch 在 abort 时 reject）
+      if (req.signal?.aborted) throw Object.assign(new Error("This operation was aborted"), { name: "AbortError" });
+      yield { type: "text-delta", delta: "不应到达" };
+      yield done("stop");
+    },
+  };
+  const events = await collect(
+    runAgent(
+      { client, registry: makeRegistry(), config: { ...config, systemPrompt: "" } },
+      messages,
+      { signal: controller.signal },
+    ),
+  );
+  const interrupted = events.find((e): e is Extract<AgentEvent, { type: "interrupted" }> => e.type === "interrupted");
+  assert.ok(interrupted, "应产生 interrupted 事件");
+  assert.equal(interrupted.partialText, "已经生成了半截", "半截量进事件（存证）");
+  assert.ok(!events.some((e) => e.type === "final"), "取消不是完成");
+  // messages 完整性：半截 assistant 绝不回填，停在 user
+  assert.deepEqual(
+    messages.map((m) => m.role),
+    ["user"],
+  );
+});
+
+test("取消·轮首同步点：abort 后不再发起 LLM 请求（FR-74）", async () => {
+  const messages: ChatMessage[] = [{ role: "user", content: "任务" }];
+  const controller = new AbortController();
+  let calls = 0;
+  const client: LLMClient = {
+    async *stream() {
+      calls++;
+      yield toolDelta(0, "id-1", '{"text":"x"}');
+      yield done("tool_calls");
+    },
+  };
+  controller.abort(); // 工具轮结束后（下一轮开始前）已取消
+  const events = await collect(
+    runAgent(
+      { client, registry: makeRegistry(), config: { ...config, systemPrompt: "", maxIterations: 3 } },
+      messages,
+      { signal: controller.signal },
+    ),
+  );
+  assert.equal(calls, 0, "取消在先：零请求");
+  assert.ok(events.some((e) => e.type === "interrupted"));
+});
+
+test("取消·工具协作：外层 signal 不再被超时 signal 覆盖（FR-76，Step 14 修复的既有断点）", async () => {
+  const reg = new ToolRegistry();
+  let sawOuterSignal = false;
+  const hangTool: Tool<z.ZodObject<{ v: z.ZodString }>> = {
+    name: "hang",
+    description: "挂起直到 signal",
+    schema: z.object({ v: z.string() }),
+    policy: { timeoutMs: 5000 },
+    execute: async (args, ctx) => {
+      // 工具收到的是组合 signal：外层 abort 也能唤醒（修复前只听超时信号）
+      sawOuterSignal = ctx.signal !== undefined;
+      await new Promise<void>((resolve) => {
+        ctx.signal?.addEventListener("abort", () => resolve(), { once: true });
+      });
+      return { woke: true, v: args.v };
+    },
+  };
+  reg.register(hangTool);
+  const controller = new AbortController();
+  const p = reg.execute("hang", '{"v":"x"}', { signal: controller.signal });
+  await new Promise((r) => setTimeout(r, 50));
+  controller.abort(); // 外层取消（非超时）
+  const result = JSON.parse(await p);
+  assert.ok(sawOuterSignal, "工具收到了 signal 通道");
+  assert.equal(result.ok, true, "外层 abort 唤醒挂起工具后正常返回（协作式取消）");
+});
+
+test("取消·attempt 间检查：中断后不再重试（FR-76）", async () => {
+  const reg = new ToolRegistry();
+  let calls = 0;
+  const flaky: Tool<z.ZodObject<{ v: z.ZodString }>> = {
+    name: "flaky",
+    description: "f",
+    schema: z.object({ v: z.string() }),
+    policy: { retries: 3, retryDelayMs: 30 },
+    execute: async () => {
+      calls++;
+      throw new TransientToolError("瞬时");
+    },
+  };
+  reg.register(flaky);
+  const controller = new AbortController();
+  const p = (async () => {
+    const first = reg.execute("flaky", '{"v":"x"}', { signal: controller.signal });
+    await new Promise((r) => setTimeout(r, 20));
+    controller.abort();
+    return JSON.parse(await first);
+  })();
+  const result = await p;
+  assert.ok(calls <= 2, `中断后不再重试（实际尝试 ${calls} 次）`);
+  assert.equal(result.ok, false);
 });

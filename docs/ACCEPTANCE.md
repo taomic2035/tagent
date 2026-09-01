@@ -485,3 +485,34 @@ SURVEY.md §6 建议路线四步全部真机验收落地，每步都带回真机
 3. 终版：单元级丢弃（调用对/assistant 文本为单元）+ 保最近 1 单元 + 绝望降级
    （最近 tool 结果也可降级——消息保留≠丢弃）+ 纯 user 超限才真正拒续
 低水位承诺在钉住语义下从"保证"降级为"尽力"（user 总量可能超低水位），如实记载。
+
+## Step 14 真机验收报告（AC15-1~4，2026-09-01，硬取消）
+
+> 来源：Step 10 留界"硬取消待并发步"，Step 12 补并行后本步补取消——并发知识的
+> 另一半。证据：captures/step14-cancel/（events.jsonl + result.json）+ 既有套件。
+
+| # | 判定 | 证据 |
+|---|---|---|
+| AC15-1 流中断 | ✅ | 单测：abort → interrupted 事件（半截量进事件）、messages 停在完整状态、fetch 感知 signal |
+| AC15-2 工具取消 | ✅ | 单测：hang 工具被外层 signal 唤醒（AbortSignal.any 组合，修复超时覆盖外层的既有断点）；attempt 间检查中断后不再重试 |
+| AC15-3 真机取消可续 | ✅ | 真引擎全链路：3.5s 定时 abort → 3506ms interrupted 准点生效；同会话续问 12.1s 正常作答且能引用首轮已回填的天气数据；无孤儿 tool 配对 |
+| AC15-4 回归 | ✅ | 134 项单测全绿（core 93 + cli 41）；六场景验收全过 |
+
+### 验收方法的平台限制（如实）
+
+AC15-3 的"Ctrl-C 回提示符"（readline SIGINT 层）在 Windows 下**无法从外部自动化
+注入**（libuv 不提供跨进程 CTRL_C_EVENT；交互终端手动 Ctrl-C 可用）。故用等价
+全链路验证替代：真引擎 + 真 SSE 流 + AbortController 直接 abort——覆盖 fetch 中断、
+interrupted 事件、messages 完整性、续问可续的全部断言；仅 readline 事件层留待
+人工终端验证（scripts/cancel-verify.mjs 头注释记录）。
+
+### 设计取舍记录
+
+- **半截内容不回填**：残缺 tool_calls 绝不进上下文（Step 9 教训沿用）；半截正文
+  也不进 messages（停在最后完整状态）——半截量记录在 interrupted 事件里供存证
+- **取消是协作式不是硬杀**：工具执行段在下个同步点退出（attempt 间检查 + signal
+  组合唤醒挂起工具），不破坏"恒不抛"信封契约；已发生的副作用不回滚（取消语义
+  是"停止后续"，如实记录）
+- **修复的既有断点**：tools.ts 的超时 signal 此前直接覆盖外层 signal——外层取消
+  永远传不进工具（本步测试逼出的发现）
+- ReAct 引擎不接取消（runReAct 签名无 ctx，§19 边界如实记录）

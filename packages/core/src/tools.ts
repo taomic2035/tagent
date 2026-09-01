@@ -171,9 +171,17 @@ async function runWithPolicy(
   let lastTransient: Error | undefined;
 
   for (let attempt = 1; attempt <= attempts; attempt++) {
-    // 每次尝试独立的取消信号（§11.2）：超时只放弃当次尝试，不污染重试
+    // 外层取消检查（Step 14，FR-76）：用户中断后不再发起下一次尝试
+    if (outerCtx?.signal?.aborted) {
+      return { ok: false, error: "（执行被中断：外层取消信号已触发）" };
+    }
+    // 每次尝试独立的超时信号（§11.2）：超时只放弃当次尝试，不污染重试；
+    // 与外层取消信号组合（Step 14 修复既有断点：此前超时 signal 直接覆盖
+    // 外层 signal，取消永远传不进工具）
     const controller = new AbortController();
-    const ctx: ToolContext = { ...outerCtx, signal: controller.signal };
+    const signals: AbortSignal[] = [controller.signal];
+    if (outerCtx?.signal) signals.push(outerCtx.signal);
+    const ctx: ToolContext = { ...outerCtx, signal: signals.length === 1 ? controller.signal : AbortSignal.any(signals) };
 
     const outcome = await attemptOnce(
       tool,

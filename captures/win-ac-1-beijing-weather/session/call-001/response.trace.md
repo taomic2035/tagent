@@ -6,14 +6,14 @@
 
 | 指标 | 值 |
 |---|---|
-| 数据帧总数 | 52 |
+| 数据帧总数 | 70 |
 | keepalive 注释帧 | 0 |
-| 思考 token（reasoning） | 45 |
+| 思考 token（reasoning） | 63 |
 | 正文 token（text） | 0 |
 | tool_call 分片 | 5 |
 | finish_reason | tool_calls |
 | 收到 [DONE] | 是 |
-| 文件字节数 | 15539 |
+| 文件字节数 | 20714 |
 
 ## 溯源表（按流生成顺序；内容列超 48 字符截断）
 
@@ -36,36 +36,54 @@
 | 15 | reasoning | 16 | 31 | 4350 | 。 |
 | 16 | reasoning | 17 | 33 | 4637 | 根据 |
 | 17 | reasoning | 18 | 35 | 4927 | 工具 |
-| 18 | reasoning | 19 | 37 | 5217 | 定义 |
+| 18 | reasoning | 19 | 37 | 5217 | 描述 |
 | 19 | reasoning | 20 | 39 | 5507 | ， |
 | 20 | reasoning | 21 | 41 | 5794 | get |
 | 21 | reasoning | 22 | 43 | 6081 | _weather |
 | 22 | reasoning | 23 | 45 | 6373 |   |
 | 23 | reasoning | 24 | 47 | 6658 | 函数 |
-| 24 | reasoning | 25 | 49 | 6948 | 需要 |
-| 25 | reasoning | 26 | 51 | 7238 |  city |
-| 26 | reasoning | 27 | 53 | 7527 |   |
-| 27 | reasoning | 28 | 55 | 7812 | 参数 |
-| 28 | reasoning | 29 | 57 | 8102 | ， |
-| 29 | reasoning | 30 | 59 | 8389 | 城市 |
-| 30 | reasoning | 31 | 61 | 8679 | 名 |
-| 31 | reasoning | 32 | 63 | 8966 | 可以是 |
-| 32 | reasoning | 33 | 65 | 9259 | \" |
-| 33 | reasoning | 34 | 67 | 9545 | 北京 |
-| 34 | reasoning | 35 | 69 | 9835 | \" |
-| 35 | reasoning | 36 | 71 | 10121 | 。 |
-| 36 | reasoning | 37 | 73 | 10408 | 这是一个 |
-| 37 | reasoning | 38 | 75 | 10704 | 简单的 |
-| 38 | reasoning | 39 | 77 | 10997 | 查询 |
-| 39 | reasoning | 40 | 79 | 11287 | ， |
-| 40 | reasoning | 41 | 81 | 11574 | 不需要 |
-| 41 | reasoning | 42 | 83 | 11867 | 调用 |
-| 42 | reasoning | 43 | 85 | 12157 | 其他 |
-| 43 | reasoning | 44 | 87 | 12447 | 工具 |
-| 44 | reasoning | 45 | 89 | 12737 | 。 |
-| 45 | reasoning | 46 | 91 | 13024 | \n |
-| 46 | tool-call | 47 | 93 | 13310 | name=get_weather args={ |
-| 47 | tool-call | 48 | 95 | 13706 | name=null args=\"city\":\" |
-| 48 | tool-call | 49 | 97 | 14033 | name=null args=北京 |
-| 49 | tool-call | 50 | 99 | 14355 | name=null args=\" |
-| 50 | tool-call | 51 | 101 | 14673 | name=null args=} |
+| 24 | reasoning | 25 | 49 | 6948 | 支持 |
+| 25 | reasoning | 26 | 51 | 7238 | 查询 |
+| 26 | reasoning | 27 | 53 | 7528 | 北京 |
+| 27 | reasoning | 28 | 55 | 7818 | / |
+| 28 | reasoning | 29 | 57 | 8103 | 上海 |
+| 29 | reasoning | 30 | 59 | 8393 | / |
+| 30 | reasoning | 31 | 61 | 8678 | 广州 |
+| 31 | reasoning | 32 | 63 | 8968 | / |
+| 32 | reasoning | 33 | 65 | 9253 | 深圳 |
+| 33 | reasoning | 34 | 67 | 9543 | / |
+| 34 | reasoning | 35 | 69 | 9828 | 杭州 |
+| 35 | reasoning | 36 | 71 | 10118 | 的天气 |
+| 36 | reasoning | 37 | 73 | 10411 | ， |
+| 37 | reasoning | 38 | 75 | 10698 | 参数 |
+| 38 | reasoning | 39 | 77 | 10988 | 需要 |
+| 39 | reasoning | 40 | 79 | 11278 |  city |
+| 40 | reasoning | 41 | 81 | 11567 |   |
+| 41 | reasoning | 42 | 83 | 11852 | 字段 |
+| 42 | reasoning | 43 | 85 | 12142 | ， |
+| 43 | reasoning | 44 | 87 | 12429 | 值为 |
+| 44 | reasoning | 45 | 89 | 12719 | 城市 |
+| 45 | reasoning | 46 | 91 | 13009 | 名 |
+| 46 | reasoning | 47 | 93 | 13296 | 。 |
+| 47 | reasoning | 48 | 95 | 13583 | \n\n |
+| 48 | reasoning | 49 | 97 | 13871 | 用户 |
+| 49 | reasoning | 50 | 99 | 14161 | 问 |
+| 50 | reasoning | 51 | 101 | 14448 | 的是 |
+| 51 | reasoning | 52 | 103 | 14738 | 北京 |
+| 52 | reasoning | 53 | 105 | 15028 | ， |
+| 53 | reasoning | 54 | 107 | 15315 | 所以 |
+| 54 | reasoning | 55 | 109 | 15605 |  city |
+| 55 | reasoning | 56 | 111 | 15894 |   |
+| 56 | reasoning | 57 | 113 | 16179 | 参数 |
+| 57 | reasoning | 58 | 115 | 16469 | 应该 |
+| 58 | reasoning | 59 | 117 | 16759 | 设为 |
+| 59 | reasoning | 60 | 119 | 17049 | \" |
+| 60 | reasoning | 61 | 121 | 17335 | 北京 |
+| 61 | reasoning | 62 | 123 | 17625 | \" |
+| 62 | reasoning | 63 | 125 | 17911 | 。 |
+| 63 | reasoning | 64 | 127 | 18198 | \n |
+| 64 | tool-call | 65 | 129 | 18484 | name=get_weather args={ |
+| 65 | tool-call | 66 | 131 | 18880 | name=null args=\"city\":\" |
+| 66 | tool-call | 67 | 133 | 19207 | name=null args=北京 |
+| 67 | tool-call | 68 | 135 | 19529 | name=null args=\" |
+| 68 | tool-call | 69 | 137 | 19847 | name=null args=} |

@@ -18,6 +18,7 @@ export type AgentEvent =
   | { type: "context-trimmed"; removedMessages: number; fromTokens: number; toTokens: number }
   | { type: "guard"; guard: "empty-response" | "repetition" | "length-truncated"; detail: string }
   | { type: "steering"; message: string }
+  | { type: "interrupted"; partialText: string; partialToolCalls: number }
   | {
       type: "context-compacted";
       dedupedUsers: number;
@@ -120,6 +121,12 @@ export async function* runAgent(
 
     yield { type: "round-start", round };
 
+    // 取消同步点（Step 14，FR-74）：中断后不再发起新的 LLM 请求
+    if (ctx?.signal?.aborted) {
+      yield { type: "interrupted", partialText: "", partialToolCalls: 0 };
+      return;
+    }
+
     // ---- steering 注入（Step 10，FR-56/57）：每轮请求前取走排队指令 ----
     // 第 1 轮不注入（首轮时用户最新意图就是初始消息）；注入点在裁剪之后
     // （新指令绝不能被本轮裁掉）；追加进 messages 保前缀只增不改。
@@ -137,31 +144,42 @@ export async function* runAgent(
     let textBuf = "";
     let finishReason: "stop" | "tool_calls" | "length" = "stop";
 
-    for await (const ev of client.stream({
-      messages,
-      tools: registry.schemas(),
-      temperature: config.temperature,
-      ...(config.thinking !== undefined ? { chatTemplateKwargs: { enable_thinking: config.thinking } } : {}),
-    })) {
+    try {
+      for await (const ev of client.stream({
+        messages,
+        tools: registry.schemas(),
+        temperature: config.temperature,
+        ...(config.thinking !== undefined ? { chatTemplateKwargs: { enable_thinking: config.thinking } } : {}),
+        ...(ctx?.signal ? { signal: ctx.signal } : {}),
+      })) {
       if (ev.type === "reasoning-delta") {
-        yield ev; // 透传渲染，不积累
+          yield ev; // 透传渲染，不积累
       } else if (ev.type === "text-delta") {
-        textBuf += ev.delta;
-        yield ev;
+          textBuf += ev.delta;
+          yield ev;
       } else if (ev.type === "tool-call-delta") {
-        // OpenAI 式分片：同 index 的 id/name/args 分多帧到达，逐段合并（PROTOCOL.md §5.2）
-        const slot = slots.get(ev.index) ?? { argsBuf: "" };
-        if (ev.id) slot.id = ev.id;
-        if (ev.name) slot.name = ev.name;
-        if (ev.argsDelta) slot.argsBuf += ev.argsDelta;
-        slots.set(ev.index, slot);
-      } else {
-        finishReason = ev.finishReason;
-        if (ev.usage) {
-          totalUsage.promptTokens += ev.usage.promptTokens;
-          totalUsage.completionTokens += ev.usage.completionTokens;
-        }
+          // OpenAI 式分片：同 index 的 id/name/args 分多帧到达，逐段合并（PROTOCOL.md §5.2）
+          const slot = slots.get(ev.index) ?? { argsBuf: "" };
+          if (ev.id) slot.id = ev.id;
+          if (ev.name) slot.name = ev.name;
+          if (ev.argsDelta) slot.argsBuf += ev.argsDelta;
+          slots.set(ev.index, slot);
+          } else {
+            finishReason = ev.finishReason;
+            if (ev.usage) {
+              totalUsage.promptTokens += ev.usage.promptTokens;
+              totalUsage.completionTokens += ev.usage.completionTokens;
+            }
+          }
       }
+    } catch (err) {
+      // 取消主路径（FR-74/75）：fetch abort 抛 AbortError——半截内容不组装不回填，
+      // messages 停在最后完整状态（残缺 tool_calls 绝不进上下文，Step 9 教训）
+      if (ctx?.signal?.aborted || (err instanceof Error && err.name === "AbortError")) {
+        yield { type: "interrupted", partialText: textBuf, partialToolCalls: slots.size };
+        return;
+      }
+      throw err; // 非取消异常维持原语义：向上抛
     }
 
     // ---- 组装 assistant 消息入档（reasoning 丢弃，不变量4）----
