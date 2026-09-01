@@ -59,7 +59,15 @@ packages:
 }
 ```
 
-`packages/core/tsconfig.json`：`{ "extends": "../../tsconfig.base.json" }`
+`packages/core/tsconfig.json`（**必须重声明 outDir/rootDir**——extends 语义下
+这两个路径按 base 所在目录解析，不重声明编译必报 `not under 'rootDir'`，
+真机验证踩过的坑）：
+```json
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": { "outDir": "dist", "rootDir": "src" }
+}
+```
 
 **为什么分家**：大脑要被多种壳带走（第 8 章手机壳直接 import packages/core），
 所以物理隔离；大脑零依赖（HTTP 用内置 fetch、解析手写）是"一份大脑到处跑"
@@ -370,7 +378,7 @@ export class OpenAIClient implements LLMClient {
 }
 ```
 
-`apps/cli/tsconfig.json`：`{ "extends": "../../tsconfig.base.json" }`
+`apps/cli/tsconfig.json`：同上结构（extends + 重声明 outDir/rootDir）
 
 `apps/cli/src/main.ts`（v0.3 全量）：
 

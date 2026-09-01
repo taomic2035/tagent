@@ -145,7 +145,12 @@ tool_calls=要干活 / length=被截断）；`content: null`（也可能与文�
 cd packages/core && pnpm add zod
 ```
 
-`packages/core/src/types.ts`（本章新增，全量）：
+先做一次**类型迁移**（真机验证发现的必要步骤）：`ChatMessage` 从 client.ts
+**迁到** types.ts 并扩展 tool 消息；client.ts 删除本地定义、改为
+`import type { ChatMessage } from "./types.js"; export type { ChatMessage };`
+（保持旧引用不断）。
+
+`packages/core/src/types.ts`（本章终态，全量）：
 
 ```ts
 import type { z } from "zod";
@@ -404,7 +409,8 @@ export async function* runAgent(
 }
 ```
 
-client 的 StreamEvent 扩展（`sseEvents` 解析里追加 tool_calls 段）：
+client.ts 的三处扩展（ChatRequest / StreamEvent / sseEvents——注意 cast 类型
+也要带 tool_calls 字段，否则编译不过）：
 
 ```ts
 export type StreamEvent =
@@ -430,7 +436,9 @@ if (Array.isArray(tcs)) {
     };
   }
 }
-// finish_reason 判定加 "tool_calls" 分支（见 02 章 sseEvents 同位置）
+// finish_reason 判定加 "tool_calls"（三值联合：变量声明与判定同步改）；
+// 另两处：ChatRequest 加 tools?: ToolDef[]（stream 请求体序列化带上
+// tools: req.tools）；sseEvents 的 cast 类型加 tool_calls?: unknown
 ```
 
 壳渲染（`apps/cli/src/main.ts` 循环调用处）：

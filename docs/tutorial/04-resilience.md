@@ -124,14 +124,27 @@ export class TransientToolError extends Error {
   constructor(message: string) { super(message); this.name = "TransientToolError"; }
 }
 
-// Tool 增加可选 policy（types.ts）：
+// Tool 接口演进（types.ts——两个新类型 + execute 加第二参数 + policy 字段；
+// 不做这步，策略层的 ctx.signal 无处安放，编译不过）：
 export interface ToolExecPolicy {
   timeoutMs?: number;      // 单次超时；超时视为可重试
   retries?: number;        // 瞬时失败重试次数（默认 0）
   retryDelayMs?: number;   // 线性退避：第 n 次前等 n × retryDelayMs
 }
+export interface ToolContext {
+  signal?: AbortSignal;    // 超时/取消的协作信号（深入②的主角）
+}
+export interface Tool<T extends z.ZodType = z.ZodType> {
+  name: string;
+  description: string;
+  schema: T;
+  execute: (args: z.infer<T>, ctx: ToolContext) => Promise<unknown>;
+  policy?: ToolExecPolicy;
+}
+// TS 兼容性顺带说明：已有工具的 execute 少写 ctx 参数也不报错
+// （少参函数可赋给多参签名），但要用 signal 的工具必须显式接收
 
-// 段 4 替换为：return runWithPolicy(tool, parsed.data, tool.policy ?? {});
+// tools.ts 段 4 替换为：return runWithPolicy(tool, parsed.data, tool.policy ?? {});
 ```
 
 ## 深入一层 ②：Promise.race 不取消输家——超时为什么必须配合 abort
