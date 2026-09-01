@@ -275,3 +275,50 @@ Step 6 的 `--memory` 注入当时实为死代码（验收恰靠 recall 工具�
 思考预算要给足或默认关（越大的模型越需要）、native tool calling 恒为最优驱动、
 受限解码在任何规模都是可靠性的免费保险。「模型升级」与「壳兜底」是互补关系，
 不是替代关系——这正是 FALLBACK.md 总纲在两代模型上的实证。
+
+## R3 移动瘦客户端真机验收报告（AC9-1~5，2026-09-01）
+
+> 真机：华为 Mate 40 Pro（Android 12），adb reverse tcp:8081 连 Windows/llama.cpp（Qwen3.5-4B）。
+> 证据：`captures/step9-mobile-*.png`（4 张）+ `D:/LLM/llama_server.log.err` 服务器日志（7 次请求完成）
+> + 云端视觉模型（qwen3.7-plus）逐字读屏复核。agent 代码零改动——第三种壳语言直接复用同一协议。
+
+| # | 判定 | 证据 |
+|---|---|---|
+| AC9-1 管道 | ✅ | 手机发 "hello"，服务器侧 `total time = 16176.46 ms / 232 tokens`；共 7 次请求全部完成往返 |
+| AC9-2 中文多轮 | ✅ | 三道中文挑战题连续往返；第 2 题 prompt eval 仅 27 tok = KV cache 前缀命中（历史累积、非重发） |
+| AC9-3 防过度思考 | ✅ | 同题 A/B 见下表——**关思考快 11 倍且答对，开思考把渲染线程压垮** |
+| AC9-4 视觉核验 | ✅ | 4 张截图经独立视觉模型逐字读屏：用户消息、思考灰斜体、复选框状态、无 "null" 残留全部如实 |
+| AC9-5 环境归还 | ✅ | ADBKeyboard 用后 `ime set` 还原百度输入法 |
+
+### AC9-3 防过度思考 A/B（同题：strawberry 里有几个 r？）
+
+| 思考 | 生成 token | 耗时 | 结果 |
+|---|---|---|---|
+| ON | 1251 | 90.0 s | 内耗：1224 个 reasoning 增量把手机主线程压垮（见 AC9-3 修复记） |
+| OFF | **131** | **7.9 s** | **答对**：逐字母数出 3 个 r（131 tok 里含逐字母清单） |
+
+同一题省 9.5 倍 token、快 11 倍且答对——FALLBACK.md §1.6「开关落在协议层」的移动端实证：
+`chat_template_kwargs.enable_thinking: false` 一行字段，比任何 prompt 恳求都可靠。
+
+### 三个真机坑与修复（按发现顺序，全部存证可溯）
+
+1. **`optString` 把 JSON null 变 "null" 字面量**：llama.cpp 首帧 delta 常带
+   `"reasoning_content": null`，Android org.json 的 `optString` 对 JSONObject.NULL
+   返回字符串 `"null"` → 屏幕渲染 `tagent> nullOkay, ...`。视觉核验发现（对比 chat.png
+   与 e2e.png），修复 = `isNull()` 守卫（`jsonText` 助手）。
+2. **逐 delta 全量重排压垮主线程**：每 token 一次 `setText` 触发 ScrollView 全量重排，
+   O(n²)——1224 个 reasoning 增量后 `uiautomator` 连 accessibility 树都取不到
+   （`null root node`），用户后续点击延迟数十秒才补发。修复 = 增量入缓冲、
+   120ms 批量 flush、每批一次 `setText`（FR-50）。
+3. **adb 自动化输入的坑**：`input text` 不支持中文且空格转义因设备而异（华为上
+   `%s` 不生效）；坐标随软键盘弹出漂移（发送键 y 2628→1689，点击落空即静默）。
+   修复 = ADBKeyboard B64 广播注中文 + 每次 dump 动态解析控件中心坐标。
+
+### 观察与边界（如实）
+
+- 思考 ON 的 1251 tok 中 1224 是 reasoning：**弱模型的「过度思考」既是成本问题也是可用性问题**
+  （移动端 90 秒无响应）；「防止过度思考」是 agent 的本职，不是可选项
+- 服务器 prompt eval 27 tok ≠ 历史丢失：那是 KV cache 命中后的增量——证据链要看
+  `prompt eval` 与 `timings.cache_n` 两处，别只看一处下结论
+- v1 不含工具循环/持久化/HTTPS（REQUIREMENTS §13 边界）；`usesCleartextTraffic` 仅限
+  adb reverse 局域网场景

@@ -1,0 +1,4 @@
+# Gradle / Android 构建产物与本机配置不入库
+.gradle/
+build/
+local.properties

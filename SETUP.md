@@ -278,3 +278,20 @@ D:\LLM\
 | 六场景验收 | ✅ 全过 | ✅ 全过（行为与 4B 一致；AC-5 火星同样拒绝调用——谨慎行为跨规模不变，step8-ac9b-six/） |
 
 27B 边界：纯 CPU 带宽线性外推 <2 tok/s，实验电池不可行，未做（REQUIREMENTS §12.1）。
+
+### 8.9 Android 瘦客户端环境（R3，2026-09-01）
+
+| 组件 | 位置/值 | 说明 |
+|---|---|---|
+| SDK | `D:/Android`（platform 35、build-tools 35.0.1） | `local.properties` 指向（不入库） |
+| JDK | `D:/Java/jdk-21.0.10` | AGP 8.7.3 要求 JDK 17+ |
+| Gradle | wrapper 8.11.1（腾讯+阿里镜像，见 `apps/mobile/settings.gradle`） | 复用已验证 demo 管线，首建一次过 |
+| 真机 | 华为 Mate 40 Pro（Android 12），`adb reverse tcp:8081 tcp:8081` | 引擎无需监听公网：手机经 USB 反向通道访问本机 |
+
+**adb 自动化输入的坑（真机实测）**：
+
+1. `input text` 只支持 ASCII，中文需 ADBKeyboard（`am broadcast -a ADB_INPUT_B64 --es msg <b64>`）；
+   `%s` 空格转义在华为设备不生效，直接避开空格或走 B64
+2. 控件坐标随软键盘弹出漂移（发送键 y 2628→1689）——**每次 uiautomator dump 动态解析中心坐标**，别写死
+3. Android 12 无 `cmd clipboard`；`ime reset` 会重置为系统默认而非用户原输入法，还原要显式 `ime set`
+4. uiautomator 报 `null root node` ≠ 锁屏：先查 app 主线程是否被压垮（本次根因：逐 delta 全量重排，见 AC9-3）

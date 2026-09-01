@@ -93,7 +93,8 @@ tagent/
 │       └── src/memory.ts    #   （Step 3）上下文裁剪与记忆
 ├── apps/
 │   ├── cli/                 # 终端 agent（第一个可用产品）
-│   ├── mobile/              # （远期）React Native 壳，直接 import core
+│   ├── mobile/              # （R3 已落地）Android 瘦客户端：Java + 零依赖手写 SSE，
+│   │                        #   不 import core——证明协议解耦让壳语言自由（AC9）
 │   └── harmony/             # （远期）RNOH/ArkTS 壳，直接 import core
 ├── SETUP.md                 # 环境与实测数据（§八 = Windows）
 ├── TECH_STACK.md            # 本文档

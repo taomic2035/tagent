@@ -70,10 +70,11 @@ tagent/
 │   ├── ACCEPTANCE.md     # 真机验收报告：AC-1~6 + Windows 引擎复验附录
 │   ├── WINDOWS-ENV.md    # Windows 环境对齐总结：清单、速查、与 Mac 差异
 │   └── FALLBACK.md       # Agent 兜底工程模式：弱模型失败的系统级对策（Step 1~5 沉淀）
-├── captures/         # 原始报文存证：01~06（MLX）、07~10（llama.cpp）、ac-*/win-ac-*（验收）
+├── captures/         # 原始报文存证：01~06（MLX）、07~10（llama.cpp）、ac-*/win-ac-*/step*（验收）
 ├── scripts/          # 验收（acceptance*.sh）、抓包（capture*.sh）、溯源/重放、隐私检查
 ├── packages/core/    # agent 大脑（零依赖，仅 zod）
-├── apps/cli/         # 终端壳
+├── apps/cli/         # 终端壳（TypeScript）
+├── apps/mobile/      # Android 瘦客户端（Java/零依赖手写 SSE，R3 已验收，见 docs/ACCEPTANCE.md AC9）
 └── LICENSE           # MIT
 # 模型权重不入库：Mac 在 ~/.cache/huggingface，Windows 统一放 D:\LLM\models
 ```
