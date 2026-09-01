@@ -139,7 +139,7 @@ steering 是"下一轮生效"，取消是"现在就停"。通道是 Web 标准 A
 const res = await fetch(url, { ...init, signal: req.signal });
 
 // 2. 工具层：外层 signal 与超时 signal 组合——单独听超时会覆盖外层，
-//    取消永远传不进工具（真实踩坑；AbortSignal.any 组合）
+//    取消永远传不进工具（AbortSignal.any 组合）
 const signals = [controller.signal, ...(outer?.signal ? [outer.signal] : [])];
 const ctx = { ...outer, signal: AbortSignal.any(signals) };
 
@@ -181,7 +181,7 @@ assistant 消息入档（"模型说过的话不该丢吗"）？
 - **思考烧穿复现**：请求体手工 `enable_thinking: true` + `max_tokens: 400`，
   问推理题——观察整段只有 reasoning、finish_reason=length（7.1② 亲手复现）
 - **steering 假注入识别**：注入点故意改成 round≥1，管道连发两行——第二行
-  在首个请求前入队，这不是"中途打断"。验收必须区分两种时序（真机踩坑）
+  在首个请求前入队，这不是"中途打断"。验收必须区分两种时序
 - **取消后续问**：长任务 Ctrl-C，再问"刚才北京多少度"——会话可续、已完成轮
   的工具结果还在（取消不回滚）
 - **半截回填复现（选做）**：把 interrupted 分支改成照常组装入档，触发一次

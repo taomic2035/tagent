@@ -154,7 +154,7 @@ description 的质量就是匹配的质量（写得含糊，模型就选错或�
 cd packages/core && pnpm add zod
 ```
 
-先做一次**类型迁移**（真机验证发现的必要步骤）：`ChatMessage` 从 client.ts
+先做一次**类型迁移**：`ChatMessage` 从 client.ts
 **迁到** types.ts 并扩展 tool 消息；client.ts 删除本地定义、改为
 `import type { ChatMessage } from "./types.js"; export type { ChatMessage };`
 （保持旧引用不断）。
@@ -482,11 +482,10 @@ if (Array.isArray(tcs)) {
 // sseEvents 的 cast 类型加 tool_calls?: unknown
 ```
 
-**还有一处极易静默漏掉的（真机端到端抓到的坑）**：ChatRequest 加
+**还有一处极易静默漏掉的**：ChatRequest 加
 `tools?: ToolDef[]` 字段之后，`stream` 方法的请求体序列化里必须真实插入
 `tools: req.tools,` 这一行（`messages: req.messages,` 之后）。漏掉它
-**编译绿、测试绿、但 tools 根本不进请求**——模型收不到说明书，4B 实测
-直接编造天气数据（编得有零有整还有假图片 URL）。改完在引擎日志或请求
+**编译绿、测试绿、但 tools 根本不进请求**——模型收不到说明书，4B 实测会直接编造天气数据。改完在引擎日志或请求
 存证里亲眼确认 tools 在场——编译通过不算数。
 
 壳的 v0.4 装配（`apps/cli/src/main.ts` **全量替换**——registry 组装 + 终答回填

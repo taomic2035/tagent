@@ -57,15 +57,14 @@ packages:
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   // main/types 不能省：没有入口声明，import "@my-agent/core" 找不到模块
-  //（真机踩坑）；指向的 index.js 见本章末"导出入口"一节
+  // 指向的 index.js 见本章末"导出入口"一节
   "scripts": { "build": "tsc", "test": "node --test \"dist/**/*.test.js\"" },
   "devDependencies": { "typescript": "^5.9.0", "@types/node": "^24.0.0" }
 }
 ```
 
 `packages/core/tsconfig.json`（**必须重声明 outDir/rootDir**——extends 语义下
-这两个路径按 base 所在目录解析，不重声明编译必报 `not under 'rootDir'`，
-真机验证踩过的坑）：
+这两个路径按 base 所在目录解析，不重声明编译必报 `not under 'rootDir'`）：
 ```json
 {
   "extends": "../../tsconfig.base.json",
@@ -243,7 +242,7 @@ chunk B 头带 `97`）时，前 2 字节单独看是"声明了 3 字节却只剩
 残缺序列——默认模式的 TextDecoder 只能产替换字符。**修法**：
 `decode(chunk, { stream: true })` 让 decoder 持有内部缓冲、把不完整序列
 攒到下一块；流结束后再无参 `decode()` 冲刷残留。忘了最终冲刷：流的最后一个
-字符永远丢——中文场景偶发丢字，极难排查（真机踩坑）。
+字符永远丢——中文场景偶发丢字，极难排查。
 
 ## 第二版（正确版）：sseEvents 全量
 
@@ -340,7 +339,7 @@ client 装流式接口（`OpenAIClient` 类内追加，并把 `LLMClient` 接口
 ```ts
 // ⚠️ 拼装指令：下面骨架只为展示 stream 方法体——把 async *stream 整个方法
 // 【并入】你已有的 OpenAIClient 类内（complete 之后），接口放类外。
-// 整块直接粘贴会得到第二个同名类（Duplicate identifier——真机验证踩坑）
+// 整块直接粘贴会得到第二个同名类（Duplicate identifier）
 export interface LLMClient {
   stream(req: ChatRequest): AsyncIterable<StreamEvent>;
 }
@@ -382,7 +381,7 @@ export class OpenAIClient implements LLMClient {
   "scripts": { "build": "tsc", "test": "node --test \"dist/**/*.test.js\"" },
   "dependencies": { "@my-agent/core": "workspace:*", "zod": "^4.5.4" },
   // zod 不能省：第 3 章起壳侧工具（weather.ts）直接用它声明 schema——
-  // workspace 链接不透传依赖（缺它 cli 编译报 Cannot find module，真机踩坑）
+  // workspace 链接不透传依赖（缺它 cli 编译报 Cannot find module）
   "devDependencies": { "typescript": "^5.9.0", "@types/node": "^24.0.0" }
 }
 ```

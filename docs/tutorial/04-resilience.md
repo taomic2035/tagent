@@ -245,7 +245,7 @@ test("确定性失败不重试：fatal 一次即返回", async () => {
 });
 
 test("超时：hang 工具被 abort 唤醒（协作式收尾的证据）", async () => {
-  // 注意类型标注：strict 模式下 (_a, ctx) 不标注会报隐式 any（真机验证踩坑）
+  // 注意类型标注：strict 模式下 (_a, ctx) 不标注会报隐式 any
   const hang: Tool<z.ZodObject<{}>> = { name: "hang", description: "", schema: z.object({}),
     policy: { timeoutMs: 50 },
     execute: async (_a: unknown, ctx: ToolContext) => new Promise((resolve) => {

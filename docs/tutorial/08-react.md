@@ -39,7 +39,7 @@ export type ActionParse =
 
 export function parseAction(text: string): ActionParse {
   // 捕获组在 noUncheckedIndexedAccess 下是 string | undefined——用可选链收窄
-  //（直接 [1] 索引在严格模式编译不过，真机验证回填）
+  //（直接 [1] 索引在严格模式编译不过）
   const action = text.match(/Action:\s*(\S+)/);
   const input = text.match(/Action Input:\s*([\s\S]*?)(?:\n|$)/);
   const final = text.match(/Final Answer:\s*([\s\S]*)/);
