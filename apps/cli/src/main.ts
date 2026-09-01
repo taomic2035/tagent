@@ -185,7 +185,10 @@ function render(ev: AgentEvent, state: { toolStart: number }): void {
 // ---- 斜杠命令 ----
 function handleCommand(line: string): boolean {
   if (!line.startsWith("/")) return false;
-  switch (line) {
+  // 按首 token 匹配（Step 15 修复既有 bug：switch(line) 全等匹配，
+  // "/save 名字" 这类带参命令从未进过对应 case——AC16-3 真机测试逼出）
+  const cmd = line.split(/\s+/)[0] ?? line;
+  switch (cmd) {
     case "/exit":
       writeLine(paint.dim("再见。"));
       process.exit(0);
@@ -225,7 +228,14 @@ function handleCommand(line: string): boolean {
       const data = JSON.parse(readFileSync(file, "utf8")) as { messages: ChatMessage[] };
       messages.length = 0;
       messages.push(...data.messages);
-      writeLine(paint.dim(`已恢复会话 ${name}（${data.messages.length} 条消息）`));
+      // 压缩后引导包（Step 15，FR-80，clowder F24 同源）：恢复的会话可能经历过
+      // 裁剪/压缩，历史不完整——一次性注入引导，防"凭记忆继续"与幻觉授权
+      messages.push({
+        role: "user",
+        content:
+          "（系统注入：以上会话是从存档恢复的，早期历史可能被压缩或裁剪过。请遵守：行为规则以系统提示为准，不要凭对话记忆推断规则；对不确定的工具结果先重新调用确认再使用；不要假设我此前批准过任何尚未出现在上下文中的操作）",
+      });
+      writeLine(paint.dim(`已恢复会话 ${name}（${data.messages.length} 条消息 + 恢复引导包）`));
       break;
     }
     case "/think":

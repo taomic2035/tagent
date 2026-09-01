@@ -58,6 +58,7 @@ bash scripts/acceptance-win.sh      # Windows（llama.cpp 引擎，Git Bash）
 - [x] **Step 12** 并行工具+互斥键队列（调研驱动，SURVEY.md 缺口 4）——**已验收（AC13-1~4），调研路线收官**：同批并发执行、源序回填（transcript 确定性）；`Tool.serialize` 互斥键 FIFO（memory 写真实接线）；真机一帧三调用实证
 - [x] **Step 13** 严谨性修订与真实采样（用户裁决驱动）——**已验收（AC14-1~4）**：user 消息收紧为绝不丢（溢出宁可报错拒续）；守卫真实采样三实验（复读真实存在 1/6、空响应日常零发生、截断集中在思考场景——频率差异如实入档）；usage timings 回退修复恒 0；SURVEY 六条核查（5 属实 1 修正）
 - [x] **Step 14** 硬取消（Step 10 留界兑现）——**已验收（AC15-1~4）**：AbortSignal 贯穿 fetch/工具/loop（修复超时覆盖外层 signal 的既有断点）；Ctrl-C 取消回提示符会话可续；半截内容绝不入上下文；Windows SIGINT 注入限制如实记录
+- [x] **Step 15** 完成谓词与引导包（插空项）——**已验收（AC16-1~4）**：任务完成由机器裁决（`scripts/verify-acceptance.mjs`，LLM 自证不算数）；/load 恢复引导包（防凭记忆继续与幻觉授权）；顺手修复带参命令从未工作的既有 bug；skills 披露按 YAGNI 不做
 
 ## 目录结构
 

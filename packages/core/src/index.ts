@@ -53,3 +53,12 @@ export {
   type CompactPolicy,
   type CompactResult,
 } from "./memory.js";
+export {
+  toolCalled,
+  toolResultOk,
+  finalAnswers,
+  all,
+  predicateFromSpec,
+  type TaskPredicate,
+  type PredicateResult,
+} from "./predicate.js";
