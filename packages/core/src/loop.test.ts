@@ -664,3 +664,87 @@ test("压缩集成·loop 触发：大 tool 结果超预算 → context-compacted
   assert.ok(r3.messages.some((m) => m.role === "tool" && m.content.includes("[工具结果已降级")), "第三轮请求可见降级标注");
   assert.ok(events.at(-1)?.type === "final");
 });
+
+// ============================================================
+// 并行执行（Step 12，FR-64/67）
+// ============================================================
+
+test("并行·同批多工具并发执行：吞吐=max 而非 sum，结果按源序回填（FR-64）", async () => {
+  const order: string[] = [];
+  const reg = new ToolRegistry();
+  const mk = (name: string, ms: number): Tool<z.ZodObject<{ v: z.ZodString }>> => ({
+    name,
+    description: name,
+    schema: z.object({ v: z.string() }),
+    execute: async (args) => {
+      order.push(`start-${name}`);
+      await new Promise((r) => setTimeout(r, ms));
+      order.push(`end-${name}`);
+      return { r: args.v };
+    },
+  });
+  reg.register(mk("slow", 60)); // index 0（源序在前）
+  reg.register(mk("fast", 10)); // index 1（先完成）
+  const messages: ChatMessage[] = [{ role: "user", content: "并行跑" }];
+  const t0 = Date.now();
+  const events = await collect(
+    runAgent(
+      makeDeps(
+        scriptedClient([
+          [toolDelta(0, "id-slow", '{"v":"a"}', "slow"), toolDelta(1, "id-fast", '{"v":"b"}', "fast"), done("tool_calls")],
+          [{ type: "text-delta", delta: "完成" }, done("stop")],
+        ]),
+        reg,
+      ),
+      messages,
+    ),
+  );
+  const elapsed = Date.now() - t0;
+  // 并行：两个 start 先于任一 end（fast 先完成但事件/回填仍按源序）
+  assert.deepEqual(order.slice(0, 2), ["start-slow", "start-fast"]);
+  assert.ok(elapsed < 110, `总耗时 ${elapsed}ms 应接近 max(60,10) 而非 sum(70)+开销`);
+  // 事件源序：tool-call 顺序 slow,fast；tool-result 也按源序（slow 在前，尽管它后完成）
+  const calls = events.filter((e): e is Extract<AgentEvent, { type: "tool-call" }> => e.type === "tool-call");
+  assert.deepEqual(calls.map((c) => c.name), ["slow", "fast"]);
+  const results = events.filter((e): e is Extract<AgentEvent, { type: "tool-result" }> => e.type === "tool-result");
+  assert.deepEqual(results.map((r) => r.name), ["slow", "fast"]);
+  // messages 配对按源序（不变量2）
+  const toolMsgs = messages.filter((m) => m.role === "tool");
+  assert.deepEqual(
+    toolMsgs.map((m) => (m.role === "tool" ? m.tool_call_id : "")),
+    ["id-slow", "id-fast"],
+  );
+});
+
+test("并行·同帧两个 remember 走互斥键串行（FR-66，registry 队列经 loop 全链路）", async () => {
+  const reg = new ToolRegistry();
+  const timeline: string[] = [];
+  const remember: Tool<z.ZodObject<{ c: z.ZodString }>> = {
+    name: "remember",
+    description: "写入",
+    schema: z.object({ c: z.string() }),
+    serialize: "memory-store",
+    execute: async (args) => {
+      timeline.push(`start-${args.c}`);
+      await new Promise((r) => setTimeout(r, 20));
+      timeline.push(`end-${args.c}`);
+      return { saved: true };
+    },
+  };
+  reg.register(remember);
+  const messages: ChatMessage[] = [{ role: "user", content: "记住两件事" }];
+  await collect(
+    runAgent(
+      makeDeps(
+        scriptedClient([
+          [toolDelta(0, "id-1", '{"c":"甲"}', "remember"), toolDelta(1, "id-2", '{"c":"乙"}', "remember"), done("tool_calls")],
+          [{ type: "text-delta", delta: "记好了" }, done("stop")],
+        ]),
+        reg,
+      ),
+      messages,
+    ),
+  );
+  // 并行批次内部，同键的两个写被队列串行化（时间线无交错）
+  assert.deepEqual(timeline, ["start-甲", "end-甲", "start-乙", "end-乙"]);
+});

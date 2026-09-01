@@ -67,6 +67,9 @@ export interface Tool<T extends z.ZodType = z.ZodType> {
   execute: (args: z.infer<T>, ctx: ToolContext) => Promise<unknown>;
   /** 执行策略（Step 2，可缺省） */
   policy?: ToolExecPolicy;
+  /** 互斥键（Step 12，FR-65）：同键的执行自动 FIFO 串行（写竞态防护，如文件/
+   *  存储写入工具声明同键），异键与无键并行不受约束。缺省 = 无约束。 */
+  serialize?: string;
 }
 
 // ============================================================

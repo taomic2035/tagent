@@ -45,6 +45,9 @@ type AttemptFailure = { kind: "transient"; err: Error } | { kind: "fatal"; err: 
  */
 export class ToolRegistry {
   private tools = new Map<string, Tool>();
+  /** 互斥键 → 尾部 Promise（Step 12，FR-65）：同键 FIFO 串行的队列本体。
+   *  链上吞异常（.then(noop, noop)）防止一次失败断掉后续排队。 */
+  private keyQueues = new Map<string, Promise<void>>();
 
   /** 登记工具。重名是程序员错误（启动期），这里允许 throw——
    *  与 execute 的"恒不抛"契约不同，不要混淆这两个场景。 */
@@ -132,8 +135,18 @@ export class ToolRegistry {
       };
     }
 
-    // 4. 执行 + Step 2 策略（超时/重试/退避，DESIGN §11.2）
-    return runWithPolicy(tool, parsed.data, ctx);
+    // 4. 执行 + Step 2 策略（超时/重试/退避，DESIGN §11.2）；
+    //    有互斥键的工具进同键 FIFO 队列（Step 12，FR-65）——校验段是纯函数不进队列
+    const run = () => runWithPolicy(tool, parsed.data, ctx);
+    if (!tool.serialize) return run();
+    const key = tool.serialize;
+    const prev = this.keyQueues.get(key) ?? Promise.resolve();
+    const chained = prev.then(run); // run 恒不抛（信封契约），链安全
+    this.keyQueues.set(key, chained.then(
+      () => undefined,
+      () => undefined,
+    ));
+    return chained;
   }
 }
 

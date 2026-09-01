@@ -55,6 +55,7 @@ bash scripts/acceptance-win.sh      # Windows（llama.cpp 引擎，Git Bash）
 - [x] **Step 9** 循环守卫（调研驱动，[SURVEY.md](docs/SURVEY.md) 缺口 1）——**已验收（AC10-1~4）**：空响应 nudge / 复读检测 / length 截断判错三件套（`config.guards`），LLM 层故障注入验收；发现 llama.cpp 历史非法 args 直接 500 的新差异（PROTOCOL §8）
 - [x] **Step 10** Steering 打断通道（调研驱动，SURVEY.md 缺口 2）——**已验收（AC11-1~4）**：生成期间用户输入排队、下轮 LLM 请求前以 user 消息注入（前缀只增不改）；真机改向实证（北京→上海）；余量按 followUp 转下轮
 - [x] **Step 11** 摘要压缩（调研驱动，SURVEY.md 缺口 3）——**已验收（AC12-1~4）**：去重→降级→LLM 摘要阶梯（`--compact`），user 原文钉住永不改写；真机三发现——摘要越压越大需划算预检、丢弃不得冒充压缩、Qwen 模板禁非头部 system（PROTOCOL §8）
+- [x] **Step 12** 并行工具+互斥键队列（调研驱动，SURVEY.md 缺口 4）——**已验收（AC13-1~4），调研路线收官**：同批并发执行、源序回填（transcript 确定性）；`Tool.serialize` 互斥键 FIFO（memory 写真实接线）；真机一帧三调用实证
 
 ## 目录结构
 

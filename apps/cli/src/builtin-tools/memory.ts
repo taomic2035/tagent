@@ -18,6 +18,9 @@ export function makeMemoryTools(store: MemoryStore): Tool[] {
       content: z.string().min(1).describe("要记住的事实，一句话，如：用户喜欢喝美式咖啡"),
       tag: z.string().optional().describe("可选分类，如 profile/preference"),
     }),
+    // 互斥键（Step 12，FR-66）：JSONL 追加写有真实并发交错风险，
+    // 同帧多个 remember 由 registry 按键 FIFO 串行
+    serialize: "memory-store",
     execute: async (args) => {
       const fact = store.append(args.content, args.tag);
       return { saved: true, id: fact.id, totalFacts: store.all().length };

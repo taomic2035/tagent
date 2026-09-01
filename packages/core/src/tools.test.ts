@@ -116,3 +116,71 @@ test("契约：无论成败，execute 返回的恒是可解析 JSON 字符串（
     assert.ok(out.ok === true || out.ok === false, "信封形态合法");
   }
 });
+
+// ============================================================
+// 互斥键队列（Step 12，FR-65）
+// ============================================================
+
+test("互斥键·同键 FIFO 串行：时间线不重叠，先入队先执行", async () => {
+  const reg = new ToolRegistry();
+  const timeline: string[] = [];
+  const mk = (name: string): Tool<z.ZodObject<{ n: z.ZodNumber }>> => ({
+    name,
+    description: name,
+    schema: z.object({ n: z.number() }),
+    serialize: "same-key",
+    execute: async (args) => {
+      timeline.push(`start-${name}`);
+      await new Promise((r) => setTimeout(r, 30));
+      timeline.push(`end-${name}`);
+      return args.n;
+    },
+  });
+  reg.register(mk("a"));
+  reg.register(mk("b"));
+  const [ra, rb] = await Promise.all([reg.execute("a", '{"n":1}'), reg.execute("b", '{"n":2}')]);
+  // 串行：a 完整结束后 b 才开始
+  assert.deepEqual(timeline, ["start-a", "end-a", "start-b", "end-b"]);
+  assert.ok(JSON.parse(ra).ok && JSON.parse(rb).ok);
+});
+
+test("互斥键·异键并行：不同键互不阻塞", async () => {
+  const reg = new ToolRegistry();
+  const order: string[] = [];
+  const mk = (name: string, key: string | undefined): Tool<z.ZodObject<{ n: z.ZodNumber }>> => ({
+    name,
+    description: name,
+    schema: z.object({ n: z.number() }),
+    ...(key ? { serialize: key } : {}),
+    execute: async (args) => {
+      order.push(`start-${name}`);
+      await new Promise((r) => setTimeout(r, 30));
+      order.push(`end-${name}`);
+      return args.n;
+    },
+  });
+  reg.register(mk("x", "key-1"));
+  reg.register(mk("y", "key-2"));
+  await Promise.all([reg.execute("x", '{"n":1}'), reg.execute("y", '{"n":2}')]);
+  // 并行：两个 start 都在任一 end 之前
+  assert.deepEqual(order.slice(0, 2), ["start-x", "start-y"]);
+});
+
+test("互斥键·同键失败不断链：后续排队执行照常（信封契约 + 队列吞异常）", async () => {
+  const reg = new ToolRegistry();
+  const mk = (name: string, fail: boolean): Tool<z.ZodObject<{ n: z.ZodNumber }>> => ({
+    name,
+    description: name,
+    schema: z.object({ n: z.number() }),
+    serialize: "k",
+    execute: async (args) => {
+      if (fail) throw new Error("炸了");
+      return args.n;
+    },
+  });
+  reg.register(mk("boom", true));
+  reg.register(mk("ok", false));
+  const [r1, r2] = await Promise.all([reg.execute("boom", '{"n":1}'), reg.execute("ok", '{"n":2}')]);
+  assert.equal(JSON.parse(r1).ok, false);
+  assert.equal(JSON.parse(r2).ok, true, "前一个失败不阻断后续同键执行");
+});

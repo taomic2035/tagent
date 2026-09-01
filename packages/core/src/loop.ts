@@ -243,10 +243,19 @@ export async function* runAgent(
       break; // 跳出轮次循环 → 触顶降级出口（复用 Step 2 FR-15 的协议级降级）
     }
 
-    // ---- 按协议顺序执行工具，结果逐一回填（不变量2）----
+    // ---- 并行执行（Step 12，FR-64）：并发跑整批，结果按 assistant 源顺序回填 ----
+    // 吞吐 = max(单次) 而非 sum(逐次)；写竞态由工具声明的互斥键在 registry 排队
+    // （FR-65）。事件流保持源序确定性（transcript 可复现），不按完成乱序发。
+    // 执行策略（超时/重试/信封）逐调用独立，语义与串行时代完全一致（FR-67）。
+    const executions = toolCalls.map((tc) => registry.execute(tc.function.name, tc.function.arguments, ctx));
     for (const tc of toolCalls) {
       yield { type: "tool-call", id: tc.id, name: tc.function.name, args: tryParse(tc.function.arguments) };
-      const result = await registry.execute(tc.function.name, tc.function.arguments, ctx);
+    }
+    const results = await Promise.all(executions);
+    for (let i = 0; i < toolCalls.length; i++) {
+      const tc = toolCalls[i];
+      if (!tc) continue;
+      const result = results[i] ?? JSON.stringify({ ok: false, error: "internal: result missing" });
       // retriesUsed 透出到事件流（NFR-9）：CLI 渲染"重试 N 次"，transcript 可观测
       const retriesUsed = pickRetriesUsed(result);
       yield { type: "tool-result", id: tc.id, name: tc.function.name, result, ...(retriesUsed !== undefined ? { retriesUsed } : {}) };
