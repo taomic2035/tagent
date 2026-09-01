@@ -4,8 +4,8 @@
 {"seq":4,"kind":"reasoning","frame":5,"line":9,"byte":1165,"text":"天气"}
 {"seq":5,"kind":"reasoning","frame":6,"line":11,"byte":1455,"text":"怎么样"}
 {"seq":6,"kind":"reasoning","frame":7,"line":13,"byte":1748,"text":"，"}
-{"seq":7,"kind":"reasoning","frame":8,"line":15,"byte":2035,"text":"我需要"}
-{"seq":8,"kind":"reasoning","frame":9,"line":17,"byte":2328,"text":"调用"}
+{"seq":7,"kind":"reasoning","frame":8,"line":15,"byte":2035,"text":"我"}
+{"seq":8,"kind":"reasoning","frame":9,"line":17,"byte":2322,"text":"需要使用"}
 {"seq":9,"kind":"reasoning","frame":10,"line":19,"byte":2618,"text":" get"}
 {"seq":10,"kind":"reasoning","frame":11,"line":21,"byte":2906,"text":"_weather"}
 {"seq":11,"kind":"reasoning","frame":12,"line":23,"byte":3198,"text":" "}
@@ -13,49 +13,47 @@
 {"seq":13,"kind":"reasoning","frame":14,"line":27,"byte":3773,"text":"来"}
 {"seq":14,"kind":"reasoning","frame":15,"line":29,"byte":4060,"text":"查询"}
 {"seq":15,"kind":"reasoning","frame":16,"line":31,"byte":4350,"text":"上海"}
-{"seq":16,"kind":"reasoning","frame":17,"line":33,"byte":4640,"text":"当前的"}
-{"seq":17,"kind":"reasoning","frame":18,"line":35,"byte":4933,"text":"天气"}
-{"seq":18,"kind":"reasoning","frame":19,"line":37,"byte":5223,"text":"。"}
-{"seq":19,"kind":"reasoning","frame":20,"line":39,"byte":5510,"text":"根据"}
-{"seq":20,"kind":"reasoning","frame":21,"line":41,"byte":5800,"text":"工具"}
-{"seq":21,"kind":"reasoning","frame":22,"line":43,"byte":6090,"text":"描述"}
-{"seq":22,"kind":"reasoning","frame":23,"line":45,"byte":6380,"text":"，"}
-{"seq":23,"kind":"reasoning","frame":24,"line":47,"byte":6667,"text":"这个"}
-{"seq":24,"kind":"reasoning","frame":25,"line":49,"byte":6957,"text":"工具"}
-{"seq":25,"kind":"reasoning","frame":26,"line":51,"byte":7247,"text":"支持"}
-{"seq":26,"kind":"reasoning","frame":27,"line":53,"byte":7537,"text":"查询"}
-{"seq":27,"kind":"reasoning","frame":28,"line":55,"byte":7827,"text":"上海"}
-{"seq":28,"kind":"reasoning","frame":29,"line":57,"byte":8117,"text":"、"}
-{"seq":29,"kind":"reasoning","frame":30,"line":59,"byte":8404,"text":"北京"}
-{"seq":30,"kind":"reasoning","frame":31,"line":61,"byte":8694,"text":"、"}
-{"seq":31,"kind":"reasoning","frame":32,"line":63,"byte":8981,"text":"广州"}
-{"seq":32,"kind":"reasoning","frame":33,"line":65,"byte":9271,"text":"、"}
-{"seq":33,"kind":"reasoning","frame":34,"line":67,"byte":9558,"text":"深圳"}
-{"seq":34,"kind":"reasoning","frame":35,"line":69,"byte":9848,"text":"、"}
-{"seq":35,"kind":"reasoning","frame":36,"line":71,"byte":10135,"text":"杭州"}
-{"seq":36,"kind":"reasoning","frame":37,"line":73,"byte":10425,"text":"等"}
-{"seq":37,"kind":"reasoning","frame":38,"line":75,"byte":10712,"text":"城市的"}
-{"seq":38,"kind":"reasoning","frame":39,"line":77,"byte":11005,"text":"天气"}
-{"seq":39,"kind":"reasoning","frame":40,"line":79,"byte":11295,"text":"。"}
-{"seq":40,"kind":"reasoning","frame":41,"line":81,"byte":11582,"text":"\n\n"}
-{"seq":41,"kind":"reasoning","frame":42,"line":83,"byte":11870,"text":"我需要"}
-{"seq":42,"kind":"reasoning","frame":43,"line":85,"byte":12163,"text":"调用"}
-{"seq":43,"kind":"reasoning","frame":44,"line":87,"byte":12453,"text":" get"}
-{"seq":44,"kind":"reasoning","frame":45,"line":89,"byte":12741,"text":"_weather"}
-{"seq":45,"kind":"reasoning","frame":46,"line":91,"byte":13033,"text":" "}
-{"seq":46,"kind":"reasoning","frame":47,"line":93,"byte":13318,"text":"函数"}
-{"seq":47,"kind":"reasoning","frame":48,"line":95,"byte":13608,"text":"，"}
-{"seq":48,"kind":"reasoning","frame":49,"line":97,"byte":13895,"text":"参数"}
-{"seq":49,"kind":"reasoning","frame":50,"line":99,"byte":14185,"text":" city"}
-{"seq":50,"kind":"reasoning","frame":51,"line":101,"byte":14474,"text":" "}
-{"seq":51,"kind":"reasoning","frame":52,"line":103,"byte":14759,"text":"为"}
-{"seq":52,"kind":"reasoning","frame":53,"line":105,"byte":15046,"text":"\""}
-{"seq":53,"kind":"reasoning","frame":54,"line":107,"byte":15332,"text":"上海"}
-{"seq":54,"kind":"reasoning","frame":55,"line":109,"byte":15622,"text":"\""}
-{"seq":55,"kind":"reasoning","frame":56,"line":111,"byte":15908,"text":"。"}
-{"seq":56,"kind":"reasoning","frame":57,"line":113,"byte":16195,"text":"\n"}
-{"seq":57,"kind":"tool-call","frame":58,"line":115,"byte":16481,"text":"{","index":0,"id":"LRbbGasPOgBiFUL3Eb1pTvGxhqso1F6t","name":"get_weather"}
-{"seq":58,"kind":"tool-call","frame":59,"line":117,"byte":16877,"text":"\"city\":\"","index":0,"id":null,"name":null}
-{"seq":59,"kind":"tool-call","frame":60,"line":119,"byte":17204,"text":"上海","index":0,"id":null,"name":null}
-{"seq":60,"kind":"tool-call","frame":61,"line":121,"byte":17526,"text":"\"","index":0,"id":null,"name":null}
-{"seq":61,"kind":"tool-call","frame":62,"line":123,"byte":17844,"text":"}","index":0,"id":null,"name":null}
+{"seq":16,"kind":"reasoning","frame":17,"line":33,"byte":4640,"text":"天气"}
+{"seq":17,"kind":"reasoning","frame":18,"line":35,"byte":4930,"text":"。"}
+{"seq":18,"kind":"reasoning","frame":19,"line":37,"byte":5217,"text":"工具"}
+{"seq":19,"kind":"reasoning","frame":20,"line":39,"byte":5507,"text":"支持"}
+{"seq":20,"kind":"reasoning","frame":21,"line":41,"byte":5797,"text":"的城市"}
+{"seq":21,"kind":"reasoning","frame":22,"line":43,"byte":6090,"text":"包括"}
+{"seq":22,"kind":"reasoning","frame":23,"line":45,"byte":6380,"text":"北京"}
+{"seq":23,"kind":"reasoning","frame":24,"line":47,"byte":6670,"text":"/"}
+{"seq":24,"kind":"reasoning","frame":25,"line":49,"byte":6955,"text":"上海"}
+{"seq":25,"kind":"reasoning","frame":26,"line":51,"byte":7245,"text":"/"}
+{"seq":26,"kind":"reasoning","frame":27,"line":53,"byte":7530,"text":"广州"}
+{"seq":27,"kind":"reasoning","frame":28,"line":55,"byte":7820,"text":"/"}
+{"seq":28,"kind":"reasoning","frame":29,"line":57,"byte":8105,"text":"深圳"}
+{"seq":29,"kind":"reasoning","frame":30,"line":59,"byte":8395,"text":"/"}
+{"seq":30,"kind":"reasoning","frame":31,"line":61,"byte":8680,"text":"杭州"}
+{"seq":31,"kind":"reasoning","frame":32,"line":63,"byte":8970,"text":"，"}
+{"seq":32,"kind":"reasoning","frame":33,"line":65,"byte":9257,"text":"上海"}
+{"seq":33,"kind":"reasoning","frame":34,"line":67,"byte":9547,"text":"是"}
+{"seq":34,"kind":"reasoning","frame":35,"line":69,"byte":9834,"text":"支持"}
+{"seq":35,"kind":"reasoning","frame":36,"line":71,"byte":10124,"text":"的城市"}
+{"seq":36,"kind":"reasoning","frame":37,"line":73,"byte":10417,"text":"之一"}
+{"seq":37,"kind":"reasoning","frame":38,"line":75,"byte":10707,"text":"。"}
+{"seq":38,"kind":"reasoning","frame":39,"line":77,"byte":10994,"text":"\n\n"}
+{"seq":39,"kind":"reasoning","frame":40,"line":79,"byte":11282,"text":"我需要"}
+{"seq":40,"kind":"reasoning","frame":41,"line":81,"byte":11575,"text":"调用"}
+{"seq":41,"kind":"reasoning","frame":42,"line":83,"byte":11865,"text":" get"}
+{"seq":42,"kind":"reasoning","frame":43,"line":85,"byte":12153,"text":"_weather"}
+{"seq":43,"kind":"reasoning","frame":44,"line":87,"byte":12445,"text":" "}
+{"seq":44,"kind":"reasoning","frame":45,"line":89,"byte":12730,"text":"函数"}
+{"seq":45,"kind":"reasoning","frame":46,"line":91,"byte":13020,"text":"，"}
+{"seq":46,"kind":"reasoning","frame":47,"line":93,"byte":13307,"text":"参数"}
+{"seq":47,"kind":"reasoning","frame":48,"line":95,"byte":13597,"text":" city"}
+{"seq":48,"kind":"reasoning","frame":49,"line":97,"byte":13886,"text":" "}
+{"seq":49,"kind":"reasoning","frame":50,"line":99,"byte":14171,"text":"设置为"}
+{"seq":50,"kind":"reasoning","frame":51,"line":101,"byte":14464,"text":"\""}
+{"seq":51,"kind":"reasoning","frame":52,"line":103,"byte":14750,"text":"上海"}
+{"seq":52,"kind":"reasoning","frame":53,"line":105,"byte":15040,"text":"\""}
+{"seq":53,"kind":"reasoning","frame":54,"line":107,"byte":15326,"text":"。"}
+{"seq":54,"kind":"reasoning","frame":55,"line":109,"byte":15613,"text":"\n"}
+{"seq":55,"kind":"tool-call","frame":56,"line":111,"byte":15899,"text":"{","index":0,"id":"Yx7qsYOtbZ6z1gBJZindzbVUalakU5uR","name":"get_weather"}
+{"seq":56,"kind":"tool-call","frame":57,"line":113,"byte":16295,"text":"\"city\":\"","index":0,"id":null,"name":null}
+{"seq":57,"kind":"tool-call","frame":58,"line":115,"byte":16622,"text":"上海","index":0,"id":null,"name":null}
+{"seq":58,"kind":"tool-call","frame":59,"line":117,"byte":16944,"text":"\"","index":0,"id":null,"name":null}
+{"seq":59,"kind":"tool-call","frame":60,"line":119,"byte":17262,"text":"}","index":0,"id":null,"name":null}

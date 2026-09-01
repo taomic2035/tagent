@@ -335,3 +335,31 @@
 | AC10-2 | 重复 | 注入重复工具调用 → 第 3 批出现警告注入事件、第 5 批前停止执行、降级终答产出 |
 | AC10-3 | length | 注入截断 tool_calls → 未执行（registry 零调用）、回填错误结果、下轮重发成功、任务完成 |
 | AC10-4 | 回归 | guards 全关 = Step 8 行为（既有测试全绿）；真机六场景验收不回归 |
+
+## 15. Step 10 需求增补：Steering 打断通道（2026-09-01，调研驱动步）
+
+> 来源：docs/SURVEY.md §5 缺口 2（pi steer/followUp 双队列；hermes redirect 保持缓存前缀）。
+> 现状：CLI 生成期间 `rl.pause()` 拒绝输入，agent 在错误方向跑满 maxIterations 才停——
+> 本地 CPU 推理一轮几十秒，打断通道的体验价值比云端更高。
+> 语义取 pi 的 steer：**注入不硬中断**——用户指令排队，在下一次 LLM 请求前生效；
+> 追加注入保持前缀稳定（只 append，不动历史，KV cache 前缀命中不受损）。
+
+### 15.1 功能需求
+
+| ID | 需求 | 说明 | 优先级 |
+|---|---|---|---|
+| FR-56 | SteeringChannel 注入通道 | `runAgent` 可选第 4 参：每轮 LLM 请求前 `take()` 取走排队指令，以 user 消息追加进 messages（role 交替合法、前缀只增不改）；**第 1 轮不注入**（首轮时用户最新意图就是初始消息本身） | P0 |
+| FR-57 | steering 事件 | 每条注入发 `steering` 事件进事件流（transcript 存证可回放） | P0 |
+| FR-58 | CLI 生成期接收输入 | 生成期间不再 pause：普通输入进 steering 队列（渲染确认提示），`/` 命令仍即时生效；生成结束时队列若有余量，按 followUp 语义转为下一轮提问（不丢弃用户输入） | P0 |
+
+### 15.2 验收标准（AC11-x）
+
+| ID | 场景 | 通过标准 |
+|---|---|---|
+| AC11-1 | 注入生效 | 单测：round 2 的 llm-request 在 tool 结果后含注入的 user 消息 + steering 事件可见；round 1 永不注入 |
+| AC11-2 | 真机改向 | CLI 生成期间注入"改成查上海"→ 第二轮请求含该指令（transcript 可证）→ 模型实际改查上海 |
+| AC11-3 | followUp 余量 | 生成结束后队列余量转为下一轮提问，不静默丢弃 |
+| AC11-4 | 回归 | 无 steering 通道时行为与 Step 9 完全一致（既有测试全绿）；六场景验收不回归 |
+
+边界（如实）：本步只做"注入"不做"硬取消"（中断进行中的流/工具是取消语义，AbortSignal
+留待并发步）；runReAct 不接 steering（ReAct 引擎留待需要时）。

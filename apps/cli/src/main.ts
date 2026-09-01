@@ -133,6 +133,9 @@ function render(ev: AgentEvent, state: { toolStart: number }): void {
     case "guard":
       writeLine(paint.yellow(`🛡 守卫[${ev.guard}]：${ev.detail}`));
       break;
+    case "steering":
+      writeLine(paint.yellow(`↪ 注入用户中途指令：${ev.message}`));
+      break;
     case "tool-call":
       state.toolStart = Date.now();
       writeLine();
@@ -222,11 +225,21 @@ function handleCommand(line: string): boolean {
   return true;
 }
 // ---- REPL 主循环 ----
+// Step 10 steering：生成期间不再 pause readline——普通输入进 steering 队列
+// （下一轮 LLM 请求前注入，FR-56），/ 命令仍即时生效；生成结束队列有余量
+// 则按 followUp 语义转为下一轮提问（不丢弃用户输入，FR-58）。
+const steeringQueue: string[] = [];
+let busy = false;
+
 async function chat(input: string): Promise<void> {
   messages.push({ role: "user", content: input });
   const state = { toolStart: 0 };
   const engine = config.reactMode ? runReAct : runAgent; // 两引擎同事件契约（FR-28）
-  for await (const ev of engine({ client, registry, config }, messages)) {
+  // steering 只接 runAgent（ReAct 引擎留待需要时，REQUIREMENTS §15 边界）
+  const gen = config.reactMode
+    ? engine({ client, registry, config }, messages)
+    : runAgent({ client, registry, config }, messages, undefined, { take: () => steeringQueue.splice(0) });
+  for await (const ev of gen) {
     record(ev); // 每个事件落盘（制度：NFR-4）
     render(ev, state);
   }
@@ -263,6 +276,22 @@ function main(): void {
 
   const rl = createInterface({ input: process.stdin, output: process.stdout, prompt: paint.green("你> ") });
   rl.prompt();
+  const submit = (text: string): void => {
+    busy = true;
+    chat(text)
+      .catch((err) => writeLine(paint.red(`✖ ${err.message}`)))
+      .finally(() => {
+        busy = false;
+        writeLine();
+        // followUp（FR-58）：生成结束后队列余量合并为下一轮提问
+        const follow = steeringQueue.splice(0);
+        if (follow.length > 0) {
+          submit(follow.join("\n"));
+          return;
+        }
+        rl.prompt();
+      });
+  };
   rl.on("line", (line) => {
     const text = line.trim();
     if (!text) {
@@ -273,14 +302,14 @@ function main(): void {
       rl.prompt();
       return;
     }
-    rl.pause(); // 模型生成期间停止接受输入
-    chat(text)
-      .catch((err) => writeLine(paint.red(`✖ ${err.message}`)))
-      .finally(() => {
-        writeLine();
-        rl.resume();
-        rl.prompt();
-      });
+    if (busy) {
+      // 生成期间：普通输入进 steering 队列（下一轮请求前注入），命令保持即时
+      steeringQueue.push(text);
+      writeLine(paint.yellow(`↪ 已接收（队列 ${steeringQueue.length} 条），将在下一轮生效`));
+      rl.prompt();
+      return;
+    }
+    submit(text);
   });
 }
 

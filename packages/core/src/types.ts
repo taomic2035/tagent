@@ -140,3 +140,13 @@ export interface AgentGuards {
   /** length 截断判错：截断的残缺 tool_calls 不执行，回填错误让模型重发 */
   lengthTruncation?: boolean;
 }
+
+/**
+ * 用户中途指令通道（Step 10，FR-56；pi 的 steer 语义）：loop 在每轮 LLM 请求前
+ * 调 take() 取走排队指令（取走即清），以 user 消息追加进 messages——注入不硬中断，
+ * 前缀只增不改（KV cache 命中不受损）。第 1 轮不注入（首轮时用户最新意图
+ * 就是初始消息本身）。
+ */
+export interface SteeringChannel {
+  take(): string[];
+}

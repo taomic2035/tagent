@@ -4,6 +4,7 @@ export type {
   AgentConfig,
   AgentGuards,
   ChatMessage,
+  SteeringChannel,
   Tool,
   ToolCallData,
   ToolContext,

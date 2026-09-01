@@ -538,3 +538,94 @@ test("守卫·全关回归：guards 显式关闭 = Step 8 行为（FR-55）", as
   assert.equal(client.calls, 1, "守卫关闭时一次请求即收场");
   assert.ok(events.at(-1)?.type === "final");
 });
+
+// ============================================================
+// Steering 打断通道（Step 10，FR-56~58）
+// ============================================================
+
+test("steering·注入生效：round 2 请求在 tool 结果后含注入指令 + 事件可见（FR-56/57）", async () => {
+  const messages: ChatMessage[] = [{ role: "user", content: "查北京天气" }];
+  // take() 只在 round≥2 被调用：第一次吐一条指令，之后吐空
+  let calls = 0;
+  const steering = {
+    take: () => {
+      calls++;
+      return calls === 1 ? ["改成查上海天气"] : [];
+    },
+  };
+  const events = await collect(
+    runAgent(
+      makeDeps(
+        scriptedClient([
+          [toolDelta(0, "id-1", '{"text":"北京"}'), done("tool_calls")],
+          [{ type: "text-delta", delta: "好的，改查上海" }, done("stop")],
+        ]),
+        makeRegistry(),
+      ),
+      messages,
+      undefined,
+      steering,
+    ),
+  );
+  // steering 事件可见（可观测，transcript 可回放）
+  const steers = events.filter((e): e is Extract<AgentEvent, { type: "steering" }> => e.type === "steering");
+  assert.equal(steers.length, 1);
+  assert.ok(steers[0]);
+  assert.equal(steers[0].message, "改成查上海天气");
+  // round 2 的 llm-request 快照：tool 结果之后、assistant 之前是注入的 user 消息
+  const requests = events.filter((e): e is Extract<AgentEvent, { type: "llm-request" }> => e.type === "llm-request");
+  assert.equal(requests.length, 2);
+  const r2req = requests[1];
+  const r1req = requests[0];
+  assert.ok(r2req && r1req);
+  const r2 = r2req.messages;
+  const last = r2[r2.length - 1];
+  assert.ok(last && last.role === "user" && last.content === "改成查上海天气");
+  // messages 事实来源：注入指令入档（真实发生的上下文注入）
+  assert.ok(messages.some((m) => m.role === "user" && m.content === "改成查上海天气"));
+  // 前缀只增不改：round 1 的请求消息仍是 round 2 请求消息的前缀
+  assert.deepEqual(r2.slice(0, r1req.messages.length), r1req.messages);
+});
+
+test("steering·首轮不注入：take() 在 round 1 不被调用（FR-56）", async () => {
+  const messages: ChatMessage[] = [{ role: "user", content: "直接回答" }];
+  let taken = 0;
+  const events = await collect(
+    runAgent(
+      makeDeps(scriptedClient([[{ type: "text-delta", delta: "答" }, done("stop")]]), makeRegistry()),
+      messages,
+      undefined,
+      { take: () => (taken++, []) },
+    ),
+  );
+  assert.equal(taken, 0, "单轮即终答，take 从未被调用");
+  assert.ok(events.at(-1)?.type === "final");
+});
+
+test("steering·多轮注入与守卫共存：nudge/steering 都是 user 追加，结构合法（FR-56 × FR-52）", async () => {
+  const messages: ChatMessage[] = [{ role: "user", content: "查天气" }];
+  const events = await collect(
+    runAgent(
+      makeDeps(
+        scriptedClient([
+          [done("stop")], // round 1：空响应 → nudge（user）
+          [toolDelta(0, "id-1", '{"text":"北京"}'), done("tool_calls")], // round 2：执行工具
+          [{ type: "text-delta", delta: "完成" }, done("stop")], // round 3：终答（前有 steering 注入）
+        ]),
+        makeRegistry(),
+      ),
+      messages,
+      undefined,
+      (() => {
+        let taken = false; // 真实队列语义：取走即清
+        return { take: () => (taken ? [] : ((taken = true), ["顺便也看看上海"])) };
+      })(), // round 2 前注入（一次性）
+    ),
+  );
+  assert.ok(events.some((e) => e.type === "steering" && e.message === "顺便也看看上海"));
+  assert.ok(events.some((e) => e.type === "guard" && e.guard === "empty-response"));
+  // 结构合法：nudge（round1 末）与 steering（round2 首）是两条相邻 user 消息——
+  // 协议允许连续 user（模板拼接渲染），保留两条使注入来源各自可溯（transcript 事件区分）
+  const roles = messages.map((m) => m.role);
+  assert.deepEqual(roles, ["user", "assistant", "user", "user", "assistant", "tool", "assistant"]);
+});

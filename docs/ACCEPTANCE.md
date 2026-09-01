@@ -351,3 +351,27 @@ Step 6 的 `--memory` 注入当时实为死代码（验收恰靠 recall 工具�
 - **空响应守卫自设上限（3 次）**：守卫本身也要兜底——nudge 无限重试就是把发呆换成死循环
 - **重复检测用批次签名**（name+键排序参数）：同工具不同参数是正常行为（翻页），整批相同才算复读，误报优先级低于漏报
 - **触顶降级（Step 2）即 grace call**：调研时以为缺"预算收尾调用"，实读代码确认 degradeOnCap 无 tools 终答已是其等价物——调研结论与代码实况对齐后再动手
+
+## Step 10 真机验收报告（AC11-1~4，2026-09-01，Steering 打断通道）
+
+> 来源：SURVEY.md 缺口 2（pi steer/followUp + hermes redirect 保前缀）。
+> 语义：**注入不硬中断**——生成期间用户输入进队列，在下一次 LLM 请求前以 user
+> 消息追加（前缀只增不改，KV cache 命中不受损）；第 1 轮不注入。
+> 证据：captures/step10-steering/（stdout + transcript JSONL，steering 事件可回放）。
+
+| # | 判定 | 证据 |
+|---|---|---|
+| AC11-1 注入生效（单测） | ✅ | round 2 的 llm-request 在 tool 结果后含注入 user 消息 + steering 事件；round 1 永不注入（take 零调用）；前缀只增不改（r1 是 r2 的前缀，deepEqual 断言） |
+| AC11-2 真机改向 | ✅ | 任务"查北京天气"→round 1 调 get_weather 北京→注入"改成查上海天气"→round 2 实际改调 get_weather 上海→3 轮完成（ac11-2，transcript steering 事件实录） |
+| AC11-3 followUp 余量 | ✅ | 单轮即完的任务 + 期间输入的"现在换成回复两个字：收到"→ 自动转为下一轮提问，两次完成、零丢弃（ac11-3，transcript 2 finals/0 steering） |
+| AC11-4 回归 | ✅ | 六场景验收全过（win-ac-* 刷新归档）；116 项单测全绿（core 75 + cli 41） |
+
+### 设计取舍记录
+
+- **去掉 `rl.pause()`**：原实现生成期间直接拒绝输入（agent 在错误方向跑满 maxIterations
+  才停）——本地 CPU 推理一轮几十秒，打断通道的体验价值比云端更高
+- **nudge 与 steering 相邻共存**：守卫 nudge（round 末）与 steering 注入（round 首）
+  可能产生两条相邻 user 消息——协议允许（模板拼接渲染），保留两条使注入来源在
+  transcript 事件里各自可溯（guard vs steering 事件区分）
+- **不做硬取消**：中断进行中的流/工具是取消语义（AbortSignal），留待并发步——本步
+  诚实记录边界（REQUIREMENTS §15）；runReAct 不接 steering（需要时再开）

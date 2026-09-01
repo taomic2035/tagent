@@ -1,4 +1,4 @@
-import type { AgentConfig, ChatMessage, ToolContext, Usage } from "./types.js";
+import type { AgentConfig, ChatMessage, SteeringChannel, ToolContext, Usage } from "./types.js";
 import type { LLMClient } from "./client.js";
 import type { ToolRegistry } from "./tools.js";
 import { trimMessages } from "./memory.js";
@@ -17,6 +17,7 @@ export type AgentEvent =
   | { type: "tool-result"; id: string; name: string; result: string; retriesUsed?: number }
   | { type: "context-trimmed"; removedMessages: number; fromTokens: number; toTokens: number }
   | { type: "guard"; guard: "empty-response" | "repetition" | "length-truncated"; detail: string }
+  | { type: "steering"; message: string }
   | { type: "final"; message: ChatMessage; rounds: number; usage: Usage }
   | { type: "error"; message: string; recoverable: boolean };
 
@@ -40,6 +41,7 @@ export async function* runAgent(
   deps: AgentDeps,
   messages: ChatMessage[],
   ctx?: ToolContext,
+  steering?: SteeringChannel,
 ): AsyncGenerator<AgentEvent> {
   const { client, registry, config } = deps;
 
@@ -81,6 +83,17 @@ export async function* runAgent(
     }
 
     yield { type: "round-start", round };
+
+    // ---- steering 注入（Step 10，FR-56/57）：每轮请求前取走排队指令 ----
+    // 第 1 轮不注入（首轮时用户最新意图就是初始消息）；注入点在裁剪之后
+    // （新指令绝不能被本轮裁掉）；追加进 messages 保前缀只增不改。
+    if (round > 1 && steering) {
+      for (const directive of steering.take()) {
+        messages.push({ role: "user", content: directive });
+        yield { type: "steering", message: directive };
+      }
+    }
+
     yield { type: "llm-request", messages: [...messages] }; // 快照，供 debug/transcript
 
     // ---- 一轮流式请求：透传增量，累积 tool_calls 分片 ----
