@@ -1,0 +1,6 @@
+{"ts":"2026-09-01T02:12:48.337Z","ev":{"type":"round-start","round":1}}
+{"ts":"2026-09-01T02:12:48.337Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"查一下北京天气"}]}}
+{"ts":"2026-09-01T02:12:48.339Z","ev":{"type":"guard","guard":"length-truncated","detail":"1 个工具调用因 max_tokens 截断未执行，已回填错误等待重发"}}
+{"ts":"2026-09-01T02:12:48.340Z","ev":{"type":"tool-result","id":"fault-length","name":"get_weather","result":"（系统：输出因 max_tokens 截断，该工具调用参数不完整，未执行。请精简输出，重新发起完整的工具调用）"}}
+{"ts":"2026-09-01T02:12:48.340Z","ev":{"type":"round-start","round":2}}
+{"ts":"2026-09-01T02:12:48.340Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"查一下北京天气"},{"role":"assistant","content":null,"tool_calls":[{"id":"fault-length","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"北"}}]},{"role":"tool","tool_call_id":"fault-length","content":"（系统：输出因 max_tokens 截断，该工具调用参数不完整，未执行。请精简输出，重新发起完整的工具调用）"}]}}

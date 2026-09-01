@@ -124,4 +124,19 @@ export interface AgentConfig {
   memoryInject?: number;
   /** 是否注册 delegate 委托工具（Step 7，FR-42，CLI 装配字段） */
   delegate?: boolean;
+  /** 循环守卫开关（Step 9，FR-52~55）：缺省全开；置 false 可逐项关闭（实验对照） */
+  guards?: AgentGuards;
+}
+
+/**
+ * 循环守卫开关（Step 9）。守卫对策针对"不抛错但也不干活"的模型失败
+ * （空响应/复读/max_tokens 截断出残缺调用），全部动作发 guard 事件可观测。
+ */
+export interface AgentGuards {
+  /** 空响应守卫：空内容且无工具调用 → 注入 nudge，连续 3 次放弃（诚实失败） */
+  emptyResponse?: boolean;
+  /** 重复检测：相同工具批次签名连续 3 批附警告、5 批强制降级终答 */
+  repetition?: boolean;
+  /** length 截断判错：截断的残缺 tool_calls 不执行，回填错误让模型重发 */
+  lengthTruncation?: boolean;
 }

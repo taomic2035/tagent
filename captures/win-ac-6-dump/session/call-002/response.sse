@@ -1,142 +1,118 @@
-data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"role":"assistant","content":null}}],"created":1788228968,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"询问"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"工具"}}],"created":1788228968,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"上海"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"返回"}}],"created":1788228968,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"了"}}],"created":1788228968,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"上海的"}}],"created":1788228968,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"我"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"天气"}}],"created":1788228968,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"需要使用"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"数据"}}],"created":1788228968,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"get"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"："}}],"created":1788228968,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"_weather"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"多云"}}],"created":1788228969,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"，"}}],"created":1788228969,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"查询"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"温度"}}],"created":1788228969,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"3"}}],"created":1788228969,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"工具"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"1"}}],"created":1788228969,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"返回"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"摄氏度"}}],"created":1788228969,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"了"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"，"}}],"created":1788228969,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"上海"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"湿度"}}],"created":1788228969,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"天气"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"7"}}],"created":1788228969,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"信息"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"0"}}],"created":1788228969,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"："}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"%，"}}],"created":1788228969,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"多云"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"AQ"}}],"created":1788228969,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"I"}}],"created":1788228969,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"3"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":" "}}],"created":1788228970,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"1"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"4"}}],"created":1788228970,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"℃"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"8"}}],"created":1788228970,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"，"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"。"}}],"created":1788228970,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"湿度"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"我"}}],"created":1788228970,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"7"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"可以根据"}}],"created":1788228970,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"0"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"这些信息"}}],"created":1788228970,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"%，"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"回答"}}],"created":1788228970,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"AQ"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"用户"}}],"created":1788228970,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"I"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"。"}}],"created":1788228970,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":" "}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"reasoning_content":"\n"}}],"created":1788228970,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"4"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"上海"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"8"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"当前"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"天气"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"我"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"为"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"可以直接"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"多云"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"回答"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"，"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"用户"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"气温"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"。"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"3"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"reasoning":"\n"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"1"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"上海"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"摄氏度"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"当前"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"，"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"天气"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"湿度"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"为"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"7"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"："}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"0"}}],"created":1788228971,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"多云"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"%，"}}],"created":1788228972,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"空气质量"}}],"created":1788228972,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"温度"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"指数"}}],"created":1788228972,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":" "}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"(A"}}],"created":1788228972,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"3"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"Q"}}],"created":1788228972,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"1"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"I"}}],"created":1788228972,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"℃"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":")"}}],"created":1788228972,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"，"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"为"}}],"created":1788228972,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"湿度"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"4"}}],"created":1788228972,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":" "}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"8"}}],"created":1788228972,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"7"}}]}
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"。"}}],"created":1788228972,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk"}
 
-data: {"choices":[{"index":0,"delta":{"content":"0"}}]}
-
-data: {"choices":[{"index":0,"delta":{"content":"%，"}}]}
-
-data: {"choices":[{"index":0,"delta":{"content":"空气质量"}}]}
-
-data: {"choices":[{"index":0,"delta":{"content":"指数"}}]}
-
-data: {"choices":[{"index":0,"delta":{"content":" ("}}]}
-
-data: {"choices":[{"index":0,"delta":{"content":"AQ"}}]}
-
-data: {"choices":[{"index":0,"delta":{"content":"I"}}]}
-
-data: {"choices":[{"index":0,"delta":{"content":")"}}]}
-
-data: {"choices":[{"index":0,"delta":{"content":" "}}]}
-
-data: {"choices":[{"index":0,"delta":{"content":"4"}}]}
-
-data: {"choices":[{"index":0,"delta":{"content":"8"}}]}
-
-data: {"choices":[{"index":0,"delta":{"content":"。"}}]}
-
-data: {"choices":[{"index":0,"finish_reason":"stop","delta":{}}]}
+data: {"choices":[{"finish_reason":"stop","index":0,"delta":{}}],"created":1788228972,"id":"chatcmpl-qUldmINR7D7owx6HqFbBKGO4dudGuJhU","model":"D:\\LLM\\models\\Qwen3.5-4B-UD-Q4_K_XL.gguf","system_fingerprint":"b10621-c1d0e7a00","object":"chat.completion.chunk","timings":{"cache_n":866,"prompt_n":116,"prompt_ms":1775.492,"prompt_per_token_ms":15.305965517241379,"prompt_per_second":65.33400319460748,"predicted_n":59,"predicted_ms":4343.261,"predicted_per_token_ms":74.8838103448276,"predicted_per_second":13.354021321767213}}
 
 data: [DONE]
 

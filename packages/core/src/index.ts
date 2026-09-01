@@ -2,6 +2,7 @@
 export { CORE_VERSION } from "./version.js";
 export type {
   AgentConfig,
+  AgentGuards,
   ChatMessage,
   Tool,
   ToolCallData,

@@ -52,6 +52,7 @@ bash scripts/acceptance-win.sh      # Windows（llama.cpp 引擎，Git Bash）
 - [x] **Step 6** 记忆机制——**已验收（AC6-1~5）**：跨会话长期记忆（追加式事实库 + remember/recall 工具 + 手写 bigram 召回）、/save /load 会话持久化、--memory 静态注入；注入策略取舍表入档（逐问动态注入=反模式）
 - [x] **Step 7** 子 agent 与编排——**已验收（AC7-1~4）**：delegate 工具（子 agent 即工具：独立上下文/递归锁/摘要信封）；同轮多委托=协议原生并行分解；直做 vs 委托成本对比（2.7× 调用买上下文隔离）
 - [x] **Step 8** 模型能力对比——**已验收（AC8-1~4），学习路线收官**：9B 复测三组实验，反直觉双结论——思考不收敛随规模**加剧**（82%→68%），格式纪律随规模**解决**（75%→100%）；工程兜底价值不随模型变强而消失
+- [x] **Step 9** 循环守卫（调研驱动，[SURVEY.md](docs/SURVEY.md) 缺口 1）——**已验收（AC10-1~4）**：空响应 nudge / 复读检测 / length 截断判错三件套（`config.guards`），LLM 层故障注入验收；发现 llama.cpp 历史非法 args 直接 500 的新差异（PROTOCOL §8）
 
 ## 目录结构
 

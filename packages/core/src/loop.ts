@@ -16,6 +16,7 @@ export type AgentEvent =
   | { type: "tool-call"; id: string; name: string; args: unknown }
   | { type: "tool-result"; id: string; name: string; result: string; retriesUsed?: number }
   | { type: "context-trimmed"; removedMessages: number; fromTokens: number; toTokens: number }
+  | { type: "guard"; guard: "empty-response" | "repetition" | "length-truncated"; detail: string }
   | { type: "final"; message: ChatMessage; rounds: number; usage: Usage }
   | { type: "error"; message: string; recoverable: boolean };
 
@@ -48,6 +49,19 @@ export async function* runAgent(
   }
 
   const totalUsage: Usage = { promptTokens: 0, completionTokens: 0 };
+
+  // ---- 循环守卫（Step 9，FR-52~55）：对"不抛错但也不干活"的模型失败设防 ----
+  const guards = {
+    emptyResponse: config.guards?.emptyResponse !== false,
+    repetition: config.guards?.repetition !== false,
+    length: config.guards?.lengthTruncation !== false,
+  };
+  const EMPTY_GIVE_UP = 3; // 连续 3 次空响应：放弃 nudge，按 final 诚实收场
+  const REPEAT_WARN = 3; // 工具批次签名连续相同第 3 批：执行后附警告
+  const REPEAT_STOP = 5; // 第 5 批：不再执行，直接触顶降级（视为卡死）
+  let emptyStreak = 0;
+  let repeatStreak = 0;
+  let lastBatchSig = "";
 
   for (let round = 1; round <= config.maxIterations; round++) {
     // ---- 上下文预算检查（Step 3，FR-20/21）：每轮请求前，超预算才裁，一次裁到低水位 ----
@@ -116,10 +130,77 @@ export async function* runAgent(
     };
     messages.push(assistant);
 
+    // ---- length 守卫（FR-54）：协议说截断就不猜完整性——残缺调用不执行，
+    //      逐个回填错误结果让模型重发（pi 契约：框架不猜，模型重发）----
+    if (finishReason === "length" && toolCalls.length > 0) {
+      if (guards.length) {
+        yield {
+          type: "guard",
+          guard: "length-truncated",
+          detail: `${toolCalls.length} 个工具调用因 max_tokens 截断未执行，已回填错误等待重发`,
+        };
+        for (const tc of toolCalls) {
+          // llama.cpp 实测差异（PROTOCOL）：服务端渲染模板时会重新解析历史中
+          // assistant.tool_calls.arguments 的 JSON——截断片段直接 HTTP 500
+          // （OpenAI/MLX 容忍非法 JSON）。传输层改写为合法 {}，原始字节片段
+          // 移入 tool 结果文本保存（溯源不丢）。
+          const rawArgs = tc.function.arguments;
+          tc.function.arguments = "{}";
+          const truncated = `（系统：输出因 max_tokens 截断，该工具调用参数不完整，未执行。原始参数片段：${rawArgs}。请精简输出，重新发起完整的工具调用）`;
+          yield { type: "tool-result", id: tc.id, name: tc.function.name, result: truncated };
+          messages.push({ role: "tool", tool_call_id: tc.id, content: truncated });
+        }
+        continue;
+      }
+      // 守卫关闭：维持 Step 8 行为（执行残缺调用，由工具层错误信封兜住）
+    }
+
     // ---- 出口判定（不变量3）：非工具请求，或协议矛盾（声称工具但没解析出调用）----
     if (finishReason !== "tool_calls" || toolCalls.length === 0) {
+      // 空响应守卫（FR-52）：空内容且无调用 = 模型发呆。注入 nudge 让它继续；
+      // 连续 EMPTY_GIVE_UP 次或已无轮次余量则放弃，按 final 诚实收场。
+      const isEmpty = textBuf === "" && toolCalls.length === 0;
+      const canNudge = guards.emptyResponse && emptyStreak < EMPTY_GIVE_UP - 1 && round < config.maxIterations;
+      if (isEmpty && canNudge) {
+        emptyStreak++;
+        yield {
+          type: "guard",
+          guard: "empty-response",
+          detail: `第 ${emptyStreak} 次空响应，注入提示让模型继续`,
+        };
+        messages.push({
+          role: "user",
+          content: "（系统注入：你上一轮没有产生任何内容或工具调用。请基于已有信息继续：调用工具，或直接给出最终回答）",
+        });
+        continue;
+      }
+      if (isEmpty && finishReason === "length" && guards.length) {
+        yield { type: "guard", guard: "length-truncated", detail: "终答因 max_tokens 截断，内容可能不完整" };
+      }
       yield { type: "final", message: assistant, rounds: round, usage: totalUsage };
       return;
+    }
+    emptyStreak = 0; // 有产出即清零空响应计数
+
+    // ---- 重复检测（FR-53）：批次签名 = 每个调用 name+规范化参数。整批相同才算复读
+    //      （同工具不同参数是正常行为，如翻页），误报优先级低于漏报 ----
+    const batchSig = toolCalls.map((tc) => callSignature(tc.function.name, tc.function.arguments)).join(" | ");
+    repeatStreak = batchSig === lastBatchSig ? repeatStreak + 1 : 1;
+    lastBatchSig = batchSig;
+    if (guards.repetition && repeatStreak >= REPEAT_STOP) {
+      yield {
+        type: "guard",
+        guard: "repetition",
+        detail: `连续 ${repeatStreak} 轮完全相同的工具调用，视为卡死，本批不再执行，强制进入降级终答`,
+      };
+      // 不变量2：assistant 的每个 tool_call 必须有配对 tool 结果——本批未执行，
+      // 也回填说明（部分服务端会拒绝无配对的 tool_calls 消息）
+      for (const tc of toolCalls) {
+        const skipped = "（系统：检测到连续重复的相同工具调用，本批未执行。请基于已获得的结果直接给出最终回答，不要再次发起相同调用）";
+        yield { type: "tool-result", id: tc.id, name: tc.function.name, result: skipped };
+        messages.push({ role: "tool", tool_call_id: tc.id, content: skipped });
+      }
+      break; // 跳出轮次循环 → 触顶降级出口（复用 Step 2 FR-15 的协议级降级）
     }
 
     // ---- 按协议顺序执行工具，结果逐一回填（不变量2）----
@@ -131,13 +212,27 @@ export async function* runAgent(
       yield { type: "tool-result", id: tc.id, name: tc.function.name, result, ...(retriesUsed !== undefined ? { retriesUsed } : {}) };
       messages.push({ role: "tool", tool_call_id: tc.id, content: result });
     }
+
+    // 重复警告（FR-53）：第 3/4 批照常执行（结果给全），回填后追加警告——
+    // 模型看到的是"相同结果 + 系统点破"，给它改变策略的机会
+    if (guards.repetition && repeatStreak >= REPEAT_WARN && round < config.maxIterations) {
+      yield {
+        type: "guard",
+        guard: "repetition",
+        detail: `连续 ${repeatStreak} 轮相同工具调用，已附警告`,
+      };
+      messages.push({
+        role: "user",
+        content: "（系统注入：检测到你连续多次发起完全相同的工具调用，相同参数大概率得到相同结果。请检查已获得的结果改变策略，或直接给出最终回答）",
+      });
+    }
   }
 
-  // ---- 触顶出口（不变量3 的降级形态，Step 2 FR-15）----
+  // ---- 触顶出口（不变量3 的降级形态，Step 2 FR-15；重复卡死也走这里，Step 9 FR-53）----
   if (config.degradeOnCap === false) {
     yield {
       type: "error",
-      message: `已达最大迭代次数 ${config.maxIterations}，模型仍未给出最终回答（可能陷入工具循环）`,
+      message: `循环终止：迭代耗尽（上限 ${config.maxIterations}）或重复工具调用卡死，模型仍未给出最终回答`,
       recoverable: false,
     };
     return;
@@ -210,5 +305,27 @@ function tryParse(argsJson: string): unknown {
     return JSON.parse(argsJson);
   } catch {
     return argsJson;
+  }
+}
+
+/** 键排序的稳定序列化：{"b":1,"a":2} 与 {"a":2,"b":1} 生成相同签名（FR-53） */
+function stableKey(v: unknown): string {
+  if (Array.isArray(v)) return `[${v.map(stableKey).join(",")}]`;
+  if (v && typeof v === "object") {
+    const obj = v as Record<string, unknown>;
+    return `{${Object.keys(obj)
+      .sort()
+      .map((k) => `${JSON.stringify(k)}:${stableKey(obj[k])}`)
+      .join(",")}}`;
+  }
+  return JSON.stringify(v);
+}
+
+/** 工具调用签名：name + 规范化参数；args 非法 JSON（如被截断）时按原文退化为 raw 形式 */
+function callSignature(name: string, argsJson: string): string {
+  try {
+    return `${name}(${stableKey(JSON.parse(argsJson))})`;
+  } catch {
+    return `${name}(raw:${argsJson})`;
   }
 }

@@ -322,3 +322,32 @@ Step 6 的 `--memory` 注入当时实为死代码（验收恰靠 recall 工具�
   `prompt eval` 与 `timings.cache_n` 两处，别只看一处下结论
 - v1 不含工具循环/持久化/HTTPS（REQUIREMENTS §13 边界）；`usesCleartextTraffic` 仅限
   adb reverse 局域网场景
+
+## Step 9 真机验收报告（AC10-1~4，2026-09-01，循环守卫）
+
+> 来源：docs/SURVEY.md 调研驱动的第一个补强步。守卫对"不抛错但也不干活"的模型失败设防：
+> 空响应（发呆）、复读（相同工具调用）、max_tokens 截断（残缺调用）。
+> 方法：LLM 层故障注入（TAGENT_LLM_FAULTS，壳层装饰器合成"坏模型"流）——复现不赌真模型抽风；
+> 放行轮走真实引擎（Qwen3.5-4B @ llama.cpp）。证据：captures/step9-guards/（stdout + transcript JSONL）。
+
+| # | 判定 | 证据 |
+|---|---|---|
+| AC10-1 空响应 | ✅ | ac10-1：注入 2 次空响应 → 2 条 guard 事件 + 2 条 nudge 入 messages → 真引擎接管，4 轮完成（transcript 20KB） |
+| AC10-2 重复 | ✅ | ac10-2：注入 5 批相同调用 → 第 1~4 批执行（⚠ 前两轮无警告）、第 3/4 批附警告注入、第 5 批不执行回填配对结果 → 降级终答完成 |
+| AC10-3 length | ✅ | ac10-3：截断调用未执行（registry 零执行）→ 回填错误（含原始字节片段）→ 模型完整重发 `get_weather {"city":"北京"}` → 3 轮完成 |
+| AC10-4 回归 | ✅ | 六场景验收（acceptance-win.sh）守卫默认开启下全过，win-ac-* 已刷新归档；113 项单测全绿（core 72 + cli 37） |
+
+### 验收中发现的新引擎差异（已入 PROTOCOL §8）
+
+**llama.cpp 对历史中非法 JSON 的 tool_call args 返回 HTTP 500**：守卫回填后重发请求时，
+服务端渲染模板会重新解析 assistant.tool_calls.arguments——截断片段 `{"city":"北` 直接炸
+（首跑实录：ac10-3-first-attempt-llamacpp-500）。OpenAI/MLX 容忍此形态。
+对策：回填前把传输层 args 改写为合法 `{}`，原始字节片段挪进 tool 结果文本（溯源不丢）。
+这是"存证要保原始字节、传输要保协议合法"两全的实例。
+
+### 设计取舍记录
+
+- **nudge/警告都以 user 消息入档**：真实发生的上下文注入必须进 messages（不变量 1），且保 role 交替与缓存前缀
+- **空响应守卫自设上限（3 次）**：守卫本身也要兜底——nudge 无限重试就是把发呆换成死循环
+- **重复检测用批次签名**（name+键排序参数）：同工具不同参数是正常行为（翻页），整批相同才算复读，误报优先级低于漏报
+- **触顶降级（Step 2）即 grace call**：调研时以为缺"预算收尾调用"，实读代码确认 degradeOnCap 无 tools 终答已是其等价物——调研结论与代码实况对齐后再动手

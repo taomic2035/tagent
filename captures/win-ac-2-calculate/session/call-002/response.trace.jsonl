@@ -1,67 +1,54 @@
-{"seq":1,"kind":"reasoning","frame":1,"line":1,"byte":0,"text":"用户"}
-{"seq":2,"kind":"reasoning","frame":2,"line":3,"byte":64,"text":"要求"}
-{"seq":3,"kind":"reasoning","frame":3,"line":5,"byte":128,"text":"计算"}
-{"seq":4,"kind":"reasoning","frame":4,"line":7,"byte":192,"text":" "}
-{"seq":5,"kind":"reasoning","frame":5,"line":9,"byte":251,"text":"3"}
-{"seq":6,"kind":"reasoning","frame":6,"line":11,"byte":310,"text":"."}
-{"seq":7,"kind":"reasoning","frame":7,"line":13,"byte":369,"text":"7"}
-{"seq":8,"kind":"reasoning","frame":8,"line":15,"byte":428,"text":" "}
-{"seq":9,"kind":"reasoning","frame":9,"line":17,"byte":487,"text":"乘以"}
-{"seq":10,"kind":"reasoning","frame":10,"line":19,"byte":551,"text":" "}
-{"seq":11,"kind":"reasoning","frame":11,"line":21,"byte":610,"text":"1"}
-{"seq":12,"kind":"reasoning","frame":12,"line":23,"byte":669,"text":"2"}
-{"seq":13,"kind":"reasoning","frame":13,"line":25,"byte":728,"text":" "}
-{"seq":14,"kind":"reasoning","frame":14,"line":27,"byte":787,"text":"再"}
-{"seq":15,"kind":"reasoning","frame":15,"line":29,"byte":848,"text":"减"}
-{"seq":16,"kind":"reasoning","frame":16,"line":31,"byte":909,"text":" "}
-{"seq":17,"kind":"reasoning","frame":17,"line":33,"byte":968,"text":"8"}
-{"seq":18,"kind":"reasoning","frame":18,"line":35,"byte":1027,"text":"."}
-{"seq":19,"kind":"reasoning","frame":19,"line":37,"byte":1086,"text":"2"}
-{"seq":20,"kind":"reasoning","frame":20,"line":39,"byte":1145,"text":" "}
-{"seq":21,"kind":"reasoning","frame":21,"line":41,"byte":1204,"text":"的结果"}
-{"seq":22,"kind":"reasoning","frame":22,"line":43,"byte":1271,"text":"。"}
-{"seq":23,"kind":"reasoning","frame":23,"line":45,"byte":1332,"text":"我已经"}
-{"seq":24,"kind":"reasoning","frame":24,"line":47,"byte":1399,"text":"调"}
-{"seq":25,"kind":"reasoning","frame":25,"line":49,"byte":1460,"text":"用了"}
-{"seq":26,"kind":"reasoning","frame":26,"line":51,"byte":1524,"text":" calculate"}
-{"seq":27,"kind":"reasoning","frame":27,"line":53,"byte":1592,"text":" "}
-{"seq":28,"kind":"reasoning","frame":28,"line":55,"byte":1651,"text":"工具"}
-{"seq":29,"kind":"reasoning","frame":29,"line":57,"byte":1715,"text":"，"}
-{"seq":30,"kind":"reasoning","frame":30,"line":59,"byte":1776,"text":"得到了"}
-{"seq":31,"kind":"reasoning","frame":31,"line":61,"byte":1843,"text":"结果"}
-{"seq":32,"kind":"reasoning","frame":32,"line":63,"byte":1907,"text":" "}
-{"seq":33,"kind":"reasoning","frame":33,"line":65,"byte":1966,"text":"3"}
-{"seq":34,"kind":"reasoning","frame":34,"line":67,"byte":2025,"text":"6"}
-{"seq":35,"kind":"reasoning","frame":35,"line":69,"byte":2084,"text":"."}
-{"seq":36,"kind":"reasoning","frame":36,"line":71,"byte":2143,"text":"2"}
-{"seq":37,"kind":"reasoning","frame":37,"line":73,"byte":2202,"text":"。"}
-{"seq":38,"kind":"reasoning","frame":38,"line":75,"byte":2263,"text":"现在我"}
-{"seq":39,"kind":"reasoning","frame":39,"line":77,"byte":2330,"text":"可以直接"}
-{"seq":40,"kind":"reasoning","frame":40,"line":79,"byte":2400,"text":"回答"}
-{"seq":41,"kind":"reasoning","frame":41,"line":81,"byte":2464,"text":"用户"}
-{"seq":42,"kind":"reasoning","frame":42,"line":83,"byte":2528,"text":"。"}
-{"seq":43,"kind":"reasoning","frame":43,"line":85,"byte":2589,"text":"\n"}
-{"seq":44,"kind":"text","frame":44,"line":87,"byte":2649,"text":"3"}
-{"seq":45,"kind":"text","frame":45,"line":89,"byte":2706,"text":"."}
-{"seq":46,"kind":"text","frame":46,"line":91,"byte":2763,"text":"7"}
-{"seq":47,"kind":"text","frame":47,"line":93,"byte":2820,"text":" "}
-{"seq":48,"kind":"text","frame":48,"line":95,"byte":2877,"text":"乘以"}
-{"seq":49,"kind":"text","frame":49,"line":97,"byte":2939,"text":" "}
-{"seq":50,"kind":"text","frame":50,"line":99,"byte":2996,"text":"1"}
-{"seq":51,"kind":"text","frame":51,"line":101,"byte":3053,"text":"2"}
-{"seq":52,"kind":"text","frame":52,"line":103,"byte":3110,"text":" "}
-{"seq":53,"kind":"text","frame":53,"line":105,"byte":3167,"text":"再"}
-{"seq":54,"kind":"text","frame":54,"line":107,"byte":3226,"text":"减"}
-{"seq":55,"kind":"text","frame":55,"line":109,"byte":3285,"text":" "}
-{"seq":56,"kind":"text","frame":56,"line":111,"byte":3342,"text":"8"}
-{"seq":57,"kind":"text","frame":57,"line":113,"byte":3399,"text":"."}
-{"seq":58,"kind":"text","frame":58,"line":115,"byte":3456,"text":"2"}
-{"seq":59,"kind":"text","frame":59,"line":117,"byte":3513,"text":" "}
-{"seq":60,"kind":"text","frame":60,"line":119,"byte":3570,"text":"的结果"}
-{"seq":61,"kind":"text","frame":61,"line":121,"byte":3635,"text":"是"}
-{"seq":62,"kind":"text","frame":62,"line":123,"byte":3694,"text":" "}
-{"seq":63,"kind":"text","frame":63,"line":125,"byte":3751,"text":"3"}
-{"seq":64,"kind":"text","frame":64,"line":127,"byte":3808,"text":"6"}
-{"seq":65,"kind":"text","frame":65,"line":129,"byte":3865,"text":"."}
-{"seq":66,"kind":"text","frame":66,"line":131,"byte":3922,"text":"2"}
-{"seq":67,"kind":"text","frame":67,"line":133,"byte":3979,"text":"。"}
+{"seq":1,"kind":"reasoning","frame":2,"line":3,"byte":295,"text":"工具"}
+{"seq":2,"kind":"reasoning","frame":3,"line":5,"byte":585,"text":"返回"}
+{"seq":3,"kind":"reasoning","frame":4,"line":7,"byte":875,"text":"了"}
+{"seq":4,"kind":"reasoning","frame":5,"line":9,"byte":1162,"text":"计算"}
+{"seq":5,"kind":"reasoning","frame":6,"line":11,"byte":1452,"text":"结果"}
+{"seq":6,"kind":"reasoning","frame":7,"line":13,"byte":1742,"text":"，"}
+{"seq":7,"kind":"reasoning","frame":8,"line":15,"byte":2029,"text":"3"}
+{"seq":8,"kind":"reasoning","frame":9,"line":17,"byte":2314,"text":"."}
+{"seq":9,"kind":"reasoning","frame":10,"line":19,"byte":2599,"text":"7"}
+{"seq":10,"kind":"reasoning","frame":11,"line":21,"byte":2884,"text":"乘以"}
+{"seq":11,"kind":"reasoning","frame":12,"line":23,"byte":3174,"text":"1"}
+{"seq":12,"kind":"reasoning","frame":13,"line":25,"byte":3459,"text":"2"}
+{"seq":13,"kind":"reasoning","frame":14,"line":27,"byte":3744,"text":"再"}
+{"seq":14,"kind":"reasoning","frame":15,"line":29,"byte":4031,"text":"减去"}
+{"seq":15,"kind":"reasoning","frame":16,"line":31,"byte":4321,"text":"8"}
+{"seq":16,"kind":"reasoning","frame":17,"line":33,"byte":4606,"text":"."}
+{"seq":17,"kind":"reasoning","frame":18,"line":35,"byte":4891,"text":"2"}
+{"seq":18,"kind":"reasoning","frame":19,"line":37,"byte":5176,"text":"等于"}
+{"seq":19,"kind":"reasoning","frame":20,"line":39,"byte":5466,"text":"3"}
+{"seq":20,"kind":"reasoning","frame":21,"line":41,"byte":5751,"text":"6"}
+{"seq":21,"kind":"reasoning","frame":22,"line":43,"byte":6036,"text":"."}
+{"seq":22,"kind":"reasoning","frame":23,"line":45,"byte":6321,"text":"2"}
+{"seq":23,"kind":"reasoning","frame":24,"line":47,"byte":6606,"text":"。"}
+{"seq":24,"kind":"reasoning","frame":25,"line":49,"byte":6893,"text":"我"}
+{"seq":25,"kind":"reasoning","frame":26,"line":51,"byte":7180,"text":"可以直接"}
+{"seq":26,"kind":"reasoning","frame":27,"line":53,"byte":7476,"text":"告诉"}
+{"seq":27,"kind":"reasoning","frame":28,"line":55,"byte":7766,"text":"用户"}
+{"seq":28,"kind":"reasoning","frame":29,"line":57,"byte":8056,"text":"这个"}
+{"seq":29,"kind":"reasoning","frame":30,"line":59,"byte":8346,"text":"结果"}
+{"seq":30,"kind":"reasoning","frame":31,"line":61,"byte":8636,"text":"。"}
+{"seq":31,"kind":"reasoning","frame":32,"line":63,"byte":8923,"text":"\n"}
+{"seq":32,"kind":"text","frame":33,"line":65,"byte":9209,"text":"3"}
+{"seq":33,"kind":"text","frame":34,"line":67,"byte":9484,"text":"."}
+{"seq":34,"kind":"text","frame":35,"line":69,"byte":9759,"text":"7"}
+{"seq":35,"kind":"text","frame":36,"line":71,"byte":10034,"text":" "}
+{"seq":36,"kind":"text","frame":37,"line":73,"byte":10309,"text":"乘以"}
+{"seq":37,"kind":"text","frame":38,"line":75,"byte":10589,"text":" "}
+{"seq":38,"kind":"text","frame":39,"line":77,"byte":10864,"text":"1"}
+{"seq":39,"kind":"text","frame":40,"line":79,"byte":11139,"text":"2"}
+{"seq":40,"kind":"text","frame":41,"line":81,"byte":11414,"text":" "}
+{"seq":41,"kind":"text","frame":42,"line":83,"byte":11689,"text":"再"}
+{"seq":42,"kind":"text","frame":43,"line":85,"byte":11966,"text":"减"}
+{"seq":43,"kind":"text","frame":44,"line":87,"byte":12243,"text":" "}
+{"seq":44,"kind":"text","frame":45,"line":89,"byte":12518,"text":"8"}
+{"seq":45,"kind":"text","frame":46,"line":91,"byte":12793,"text":"."}
+{"seq":46,"kind":"text","frame":47,"line":93,"byte":13068,"text":"2"}
+{"seq":47,"kind":"text","frame":48,"line":95,"byte":13343,"text":" "}
+{"seq":48,"kind":"text","frame":49,"line":97,"byte":13618,"text":"等于"}
+{"seq":49,"kind":"text","frame":50,"line":99,"byte":13898,"text":" "}
+{"seq":50,"kind":"text","frame":51,"line":101,"byte":14173,"text":"3"}
+{"seq":51,"kind":"text","frame":52,"line":103,"byte":14448,"text":"6"}
+{"seq":52,"kind":"text","frame":53,"line":105,"byte":14723,"text":"."}
+{"seq":53,"kind":"text","frame":54,"line":107,"byte":14998,"text":"2"}
+{"seq":54,"kind":"text","frame":55,"line":109,"byte":15273,"text":"。"}

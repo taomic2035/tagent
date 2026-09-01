@@ -21,6 +21,7 @@ import { makeMemoryTools } from "./builtin-tools/memory.js";
 import { makeDelegateTool } from "./builtin-tools/delegate.js";
 import { createWireRecorder } from "./wire.js";
 import { parseFaults, withFaults, describeFaults } from "./faults.js";
+import { parseLlmFaults, withLlmFaults, describeLlmFaults } from "./llm-faults.js";
 import { paint, writeChunk, writeLine } from "./ui.js";
 
 // ---- 启动参数：CLI 参数 > 环境变量 > 默认值（泛化：不硬编码本机信息）----
@@ -66,7 +67,10 @@ const config: AgentConfig = {
 // wire 记录器在 fetch 层 tee 原始字节（复盘修复：session 存证必须是引擎原始
 // 报文而非重建帧，TRACEABILITY.md §1/§4）；core 经 fetchImpl 注入点一行动不改
 const wire = createWireRecorder(join(process.cwd(), "logs", "sessions"));
-const client = new OpenAIClient(config.baseUrl, config.model, wire.fetchImpl);
+// Step 9：LLM 层故障注入（AC10 验收道具）——包在 OpenAIClient 外，
+// 注入轮返回合成流（不经 fetch），放行轮才产生真实 wire 存证
+const llmFaults = parseLlmFaults(process.env.TAGENT_LLM_FAULTS);
+const client = withLlmFaults(new OpenAIClient(config.baseUrl, config.model, wire.fetchImpl), llmFaults);
 const registry = new ToolRegistry();
 // 故障注入（FR-16）：TAGENT_FAULTS 按剧本把内建工具搞坏，实验工具只进壳
 const faults = parseFaults(process.env.TAGENT_FAULTS);
@@ -125,6 +129,9 @@ function render(ev: AgentEvent, state: { toolStart: number }): void {
       break;
     case "context-trimmed":
       writeLine(paint.yellow(`⚡ 上下文已裁剪：${ev.fromTokens} → ${ev.toTokens} 估算 token（移除 ${ev.removedMessages} 条消息；裁剪即遗忘，旧回合不再可见）`));
+      break;
+    case "guard":
+      writeLine(paint.yellow(`🛡 守卫[${ev.guard}]：${ev.detail}`));
       break;
     case "tool-call":
       state.toolStart = Date.now();
@@ -232,6 +239,9 @@ function main(): void {
   }
   if (faults.size > 0) {
     writeLine(paint.red(`⚡ 故障注入已启用: ${describeFaults(faults)}（TAGENT_FAULTS）`));
+  }
+  if (llmFaults.size > 0) {
+    writeLine(paint.red(`⚡ LLM 故障注入已启用: ${describeLlmFaults(llmFaults)}（TAGENT_LLM_FAULTS）`));
   }
   if (config.contextBudgetTokens) {
     writeLine(paint.dim(`上下文预算: ${config.contextBudgetTokens} 估算 token（双水位裁剪）`));

@@ -143,13 +143,11 @@ test("场景·同轮双工具乱序分片：按 index 顺序执行并回填", as
     runAgent(
       makeDeps(
         scriptedClient([
-          [
-            toolDelta(1, "id-b", '{"v":"2"}', "beta"),  // index 1 先到（乱序）
+          [toolDelta(1, "id-b", '{"v":"2"}', "beta"),  // index 1 先到（乱序）
             toolDelta(0, "id-a", '{"v":"', "alpha"),     // index 0 的参数分两片
             { type: "tool-call-delta", index: 0, argsDelta: '1"}' },
-            done("tool_calls"),
-          ],
-          [done("stop")],
+            done("tool_calls")],
+          [{ type: "text-delta", delta: "完成" }, done("stop")], // 终答须有内容，否则触发空响应守卫
         ]),
         reg,
       ),
@@ -231,7 +229,7 @@ test("场景·usage 跨轮累加", async () => {
       makeDeps(
         scriptedClient([
           [toolDelta(0, "id-1", '{"text":"a"}'), { type: "done", finishReason: "tool_calls", usage: { promptTokens: 10, completionTokens: 5 } }],
-          [{ type: "done", finishReason: "stop", usage: { promptTokens: 20, completionTokens: 7 } }],
+          [{ type: "text-delta", delta: "答" }, { type: "done", finishReason: "stop", usage: { promptTokens: 20, completionTokens: 7 } }],
         ]),
         makeRegistry(),
       ),
@@ -377,10 +375,166 @@ test("思考开关（Step 4）：config.thinking 经 loop 下发为 chat_templat
   const client = {
     async *stream(req: { chatTemplateKwargs?: unknown }): AsyncGenerator<StreamEvent> {
       seen.push(req.chatTemplateKwargs);
+      yield { type: "text-delta", delta: "ok" };
       yield done("stop");
     },
   };
   await collect(runAgent({ client, registry: makeRegistry(), config: { ...config, systemPrompt: "", thinking: false } }, [{ role: "user", content: "q" }]));
   await collect(runAgent({ client, registry: makeRegistry(), config: { ...config, systemPrompt: "" } }, [{ role: "user", content: "q" }]));
   assert.deepEqual(seen, [{ enable_thinking: false }, undefined]);
+});
+
+// ============================================================
+// 循环守卫（Step 9，FR-52~55）
+// ============================================================
+
+const guardEvents = (events: AgentEvent[]) => events.filter((e): e is Extract<AgentEvent, { type: "guard" }> => e.type === "guard");
+
+test("守卫·空响应 nudge 恢复：两次发呆后正常作答，nudge 入档且事件可见（FR-52）", async () => {
+  const messages: ChatMessage[] = [{ role: "user", content: "任务" }];
+  const events = await collect(
+    runAgent(
+      makeDeps(
+        scriptedClient([
+          [done("stop")], // 第 1 轮：空内容无调用
+          [done("stop")], // 第 2 轮：又是发呆
+          [{ type: "text-delta", delta: "恢复了" }, done("stop")],
+        ]),
+        makeRegistry(),
+      ),
+      messages,
+    ),
+  );
+  const guards = guardEvents(events);
+  assert.equal(guards.length, 2);
+  assert.ok(guards.every((g) => g.guard === "empty-response"));
+  // 两条 nudge 都进了 messages（真实发生的上下文注入必须入档）
+  const nudges = messages.filter((m) => m.role === "user" && m.content.startsWith("（系统注入"));
+  assert.equal(nudges.length, 2);
+  const final = events.at(-1) as Extract<AgentEvent, { type: "final" }>;
+  assert.equal(final.rounds, 3);
+  assert.equal(final.message.role === "assistant" && final.message.content, "恢复了");
+});
+
+test("守卫·连续 3 次空响应：放弃 nudge，final 诚实收场（FR-52）", async () => {
+  const messages: ChatMessage[] = [{ role: "user", content: "任务" }];
+  const events = await collect(
+    runAgent(
+      makeDeps(scriptedClient([[done("stop")], [done("stop")], [done("stop")]]), makeRegistry()),
+      messages,
+    ),
+  );
+  const guards = guardEvents(events);
+  assert.equal(guards.length, 2); // 第 3 次不再 nudge（上限守卫自身也要兜底）
+  const final = events.at(-1) as Extract<AgentEvent, { type: "final" }>;
+  assert.equal(final.rounds, 3);
+  assert.equal(final.message.role === "assistant" && final.message.content, null); // 空终答如实交付
+});
+
+test("守卫·重复检测：第 3 批执行后附警告注入（FR-53）", async () => {
+  const order: string[] = [];
+  const reg = makeRegistry(order);
+  const batch = (id: string) => [toolDelta(0, id, '{"text":"same"}'), done("tool_calls")];
+  const messages: ChatMessage[] = [{ role: "user", content: "任务" }];
+  const events = await collect(
+    runAgent(
+      makeDeps(
+        scriptedClient([
+          batch("id-1"),
+          batch("id-2"),
+          batch("id-3"), // streak=3 → 警告
+          [{ type: "text-delta", delta: "改策略了" }, done("stop")],
+        ]),
+        reg,
+      ),
+      messages,
+    ),
+  );
+  assert.equal(order.length, 3, "前三批都执行（结果给全，警告只是点破）");
+  const warns = guardEvents(events).filter((g) => g.guard === "repetition");
+  assert.equal(warns.length, 1);
+  const warned = messages.find((m) => m.role === "user" && m.content.includes("完全相同的工具调用"));
+  assert.ok(warned, "警告以 user 消息注入 messages");
+  assert.ok(events.at(-1)?.type === "final");
+});
+
+test("守卫·重复卡死：第 5 批不执行、回填配对结果、强制降级终答（FR-53）", async () => {
+  const order: string[] = [];
+  const reg = makeRegistry(order);
+  const batch = (id: string) => [toolDelta(0, id, '{"text":"same"}'), done("tool_calls")];
+  const messages: ChatMessage[] = [{ role: "user", content: "任务" }];
+  const events = await collect(
+    runAgent(
+      makeDeps(
+        scriptedClient([
+          batch("id-1"),
+          batch("id-2"),
+          batch("id-3"),
+          batch("id-4"),
+          batch("id-5"), // streak=5 → 本批不执行
+          [{ type: "text-delta", delta: "降级终答" }, done("stop")], // 降级轮（无 tools）
+        ]),
+        reg,
+        { ...config, systemPrompt: "", maxIterations: 8 }, // 装得下 5 批 + 降级
+      ),
+      messages,
+    ),
+  );
+  assert.equal(order.length, 4, "第 5 批未执行");
+  // 不变量2：第 5 批的 tool_calls 也有配对 tool 消息（未执行说明）
+  const skipped = messages.filter((m) => m.role === "tool" && m.content.includes("本批未执行"));
+  assert.equal(skipped.length, 1);
+  // 降级终答产出
+  const final = events.at(-1) as Extract<AgentEvent, { type: "final" }>;
+  assert.equal(final.message.role === "assistant" && final.message.content, "降级终答");
+  assert.ok(guardEvents(events).some((g) => g.guard === "repetition" && g.detail.includes("卡死")));
+});
+
+test("守卫·length 截断：残缺调用不执行，回填错误，下轮重发成功（FR-54）", async () => {
+  const order: string[] = [];
+  const reg = makeRegistry(order);
+  const messages: ChatMessage[] = [{ role: "user", content: "echo 一下 hello" }];
+  const events = await collect(
+    runAgent(
+      makeDeps(
+        scriptedClient([
+          // 第 1 轮：args JSON 被截断 + length
+          [toolDelta(0, "id-1", '{"text":"hel'), done("length")],
+          // 第 2 轮：模型重发完整调用
+          [toolDelta(0, "id-2", '{"text":"hello"}'), done("tool_calls")],
+          [{ type: "text-delta", delta: "已回显" }, done("stop")],
+        ]),
+        reg,
+      ),
+      messages,
+    ),
+  );
+  assert.deepEqual(order, ["echo"], "截断的残缺调用从未执行，只有重发的那次执行");
+  const truncGuards = guardEvents(events).filter((g) => g.guard === "length-truncated");
+  assert.equal(truncGuards.length, 1);
+  // 回填的错误 tool 结果与 assistant 的 tool_call 配对
+  const errTool = messages.find((m) => m.role === "tool" && m.content.includes("未执行"));
+  assert.equal(errTool?.role === "tool" && errTool.tool_call_id, "id-1");
+  // 传输层改写：历史里截断 args 必须已换成合法 {}（llama.cpp 500 规避），
+  // 原始字节片段保存在 tool 结果文本里（溯源不丢）
+  const truncatedCall = messages.find(
+    (m) => m.role === "assistant" && m.tool_calls?.some((c) => c.id === "id-1"),
+  );
+  const rawCall = truncatedCall?.role === "assistant" && truncatedCall.tool_calls?.[0];
+  assert.ok(rawCall);
+  assert.equal(rawCall.function.arguments, "{}");
+  assert.ok(errTool?.role === "tool" && errTool.content.includes('{"text":"hel'), "原始截断片段保留在 tool 结果中");
+  const final = events.at(-1) as Extract<AgentEvent, { type: "final" }>;
+  assert.equal(final.message.role === "assistant" && final.message.content, "已回显");
+});
+
+test("守卫·全关回归：guards 显式关闭 = Step 8 行为（FR-55）", async () => {
+  // 关闭后：空响应立即按 final 收场，不再 nudge
+  const messages: ChatMessage[] = [{ role: "user", content: "任务" }];
+  const cfg: AgentConfig = { ...config, systemPrompt: "", guards: { emptyResponse: false, repetition: false, lengthTruncation: false } };
+  const client = scriptedClient([[done("stop")]]);
+  const events = await collect(runAgent(makeDeps(client, makeRegistry(), cfg), messages));
+  assert.equal(guardEvents(events).length, 0);
+  assert.equal(client.calls, 1, "守卫关闭时一次请求即收场");
+  assert.ok(events.at(-1)?.type === "final");
 });

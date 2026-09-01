@@ -173,6 +173,7 @@ Cache-Control: no-cache
 | `system_fingerprint` | 版本+OS+硬件指纹（敏感，入库脱敏） | `b10621-c1d0e7a00`（仅 build+commit，非机器指纹，可留原件） |
 | model 回显 | 原样路径 | 会把正斜杠归一为反斜杠回显（`D:/` → `D:\`） |
 | HTTP 版本 | 1.0（连接关闭收尾） | 1.1 + Keep-Alive |
+| **历史中非法 JSON 的 tool_call args** | 容忍（原样存储） | **HTTP 500**：服务端渲染模板时重新解析 assistant.tool_calls.arguments，截断片段 `{"city":"北` 直接炸（Step 9 守卫实测，captures/step9-guards/ac10-3-first-attempt）——回填前须把传输层 args 改写为合法 `{}`，原始字节挪进 tool 结果文本保存 |
 | 默认端口 | 8080（将改 9931，启动日志警告） | 8080（两引擎都由启动脚本固定 8081） |
 
 ### 8.1 默认温度暗坑（跨引擎对照实验最重要的参数）

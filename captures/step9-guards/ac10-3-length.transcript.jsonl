@@ -1,0 +1,80 @@
+{"ts":"2026-09-01T02:13:41.778Z","ev":{"type":"round-start","round":1}}
+{"ts":"2026-09-01T02:13:41.779Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"查一下北京天气"}]}}
+{"ts":"2026-09-01T02:13:41.781Z","ev":{"type":"guard","guard":"length-truncated","detail":"1 个工具调用因 max_tokens 截断未执行，已回填错误等待重发"}}
+{"ts":"2026-09-01T02:13:41.781Z","ev":{"type":"tool-result","id":"fault-length","name":"get_weather","result":"（系统：输出因 max_tokens 截断，该工具调用参数不完整，未执行。原始参数片段：{\"city\":\"北。请精简输出，重新发起完整的工具调用）"}}
+{"ts":"2026-09-01T02:13:41.781Z","ev":{"type":"round-start","round":2}}
+{"ts":"2026-09-01T02:13:41.782Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"查一下北京天气"},{"role":"assistant","content":null,"tool_calls":[{"id":"fault-length","type":"function","function":{"name":"get_weather","arguments":"{}"}}]},{"role":"tool","tool_call_id":"fault-length","content":"（系统：输出因 max_tokens 截断，该工具调用参数不完整，未执行。原始参数片段：{\"city\":\"北。请精简输出，重新发起完整的工具调用）"}]}}
+{"ts":"2026-09-01T02:13:47.191Z","ev":{"type":"reasoning-delta","delta":"工具"}}
+{"ts":"2026-09-01T02:13:47.259Z","ev":{"type":"reasoning-delta","delta":"调用"}}
+{"ts":"2026-09-01T02:13:47.330Z","ev":{"type":"reasoning-delta","delta":"失败了"}}
+{"ts":"2026-09-01T02:13:47.397Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-09-01T02:13:47.463Z","ev":{"type":"reasoning-delta","delta":"因为"}}
+{"ts":"2026-09-01T02:13:47.532Z","ev":{"type":"reasoning-delta","delta":"原始"}}
+{"ts":"2026-09-01T02:13:47.600Z","ev":{"type":"reasoning-delta","delta":"参数"}}
+{"ts":"2026-09-01T02:13:47.673Z","ev":{"type":"reasoning-delta","delta":"被"}}
+{"ts":"2026-09-01T02:13:47.743Z","ev":{"type":"reasoning-delta","delta":"截"}}
+{"ts":"2026-09-01T02:13:47.812Z","ev":{"type":"reasoning-delta","delta":"断了"}}
+{"ts":"2026-09-01T02:13:47.884Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-09-01T02:13:47.950Z","ev":{"type":"reasoning-delta","delta":"正确的"}}
+{"ts":"2026-09-01T02:13:48.023Z","ev":{"type":"reasoning-delta","delta":"参数"}}
+{"ts":"2026-09-01T02:13:48.091Z","ev":{"type":"reasoning-delta","delta":"应该是"}}
+{"ts":"2026-09-01T02:13:48.159Z","ev":{"type":"reasoning-delta","delta":" `"}}
+{"ts":"2026-09-01T02:13:48.233Z","ev":{"type":"reasoning-delta","delta":"{\""}}
+{"ts":"2026-09-01T02:13:48.307Z","ev":{"type":"reasoning-delta","delta":"city"}}
+{"ts":"2026-09-01T02:13:48.378Z","ev":{"type":"reasoning-delta","delta":"\":"}}
+{"ts":"2026-09-01T02:13:48.449Z","ev":{"type":"reasoning-delta","delta":" \""}}
+{"ts":"2026-09-01T02:13:48.516Z","ev":{"type":"reasoning-delta","delta":"北京"}}
+{"ts":"2026-09-01T02:13:48.585Z","ev":{"type":"reasoning-delta","delta":"\""}}
+{"ts":"2026-09-01T02:13:48.654Z","ev":{"type":"reasoning-delta","delta":"}`"}}
+{"ts":"2026-09-01T02:13:48.727Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-09-01T02:13:48.794Z","ev":{"type":"reasoning-delta","delta":"我需要"}}
+{"ts":"2026-09-01T02:13:48.868Z","ev":{"type":"reasoning-delta","delta":"重新"}}
+{"ts":"2026-09-01T02:13:48.935Z","ev":{"type":"reasoning-delta","delta":"调用"}}
+{"ts":"2026-09-01T02:13:49.005Z","ev":{"type":"reasoning-delta","delta":"工具"}}
+{"ts":"2026-09-01T02:13:49.075Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-09-01T02:13:49.141Z","ev":{"type":"reasoning-delta","delta":"确保"}}
+{"ts":"2026-09-01T02:13:49.209Z","ev":{"type":"reasoning-delta","delta":"参数"}}
+{"ts":"2026-09-01T02:13:49.279Z","ev":{"type":"reasoning-delta","delta":"完整"}}
+{"ts":"2026-09-01T02:13:49.346Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-09-01T02:13:49.419Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-09-01T02:13:51.424Z","ev":{"type":"tool-call","id":"PNNxXuEMzTShTfZ8D1yqwXkLEaR2tfu6","name":"get_weather","args":{"city":"北京"}}}
+{"ts":"2026-09-01T02:13:51.427Z","ev":{"type":"tool-result","id":"PNNxXuEMzTShTfZ8D1yqwXkLEaR2tfu6","name":"get_weather","result":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"北京\",\"condition\":\"晴\",\"tempC\":28,\"humidity\":40,\"aqi\":55,\"fetchedAt\":\"2026-09-01T02:13:51.426Z\",\"source\":\"mock\"}}"}}
+{"ts":"2026-09-01T02:13:51.427Z","ev":{"type":"round-start","round":3}}
+{"ts":"2026-09-01T02:13:51.427Z","ev":{"type":"llm-request","messages":[{"role":"system","content":"你是 tagent，一个运行在用户本地终端上的助手。\n你可以使用提供的工具来获取信息或进行计算。\n规则：\n- 需要工具才能回答时，调用工具并等待结果，不要编造工具会提供的数据\n- 工具返回错误时，向用户如实说明，或修正参数后重试\n- 无需工具的日常对话直接回答\n- 回答使用用户使用的语言（默认中文）"},{"role":"user","content":"查一下北京天气"},{"role":"assistant","content":null,"tool_calls":[{"id":"fault-length","type":"function","function":{"name":"get_weather","arguments":"{}"}}]},{"role":"tool","tool_call_id":"fault-length","content":"（系统：输出因 max_tokens 截断，该工具调用参数不完整，未执行。原始参数片段：{\"city\":\"北。请精简输出，重新发起完整的工具调用）"},{"role":"assistant","content":null,"tool_calls":[{"id":"PNNxXuEMzTShTfZ8D1yqwXkLEaR2tfu6","type":"function","function":{"name":"get_weather","arguments":"{\"city\":\"北京\"}"}}]},{"role":"tool","tool_call_id":"PNNxXuEMzTShTfZ8D1yqwXkLEaR2tfu6","content":"{\"ok\":true,\"data\":{\"ok\":true,\"city\":\"北京\",\"condition\":\"晴\",\"tempC\":28,\"humidity\":40,\"aqi\":55,\"fetchedAt\":\"2026-09-01T02:13:51.426Z\",\"source\":\"mock\"}}"}]}}
+{"ts":"2026-09-01T02:13:52.754Z","ev":{"type":"reasoning-delta","delta":"工具"}}
+{"ts":"2026-09-01T02:13:52.844Z","ev":{"type":"reasoning-delta","delta":"调用"}}
+{"ts":"2026-09-01T02:13:52.905Z","ev":{"type":"reasoning-delta","delta":"成功"}}
+{"ts":"2026-09-01T02:13:52.975Z","ev":{"type":"reasoning-delta","delta":"，"}}
+{"ts":"2026-09-01T02:13:53.048Z","ev":{"type":"reasoning-delta","delta":"返回"}}
+{"ts":"2026-09-01T02:13:53.116Z","ev":{"type":"reasoning-delta","delta":"了"}}
+{"ts":"2026-09-01T02:13:53.186Z","ev":{"type":"reasoning-delta","delta":"北京的"}}
+{"ts":"2026-09-01T02:13:53.258Z","ev":{"type":"reasoning-delta","delta":"天气"}}
+{"ts":"2026-09-01T02:13:53.334Z","ev":{"type":"reasoning-delta","delta":"信息"}}
+{"ts":"2026-09-01T02:13:53.411Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-09-01T02:13:53.486Z","ev":{"type":"reasoning-delta","delta":"现在"}}
+{"ts":"2026-09-01T02:13:53.562Z","ev":{"type":"reasoning-delta","delta":"可以直接"}}
+{"ts":"2026-09-01T02:13:53.639Z","ev":{"type":"reasoning-delta","delta":"回答"}}
+{"ts":"2026-09-01T02:13:53.712Z","ev":{"type":"reasoning-delta","delta":"用户"}}
+{"ts":"2026-09-01T02:13:53.788Z","ev":{"type":"reasoning-delta","delta":"的问题"}}
+{"ts":"2026-09-01T02:13:53.864Z","ev":{"type":"reasoning-delta","delta":"。"}}
+{"ts":"2026-09-01T02:13:53.941Z","ev":{"type":"reasoning-delta","delta":"\n"}}
+{"ts":"2026-09-01T02:13:54.159Z","ev":{"type":"text-delta","delta":"北京"}}
+{"ts":"2026-09-01T02:13:54.235Z","ev":{"type":"text-delta","delta":"今天"}}
+{"ts":"2026-09-01T02:13:54.316Z","ev":{"type":"text-delta","delta":"天气"}}
+{"ts":"2026-09-01T02:13:54.396Z","ev":{"type":"text-delta","delta":"晴朗"}}
+{"ts":"2026-09-01T02:13:54.472Z","ev":{"type":"text-delta","delta":"，"}}
+{"ts":"2026-09-01T02:13:54.546Z","ev":{"type":"text-delta","delta":"气温"}}
+{"ts":"2026-09-01T02:13:54.623Z","ev":{"type":"text-delta","delta":"2"}}
+{"ts":"2026-09-01T02:13:54.697Z","ev":{"type":"text-delta","delta":"8"}}
+{"ts":"2026-09-01T02:13:54.783Z","ev":{"type":"text-delta","delta":"℃"}}
+{"ts":"2026-09-01T02:13:54.859Z","ev":{"type":"text-delta","delta":"，"}}
+{"ts":"2026-09-01T02:13:54.933Z","ev":{"type":"text-delta","delta":"湿度"}}
+{"ts":"2026-09-01T02:13:55.005Z","ev":{"type":"text-delta","delta":"4"}}
+{"ts":"2026-09-01T02:13:55.080Z","ev":{"type":"text-delta","delta":"0"}}
+{"ts":"2026-09-01T02:13:55.155Z","ev":{"type":"text-delta","delta":"%，"}}
+{"ts":"2026-09-01T02:13:55.230Z","ev":{"type":"text-delta","delta":"空气质量"}}
+{"ts":"2026-09-01T02:13:55.306Z","ev":{"type":"text-delta","delta":"指数"}}
+{"ts":"2026-09-01T02:13:55.384Z","ev":{"type":"text-delta","delta":"5"}}
+{"ts":"2026-09-01T02:13:55.460Z","ev":{"type":"text-delta","delta":"5"}}
+{"ts":"2026-09-01T02:13:55.534Z","ev":{"type":"text-delta","delta":"。"}}
+{"ts":"2026-09-01T02:13:55.610Z","ev":{"type":"final","message":{"role":"assistant","content":"北京今天天气晴朗，气温28℃，湿度40%，空气质量指数55。"},"rounds":3,"usage":{"promptTokens":0,"completionTokens":0}}}
