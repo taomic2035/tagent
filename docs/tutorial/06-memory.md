@@ -79,6 +79,12 @@ softmax 加权求和 Value。softmax 是**归一化**的——分给 100 个位�
 低水位（预算×0.5）以下，以**完整轮次**为单位从最旧开始：
 
 ```ts
+export interface TrimResult {
+  kept: ChatMessage[]; removed: ChatMessage[];
+  beforeTokens: number; afterTokens: number;
+}
+// trimMessages 的返回结构（骨架初稿引用了它但没给定义——引用完整性回填）
+
 export interface TrimPolicy { budget: number; lowRatio?: number }   // 缺省 0.5
 
 export function trimMessages(messages: ChatMessage[], policy: TrimPolicy): TrimResult {
@@ -173,6 +179,10 @@ LLM 调用还更胖了。账目拆开：
 上下文管"这轮对话"，长期记忆管"跨会话"。最小够用件：
 
 ```ts
+// 两个值类型先定义（骨架初稿把它们藏在注释里——引用完整性回填）：
+export interface MemoryFact { id: number; ts: number; content: string; tag?: string }
+export interface RecalledFact extends MemoryFact { score: number }
+
 export class MemoryStore {
   private facts: MemoryFact[] = [];      // {id, ts, content, tag?}
   constructor(private file: string) { /* 存在则逐行加载 */ }

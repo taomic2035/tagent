@@ -38,13 +38,18 @@ export type ActionParse =
   | { kind: "parse-error"; message: string };
 
 export function parseAction(text: string): ActionParse {
+  // 捕获组在 noUncheckedIndexedAccess 下是 string | undefined——用可选链收窄
+  //（直接 [1] 索引在严格模式编译不过，真机验证回填）
   const action = text.match(/Action:\s*(\S+)/);
   const input = text.match(/Action Input:\s*([\s\S]*?)(?:\n|$)/);
   const final = text.match(/Final Answer:\s*([\s\S]*)/);
-  if (final) return { kind: "final", answer: final[1].trim() };
-  if (action && input) {
-    try { JSON.parse(input[1].trim()); return { kind: "action", name: action[1], args: input[1].trim() }; }
-    catch { return { kind: "parse-error", message: `Action Input 不是合法 JSON: ${input[1].slice(0, 80)}` }; }
+  const finalText = final?.[1]?.trim();
+  if (finalText !== undefined) return { kind: "final", answer: finalText };
+  const name = action?.[1];
+  const args = input?.[1]?.trim();
+  if (name !== undefined && args !== undefined) {
+    try { JSON.parse(args); return { kind: "action", name, args }; }
+    catch { return { kind: "parse-error", message: `Action Input 不是合法 JSON: ${args.slice(0, 80)}` }; }
   }
   return { kind: "parse-error", message: "未找到 Action/Final Answer，请严格按格式输出" };
 }

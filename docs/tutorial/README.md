@@ -88,6 +88,14 @@ chapter 2 的 cli 配置缺依赖）。
 其中**行为级缺陷只有真机端到端能抓到**——编译绿测试绿 ≠ 工具真的发出去了。
 这是全书"亲眼看过它工作"纪律的最后一课。
 
+**第三轮**（第二册验证）：提取第二册全部 TS 代码块，按"可编译单元 / 骨架展示"
+分类——可编译单元（estimateTokens/parseAction/TrimPolicy 等）拼入验证区
+编译并加测试，骨架（MemoryStore/谓词签名等）做**签名兼容性检查**（declare
+化后与既有类型对编译）。结果：12/12 测试全绿，抓出 3 处并回填：
+MemoryFact/RecalledFact 藏在注释里未成类型定义、parseAction 捕获组在
+noUncheckedIndexedAccess 下的可空索引、TrimResult 被引用但未定义。
+骨架级代码的定位由此明确：**签名经过编译验证，实现留给读者并对照 tagent**。
+
 ## 与参考实现的关系
 
 tagent 仓库（本教程的姊妹项目）是这条路的"完全体"——每章末尾的"对照"小节
