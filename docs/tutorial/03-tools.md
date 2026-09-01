@@ -1,14 +1,16 @@
 # 第 3 章 会用工具：v0.4 最小 agent 循环
 
-> 全书高潮。模型第一次**自己决定**调用工具。我们先看协议原文，写最笨的版本
-> 跑通"北京天气"，然后撞四面墙——每面墙都是真实协议行为，撞完你就明白
-> tool_calls 字段到底替你做了什么、藏了什么。预计 1-2 天。
+> 全书高潮。动手线：协议原文 → 最笨的循环跑通"北京天气" → 撞四面墙 →
+> 循环终态 + 剧本化测试。原理线两节"深入一层"回答两个绝大多数教程从不回答的
+> 问题：**chat template 到底把 tools 渲染成了什么文本**、
+> **tool_calls 在模型眼里根本不是结构化数据**。读完你会知道 `--jinja`、
+> arguments-是-字符串、流式分片这三件事其实是同一件事。预计 1-2 天。
 
 ---
 
-## 3.1 先看协议：模型怎么"举手"
+## 3.1 协议原文：模型怎么"举手"
 
-把第 1 章的请求加 `tools` 字段（说明书），发给引擎：
+请求加 `tools` 字段（工具的**说明书**，JSON Schema 写的）：
 
 ```json
 {
@@ -21,7 +23,7 @@
       "description": "查询指定城市的实时天气（支持：北京/上海/广州）",
       "parameters": {
         "type": "object",
-        "properties": { "city": { "type": "string", "description": "城市名，如：北京" } },
+        "properties": { "city": { "type": "string" } },
         "required": ["city"]
       }
     }
@@ -30,7 +32,7 @@
 }
 ```
 
-响应（真实原文，逐字段盯五分钟）：
+响应（真实原文）：
 
 ```json
 {
@@ -42,27 +44,18 @@
       "tool_calls": [{
         "id": "call_abc123",
         "type": "function",
-        "function": {
-          "name": "get_weather",
-          "arguments": "{\"city\":\"北京\"}"
-        }
+        "function": { "name": "get_weather", "arguments": "{\"city\":\"北京\"}" }
       }]
     }
   }]
 }
 ```
 
-三件大事同时发生：
+三件事同时发生：`finish_reason: "tool_calls"`（分叉信号：stop=说完 /
+tool_calls=要干活 / length=被截断）；`content: null`（也可能与文本并存）；
+**`arguments` 是 JSON 字符串不是对象**——第一面墙，原理在 3.3 讲透。
 
-1. **`finish_reason: "tool_calls"`**——模型不回答，举手说"我要调工具"。
-   这就是循环的分叉信号（stop=说完 / tool_calls=要干活 / length=被截断）
-2. **`content: null`**——它这轮一句话没说，光举手。也可能既说话又举手
-   （content 和 tool_calls 并存），后面会见到
-3. **`arguments` 是 JSON 字符串，不是对象**——`"{\"city\":\"北京\"}"`。
-   模型逐 token 生成的是**文本**，引擎原样放进字符串字段。这是四面墙的第一面，
-   也是无数新手第一次崩溃的地方
-
-下一轮请求的 messages 要变成三段（把工具结果喂回去）：
+下一轮 messages 三段回填（tool 消息带 `tool_call_id` 指回举手）：
 
 ```json
 [
@@ -75,35 +68,92 @@
 ]
 ```
 
-role 为 `tool` 的消息是工具结果，`tool_call_id` 指回那次举手。带着结果再问，
-模型才给出"北京 28 度晴"。
+带着结果再问，模型才给出"北京 28 度晴"。**循环的全部真相**：
+"请求→举手→执行→回填→再请求"放进 while，直到 finish_reason 不是 tool_calls。
 
-**循环的全部真相**：把"请求→举手→执行→回填→再请求"放进 while，
-直到 finish_reason 不再是 tool_calls。没了。
+## 深入一层 ①：chat template 把你的 JSON 渲染成了什么
+
+第 1 章⑥留的问号。引擎收到你的 messages+tools 后，**先渲染成一段纯文本**
+（模型只吃文本——第 1 章①：token 是原子，结构化字段是给程序看的）。
+渲染者是 chat template（GGUF 内置的 Jinja2 模板，`--jinja` 启用）。Qwen 系
+把 tools 渲染进 system 末尾，形态大致是（节选自真实渲染产物）：
+
+```
+<|im_start|>system
+你是 tagent 助手。
+
+# Tools
+
+你可以调用以下工具：
+
+{"type": "function", "function": {"name": "get_weather",
+ "description": "查询指定城市的实时天气…", "parameters": {…}}}
+
+调用工具时，请使用以下格式：
+
+<tool_call>
+{"name": "函数名", "arguments": {参数 JSON 对象}}
+</tool_call><|im_end|>
+<|im_start|>user
+北京今天多少度？<|im_end|>
+<|im_start|>assistant
+```
+
+看清三件事：
+
+1. **说明书不是协议魔法**：tools 数组被模板**序列化成文本**贴进上下文——
+   模型"知道有哪些工具"，靠的是读这段字（所以 4B 会把说明书念歪、把工具名
+   拼错——它就是在"背课文"）
+2. **调用格式是文本约定**：`<tool_call>…</tool_call>` 这个格式是模型在训练时
+   学会的"输出习惯"，模板在 system 里再提醒一遍
+3. **`--jinja` 生死的解释**：不开模板渲染，tools 就根本没进上下文——
+   模型看不见说明书，自然永远只会 `<|im_end|>` 收尾（finish_reason 恒 stop）
+
+## 深入一层 ②：tool_calls 的文本本质——引擎在替你"后处理"
+
+那响应里的结构化 `tool_calls` 字段哪来的？**引擎的流式后处理器**：
+模型在 decode 阶段逐 token 生成文本；当它开始吐 `<tool_call>` 时，引擎实时
+识别这个标记段，**把段内的 JSON 解析出来、转成结构化 delta 再发给 HTTP 客户端**：
+
+```
+模型实际生成的文本流：          引擎后处理发给你的 SSE：
+<tool_call>                    {"delta":{"tool_calls":[{"index":0,
+{"name": "get_weather",          "id":"call_abc","function":{"name":"get_weather",
+ "arguments": {"city": "北       "arguments":""}}]}}
+                                             ↓（后续 token 逐个累积）
+京"}}                           {"delta":{"tool_calls":[{"index":0,
+</tool_call>                     "function":{"arguments":"{\"ci"}}]}}
+```
+
+这一层同时解释了三件"怪事"（**四面墙的前两面，现在从原理推出来**）：
+
+- **arguments 为什么是字符串**：那就是模型逐 token 吐出的**原文片段拼接**，
+  引擎没有（也不能）替它补全 JSON——参数是不是合法 JSON，取决于模型生成
+  完整与否（max_tokens 掐断时就是半截，第 4 章的现场）
+- **为什么流式分片**：模型本来就是一个 token 一个 token 吐的（第 1 章②），
+  结构化只是外衣
+- **id 从哪来**：引擎生成（它要靠 id 把后处理产物和原文配对），不是模型
+  "想"出来的
+
+由此得出本章最重要的世界观：**协议里的结构化字段是引擎对模型文本行为的
+郑重承诺；模型本人只承诺文本**。agent 的一切兜底（第 4 章）与一切校验
+（受限解码，第二册）都建立在这个认识上。
 
 ## 3.2 工具注册表：zod 一行，说明书自动生成
-
-模型看不懂你的函数，只看得懂**说明书**（JSON Schema）。每个工具两副面孔：
-给模型看的 schema、给你执行的函数。用 zod 写在一处：
 
 ```powershell
 cd packages/core && pnpm add zod
 ```
 
-`packages/core/src/types.ts`（本章新增类型的全量）：
+`packages/core/src/types.ts`（本章新增，全量）：
 
 ```ts
 import type { z } from "zod";
 
-// assistant 消息扩展出 tool_calls；新增 tool 消息（协议见 3.1）
 export type ChatMessage =
   | { role: "system"; content: string }
   | { role: "user"; content: string }
-  | {
-      role: "assistant";
-      content: string | null;
-      tool_calls?: ToolCallData[];
-    }
+  | { role: "assistant"; content: string | null; tool_calls?: ToolCallData[] }
   | { role: "tool"; tool_call_id: string; content: string };
 
 export interface ToolCallData {
@@ -112,13 +162,11 @@ export interface ToolCallData {
   function: { name: string; arguments: string };
 }
 
-// 工具的协议形态（给模型看的）
 export interface ToolDef {
   type: "function";
   function: { name: string; description: string; parameters: Record<string, unknown> };
 }
 
-// 工具的完整定义（给我们用的）
 export interface Tool<T extends z.ZodType = z.ZodType> {
   name: string;
   description: string;
@@ -127,7 +175,7 @@ export interface Tool<T extends z.ZodType = z.ZodType> {
 }
 ```
 
-`packages/core/src/tools.ts`（v0.4 全量——**故意裸奔**，第 4 章封成安全壳）：
+`packages/core/src/tools.ts`（v0.4 裸奔版全量——第 4 章封壳的教材）：
 
 ```ts
 import { z } from "zod";
@@ -141,45 +189,38 @@ export class ToolRegistry {
     this.tools.set(tool.name, tool);
   }
 
-  /** 全部工具的协议形态——直接塞进请求的 tools 字段 */
   schemas(): ToolDef[] {
     return [...this.tools.values()].map((t) => ({
       type: "function" as const,
       function: {
         name: t.name,
         description: t.description,
-        parameters: z.toJSONSchema(t.schema),   // zod → JSON Schema，永不失同步
+        parameters: z.toJSONSchema(t.schema),   // zod → JSON Schema：说明书与实现永不失同步
       },
     }));
   }
 
-  /** 执行一次调用（v0.4 裸奔版：任何意外直接炸——第 4 章的教材） */
   async execute(name: string, argsJson: string): Promise<string> {
     const tool = this.tools.get(name);
-    if (!tool) return JSON.stringify({ ok: false, error: `unknown tool: ${name}` });
-    const parsed = tool.schema.safeParse(JSON.parse(argsJson));
+    if (!tool) return JSON.stringify({ ok: false, error: `unknown tool: ${name}（可用: ${this.names().join(", ")}）` });
+    const parsed = tool.schema.safeParse(JSON.parse(argsJson));   // ← 墙1 的裸奔点
     if (!parsed.success) return JSON.stringify({ ok: false, error: "参数校验失败" });
     return JSON.stringify({ ok: true, data: await tool.execute(parsed.data) });
   }
+
+  private names(): string[] { return [...this.tools.keys()]; }
 }
 ```
 
-三个决定，各有讲究：
-
-- **zod → `z.toJSONSchema` 自动转换**：参数规则声明一次，说明书与实现物理性
-  同步。手写 schema 必然失同步，"说明书骗人"是 agent 的慢性毒药
-- **`safeParse` 而非 `parse`**：模型给的参数是**不可信外部输入**（纪律），
-  校验失败不该炸循环——注意这里已经悄悄埋了第 4 章的种子
-- **返回 JSON 字符串**：结果终将进 messages（协议要求字符串），统一出口
+**zod → `z.toJSONSchema`**：参数规则声明一次，自动生成说明书——手写 schema
+必然失同步，"说明书骗人"是 agent 慢性毒药。**safeParse**：模型参数是不可信
+输入，校验失败不能炸循环（第 4 章制度化的种子）。
 
 > **引经据典**｜pi `packages/agent/src/types.ts`（AgentTool）
-> pi 用 TypeBox 做同一件事（schema 即说明书），并且让工具声明
-> `executionMode: "sequential" | "parallel"`——我们第 7 章会做到同款。
-> 另一个对照值得现在记：pi 规定"工具失败**必须抛异常**，由框架转成错误结果"；
-> 我们相反——工具返回信封、恒不抛。哲学相反，殊途同归：**错误必须以某种
-> 结构化形态到达模型**，谁来做只是分工不同。
+> pi 用 TypeBox 干同一件事，且规定"工具失败必须抛异常，框架转错误结果"；
+> 我们相反——信封恒不抛。哲学相反、殊途同归：**错误必须以结构化形态到达模型**。
 
-第一个真工具 `apps/cli/src/weather.ts`（教学用模拟数据，不调真 API）：
+第一个工具 `apps/cli/src/weather.ts`（模拟数据，教学不需要真 API）：
 
 ```ts
 import { z } from "zod";
@@ -195,150 +236,36 @@ export const weatherTool: Tool<z.ZodObject<{ city: z.ZodString }>> = {
   name: "get_weather",
   description: "查询指定城市的实时天气（支持：北京/上海/广州；其他城市无数据）",
   schema: z.object({ city: z.string().describe("城市名，如：北京") }),
-  execute: async (args) => ({ city: args.city, ...DB[args.city] }),
+  execute: async (args) => {
+    const hit = DB[args.city];
+    if (!hit) return { error: `无 ${args.city} 的数据（支持：${Object.keys(DB).join("/")}）` };
+    return { city: args.city, ...hit };
+  },
 };
 ```
 
-`.describe()` 的文字直接进 schema 的 description——**那是写给模型看的 prompt**，
-写得越明确（包括"其他城市无数据"），模型越少乱猜。
+`.describe()` 与 description 都是**写给模型看的 prompt**——写得越明确
+（包括"其他城市无数据"），模型越少乱猜。
 
-## 3.3 循环第一版：先跑通最简单的情形
+## 3.3 循环第一版与四面墙
 
-**v0.4 的目标拆小**：先假设模型规规矩矩——一次举手一个工具、参数完整、
-说完就收工。这个前提下循环很短（`packages/core/src/loop.ts` v0.4-naive）：
-
-```ts
-import type { ChatMessage, LLMClient, StreamEvent } from "./client.js";
-import type { ToolRegistry } from "./tools.js";
-
-export async function runAgent(
-  deps: { client: LLMClient; registry: ToolRegistry; maxIterations: number },
-  messages: ChatMessage[],
-): Promise<void> {
-  for (let round = 1; round <= deps.maxIterations; round++) {
-    // 1. 请求（带上工具说明书）
-    let text = "";
-    let finishReason: "stop" | "tool_calls" | "length" = "stop";
-    let call: { id: string; name: string; args: string } | null = null;
-
-    for await (const ev of deps.client.stream({
-      messages,
-      tools: deps.registry.schemas(),       // ← 说明书在这里
-    })) {
-      if (ev.type === "text-delta") text += ev.delta;
-      else if (ev.type === "tool-call-delta") {
-        // 先假设分片一次到齐（这行代码是墙2的现场，稍后撞）
-        if (ev.id) call = { id: ev.id, name: ev.name ?? "", args: ev.argsDelta ?? "" };
-      }
-      else finishReason = ev.finishReason;
-    }
-
-    // 2. assistant 轮入档（messages 是唯一事实来源——先记录，后行动）
-    messages.push({
-      role: "assistant",
-      content: text === "" ? null : text,
-      ...(call ? { tool_calls: [{ id: call.id, type: "function" as const,
-        function: { name: call.name, arguments: call.args } }] } : {}),
-    });
-
-    // 3. 出口判定
-    if (finishReason !== "tool_calls" || !call) return;   // 收工
-
-    // 4. 执行 + 回填
-    const result = await deps.registry.execute(call.name, call.args);
-    messages.push({ role: "tool", tool_call_id: call.id, content: result });
-  }
-}
-```
-
-等等——`ev.type === "tool-call-delta"`？我们的 `StreamEvent` 还没有这个类型。
-先给 client 加上（`sseEvents` 的 JSON 帧解析里追加一段，全量 diff）：
-
-```ts
-// client.ts 的 StreamEvent 联合类型追加：
-export type StreamEvent =
-  | { type: "text-delta"; delta: string }
-  | { type: "tool-call-delta"; index: number; id?: string; name?: string; argsDelta?: string }
-  | { type: "done"; finishReason: "stop" | "tool_calls" | "length" };
-
-// sseEvents 的帧解析 try 块里，content 处理之后追加：
-const toolCalls = choice?.delta?.tool_calls;
-if (Array.isArray(toolCalls)) {
-  for (const tc of toolCalls) {
-    if (typeof tc !== "object" || tc === null) continue;
-    const t = tc as {
-      index?: unknown; id?: unknown;
-      function?: { name?: unknown; arguments?: unknown };
-    };
-    yield {
-      type: "tool-call-delta",
-      index: typeof t.index === "number" ? t.index : 0,
-      ...(typeof t.id === "string" ? { id: t.id } : {}),
-      ...(typeof t.function?.name === "string" && t.function.name !== ""
-        ? { name: t.function.name } : {}),
-      ...(typeof t.function?.arguments === "string" && t.function.arguments !== ""
-        ? { argsDelta: t.function.arguments } : {}),
-    };
-  }
-}
-// finish_reason 判定追加 "tool_calls"：
-if (choice?.finish_reason === "stop" || choice?.finish_reason === "tool_calls"
-    || choice?.finish_reason === "length") finishReason = choice.finish_reason;
-```
-
-壳接上（`apps/cli/src/main.ts` 的 rl.on("line") 里改造，全量）：
-
-```ts
-import { runAgent, ToolRegistry, type ChatMessage, OpenAIClient } from "@my-agent/core";
-import { weatherTool } from "./weather.js";
-
-const registry = new ToolRegistry();
-registry.register(weatherTool);
-
-rl.on("line", async (line) => {
-  const text = line.trim();
-  if (!text || text === "/exit") { rl.close(); return; }
-  history.push({ role: "user", content: text });
-  process.stdout.write("ai> ");
-  await runAgent({ client: registry2(), registry, maxIterations: 8 }, history);
-  process.stdout.write("\n\n");
-  rl.prompt();
-});
-```
-
-（`registry2` 顺手改掉——直接传 `client` 变量即可，这里强调装配关系。）
-
-跑：
+v0.4 目标拆小：先假设模型规规矩矩。第一版循环（`loop.ts` naive）+ client
+追加 tool 分片事件（完整 diff 见下方"终态"里已含）后跑通：
 
 ```powershell
-pnpm build
-node apps/cli/dist/main.js
 你> 北京今天多少度？
 北京今天 28 度，晴。
 ```
 
-**没人告诉它调工具**——是模型读了说明书、理解意图、自己举的手。
-你写的循环把"模型的意图"变成了"被执行的动作"。
+**没人告诉它调工具**——是模型读了模板渲染的说明书、理解意图、自己举的手。
+你写的循环把"模型的意图"变成"被执行的动作"。现在撞墙（每面都真实）：
 
-现在，撞墙时间。**四面墙全部真实存在**，naive 版在每一面都会死。
+**墙 1：arguments 是字符串。** 模型被 max_tokens 掐断或抽风时给半截 JSON：
+`JSON.parse('{"city":"北')` → `SyntaxError: Unexpected end of JSON input`，
+整轮对话炸给用户。原理已讲（3.1②）：那是原文拼接。v0.4 先在 execute 里
+包 try（与 schema 校验并列），第 4 章制度化成四段外壳。
 
-## 3.4 墙 1：arguments 是字符串
-
-naive 版侥幸没死（4B 这次给了完整合法的 arguments 字符串）。现在亲手让它死：
-在 registry.execute 里我们已经 `JSON.parse(argsJson)` 了——如果模型吐的是
-半截 JSON 呢？（"参数还没生成完就被 max_tokens 掐断"的真实形态，第 6 章常见）
-
-```
-✖ SyntaxError: Unexpected end of JSON input
-```
-
-整轮对话炸给用户看。**根因**：`JSON.parse` 面对模型生成的文本（不可信输入）
-毫无防御。**修法分两层**：本章先在 execute 里把 parse 包进安全段（与 schema
-校验并列为"确定性失败"）；第 4 章把它制度化成四段安全外壳。先记下现场。
-
-## 3.5 墙 2：工具调用也是流式分片的
-
-抓一次真实报文（第 1 章的存证方法），看 tool_calls 的流式形态：
+**墙 2：调用是流式分片的。** 抓真实报文：
 
 ```
 data: {"choices":[{"delta":{"tool_calls":[{"index":0,"id":"call_X","function":{"name":"get_weather","arguments":""}}]}}]}
@@ -346,87 +273,71 @@ data: {"choices":[{"delta":{"tool_calls":[{"index":0,"function":{"arguments":"{\
 data: {"choices":[{"delta":{"tool_calls":[{"index":0,"function":{"arguments":"ty\":\"北京\"}"}}]}}]}
 ```
 
-**一次调用拆成多帧**：第一帧带 id 和 name（arguments 为空），后几帧只带
-arguments 增量。naive 版的 `if (ev.id) call = {...}` 会把第一帧之后的所有
-增量**全部丢掉**——你只会拿到一个空 arguments 的调用，然后在墙 1 炸得更惨。
-
-**修法**：和文本一样累积——按 `index` 建槽位（slot），id/name/args 各自
-"有则记之，增量则拼之"：
+第一帧带 id/name（arguments 空），后几帧只带增量。naive 的
+"有 id 就新建调用"会把增量全丢。**修法——槽位（slot）**：
 
 ```ts
 const slots = new Map<number, { id?: string; name?: string; args: string }>();
-// ...
-} else if (ev.type === "tool-call-delta") {
-  const slot = slots.get(ev.index) ?? { args: "" };
-  if (ev.id) slot.id = ev.id;
-  if (ev.name) slot.name = ev.name;
-  if (ev.argsDelta) slot.args += ev.argsDelta;
-  slots.set(ev.index, slot);
-}
+// 收到分片：
+const slot = slots.get(ev.index) ?? { args: "" };
+if (ev.id) slot.id = ev.id;          // 有则记之
+if (ev.name) slot.name = ev.name;
+if (ev.argsDelta) slot.args += ev.argsDelta;   // 增量则拼之
+slots.set(ev.index, slot);
 ```
 
-**为什么用 Map 而不是数组**：index 是模型给的槽位号，帧可能乱序到达、
-可能稀疏（先到 index 1 再到 index 0——下一面墙的现场）。数组按下标写会踩空，
-Map 按键存天然容忍。
+**为什么 Map 不用数组**：index 是模型给的槽位号，帧可乱序、可稀疏——数组
+按下标写会踩空，Map 按键存天然容忍。
 
-## 3.6 墙 3：一帧可能举手好几次
-
-问"北京和上海哪边热？"——4B 可能老实分两轮调，也可能**一帧同时举两只手**：
-
-```
-data: {"choices":[{"delta":{"tool_calls":[
-  {"index":0,"id":"call_A","function":{"name":"get_weather","arguments":"{\"city\":\"北京\"}"}},
-  {"index":1,"id":"call_B","function":{"name":"get_weather","arguments":"{\"city\":\"上海\"}"}}
-]}}]}
-```
-
-`index` 就是干这个的：槽位 0 和 1 各自独立累积。循环执行段改成遍历槽位、
-**按 index 排序**（Map 迭代序不保证，执行与回填的顺序必须是模型给的顺序）：
+**墙 3：一帧可能举手好几次。** "北京和上海哪边热？"4B 可能一帧双调
+（index 0 和 1 各自累积）。执行与回填必须**按 index 排序**——Map 迭代序
+不保证，而顺序是协议的一部分（模型给的顺序）：
 
 ```ts
 const toolCalls = [...slots.entries()].sort(([a], [b]) => a - b).map(([i, s]) => ({
-  id: s.id ?? `slot_${i}`,           // 引擎必须给 id；缺失时合成保配对
+  id: s.id ?? `slot_${i}`,             // 引擎必须给 id；缺失时合成保配对
   type: "function" as const,
   function: { name: s.name ?? "", arguments: s.args },
 }));
 ```
 
 > **引经据典**｜pi `packages/agent/src/agent-loop.ts`
-> pi 对同一帧多调用默认**并行执行**（`Promise.all`）、结果**按源顺序回填**——
-> 原话："results are filled back in the assistant's original order"。
-> 我们 v0.4 先串行（简单正确），第 7 章升级并行时，"源序回填"这条纪律
-> 原样继承——顺序是协议的一部分，不是实现细节。
+> 同款场景 pi 默认**并行执行**（Promise.all）、**结果按源顺序回填**——
+> 原话 "results are filled back in the assistant's original order"。v0.4 先串行，
+> 第二册并行章原样继承"源序"纪律。
 
-## 3.7 墙 4：配对不拆（亲手造一个 400）
-
-最隐蔽的一面墙。做实验：把 messages 里 assistant 的 tool_calls 删掉、
-只留 tool 消息（模拟"裁剪时不小心拆散"），发请求：
+**墙 4：配对不拆（亲手造一个 400）。** 实验：把 messages 里 assistant 的
+tool_calls 删掉、只留 tool 消息（模拟"裁剪拆散"），发请求：
 
 ```
 {"error":{"code":400,"message":"Invalid message: tool message without preceding tool_calls"}}
 ```
 
-**根因**：协议硬性要求每个 role:tool 消息必须紧跟在带对应 tool_call_id 的
-assistant(tool_calls) 之后。**由此推出全书最重要的不变量**：
+协议硬性要求 tool 消息紧跟带对应 id 的 assistant(tool_calls)。由此立全书
+核心不变量：
 
-> **不变量（配对不拆）**：assistant(tool_calls) 与它的 tool 结果，在 messages 里
-> 永远成对出现、顺序固定。裁剪成块、压缩、重放，都不能拆散这对。
+> **配对不拆**：assistant(tool_calls) 与其 tool 结果在 messages 里永远成对、
+> 顺序固定——第二册裁剪、压缩、重放全部服务于此。
+> **先入档**：assistant 轮在执行工具**之前**入 messages。模型说过的话、举过的
+> 手已经发生——messages 是唯一事实来源，事实先记录。
 
-它不是理论——第 5 章的裁剪以"完整轮次"为单位、第 7 章事件按源序回填、
-第 9 章存证重放，全部是这条不变量的应用。**顺手再立一条**：
+## 深入一层 ③：finish_reason 到底谁说了算
 
-> **不变量（先入档）**：assistant 轮在执行工具**之前**就 push 进 messages。
-> 不管后面执行成败，模型说过的话、举过的手已经发生——messages 是唯一事实来源，
-> 事实先记录。
+三值的来源各不相同（引擎停止条件的三种触发）：
 
-## 3.8 v0.4 完整版：runAgent 终态 + 事件流
+| 值 | 触发 | 机制 |
+|---|---|---|
+| `stop` | 模型生成 **EOS token**（`<|im_end|>`） | 第 1 章⑥：模板约定了结束符，模型"学会了"说完了就吐它 |
+| `tool_calls` | 后处理器检测到**工具段闭合**（`</tool_call>`） | 3.1② 的后处理在此顺手置位 |
+| `length` | 生成 token 数达到 **max_tokens** 上限 | 硬预算闸——注意预算是**思考+正文+参数共享的池**（第二册思考实验的数据来源：1251 token 里 1224 是思考） |
 
-四面墙修完，循环定稿。同时把"返回 void"升级成**事件流**（AsyncGenerator）——
-壳要渲染过程、存证要落盘、将来验收要断言，一份流三个消费者：
+`length` 是唯一"非自愿"的停止——所以第 4 章对它的态度是"判错重发"而不是
+当终答：**协议说被截断，就不要猜内容完整性**。
 
-`packages/core/src/loop.ts`（v0.4 终态，全量）：
+## 3.4 v0.4 终态：runAgent 全量（含事件流）
 
 ```ts
+// packages/core/src/loop.ts —— v0.4 终态全量
 import type { ChatMessage, LLMClient } from "./client.js";
 import type { ToolRegistry } from "./tools.js";
 
@@ -444,7 +355,6 @@ export async function* runAgent(
   for (let round = 1; round <= deps.maxIterations; round++) {
     yield { type: "round-start", round };
 
-    // ---- 第一拍：请求 + 累积（墙2/墙3 的槽位法）----
     let text = "";
     let finishReason: "stop" | "tool_calls" | "length" = "stop";
     const slots = new Map<number, { id?: string; name?: string; args: string }>();
@@ -453,21 +363,17 @@ export async function* runAgent(
       messages,
       tools: deps.registry.schemas(),
     })) {
-      if (ev.type === "text-delta") {
-        text += ev.delta;
-        yield ev;                                   // 透传给壳渲染
-      } else if (ev.type === "tool-call-delta") {
+      if (ev.type === "text-delta") { text += ev.delta; yield ev; }
+      else if (ev.type === "tool-call-delta") {
         const slot = slots.get(ev.index) ?? { args: "" };
         if (ev.id) slot.id = ev.id;
         if (ev.name) slot.name = ev.name;
         if (ev.argsDelta) slot.args += ev.argsDelta;
         slots.set(ev.index, slot);
-      } else {
-        finishReason = ev.finishReason;
-      }
+      } else finishReason = ev.finishReason;
     }
 
-    // ---- 第二拍：入档（不变量：先入档）----
+    // 先入档（不变量）
     const ordered = [...slots.entries()].sort(([a], [b]) => a - b);
     const toolCalls = ordered.map(([i, s]) => ({
       id: s.id ?? `slot_${i}`,
@@ -481,41 +387,64 @@ export async function* runAgent(
     };
     messages.push(assistant);
 
-    // ---- 第三拍：出口 ----
     if (finishReason !== "tool_calls" || toolCalls.length === 0) {
       yield { type: "final", message: assistant, rounds: round };
       return;
     }
 
-    // ---- 第四拍：执行 + 回填（墙3 的源序；墙1 的防御在 registry）----
+    // 源序执行 + 配对回填（不变量）
     for (const tc of toolCalls) {
       yield { type: "tool-call", id: tc.id, name: tc.function.name, args: tc.function.arguments };
       const result = await deps.registry.execute(tc.function.name, tc.function.arguments);
       yield { type: "tool-result", id: tc.id, name: tc.function.name, result };
       messages.push({ role: "tool", tool_call_id: tc.id, content: result });
     }
-    // 回到第一拍：带着结果再问
   }
-  // 轮数用尽：v0.4 到此为止，用户拿到空气——第 4 章 v0.7 的教材（触顶降级）
+  // 轮数用尽 = 用户拿空气 → 第 4 章 v0.7 的教材
 }
 ```
 
-壳渲染事件（`main.ts` 的循环调用处，全量替换）：
+client 的 StreamEvent 扩展（`sseEvents` 解析里追加 tool_calls 段）：
 
 ```ts
-import { runAgent, ToolRegistry, type AgentEvent } from "@my-agent/core";
+export type StreamEvent =
+  | { type: "text-delta"; delta: string }
+  | { type: "tool-call-delta"; index: number; id?: string; name?: string; argsDelta?: string }
+  | { type: "done"; finishReason: "stop" | "tool_calls" | "length" };
 
+// sseEvents 的 try 块内，content 处理后追加：
+const tcs = choice?.delta?.tool_calls;
+if (Array.isArray(tcs)) {
+  for (const raw of tcs) {
+    if (typeof raw !== "object" || raw === null) continue;
+    const t = raw as { index?: unknown; id?: unknown;
+      function?: { name?: unknown; arguments?: unknown } };
+    yield {
+      type: "tool-call-delta",
+      index: typeof t.index === "number" ? t.index : 0,
+      ...(typeof t.id === "string" ? { id: t.id } : {}),
+      ...(typeof t.function?.name === "string" && t.function.name !== ""
+        ? { name: t.function.name } : {}),
+      ...(typeof t.function?.arguments === "string" && t.function.arguments !== ""
+        ? { argsDelta: t.function.arguments } : {}),
+    };
+  }
+}
+// finish_reason 判定加 "tool_calls" 分支（见 02 章 sseEvents 同位置）
+```
+
+壳渲染（`apps/cli/src/main.ts` 循环调用处）：
+
+```ts
 process.stdout.write("ai> ");
 for await (const ev of runAgent({ client, registry, maxIterations: 8 }, history)) {
   if (ev.type === "text-delta") process.stdout.write(ev.delta);
   else if (ev.type === "tool-call") process.stdout.write(`\n⚙ ${ev.name} ${ev.args}`);
   else if (ev.type === "tool-result") process.stdout.write(`\n  ↳ ${ev.result.slice(0, 120)}`);
 }
-process.stdout.write("\n\n");
-rl.prompt();
 ```
 
-跑多步任务（决策链的现场）：
+多步任务的现场（决策链）：
 
 ```
 你> 北京和上海哪边热？差几度？
@@ -526,25 +455,15 @@ rl.prompt();
 上海更热，比北京高 3 度。
 ```
 
-注意它**拿到北京结果后才决定查上海**——每步决策基于上一步真实结果。
-（这个"想一步做一步"的范式叫 ReAct，第 7 章正式讲。）
+注意：**拿到北京结果后才决定查上海**——每步决策基于上一步真实结果。
+（"想一步做一步"，即 ReAct 范式，第二册正式讲。）
 
-## 3.9 测试：剧本化，不赌真模型
+## 3.5 测试：剧本化，不赌真模型
 
-真模型行为不定（temperature 0 也有偶然性），循环逻辑必须离开引擎可测。
-手法：**剧本化 client**——每次 stream() 弹出剧本的下一轮事件：
-
-`packages/core/src/loop.test.ts`（全量）：
+真模型行为有偶然性，循环逻辑必须离开引擎可测——**剧本化 client**：
 
 ```ts
-import test from "node:test";
-import assert from "node:assert/strict";
-import { z } from "zod";
-import { runAgent, type AgentEvent } from "./loop.js";
-import { ToolRegistry } from "./tools.js";
-import { OpenAIClient, type LLMClient, type StreamEvent } from "./client.js";
-import type { ChatMessage, Tool } from "./types.js";
-
+// loop.test.ts 核心（全量见 tagent 对照）
 function scriptedClient(script: StreamEvent[][]): LLMClient & { calls: number } {
   let call = 0;
   return {
@@ -557,26 +476,7 @@ function scriptedClient(script: StreamEvent[][]): LLMClient & { calls: number } 
   };
 }
 
-const echo: Tool<z.ZodObject<{ text: z.ZodString }>> = {
-  name: "echo", description: "回显",
-  schema: z.object({ text: z.string() }),
-  execute: async (a) => ({ echoed: a.text }),
-};
-
-const cfg = { maxIterations: 4 };
-
-test("直接回答：一轮结束，事件链完整", async () => {
-  const messages: ChatMessage[] = [{ role: "user", content: "hi" }];
-  const client = scriptedClient([
-    [{ type: "text-delta", delta: "你好" }, { type: "done", finishReason: "stop" }],
-  ]);
-  const events: AgentEvent[] = [];
-  for await (const ev of runAgent({ client, registry: reg(echo), ...cfg }, messages)) events.push(ev);
-  assert.deepEqual(messages.map((m) => m.role), ["user", "assistant"]);  // 事实入档
-  assert.equal(events.at(-1)?.type, "final");
-});
-
-test("单工具：分片累积（墙2）→ 执行 → 回填 → 二轮收工", async () => {
+test("单工具：分片累积→执行→配对回填→二轮收工", async () => {
   const messages: ChatMessage[] = [{ role: "user", content: "echo 一下" }];
   const client = scriptedClient([
     [
@@ -587,45 +487,33 @@ test("单工具：分片累积（墙2）→ 执行 → 回填 → 二轮收工",
     ],
     [{ type: "text-delta", delta: "已回显" }, { type: "done", finishReason: "stop" }],
   ]);
-  const reg = new ToolRegistry(); reg.register(echo);
-  for await (const _ of runAgent({ client, registry: reg, ...cfg }, messages)) { /* 收集 */ }
-  // 配对完整（墙4）：tool 消息紧跟 assistant(tool_calls) 且 id 相等
-  assert.deepEqual(messages.map((m) => m.role), ["user", "assistant", "tool", "assistant"]);
-  const toolMsg = messages[2];
-  assert.equal(toolMsg?.role === "tool" && toolMsg.tool_call_id, "id-1");
-  assert.ok(toolMsg?.role === "tool" && toolMsg.content.includes("hello"));
+  /* 断言：messages 角色序列 [user, assistant, tool, assistant]；
+     tool 消息 tool_call_id === "id-1" 且 content 含 hello —— 两条不变量的机器版 */
 });
-
-function reg(tool: Tool): ToolRegistry {
-  const r = new ToolRegistry(); r.register(tool); return r;
-}
 ```
 
-**剧本耗尽即抛**是关键设计：循环多请求一轮，测试立刻红——防"看起来过了"。
+**剧本耗尽即抛**防"循环多转一轮但测试看起来过了"。
 
-## 3.10 搞坏实验
+## 3.6 搞坏实验
 
-- **问火星**（库外城市）：`你> 火星天气如何？`
-  ```
-  ⚙ get_weather {"city":"火星"}
-    ↳ {"ok":true,"data":{"city":"火星"}}        ← 注意！data 展开是 undefined
-  ```
-  模型拿到残缺数据，大概率如实说"查不到"。**但我们的模拟工具把无数据处理得
-  太含糊了**（ok:true 却没数据）——对比改 DB 查不到时返回
-  `{ok:false, error:"无火星数据（支持：北京/上海/广州）"}`，观察模型行为变化。
-  工具的失败语义直接影响 agent 的诚实度——第 4 章的核心议题，先埋种子
-- **maxIterations 设 1** 再问两城市对比：第一轮调完北京就停，无最终回答——
-  亲手确认"轮数用尽=用户拿空气"，v0.7 要修的洞
+- **问火星**：`⚙ get_weather {"city":"火星"}` →
+  `↳ {"error":"无 火星 的数据（支持：北京/上海/广州）}` → 模型如实转告。
+  把工具改成返回 `ok:true` 却没数据，对比模型行为——**工具的失败语义直接
+  决定 agent 的诚实度**（第 4/5 章的核心议题，先埋种子）
+- **maxIterations=1** 问两城市对比：调完北京就停、无终答——亲手确认
+  "轮数用尽=空气"，v0.7 要修的洞
+- **关 --jinja 重启引擎**再问任何工具任务：finish_reason 恒 stop、模型把
+  说明书当不存在——3.1① 的原理亲手复现
 
-## 3.11 自测与对照
+## 3.7 自测与对照
 
-**自测**：
-- [ ] 四面墙都能讲"现场→根因→修法"；能解释 slots 为什么是 Map、为什么排序
-- [ ] 两条不变量（配对不拆 / 先入档）能默写，且知道墙 4 是亲手造 400 造出来的
-- [ ] 剧本化测试跑通；能解释"剧本耗尽即抛"防的是什么
-- [ ] 火星实验两个版本的差异观察过
+- [ ] 能默写模板渲染后的形态（tools 序列化进 system、`<tool_call>` 文本约定），
+      并用它解释 --jinja 生死、arguments-是-字符串、分片三件事
+- [ ] 能讲 finish_reason 三值的触发机制（EOS/工具段闭合/预算闸）与
+      "length 唯一非自愿"的推论
+- [ ] 四面墙各有现场；slots 为什么 Map、为什么排序能答
+- [ ] 两条不变量能默写且知道墙 4 的 400 是亲手造出来的
+- [ ] 剧本化测试通过、火星两版工具的模型行为差异观察过
 
-**与 tagent 对照**：你的 loop.ts ≈ tagent 的骨架（它多了守卫/steering/并行/
-压缩触发/取消——第二册各章逐件装上）。你的 tools.ts 是裸奔版，下一章穿甲。
-
-下一章：墙 1 的崩溃还欠着债——我们把工具层封成打不死的壳，再给循环上保险丝。
+**与 tagent 对照**：你的 loop.ts 是骨架（它多守卫/steering/并行/压缩/取消——
+第二册各章装）；tools.ts 是裸奔版，下一章穿甲。
