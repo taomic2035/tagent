@@ -78,6 +78,7 @@ tagent/
 │   ├── WINDOWS-ENV.md    # Windows 环境对齐总结：清单、速查、与 Mac 差异
 │   ├── FALLBACK.md       # Agent 兜底工程模式：弱模型失败的系统级对策（Step 1~5 沉淀）
 │   └── SURVEY.md         # 三开源 agent（hermes-agent/pi/clowder-ai）核心机制调研与缺口分析
+│   └── tutorial/         # 《从零手搓本地 Agent》教程（第一册：第 0~4 章，面向初学者的完整重走路线）
 ├── captures/         # 原始报文存证：01~06（MLX）、07~10（llama.cpp）、ac-*/win-ac-*/step*（验收）
 ├── scripts/          # 验收（acceptance*.sh）、抓包（capture*.sh）、溯源/重放、隐私检查
 ├── packages/core/    # agent 大脑（零依赖，仅 zod）
