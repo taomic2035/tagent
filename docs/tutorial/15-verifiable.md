@@ -299,5 +299,8 @@ test("FauxClient：prompt cache 模拟", async () => {
 - [ ] "use_count=0 是证据缺失不是过时证据"——为什么这条语义很重要
 - [ ] 全书 v0.1~v0.16 的版本-能力-工业模式对照表能默写 80%
 
+**代码组装提示**：本章代码块是教学片段（不含 import/辅助函数），
+完整可编译版本见下方 tagent 文件。
+
 **对照答案**：tagent `predicate.ts`（注册表+断言）、`industrial.ts`
 （detectFalseCompletion+FauxClient）、`store.ts`（useCount+stats+curator）。

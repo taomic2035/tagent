@@ -326,6 +326,9 @@ test("工具白名单：不在名单的直接拒", async () => {
       截断元数据）各自解决什么问题
 - [ ] terminate 批规则的"当且仅当全部"为什么不是"部分即终止"
 
+**代码组装提示**：本章代码块是教学片段（不含 import/辅助函数），
+完整可编译版本见下方 tagent 文件。
+
 **对照答案**：tagent `packages/core/src/industrial.ts` 的 execute_code
 部分（~150 行，含 CellAuthority + 白名单 + 预算 + 持久 context +
 spill + terminate）+ `apps/cli/src/builtin-tools/execute-code.ts`。

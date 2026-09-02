@@ -301,6 +301,9 @@ test("[100] model_change：分支回去连模型都能恢复", () => {
 - [ ] branchWithSummary 的摘要为什么挂在新路径上而不是旧路径上？
 - [ ] model_change 作为树节点意味着什么？（提示：分支回去连配置都能恢复）
 
+**代码组装提示**：本章代码块是教学片段（不含 import/辅助函数），
+完整可编译版本见下方 tagent 文件。
+
 **对照答案**：tagent `packages/core/src/session-tree.ts`（~120 行，
 含完整 branchWithSummary + LCA + compact + navigateToEdit）。
 

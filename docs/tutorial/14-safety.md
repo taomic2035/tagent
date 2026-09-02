@@ -224,6 +224,9 @@ test("无人值守：危险操作默认拒绝", () => {
 - [ ] execFile vs exec 的安全差异（命令注入的原理）
 - [ ] allowlist 学习为什么只记主干不记完整命令
 
+**代码组装提示**：本章代码块是教学片段（不含 import/辅助函数），
+完整可编译版本见下方 tagent 文件。
+
 **对照答案**：tagent `packages/core/src/approval.ts`（归一化+hardline+
 decideApproval+learnAllowRule）+ `apps/cli/src/builtin-tools/shell.ts`
 （白名单+execFile+超时+输出截断）+ `apps/cli/src/builtin-tools/approval-gate.ts`
