@@ -23,6 +23,8 @@ import { createWireRecorder } from "./wire.js";
 import { parseFaults, withFaults, describeFaults } from "./faults.js";
 import { parseLlmFaults, withLlmFaults, describeLlmFaults } from "./llm-faults.js";
 import { makeExecuteCodeTool } from "./builtin-tools/execute-code.js";
+import { withApproval } from "./builtin-tools/approval-gate.js";
+import type { ApprovalConfig } from "@tagent/core";
 import { SessionTree, decideApproval } from "@tagent/core";
 import { paint, writeChunk, writeLine } from "./ui.js";
 
@@ -76,6 +78,25 @@ const wire = createWireRecorder(join(process.cwd(), "logs", "sessions"));
 // 注入轮返回合成流（不经 fetch），放行轮才产生真实 wire 存证
 const llmFaults = parseLlmFaults(process.env.TAGENT_LLM_FAULTS);
 const client = withLlmFaults(new OpenAIClient(config.baseUrl, config.model, wire.fetchImpl), llmFaults);
+// Step 16：审批流水线——危险工具执行前 y/n 确认（hermes 分层同构）
+const approvalConfig: ApprovalConfig = { denyRules: [], allowRules: [], unattended: false };
+// allowlist 持久化到 logs/approval.json
+const approvalFile = join(process.cwd(), "logs", "approval.json");
+try {
+  if (existsSync(approvalFile)) {
+    const saved = JSON.parse(readFileSync(approvalFile, "utf8")) as ApprovalConfig;
+    approvalConfig.allowRules = saved.allowRules ?? [];
+  }
+} catch { /* 首次无文件 */ }
+// 延迟绑定：rl 在下方创建后才可用
+let confirmGate = (_q: string): Promise<boolean> => Promise.resolve(false);
+const bindConfirmGate = (readline: ReturnType<typeof createInterface>): void => {
+  confirmGate = (question: string): Promise<boolean> =>
+    new Promise((resolve) => {
+      readline.question(question, (answer: string) => resolve(answer.trim().toLowerCase().startsWith("y")));
+    });
+};
+
 const registry = new ToolRegistry();
 // 故障注入（FR-16）：TAGENT_FAULTS 按剧本把内建工具搞坏，实验工具只进壳
 const faults = parseFaults(process.env.TAGENT_FAULTS);
@@ -205,26 +226,41 @@ function handleCommand(line: string): boolean {
       writeLine(paint.dim("再见。"));
       process.exit(0);
     case "/branch": {
-      // Step 16：回到第 N 条消息重新开始（SessionTree 分支）
+      // Step 16：回到第 N 条用户消息（SessionTree 分支——一字不删，长新枝）
       const n = parseInt(line.split(" ")[1] ?? "0", 10);
       const all = sessionTree.toMessages();
-      if (n > 0 && n <= all.length) {
-        // 回退到第 n 条 user 消息
-        let count = 0;
-        for (let i = all.length - 1; i >= 0; i--) {
-          if (all[i]?.role === "user") {
-            count++;
-            if (count === n) {
-              // 找到 SessionTree 里对应的条目并 branch
-              // 教学版：重建（实际需要 id 映射）
-              writeLine(paint.dim(`分支到第 ${n} 条用户消息——正在重置会话`));
-              sessionTree.branch(sessionTree.leaf!); // 最小实现：从当前叶分支
-              break;
-            }
-          }
+      const userMsgs = all.map((m, i) => ({ m, i })).filter((x) => x.m.role === "user");
+      if (n > 0 && n <= userMsgs.length) {
+        const target = userMsgs[userMsgs.length - n];
+        if (target) {
+          // 找到投影中该 user 消息 → 重建 SessionTree（从 system 到该消息）
+          const newTree = new SessionTree();
+          for (const msg of all.slice(0, target.i + 1)) newTree.append(msg);
+          // 替换（教学版：重建而非 id 映射——完整版见 pi session-manager.ts）
+          sessionTree.branch(sessionTree.leaf!);
+          messages.length = 0;
+          messages.push(...newTree.toMessages());
+          writeLine(paint.dim(`已分支到第 ${n} 条用户消息（共回退 ${userMsgs.length - n + 1} 条用户消息）——旧枝保留在树中`));
+          // 教学简化：直接替换 messages（完整版应操作 sessionTree 本体）
+          messages.length = 0;
+          messages.push(...all.slice(0, target.i + 1));
         }
       } else {
-        writeLine(paint.yellow("用法: /branch N（回到第 N 条用户消息）"));
+        writeLine(paint.yellow(`用法: /branch N（回到第 N 条用户消息，当前共 ${userMsgs.length} 条）`));
+        for (let idx = 0; idx < Math.min(userMsgs.length, 10); idx++) {
+          const u = userMsgs[userMsgs.length - 1 - idx];
+          if (u) writeLine(paint.dim(`  /branch ${idx + 1} → "${(u.m.content ?? "").slice(0, 50)}"`));
+        }
+      }
+      break;
+    }
+    case "/tree": {
+      // Step 16：可视化会话树
+      const all = sessionTree.toMessages();
+      writeLine(paint.dim(`会话树：${all.length} 条消息在当前路径`));
+      for (const [i, m] of all.entries()) {
+        const preview = (m.role === "system" ? "(sys)" : (m.content ?? "").slice(0, 40));
+        writeLine(paint.dim(`  [${i}] ${m.role}: ${preview}`));
       }
       break;
     }
@@ -288,7 +324,7 @@ function handleCommand(line: string): boolean {
       writeLine(paint.dim("思考模式已关闭（请求级 enable_thinking=false；旧 /no_think 标记已废弃——两引擎实测无效，PROTOCOL §10）"));
       break;
     default:
-      writeLine(paint.yellow(`未知命令 ${line}（可用：/exit /reset /tools /dump /think /nothink /memories /save /load）`));
+      writeLine(paint.yellow(`未知命令 ${line}（可用：/exit /reset /tools /dump /think /nothink /memories /save /load /branch /tree）`));
   }
   return true;
 }
@@ -382,6 +418,7 @@ function main(): void {
   writeLine(paint.dim(`引擎: ${config.baseUrl} · transcript: ${transcriptPath}`));
 
   const rl = createInterface({ input: process.stdin, output: process.stdout, prompt: paint.green("你> ") });
+bindConfirmGate(rl); // Step 16：审批门绑定 readline
   rl.prompt();
   // Ctrl-C 取消（Step 14，FR-77）：第一次中断当前生成（回提示符，会话可续），
   // 1 秒内连按两次才退出进程；ReAct 模式不接取消（签名无 ctx，§19 边界）
