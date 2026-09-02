@@ -24,6 +24,7 @@ import { parseFaults, withFaults, describeFaults } from "./faults.js";
 import { parseLlmFaults, withLlmFaults, describeLlmFaults } from "./llm-faults.js";
 import { makeExecuteCodeTool } from "./builtin-tools/execute-code.js";
 import { withApproval } from "./builtin-tools/approval-gate.js";
+import { readFileTool, writeFileTool, listFilesTool } from "./builtin-tools/files.js";
 import type { ApprovalConfig } from "@tagent/core";
 import { SessionTree, decideApproval } from "@tagent/core";
 import { paint, writeChunk, writeLine } from "./ui.js";
@@ -105,11 +106,22 @@ registry.register(withFaults(calculateTool, faults));
 // Step 6：长期记忆（跨会话事实库 + remember/recall 工具）
 const memoryStore = new MemoryStore(join(process.cwd(), "logs", "memory.jsonl"));
 for (const t of makeMemoryTools(memoryStore)) registry.register(t);
+// Step 16：文件工具——read/list 安全，write 有副作用走审批
+registry.register(readFileTool);
+registry.register(listFilesTool);
+registry.register(withApproval(writeFileTool, {
+  confirm: (q) => confirmGate(q),
+  config: approvalConfig,
+  onConfigChange: (cfg) => {
+    try { writeFileSync(approvalFile, JSON.stringify(cfg, null, 2)); } catch { /* 持久化失败不阻塞 */ }
+  },
+}));
+
 // Step 16：execute_code（PTC）——持久 context 跨调用存活
 const codeSandbox: Record<string, unknown> = {};
 registry.register(makeExecuteCodeTool({
   callTool: async (name, argsJson) => registry.execute(name, argsJson),
-  allowedTools: ["get_weather", "calculate", "remember", "recall"],
+  allowedTools: ["get_weather", "calculate", "remember", "recall", "read_file", "write_file", "list_files"],
   persistentContext: codeSandbox,
 }));
 // Step 7：委托工具（--delegate）。子 registry 不含 delegate 本身——递归锁（FR-39）
@@ -315,6 +327,14 @@ function handleCommand(line: string): boolean {
       writeLine(paint.dim(`已恢复会话 ${name}（${data.messages.length} 条消息 + 恢复引导包）`));
       break;
     }
+    case "/compact": {
+      // Step 16：手动触发摘要压缩（compactMessages 阶梯全跑一遍）
+      writeLine(paint.dim("触发摘要压缩（去重→降级→摘要→裁剪兜底）…"));
+      messages.length = 0;
+      messages.push(...sessionTree.toMessages());
+      writeLine(paint.dim(`压缩前 ${messages.length} 条消息。下一轮请求时将自动触发压缩（需设 --compact --max-context-tokens N）`));
+      break;
+    }
     case "/think":
       config.thinking = true;
       writeLine(paint.dim("思考模式已开启（请求级 enable_thinking=true）"));
@@ -324,7 +344,7 @@ function handleCommand(line: string): boolean {
       writeLine(paint.dim("思考模式已关闭（请求级 enable_thinking=false；旧 /no_think 标记已废弃——两引擎实测无效，PROTOCOL §10）"));
       break;
     default:
-      writeLine(paint.yellow(`未知命令 ${line}（可用：/exit /reset /tools /dump /think /nothink /memories /save /load /branch /tree）`));
+      writeLine(paint.yellow(`未知命令 ${line}（可用：/exit /reset /tools /dump /think /nothink /memories /save /load /branch /tree /compact）`));
   }
   return true;
 }
