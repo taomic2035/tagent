@@ -1,4 +1,4 @@
-# 第 15 章 让完成可证明：v0.17 验证基础设施
+# 第 15 章 让完成可证明：v0.16 验证基础设施
 
 > 你的 agent 说"已保存文件"、"已记住你的偏好"——你怎么知道它真的做了？
 > 也许它只是**说**了这句话（模型最擅长的就是生成看起来合理的文本）。
@@ -253,7 +253,7 @@ test("FauxClient：prompt cache 模拟", async () => {
 - **FauxClient 不记指纹**：删掉 `lastPromptFingerprint`——第二次的
   cacheRead 永远是 0，你的缓存测试全部假绿
 
-## 15.9 全书总复习：从 v0.1 到 v0.17
+## 15.9 全书总复习：从 v0.1 到 v0.16
 
 | 版本 | 长出什么 | 对应的工业模式 |
 |---|---|---|
@@ -272,7 +272,7 @@ test("FauxClient：prompt cache 模拟", async () => {
 | **v0.13** | **SessionTree** | pi 会话树 / retainedTail |
 | **v0.14** | **execute_code** | hermes PTC / CellAuthority |
 | **v0.15** | **审批管线 + shell** | hermes approval.py 六层 |
-| **v0.17** | **注册表 + 假完成 + FauxClient** | clowder 能力注册表 / verdict-detect |
+| **v0.16** | **注册表 + 假完成 + FauxClient** | clowder 能力注册表 / verdict-detect |
 
 ## 15.10 大师之路
 
@@ -297,7 +297,7 @@ test("FauxClient：prompt cache 模拟", async () => {
 - [ ] 假完成检测的关键词为什么用过去时（意图陈述 vs 完成声称）
 - [ ] FauxClient 比 scriptedClient 多了什么（prompt cache 模拟 + usage）
 - [ ] "use_count=0 是证据缺失不是过时证据"——为什么这条语义很重要
-- [ ] 全书 v0.1~v0.17 的版本-能力-工业模式对照表能默写 80%
+- [ ] 全书 v0.1~v0.16 的版本-能力-工业模式对照表能默写 80%
 
 **对照答案**：tagent `predicate.ts`（注册表+断言）、`industrial.ts`
 （detectFalseCompletion+FauxClient）、`store.ts`（useCount+stats+curator）。

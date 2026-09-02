@@ -308,7 +308,15 @@ test("工具白名单：不在名单的直接拒", async () => {
 });
 ```
 
-## 13.10 自测与对照
+## 13.10 搞坏实验
+
+- **去掉 CellAuthority 的 checkAlive**：retire 后 proxy 仍可调——后台 setTimeout
+  的迟到调用以过期身份执行了（安全漏洞复现）
+- **vm 沙箱不加 createContext**：直接用普通对象 → "must be a vm.Context" 报错
+- **allowlist 放全量命令**：批过 `git push` 后 `git push --force` 也放行了——
+  过度学习
+
+## 13.11 自测与对照
 
 - [ ] 能解释"中间结果永不进入上下文"为什么比"逐轮往返"省 token
 - [ ] 能说出 CellAuthority 解决的具体安全场景（后台线程的迟到调用）

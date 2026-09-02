@@ -246,7 +246,7 @@ case "/tree": {
 ## 12.7 测试
 
 ```ts
-// session-tree.test.ts 核心场景（完整版见 tagent）
+// session-tree.test.ts（核心场景——tagent 有更完整的边界测试可对照）
 test("[60] 分支不删旧数据", () => {
   const t = new SessionTree();
   t.append({ role: "user", content: "A" });

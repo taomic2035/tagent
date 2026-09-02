@@ -61,11 +61,11 @@
 | v0.12 | [第 10 章 总装大考](10-graduation.md) | 谓词裁决/溯源/复现 + 结业五题 | ✅ |
 | — | [第 11 章 参考阅读](11-industrial.md) | 工业模式一览（不实现，只指路） | ✅ |
 
-### 第三册：从能跑到敢用——工业级强化（v0.13 ~ v0.17）
+### 第三册：从能跑到敢用——工业级强化（v0.13 ~ v0.16）
 
 > 你的 v0.12 agent 能干活，但它是脆弱的：历史是扁平数组（回不去）、多步任务慢
 > （逐轮往返）、没有安全层（加 shell 全靠信念）、完成是模型的自我宣称。
-> 本册用 4 章把 v0.12 升级为 v0.17——每个模式走"naive→撞墙→修正"，
+> 本册用 4 章把 v0.12 升级为 v0.16——每个模式走"naive→撞墙→修正"，
 > 每章末尾给 tagent 实现作为对照答案。
 
 | 章 | 版本 | 主题 | 亲手构建 |
@@ -73,7 +73,7 @@
 | 12 | v0.13 | [会话是一棵树](12-session-tree.md) | SessionTree / retainedTail / branchWithSummary |
 | 13 | v0.14 | [让 Agent 写代码](13-execute-code.md) | vm 沙箱 / CellAuthority / 输出溢出 / terminate 批规则 |
 | 14 | v0.15 | [安全层](14-safety.md) | 命令归一化 / hardline / 审批门 / shell 白名单 |
-| 15 | v0.17 | [让完成可证明](15-verifiable.md) | 能力注册表 / 假完成检测 / FauxClient / useCount |
+| 15 | v0.16 | [让完成可证明](15-verifiable.md) | 能力注册表 / 假完成检测 / FauxClient / useCount |
 
 全书完。
 
