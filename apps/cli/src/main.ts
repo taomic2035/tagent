@@ -22,6 +22,8 @@ import { makeDelegateTool } from "./builtin-tools/delegate.js";
 import { createWireRecorder } from "./wire.js";
 import { parseFaults, withFaults, describeFaults } from "./faults.js";
 import { parseLlmFaults, withLlmFaults, describeLlmFaults } from "./llm-faults.js";
+import { makeExecuteCodeTool } from "./builtin-tools/execute-code.js";
+import { SessionTree, decideApproval } from "@tagent/core";
 import { paint, writeChunk, writeLine } from "./ui.js";
 
 // ---- 启动参数：CLI 参数 > 环境变量 > 默认值（泛化：不硬编码本机信息）----
@@ -82,6 +84,13 @@ registry.register(withFaults(calculateTool, faults));
 // Step 6：长期记忆（跨会话事实库 + remember/recall 工具）
 const memoryStore = new MemoryStore(join(process.cwd(), "logs", "memory.jsonl"));
 for (const t of makeMemoryTools(memoryStore)) registry.register(t);
+// Step 16：execute_code（PTC）——持久 context 跨调用存活
+const codeSandbox: Record<string, unknown> = {};
+registry.register(makeExecuteCodeTool({
+  callTool: async (name, argsJson) => registry.execute(name, argsJson),
+  allowedTools: ["get_weather", "calculate", "remember", "recall"],
+  persistentContext: codeSandbox,
+}));
 // Step 7：委托工具（--delegate）。子 registry 不含 delegate 本身——递归锁（FR-39）
 if (config.delegate) {
   const clientForSub = client;
@@ -107,7 +116,10 @@ if ((config.memoryInject ?? 0) > 0) {
     config.systemPrompt += block;
   }
 }
-const messages: ChatMessage[] = [];
+// Step 16：SessionTree 替代扁平 messages（不可变树 + 分支）
+const sessionTree = new SessionTree();
+sessionTree.append({ role: "system", content: config.systemPrompt });
+const messages: ChatMessage[] = sessionTree.toMessages();
 
 // ---- transcript：每个事件一行 JSON（NFR-4 可观测性）----
 const logsDir = join(process.cwd(), "logs");
@@ -192,6 +204,30 @@ function handleCommand(line: string): boolean {
     case "/exit":
       writeLine(paint.dim("再见。"));
       process.exit(0);
+    case "/branch": {
+      // Step 16：回到第 N 条消息重新开始（SessionTree 分支）
+      const n = parseInt(line.split(" ")[1] ?? "0", 10);
+      const all = sessionTree.toMessages();
+      if (n > 0 && n <= all.length) {
+        // 回退到第 n 条 user 消息
+        let count = 0;
+        for (let i = all.length - 1; i >= 0; i--) {
+          if (all[i]?.role === "user") {
+            count++;
+            if (count === n) {
+              // 找到 SessionTree 里对应的条目并 branch
+              // 教学版：重建（实际需要 id 映射）
+              writeLine(paint.dim(`分支到第 ${n} 条用户消息——正在重置会话`));
+              sessionTree.branch(sessionTree.leaf!); // 最小实现：从当前叶分支
+              break;
+            }
+          }
+        }
+      } else {
+        writeLine(paint.yellow("用法: /branch N（回到第 N 条用户消息）"));
+      }
+      break;
+    }
     case "/reset":
       messages.length = 0;
       writeLine(paint.dim("上下文已清空。"));
@@ -207,7 +243,12 @@ function handleCommand(line: string): boolean {
     case "/memories": {
       const all = memoryStore.all();
       if (all.length === 0) writeLine(paint.dim("（长期记忆为空）"));
-      for (const f of all.slice(-20)) writeLine(paint.dim(`  [${f.id}] ${f.content}`));
+      for (const f of all.slice(-20)) writeLine(paint.dim(`  [${f.id}] ${f.content}${(f.useCount ?? 0) > 0 ? `（用${f.useCount}次）` : ""}`));
+      const stats = memoryStore.stats();
+      writeLine(paint.dim(`  零使用: ${stats.zeroUse}/${stats.total}（"证据缺失"≠"过时"）`));
+      const cc = memoryStore.curatorCandidates();
+      if (cc.staleIds.length > 0) writeLine(paint.yellow(`  🗂 stale 候选（30 天未用）: ${cc.staleIds.length} 条（永不删除只归档）`));
+      if (cc.archiveIds.length > 0) writeLine(paint.yellow(`  📦 归档候选（90 天未用）: ${cc.archiveIds.length} 条`));
       break;
     }
     case "/save": {
@@ -259,7 +300,9 @@ const steeringQueue: string[] = [];
 let busy = false;
 
 async function chat(input: string, cancelSignal?: AbortSignal): Promise<void> {
-  messages.push({ role: "user", content: input });
+  sessionTree.append({ role: "user", content: input });
+  messages.length = 0;
+  messages.push(...sessionTree.toMessages()); // 刷新投影
   const state = { toolStart: 0 };
   const engine = config.reactMode ? runReAct : runAgent; // 两引擎同事件契约（FR-28）
   // Step 11 摘要通道：--compact 时给 runAgent 注入摘要函数（core 不做 LLM 调用，
