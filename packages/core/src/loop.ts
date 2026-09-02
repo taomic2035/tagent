@@ -2,6 +2,7 @@ import type { AgentConfig, ChatMessage, SteeringChannel, ToolContext, Usage } fr
 import type { LLMClient } from "./client.js";
 import type { ToolRegistry } from "./tools.js";
 import { compactMessages, trimMessages } from "./memory.js";
+import { shouldTerminateByTools } from "./industrial.js";
 
 // ============================================================
 // AgentEvent：loop 对外暴露的事件流
@@ -27,7 +28,7 @@ export type AgentEvent =
       fromTokens: number;
       toTokens: number;
     }
-  | { type: "final"; message: ChatMessage; rounds: number; usage: Usage }
+  | { type: "final"; message: ChatMessage; rounds: number; usage: Usage; byTool?: boolean }
   | { type: "error"; message: string; recoverable: boolean };
 
 export interface AgentDeps {
@@ -287,6 +288,14 @@ export async function* runAgent(
       const retriesUsed = pickRetriesUsed(result);
       yield { type: "tool-result", id: tc.id, name: tc.function.name, result, ...(retriesUsed !== undefined ? { retriesUsed } : {}) };
       messages.push({ role: "tool", tool_call_id: tc.id, content: result });
+    }
+
+    // ---- terminate 批规则（FR-80，pi 教学复现）----
+    // 当且仅当批内所有结果都带 terminate:true 时直接收尾，不再请求下一轮
+    // assistant——"省掉为一个唯一目的是停下来的模型轮买单"
+    if (shouldTerminateByTools(results)) {
+      yield { type: "final", message: messages[messages.length - 1] ?? assistant, rounds: round, usage: totalUsage, byTool: true };
+      return;
     }
 
     // 重复警告（FR-53）：第 3/4 批照常执行（结果给全），回填后追加警告——

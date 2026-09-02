@@ -366,9 +366,37 @@ function countTurns(messages: ChatMessage[]): number {
   return messages.filter((m) => m.role === "user").length;
 }
 
-/** 轻量 Anchor Index（FR-62）：文件路径与长数字串，去重取前 10 */
+/**
+ * Anchor Index（FR-62 → FR-83 七类升级，hermes 同构）：
+ * 各类独立 cap、频次排序（频次是 load-bearing 的代理指标）、总预算 7000 字符。
+ * "No LLM in the loop, so nothing can be paraphrased away"——
+ * 确定性防御兜住概率性摘要必丢的绣花针（SHA/id/错误串）。
+ */
+const ANCHOR_KINDS: Array<{ name: string; re: RegExp; cap: number }> = [
+  { name: "pr-issue", re: /#\d{3,6}/g, cap: 120 },
+  { name: "sha", re: /[0-9a-f]{9,40}/g, cap: 40 },
+  { name: "branch", re: /(?:^|\s)([a-z][a-z0-9_-]{2,}\/[a-zA-Z0-9._/-]{2,})(?=\s|$)/g, cap: 40 },
+  { name: "path", re: /(?:[A-Za-z]:[\/]|[./])[^\s"'，。；、）]+/g, cap: 80 },
+  { name: "error-line", re: /[^\s:]*:\d{1,5}:\s*\S+/g, cap: 40 },
+  { name: "handle", re: /@[A-Za-z][\w-]{1,38}/g, cap: 40 },
+  { name: "url", re: /https?:\/\/[^\s)"'，。]+/g, cap: 30 },
+  { name: "version-num", re: /\d[\d._-]{3,}/g, cap: 40 },  // 版本号/长数字（兼容旧模式）
+];
+
 function extractAnchors(raw: string): string[] {
-  const paths = raw.match(/[A-Za-z]:[\\/][^\s"'，。；、）]+/g) ?? [];
-  const nums = raw.match(/\d[\d._-]{3,}/g) ?? [];
-  return [...new Set([...paths, ...nums])].slice(0, 10);
+  const out: string[] = [];
+  let budget = 7000; // [80] 总预算（hermes 同值）
+  for (const kind of ANCHOR_KINDS) {
+    const hits = raw.match(kind.re) ?? [];
+    // [80] 频次排序：出现多的排前（并列保持出现顺序）
+    const freq = new Map<string, number>();
+    for (const h of hits) freq.set(h, (freq.get(h) ?? 0) + 1);
+    const sorted = [...freq.entries()].sort((a, b) => b[1] - a[1]).map(([h]) => h);
+    for (const h of sorted.slice(0, kind.cap)) {
+      if (budget - h.length < 0) break;
+      budget -= h.length;
+      out.push(h);
+    }
+  }
+  return [...new Set(out)];
 }

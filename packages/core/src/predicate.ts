@@ -141,3 +141,54 @@ export function predicateFromSpec(spec: unknown): TaskPredicate {
   if (Array.isArray(s["all"])) return all(...s["all"].map((p) => predicateFromSpec(p)));
   throw new Error(`谓词 spec 非法（可用: finalIncludes / toolCalled+args / toolResultOk / all）: ${JSON.stringify(spec)}`);
 }
+
+// ---------------- 能力注册表 + 启动断言（FR-84，clowder 教学复现） ----------------
+
+/**
+ * clowder 原则："A schema shape existing in shared types is intentionally
+ * not enough: admission is enabled only when ... every runtime port are
+ * named here and **boot-asserted**." —— "类型存在 ≠ 被受理"。
+ * 教学版：每个谓词必须声明它的**证据生产者**（事件流里的哪个事件类型
+ * 提供判定材料），未具名的谓词在启动断言时失败。
+ */
+export interface PredicateCapability {
+  kind: string;                       // 谓词名（如 "toolCalled"）
+  evidenceProducers: string[];        // 消费哪些 AgentEvent.type 作为证据
+  schemaVersion: string;              // 谓词 schema 版本（演化追踪）
+}
+
+export const PREDICATE_CAPABILITY_REGISTRY: readonly PredicateCapability[] = Object.freeze([
+  { kind: "toolCalled", evidenceProducers: ["tool-call"], schemaVersion: "1" },
+  { kind: "toolResultOk", evidenceProducers: ["tool-result"], schemaVersion: "1" },
+  { kind: "finalAnswers", evidenceProducers: ["final"], schemaVersion: "1" },
+  { kind: "all", evidenceProducers: ["*"], schemaVersion: "1" },
+]);
+
+/**
+ * [FR-84] 启动断言：注册表自检（谓词无空 producers、kind 唯一）。
+ * 用法：应用启动时调用——失败即 boot 失败（fail-fast，clowder 同构）。
+ */
+export function assertPredicateRegistryReady(): void {
+  const seen = new Set<string>();
+  for (const cap of PREDICATE_CAPABILITY_REGISTRY) {
+    if (seen.has(cap.kind)) throw new Error(`[predicate-registry] 谓词 ${cap.kind} 重复注册`);
+    seen.add(cap.kind);
+    if (cap.evidenceProducers.length === 0) {
+      throw new Error(`[predicate-registry] 谓词 ${cap.kind} 无证据生产者——"类型存在 ≠ 被受理"`);
+    }
+  }
+}
+
+// ---------------- manual_only 谓词类型（FR-100，clowder SOP 分级） ----------------
+
+/**
+ * clowder 原语的教学化："operator 已确认立项"这类无机器产物的规则，
+ * 诚实标注 manual_only——"conversational intent, not yet represented
+ * as a structured event"。可执行性分级本身是声明式数据：
+ * 机器判定走 TaskPredicate，人工判定走这里，不混装。
+ */
+export interface ManualOnlyCheck {
+  type: "manual_only";
+  reason: string; // 为什么暂时无法机器判定
+  humanQuestion: string; // 人要回答的问题
+}

@@ -62,3 +62,30 @@ export {
   type TaskPredicate,
   type PredicateResult,
 } from "./predicate.js";
+export {
+  shouldTerminateByTools, spillIfOversized, withSpill, headTailWindow,
+  CellAuthority, runCodeCell, auditEffectSandwich,
+  transitionAwait, baselineDiff, detectFalseCompletion,
+} from "./industrial.js";
+export type { SpillMeta, TerminateCapableEnvelope, ExecuteCodeDeps, CellResult,
+  OrphanReport, AwaitState, AwaitTransition, VerdictClaim } from "./industrial.js";
+export { SessionTree } from "./session-tree.js";
+export type { SessionEntry } from "./session-tree.js";
+export {
+  applyBallEvent, BallCustodyEventLog, DEAD_BALL_ZOMBIE_GRACE_MS,
+} from "./ball-custody.js";
+export type { BallState, BallEvent, BallEventKind, BallSnapshot, BallTransitionResult } from "./ball-custody.js";
+export {
+  extractRouteTargets, pingPongUpdate, A2ABoard, FauxClient, DEFAULT_PINGPONG,
+} from "./a2a.js";
+export type { RouteTargets, PingPongConfig, PingPongVerdict, QueueEntry,
+  HistoryMessage, ActiveRun, FauxStep, FauxUsage } from "./a2a.js";
+export {
+  normalizeCommand, decideApproval, learnAllowRule,
+  HARDLINE_PATTERNS, DEFAULT_APPROVAL,
+} from "./approval.js";
+export type { ApprovalDecision, ApprovalConfig } from "./approval.js";
+export {
+  assertPredicateRegistryReady, PREDICATE_CAPABILITY_REGISTRY,
+} from "./predicate.js";
+export type { PredicateCapability, ManualOnlyCheck } from "./predicate.js";

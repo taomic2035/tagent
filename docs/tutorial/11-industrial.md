@@ -10,6 +10,11 @@
 
 ## 11.1 上下文经济学的极致：hermes 的缓存戒律
 
+> **✅ 已复现**（`industrial.ts` / FR-85）：前缀指纹审计与"never mutate past
+> context"的测试断言已实现（本模式的完整复现分散在 memory.ts 的缓存迟滞
+> 与 loop.ts 的 steering 只追加语义中——教程第 6/7 章已教）。
+
+
 **机制**：hermes 有六个互不相干的子系统（微压缩、主动剪枝、缓存边界登记、
 后台自审 fork、异步委托、甚至屏幕宠物），但全部服从同一条硬不变量——
 **"never mutate past context"**（绝不改写已发送的历史）。异步委托的完成
@@ -28,6 +33,10 @@
 "never mutate past context" 交代了吗？这是比"能跑"高一级的验收标准。
 
 ## 11.2 确定性兜底概率性：Anchor Index 与 pre-pass
+
+> **✅ 已复现**（`memory.ts` / FR-83）：七类正则 + 频次排序 + 7000 字符总预算
+> + 版本号兜底模式；pre-pass 五趟在 compactMessages 阶段 1 已有（第 6 章）。
+
 
 **机制**：hermes 的压缩分两层。第一层**没有 LLM**：正则从被压缩区域收割
 七类标识符（SHA/PR 号/文件路径/错误行/URL...），按频次排序进 7000 字符的
@@ -50,6 +59,11 @@
 
 ## 11.3 状态存活，权限必须死：CellAuthority
 
+> **✅ 已复现**（`industrial.ts` / FR-91）：node:vm 沙箱 + 持久 context（变量
+> 跨 cell 存活）+ 每 cell 权限 token + retire 后迟到调用拒绝 + 工具白名单 +
+> 调用预算。**注意**：脚本需显式 `return`（与 hermes kernel 同语义）。
+
+
 **机制**：hermes 的 execute_code 让模型写 Python 脚本，脚本经 RPC 回调宿主
 工具。脚本内核是**长生命周期**的（变量跨调用存活），但每次执行的**权限**
 是短生命周期的：cell 开始时在调用线程快照 contextvars，结束时
@@ -67,6 +81,10 @@ cell 结束后发起调用，如果权限还挂着，它就以过期的审批身
 
 ## 11.4 输出溢出分页：recover-don't-rerun
 
+> **✅ 已复现**（`industrial.ts` / FR-81）：spillIfOversized（内容寻址 sha256
+> 文件 + head40/tail60 窗口）+ withSpill 工具包装器 + 结构化截断元数据。
+
+
 **机制**：模型脚本输出超 50KB 时，截断为 head 40% + tail 60%（滚动窗口
 保尾），全文溢写到内容寻址文件（相同输出只存一份），提示语直接给恢复
 配方：
@@ -83,6 +101,11 @@ be missed or later re-truncated"（文本标记可能被错过或被下一层再
 的好消息？**截断必给恢复路径**——这是工具设计的服务水准线。
 
 ## 11.5 会话即树，压缩即投影：pi 的存储哲学
+
+> **✅ 已复现**（`session-tree.ts` / FR-90）：SessionTree（不可变树 + branch
+> 移叶子指针）+ toMessages 路径投影 + retainedTail 自包含检查点 +
+> branchWithSummary（摘要挂导航目标 + LCA）+ model_change 也是节点。
+
 
 **机制**：pi 的会话是**不可变树**——每个条目带 parentId；连"换了模型"、
 "换了思考级别"都是树节点，分支回到过去时连当时的配置都能恢复。分支就是
@@ -103,6 +126,10 @@ branch 回去，被放弃的分支生成摘要（六段结构化格式：目标/
 
 ## 11.6 唯一不确定的窗口：effect sandwich
 
+> **✅ 已复现**（`industrial.ts` / FR-82）：auditEffectSandwich 孤儿检测
+> （意图无结算 + 反向孤儿——结算无意图）。loop.ts 的"先入档"即意图提交。
+
+
 **机制**：pi 的 harness 规格把每个动作拆成三明治：**意图提交 → 效果 →
 结算提交**。规格的金句：
 
@@ -121,6 +148,10 @@ branch 回去，被放弃的分支生成摘要（六段结构化格式：目标/
 
 ## 11.7 省掉最后一轮：terminate 工具批规则
 
+> **✅ 已复现**（`industrial.ts` + `loop.ts` / FR-80）：shouldTerminateByTools
+> 批判定（全 terminate 才收尾）已接入 runAgent 主循环，final 事件带 byTool。
+
+
 **机制**：pi 允许工具结果带 `terminate: true`；**当且仅当批内所有结果都
 terminate** 时，run 直接以工具结果收尾，不再请求下一轮 assistant。规格
 里写明动机：
@@ -136,6 +167,11 @@ terminate** 时，run 直接以工具结果收尾，不再请求下一轮 assist
 别逼它说废话。
 
 ## 11.8 机械层永远可测，判断层留给 LLM：clowder 的分工铁律
+
+> **✅ 已复现**（`industrial.ts` + `a2a.ts` / FR-88/98/99）：假完成检测器
+> detectFalseCompletion（声称记住但没调 remember）+ 机械路由 extractRouteTargets
+> + ping-pong 熔断（含 substantive 豁免重置为 1 而非 +1）。
+
 
 **机制**：clowder 的 @mention 路由文档开宗明义："路由层被故意设计成
 **机械的、无上下文感知的**，判断能力留给 LLM 自己（接/退/升）。" 但精彩
@@ -154,6 +190,11 @@ terminate** 时，run 直接以工具结果收尾，不再请求下一轮 assist
 （说了做 vs 真的做了）是你能加的最便宜的护栏——一次正则 + 一次事件。
 
 ## 11.9 完成定义绑定不可变 revision：typed terminal predicate
+
+> **✅ 已复现**（`predicate.ts` / FR-84）：PREDICATE_CAPABILITY_REGISTRY
+> + assertPredicateRegistryReady()（"类型存在 ≠ 被受理"——启动断言）+
+> ManualOnlyCheck（诚实标注"对话意图暂无结构化表示"）。
+
 
 **机制**：clowder 的完成谓词是 zod 判别联合六种（pr_merged/ci_passed/...），
 其中 review_delivered 必须绑定精确 headSha——**完成定义绑定到不可变
@@ -176,6 +217,11 @@ resolver/producer/port）就位，缺一个 boot 失败。
 
 ## 11.10 等待是一等公民：AwaitState 与 baseline diff
 
+> **✅ 已复现**（`industrial.ts` / FR-86）：transitionAwait 纯函数（expiry
+> 优先于谓词 + one-shot）+ baselineDiff（只给相对量）。owner fence 双形态
+> 为 [100] 档类型定义。
+
+
 **机制**：clowder 把"等 PR merge / 等 CI / 等定时"统一成一个合同
 `UnifiedAwaitStateV1`：等待开始时拍 **baseline 快照**（当时的 headSha、
 CI 指纹），唤醒时**只给相对 baseline 的 diff**（不重放全量）；expiry
@@ -192,6 +238,12 @@ sleep 轮询？还是把等待本身变成数据？**含糊的挂起是长任务
 
 ## 11.11 记忆治理的量化：把履约变成指标
 
+> **✅ 已复现**（`store.ts` / FR-87）：useCount 随 recall 记账 + stats()
+> （byOrigin/zeroUse/oldestUnusedDays）+ curatorCandidates（30 天 stale
+> /90 天归档，"零使用 = 证据缺失"语义注记）+ RECALL_DISCLAIMER（防注入
+> fenced block 标注）。
+
+
 **机制**：clowder 的记忆写入走三选一裁决（propose/defer/abstain），然后
 **度量裁决本身**：disposition 计数 >1 判"矛盾裁决"、一个没有判"无信息的
 沉默"；`awarenessCoverage`（知情覆盖率）与 `approvalCardsP95`（审批负担
@@ -205,6 +257,11 @@ p95）作为行为契约的**量化退出条件**——LLM 是否好好履行了
 自觉 + 度量自觉 = 可信任；只靠自觉 = 祈祷。
 
 ## 11.12 压缩是生命周期事件，不是数据丢失
+
+> **✅ 已复现**（`memory.ts` + `store.ts`）：压缩后引导包（第 5 章 /load
+> 已有恢复注入）+ 压缩前封存（被压原文 digest 记入 anchor 索引——摘要
+> 可追溯到被压原文的标识符）。curatorCandidates 即"压缩后主动整理"。
+
 
 **机制**：clowder 用两个 Claude Code hook 把"上下文压缩"从灾难变成流程：
 PreCompact 调 API **封存会话**（digest + SOP 阶段书签）；SessionStart(compact)

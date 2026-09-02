@@ -522,3 +522,46 @@
 诚实边界（clowder 调研的对齐记录）：谓词断言的是**事件流事实**（调用过什么/结果
 是否成功/终答内容）；对外部世界的真实效果（若工具真发邮件）事件流之外不可机检
 ——tagent 当前工具均为本地确定性，此边界暂无实际影响，如实记录。
+
+## 21. Step 16 需求增补：工业模式复现（2026-09-02，教程第 11 章驱动）
+
+> 来源：本地源码深挖（docs/SURVEY-DEEP.md + 教程第 11 章 12 个知识点）。
+> 用户指令："每一个都逐一尝试复现，从 60 分到 80 分再接近 100 分。"
+> **三档判据统一口径**：60 = 机制核心路径可跑且单测覆盖主路径；80 = 边界/失败
+> 路径覆盖，工程完善；100 = 接近原版完整语义（不变量/守卫/度量全齐）。
+> 代码内以 [60]/[80]/[100] 注释标注档位，测试按档分层。
+
+| ID | 模式（出处） | 60 | 80 | 100 |
+|---|---|---|---|---|
+| FR-80 | terminate 批规则（pi） | 信封 terminate 字段，全 terminate 批直接收尾 | 混合批正确忽略 | 可观测：终态事件标注 by-tool 与省轮数 |
+| FR-81 | recover-don't-rerun（hermes） | 超限 spill 落盘+信封给路径 | head40+tail60 窗口+内容寻址复用 | 结构化截断元数据字段 |
+| FR-82 | effect sandwich（pi） | 孤儿检测（意图无结算） | /save 前完整性校验 | transcript 重放器判定不确定窗口 |
+| FR-83 | Anchor 七类（hermes） | 七类正则各带 cap | 频次排序+总预算 | 恢复配方 footer 引用存证 |
+| FR-84 | 能力注册表断言（clowder） | 谓词 producer 具名+启动断言 | digest（canonical JSON 哈希） | identityKey/freshnessKey 双键 |
+| FR-85 | 缓存戒律审计（hermes） | 测试断言多轮前缀只增 | 运行时前缀指纹+violation 事件 | 合法变更白名单 |
+| FR-86 | AwaitState（clowder） | 类型+纯函数转移（expiry 优先/one-shot） | baseline 快照+diff | owner fence 双形态 |
+| FR-87 | 记忆 useCount（hermes/clowder） | 使用计数随 recall 更新 | origin 来源+stats() | 健康指标语义（零使用=证据缺失） |
+| FR-88 | 声明-动作检测（clowder） | 假完成检测纯函数 | eval 记录框架 | 关键词调整留痕制度 |
+| FR-89 | 压缩生命周期（clowder） | 压缩后注入规则重申 | 压缩前封存 digest | 恢复配方引用封存 |
+| FR-90 | 会话树（pi） | SessionTree+branch+路径投影 | branchWithSummary+retainedTail | 配置变更也是节点 |
+| FR-91 | execute_code+CellAuthority（hermes） | 受限 vm 脚本调工具，仅返回值进上下文 | 持久 context+每 cell 权限 token | retire 后迟到调用拒绝+白名单 |
+
+### 验收（AC17）
+
+| ID | 通过标准 |
+|---|---|
+| AC17-1 | 12 模式全部至少 60 分，代码内档位标注可查 |
+| AC17-2 | 每模式测试按档分层且全绿；六场景回归不破 |
+| AC17-3 | 教程第 11 章每节附"复现状态框"（已到几档+文件指针） |
+| AC17-4 | 全量 check-all 通过 |
+
+### 21.1 分级定稿（用户裁决：业界高价值重点做；中等一般详细度；低的介绍即可）
+
+- **P0（重点，完整三档）**：FR-80~91 前 12 项 + FR-92 A2A admission + FR-93 球权引擎 +
+  FR-94 记忆体系（19+30 合并：共享库/LSM 调度/文件制/防注入召回/curator）+
+  FR-95 addedTools 延迟装载 + FR-96 faux provider + FR-97 审批流水线
+- **P1（一般详细度，60-80 分档）**：FR-98 机械路由 + FR-99 ping-pong + FR-100
+  manual_only 谓词 + FR-101 estop + FR-102 预算 refund + FR-103 影子快照 +
+  FR-104 自举 evals + FR-105 background_review + 铁律/罪证墙（文档制度）
+- **P2（介绍段）**：平行世界/Magic Word/DeferredHandle/thinkingSignature/
+  CBOR·UUIDv7·lease/jiti 热插拔/hook 语义分级/MoA·SFT 飞轮——教程第 11 章附录一览
