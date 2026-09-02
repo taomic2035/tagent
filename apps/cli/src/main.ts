@@ -25,6 +25,7 @@ import { parseLlmFaults, withLlmFaults, describeLlmFaults } from "./llm-faults.j
 import { makeExecuteCodeTool } from "./builtin-tools/execute-code.js";
 import { withApproval } from "./builtin-tools/approval-gate.js";
 import { readFileTool, writeFileTool, listFilesTool } from "./builtin-tools/files.js";
+import { makeShellTool } from "./builtin-tools/shell.js";
 import type { ApprovalConfig } from "@tagent/core";
 import { SessionTree, decideApproval } from "@tagent/core";
 import { paint, writeChunk, writeLine } from "./ui.js";
@@ -117,11 +118,21 @@ registry.register(withApproval(writeFileTool, {
   },
 }));
 
+// Step 16：shell 工具——最危险的工具，走完整审批管线
+// （归一化→hardline→deny→allowlist→危险 pattern y/n 确认→白名单→超时）
+registry.register(withApproval(makeShellTool(), {
+  confirm: (q) => confirmGate(q),
+  config: approvalConfig,
+  onConfigChange: (cfg) => {
+    try { writeFileSync(approvalFile, JSON.stringify(cfg, null, 2)); } catch { /* 持久化失败不阻塞 */ }
+  },
+}));
+
 // Step 16：execute_code（PTC）——持久 context 跨调用存活
 const codeSandbox: Record<string, unknown> = {};
 registry.register(makeExecuteCodeTool({
   callTool: async (name, argsJson) => registry.execute(name, argsJson),
-  allowedTools: ["get_weather", "calculate", "remember", "recall", "read_file", "write_file", "list_files"],
+  allowedTools: ["get_weather", "calculate", "remember", "recall", "read_file", "write_file", "list_files", "shell"],
   persistentContext: codeSandbox,
 }));
 // Step 7：委托工具（--delegate）。子 registry 不含 delegate 本身——递归锁（FR-39）
