@@ -79,7 +79,7 @@
 | 12 | v0.13 | [会话是一棵树](12-session-tree.md) | SessionTree / retainedTail / branchWithSummary |
 | 13 | v0.14 | [让 Agent 写代码](13-execute-code.md) | vm 沙箱 / CellAuthority / 输出溢出 / terminate 批规则 |
 | 14 | v0.15 | [安全层](14-safety.md) | 命令归一化 / hardline / 审批门 / shell 白名单 |
-| 15 | v0.16 | [让完成可证明](15-verifiable.md) | 能力注册表 / 假完成检测 / FauxClient / useCount |
+| 16 | — | [LLM 与 Agent：边界、协作与未来](16-llm-vs-agent.md) | 分界线 / 能力归属 / 吞噬趋势 |
 
 全书完。
 
